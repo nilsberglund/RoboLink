@@ -71,7 +71,7 @@ public class Communicator2 implements SerialPortEventListener
 
 	//connect to the selected port in the combo box
 	//pre: ports are already found by using the searchForPorts method
-	//post: the connected comm port is stored in commPort, otherwise,
+	//post: the connected COM port is stored in commPort, otherwise,
 	//an exception is generated
 	public void connect()
 	{
@@ -128,7 +128,7 @@ public class Communicator2 implements SerialPortEventListener
 			//
 			input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
-			writeData(0, 0);
+			writeData(0);
 
 			successful = true;
 			return successful;
@@ -167,7 +167,7 @@ public class Communicator2 implements SerialPortEventListener
 		//close the serial port
 		try
 		{
-			writeData(0, 0);
+			writeData(0);
 
 			serialPort.removeEventListener();
 			serialPort.close();
@@ -230,20 +230,11 @@ public class Communicator2 implements SerialPortEventListener
 	//method that can be called to send data
 	//pre: open serial port
 	//post: data sent to the other device
-	public void writeData(int leftThrottle, int rightThrottle)
+	public void writeData(int Data)
 	{
 		try
 		{
-			output.write(leftThrottle);
-			output.flush();
-			//this is a delimiter for the data
-			output.write(DASH_ASCII);
-			output.flush();
-
-			output.write(rightThrottle);
-			output.flush();
-			//will be read as a byte so it is a space key
-			output.write(SPACE_ASCII);
+			output.write(Data);
 			output.flush();
 		}
 		catch (Exception e)
