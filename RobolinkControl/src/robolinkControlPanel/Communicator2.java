@@ -143,7 +143,7 @@ public class Communicator2 implements SerialPortEventListener
 
 	//starts the event listener that knows whenever data is available to be read
 	//pre: an open serial port
-	//post: an event listener for the serial port that knows when data is recieved
+	//post: an event listener for the serial port that knows when data is received
 	public void initListener()
 	{
 		try
@@ -211,11 +211,12 @@ public class Communicator2 implements SerialPortEventListener
 				if (singleData != NEW_LINE_ASCII)
 				{
 					logText = new String(new byte[] {singleData});
-					window.txtLog.append(logText);
+					//window.txtLog.append(logText);
+					window.txtTel.append(logText);
 				}
 				else
 				{
-					window.txtLog.append("\n");
+					window.txtTel.append("\n");
 				}
 			}
 			catch (Exception e)
