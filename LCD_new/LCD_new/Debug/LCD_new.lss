@@ -3,31 +3,31 @@ LCD_new.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000008c2  00000936  2**0
+  0 .data         00000000  00800100  000009d2  00000a46  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000008c2  00000000  00000000  00000074  2**1
+  1 .text         000009d2  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .stab         000006cc  00000000  00000000  00000938  2**2
+  2 .stab         000006cc  00000000  00000000  00000a48  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      00000097  00000000  00000000  00001004  2**0
+  3 .stabstr      00000097  00000000  00000000  00001114  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .comment      0000002f  00000000  00000000  0000109b  2**0
+  4 .comment      0000002f  00000000  00000000  000011ab  2**0
                   CONTENTS, READONLY
-  5 .debug_aranges 00000078  00000000  00000000  000010ca  2**0
+  5 .debug_aranges 00000078  00000000  00000000  000011da  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001157  00000000  00000000  00001142  2**0
+  6 .debug_info   00001575  00000000  00000000  00001252  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000001e4  00000000  00000000  00002299  2**0
+  7 .debug_abbrev 000001e4  00000000  00000000  000027c7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000069f  00000000  00000000  0000247d  2**0
+  8 .debug_line   0000076b  00000000  00000000  000029ab  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000178  00000000  00000000  00002b1c  2**2
+  9 .debug_frame  00000178  00000000  00000000  00003118  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000002d5  00000000  00000000  00002c94  2**0
+ 10 .debug_str    000002d4  00000000  00000000  00003290  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000012c5  00000000  00000000  00002f69  2**0
+ 11 .debug_loc    000012c5  00000000  00000000  00003564  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000068  00000000  00000000  0000422e  2**0
+ 12 .debug_ranges 00000068  00000000  00000000  00004829  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -112,7 +112,7 @@ Disassembly of section .text:
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
   98:	c3 d3       	rcall	.+1926   	; 0x820 <main>
-  9a:	11 c4       	rjmp	.+2082   	; 0x8be <_exit>
+  9a:	99 c4       	rjmp	.+2354   	; 0x9ce <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
@@ -1333,15 +1333,187 @@ int main(void)
  8b0:	01 96       	adiw	r24, 0x01	; 1
  8b2:	20 de       	rcall	.-960    	; 0x4f4 <hd44780_l_disp>
 	 
-	 hd44780_l_write(&low_conf, 0x48);
- 8b4:	68 e4       	ldi	r22, 0x48	; 72
+	 //0x42 0x4f 0x4f 0x42 0x49 0x45 0x53
+	 
+	 hd44780_l_write(&low_conf, 0x42);
+ 8b4:	62 e4       	ldi	r22, 0x42	; 66
  8b6:	ce 01       	movw	r24, r28
  8b8:	01 96       	adiw	r24, 0x01	; 1
  8ba:	47 de       	rcall	.-882    	; 0x54a <hd44780_l_write>
- 8bc:	ff cf       	rjmp	.-2      	; 0x8bc <main+0x9c>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 8bc:	6f e4       	ldi	r22, 0x4F	; 79
+ 8be:	ce 01       	movw	r24, r28
+ 8c0:	01 96       	adiw	r24, 0x01	; 1
+ 8c2:	43 de       	rcall	.-890    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 8c4:	6f e4       	ldi	r22, 0x4F	; 79
+ 8c6:	ce 01       	movw	r24, r28
+ 8c8:	01 96       	adiw	r24, 0x01	; 1
+ 8ca:	3f de       	rcall	.-898    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 8cc:	62 e4       	ldi	r22, 0x42	; 66
+ 8ce:	ce 01       	movw	r24, r28
+ 8d0:	01 96       	adiw	r24, 0x01	; 1
+ 8d2:	3b de       	rcall	.-906    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x49);
+ 8d4:	69 e4       	ldi	r22, 0x49	; 73
+ 8d6:	ce 01       	movw	r24, r28
+ 8d8:	01 96       	adiw	r24, 0x01	; 1
+ 8da:	37 de       	rcall	.-914    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x45);
+ 8dc:	65 e4       	ldi	r22, 0x45	; 69
+ 8de:	ce 01       	movw	r24, r28
+ 8e0:	01 96       	adiw	r24, 0x01	; 1
+ 8e2:	33 de       	rcall	.-922    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x53);
+ 8e4:	63 e5       	ldi	r22, 0x53	; 83
+ 8e6:	ce 01       	movw	r24, r28
+ 8e8:	01 96       	adiw	r24, 0x01	; 1
+ 8ea:	2f de       	rcall	.-930    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 8ec:	62 e4       	ldi	r22, 0x42	; 66
+ 8ee:	ce 01       	movw	r24, r28
+ 8f0:	01 96       	adiw	r24, 0x01	; 1
+ 8f2:	2b de       	rcall	.-938    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 8f4:	6f e4       	ldi	r22, 0x4F	; 79
+ 8f6:	ce 01       	movw	r24, r28
+ 8f8:	01 96       	adiw	r24, 0x01	; 1
+ 8fa:	27 de       	rcall	.-946    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 8fc:	6f e4       	ldi	r22, 0x4F	; 79
+ 8fe:	ce 01       	movw	r24, r28
+ 900:	01 96       	adiw	r24, 0x01	; 1
+ 902:	23 de       	rcall	.-954    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 904:	62 e4       	ldi	r22, 0x42	; 66
+ 906:	ce 01       	movw	r24, r28
+ 908:	01 96       	adiw	r24, 0x01	; 1
+ 90a:	1f de       	rcall	.-962    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x49);
+ 90c:	69 e4       	ldi	r22, 0x49	; 73
+ 90e:	ce 01       	movw	r24, r28
+ 910:	01 96       	adiw	r24, 0x01	; 1
+ 912:	1b de       	rcall	.-970    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x45);
+ 914:	65 e4       	ldi	r22, 0x45	; 69
+ 916:	ce 01       	movw	r24, r28
+ 918:	01 96       	adiw	r24, 0x01	; 1
+ 91a:	17 de       	rcall	.-978    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x53);
+ 91c:	63 e5       	ldi	r22, 0x53	; 83
+ 91e:	ce 01       	movw	r24, r28
+ 920:	01 96       	adiw	r24, 0x01	; 1
+ 922:	13 de       	rcall	.-986    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 924:	62 e4       	ldi	r22, 0x42	; 66
+ 926:	ce 01       	movw	r24, r28
+ 928:	01 96       	adiw	r24, 0x01	; 1
+ 92a:	0f de       	rcall	.-994    	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 92c:	6f e4       	ldi	r22, 0x4F	; 79
+ 92e:	ce 01       	movw	r24, r28
+ 930:	01 96       	adiw	r24, 0x01	; 1
+ 932:	0b de       	rcall	.-1002   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 934:	6f e4       	ldi	r22, 0x4F	; 79
+ 936:	ce 01       	movw	r24, r28
+ 938:	01 96       	adiw	r24, 0x01	; 1
+ 93a:	07 de       	rcall	.-1010   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 93c:	62 e4       	ldi	r22, 0x42	; 66
+ 93e:	ce 01       	movw	r24, r28
+ 940:	01 96       	adiw	r24, 0x01	; 1
+ 942:	03 de       	rcall	.-1018   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x49);
+ 944:	69 e4       	ldi	r22, 0x49	; 73
+ 946:	ce 01       	movw	r24, r28
+ 948:	01 96       	adiw	r24, 0x01	; 1
+ 94a:	ff dd       	rcall	.-1026   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x45);
+ 94c:	65 e4       	ldi	r22, 0x45	; 69
+ 94e:	ce 01       	movw	r24, r28
+ 950:	01 96       	adiw	r24, 0x01	; 1
+ 952:	fb dd       	rcall	.-1034   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x53);
+ 954:	63 e5       	ldi	r22, 0x53	; 83
+ 956:	ce 01       	movw	r24, r28
+ 958:	01 96       	adiw	r24, 0x01	; 1
+ 95a:	f7 dd       	rcall	.-1042   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 95c:	62 e4       	ldi	r22, 0x42	; 66
+ 95e:	ce 01       	movw	r24, r28
+ 960:	01 96       	adiw	r24, 0x01	; 1
+ 962:	f3 dd       	rcall	.-1050   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 964:	6f e4       	ldi	r22, 0x4F	; 79
+ 966:	ce 01       	movw	r24, r28
+ 968:	01 96       	adiw	r24, 0x01	; 1
+ 96a:	ef dd       	rcall	.-1058   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 96c:	6f e4       	ldi	r22, 0x4F	; 79
+ 96e:	ce 01       	movw	r24, r28
+ 970:	01 96       	adiw	r24, 0x01	; 1
+ 972:	eb dd       	rcall	.-1066   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 974:	62 e4       	ldi	r22, 0x42	; 66
+ 976:	ce 01       	movw	r24, r28
+ 978:	01 96       	adiw	r24, 0x01	; 1
+ 97a:	e7 dd       	rcall	.-1074   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x49);
+ 97c:	69 e4       	ldi	r22, 0x49	; 73
+ 97e:	ce 01       	movw	r24, r28
+ 980:	01 96       	adiw	r24, 0x01	; 1
+ 982:	e3 dd       	rcall	.-1082   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x45);
+ 984:	65 e4       	ldi	r22, 0x45	; 69
+ 986:	ce 01       	movw	r24, r28
+ 988:	01 96       	adiw	r24, 0x01	; 1
+ 98a:	df dd       	rcall	.-1090   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x53);
+ 98c:	63 e5       	ldi	r22, 0x53	; 83
+ 98e:	ce 01       	movw	r24, r28
+ 990:	01 96       	adiw	r24, 0x01	; 1
+ 992:	db dd       	rcall	.-1098   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 994:	62 e4       	ldi	r22, 0x42	; 66
+ 996:	ce 01       	movw	r24, r28
+ 998:	01 96       	adiw	r24, 0x01	; 1
+ 99a:	d7 dd       	rcall	.-1106   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 99c:	6f e4       	ldi	r22, 0x4F	; 79
+ 99e:	ce 01       	movw	r24, r28
+ 9a0:	01 96       	adiw	r24, 0x01	; 1
+ 9a2:	d3 dd       	rcall	.-1114   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x4f);
+ 9a4:	6f e4       	ldi	r22, 0x4F	; 79
+ 9a6:	ce 01       	movw	r24, r28
+ 9a8:	01 96       	adiw	r24, 0x01	; 1
+ 9aa:	cf dd       	rcall	.-1122   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x42);
+ 9ac:	62 e4       	ldi	r22, 0x42	; 66
+ 9ae:	ce 01       	movw	r24, r28
+ 9b0:	01 96       	adiw	r24, 0x01	; 1
+ 9b2:	cb dd       	rcall	.-1130   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x49);
+ 9b4:	69 e4       	ldi	r22, 0x49	; 73
+ 9b6:	ce 01       	movw	r24, r28
+ 9b8:	01 96       	adiw	r24, 0x01	; 1
+ 9ba:	c7 dd       	rcall	.-1138   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x45);
+ 9bc:	65 e4       	ldi	r22, 0x45	; 69
+ 9be:	ce 01       	movw	r24, r28
+ 9c0:	01 96       	adiw	r24, 0x01	; 1
+ 9c2:	c3 dd       	rcall	.-1146   	; 0x54a <hd44780_l_write>
+	 hd44780_l_write(&low_conf, 0x53);
+ 9c4:	63 e5       	ldi	r22, 0x53	; 83
+ 9c6:	ce 01       	movw	r24, r28
+ 9c8:	01 96       	adiw	r24, 0x01	; 1
+ 9ca:	bf dd       	rcall	.-1154   	; 0x54a <hd44780_l_write>
+ 9cc:	ff cf       	rjmp	.-2      	; 0x9cc <main+0x1ac>
 
-000008be <_exit>:
- 8be:	f8 94       	cli
+000009ce <_exit>:
+ 9ce:	f8 94       	cli
 
-000008c0 <__stop_program>:
- 8c0:	ff cf       	rjmp	.-2      	; 0x8c0 <__stop_program>
+000009d0 <__stop_program>:
+ 9d0:	ff cf       	rjmp	.-2      	; 0x9d0 <__stop_program>
