@@ -1,0 +1,252 @@
+
+ADconvertion_line_sensors.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00000140  000001d4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000140  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  00800100  00800100  000001d4  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  000001d4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000097  00000000  00000000  000008a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      0000002f  00000000  00000000  00000937  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 00000030  00000000  00000000  00000966  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   000000c9  00000000  00000000  00000996  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 00000081  00000000  00000000  00000a5f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   00000164  00000000  00000000  00000ae0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  00000070  00000000  00000000  00000c44  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    000000e4  00000000  00000000  00000cb4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    00000092  00000000  00000000  00000d98  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000020  00000000  00000000  00000e2a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	68 c0       	rjmp	.+208    	; 0xd6 <__vector_1>
+   6:	00 00       	nop
+   8:	51 c0       	rjmp	.+162    	; 0xac <__bad_interrupt>
+   a:	00 00       	nop
+   c:	4f c0       	rjmp	.+158    	; 0xac <__bad_interrupt>
+   e:	00 00       	nop
+  10:	4d c0       	rjmp	.+154    	; 0xac <__bad_interrupt>
+  12:	00 00       	nop
+  14:	4b c0       	rjmp	.+150    	; 0xac <__bad_interrupt>
+  16:	00 00       	nop
+  18:	49 c0       	rjmp	.+146    	; 0xac <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	47 c0       	rjmp	.+142    	; 0xac <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	45 c0       	rjmp	.+138    	; 0xac <__bad_interrupt>
+  22:	00 00       	nop
+  24:	43 c0       	rjmp	.+134    	; 0xac <__bad_interrupt>
+  26:	00 00       	nop
+  28:	41 c0       	rjmp	.+130    	; 0xac <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	3f c0       	rjmp	.+126    	; 0xac <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	3d c0       	rjmp	.+122    	; 0xac <__bad_interrupt>
+  32:	00 00       	nop
+  34:	3b c0       	rjmp	.+118    	; 0xac <__bad_interrupt>
+  36:	00 00       	nop
+  38:	39 c0       	rjmp	.+114    	; 0xac <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	37 c0       	rjmp	.+110    	; 0xac <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	35 c0       	rjmp	.+106    	; 0xac <__bad_interrupt>
+  42:	00 00       	nop
+  44:	33 c0       	rjmp	.+102    	; 0xac <__bad_interrupt>
+  46:	00 00       	nop
+  48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	2f c0       	rjmp	.+94     	; 0xac <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
+  52:	00 00       	nop
+  54:	2b c0       	rjmp	.+86     	; 0xac <__bad_interrupt>
+  56:	00 00       	nop
+  58:	29 c0       	rjmp	.+82     	; 0xac <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	27 c0       	rjmp	.+78     	; 0xac <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	26 c0       	rjmp	.+76     	; 0xae <__vector_24>
+  62:	00 00       	nop
+  64:	23 c0       	rjmp	.+70     	; 0xac <__bad_interrupt>
+  66:	00 00       	nop
+  68:	21 c0       	rjmp	.+66     	; 0xac <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	1f c0       	rjmp	.+62     	; 0xac <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	1d c0       	rjmp	.+58     	; 0xac <__bad_interrupt>
+  72:	00 00       	nop
+  74:	1b c0       	rjmp	.+54     	; 0xac <__bad_interrupt>
+  76:	00 00       	nop
+  78:	19 c0       	rjmp	.+50     	; 0xac <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	17 c0       	rjmp	.+46     	; 0xac <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	15 c0       	rjmp	.+42     	; 0xac <__bad_interrupt>
+  82:	00 00       	nop
+  84:	13 c0       	rjmp	.+38     	; 0xac <__bad_interrupt>
+  86:	00 00       	nop
+  88:	11 c0       	rjmp	.+34     	; 0xac <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_clear_bss>:
+  98:	21 e0       	ldi	r18, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	01 c0       	rjmp	.+2      	; 0xa2 <.do_clear_bss_start>
+
+000000a0 <.do_clear_bss_loop>:
+  a0:	1d 92       	st	X+, r1
+
+000000a2 <.do_clear_bss_start>:
+  a2:	a1 30       	cpi	r26, 0x01	; 1
+  a4:	b2 07       	cpc	r27, r18
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
+  a8:	32 d0       	rcall	.+100    	; 0x10e <main>
+  aa:	48 c0       	rjmp	.+144    	; 0x13c <_exit>
+
+000000ac <__bad_interrupt>:
+  ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
+
+000000ae <__vector_24>:
+		//int Res5[8] = NULL;
+		//int Res6[8] = NULL;
+		//int Res7[8] = NULL;
+
+					ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
+					{
+  ae:	1f 92       	push	r1
+  b0:	0f 92       	push	r0
+  b2:	0f b6       	in	r0, 0x3f	; 63
+  b4:	0f 92       	push	r0
+  b6:	11 24       	eor	r1, r1
+  b8:	8f 93       	push	r24
+						adc_res = ADCL;			// OBS! Must read ADCL before ADCH
+  ba:	80 91 78 00 	lds	r24, 0x0078
+  be:	80 93 00 01 	sts	0x0100, r24
+						adc_res = ADCH;			// Output ADCH to internal version 
+  c2:	80 91 79 00 	lds	r24, 0x0079
+  c6:	80 93 00 01 	sts	0x0100, r24
+						//tillkalla funktion som tar hand om adc_res. 
+				
+					}
+  ca:	8f 91       	pop	r24
+  cc:	0f 90       	pop	r0
+  ce:	0f be       	out	0x3f, r0	; 63
+  d0:	0f 90       	pop	r0
+  d2:	1f 90       	pop	r1
+  d4:	18 95       	reti
+
+000000d6 <__vector_1>:
+
+					ISR(INT0_vect) //vid kalibrering via knapp
+					{
+  d6:	1f 92       	push	r1
+  d8:	0f 92       	push	r0
+  da:	0f b6       	in	r0, 0x3f	; 63
+  dc:	0f 92       	push	r0
+  de:	11 24       	eor	r1, r1
+  e0:	0b b6       	in	r0, 0x3b	; 59
+  e2:	0f 92       	push	r0
+  e4:	8f 93       	push	r24
+  e6:	ef 93       	push	r30
+  e8:	ff 93       	push	r31
+						
+						ADCSRA |=(1<<ADSC);
+  ea:	ea e7       	ldi	r30, 0x7A	; 122
+  ec:	f0 e0       	ldi	r31, 0x00	; 0
+  ee:	80 81       	ld	r24, Z
+  f0:	80 64       	ori	r24, 0x40	; 64
+  f2:	80 83       	st	Z, r24
+						while(!(ADCSRA & (1<<ADIF)));
+  f4:	80 81       	ld	r24, Z
+  f6:	84 ff       	sbrs	r24, 4
+  f8:	fd cf       	rjmp	.-6      	; 0xf4 <__vector_1+0x1e>
+						//for(i=0; i<7; i++)
+						//{
+						//	ADMUX = ADMUX + i; //Select pin ADC0..ADC6 using MUX.
+							
+						//}
+					}
+  fa:	ff 91       	pop	r31
+  fc:	ef 91       	pop	r30
+  fe:	8f 91       	pop	r24
+ 100:	0f 90       	pop	r0
+ 102:	0b be       	out	0x3b, r0	; 59
+ 104:	0f 90       	pop	r0
+ 106:	0f be       	out	0x3f, r0	; 63
+ 108:	0f 90       	pop	r0
+ 10a:	1f 90       	pop	r1
+ 10c:	18 95       	reti
+
+0000010e <main>:
+							
+
+		int main(void) // borde heta initADC() sen kanske? 
+		{
+	
+						DDRA = 0x00;				// Configure PortA as input, all pins
+ 10e:	11 b8       	out	0x01, r1	; 1
+						DDRB = 0xFF;				// Configure PortB as output, all pins
+ 110:	8f ef       	ldi	r24, 0xFF	; 255
+ 112:	84 b9       	out	0x04, r24	; 4
+						PORTB = 0x04; // demux: enable A in CBA => led nr 2 active. 
+ 114:	84 e0       	ldi	r24, 0x04	; 4
+ 116:	85 b9       	out	0x05, r24	; 5
+						ADMUX = 0x21;			// first byte: left justify, 2nd byte: admux select channel
+ 118:	81 e2       	ldi	r24, 0x21	; 33
+ 11a:	80 93 7c 00 	sts	0x007C, r24
+						// data registers and select ADC0 as input channel. skapa loop som växlar mellan ADC0 och ADC6.
+						ADCSRA = 0x8E;			// Enable the ADC and its interrupt feature
+ 11e:	8e e8       	ldi	r24, 0x8E	; 142
+ 120:	80 93 7a 00 	sts	0x007A, r24
+							// and set the ACD clock pre-scalar to clk/8
+		        
+						EICRA |=(1<<ISC00);   //Sets the ISC00 to 1 rising edge triggering
+ 124:	e9 e6       	ldi	r30, 0x69	; 105
+ 126:	f0 e0       	ldi	r31, 0x00	; 0
+ 128:	80 81       	ld	r24, Z
+ 12a:	81 60       	ori	r24, 0x01	; 1
+ 12c:	80 83       	st	Z, r24
+						EICRA |=(1<<ISC01);	  //Sets ISC01 to 1
+ 12e:	80 81       	ld	r24, Z
+ 130:	82 60       	ori	r24, 0x02	; 2
+ 132:	80 83       	st	Z, r24
+						EIMSK =0x01; 
+ 134:	81 e0       	ldi	r24, 0x01	; 1
+ 136:	8d bb       	out	0x1d, r24	; 29
+		        
+						sei(); 				// Enable Global Interrupts
+ 138:	78 94       	sei
+ 13a:	ff cf       	rjmp	.-2      	; 0x13a <main+0x2c>
+
+0000013c <_exit>:
+ 13c:	f8 94       	cli
+
+0000013e <__stop_program>:
+ 13e:	ff cf       	rjmp	.-2      	; 0x13e <__stop_program>
