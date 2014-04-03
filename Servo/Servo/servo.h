@@ -1,14 +1,7 @@
 
-/*included files
-	*
-*/
+
 
 #define ENABLE_BIT_DEFINITIONS
-//include <io.h>
-#include <inttypes.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <avr/signal.h>
 
 typedef unsigned char byte; 
 typedef unsigned int word; 

@@ -3,29 +3,31 @@ Servo.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  0000013c  000001b0  2**0
+  0 .data         00000000  00800100  00000150  000001c4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000013c  00000000  00000000  00000074  2**1
+  1 .text         00000150  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .stab         000006cc  00000000  00000000  000001b0  2**2
+  2 .stab         000006cc  00000000  00000000  000001c4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      00000097  00000000  00000000  0000087c  2**0
+  3 .stabstr      00000097  00000000  00000000  00000890  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .comment      0000002f  00000000  00000000  00000913  2**0
+  4 .comment      0000002f  00000000  00000000  00000927  2**0
                   CONTENTS, READONLY
-  5 .debug_aranges 00000030  00000000  00000000  00000942  2**0
+  5 .debug_aranges 00000048  00000000  00000000  00000956  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000002ea  00000000  00000000  00000972  2**0
+  6 .debug_info   00000434  00000000  00000000  0000099e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000000c3  00000000  00000000  00000c5c  2**0
+  7 .debug_abbrev 00000126  00000000  00000000  00000dd2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000240  00000000  00000000  00000d1f  2**0
+  8 .debug_line   0000024f  00000000  00000000  00000ef8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000044  00000000  00000000  00000f60  2**2
+  9 .debug_frame  0000009c  00000000  00000000  00001148  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000000a8  00000000  00000000  00000fa4  2**0
+ 10 .debug_str    000000f9  00000000  00000000  000011e4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000020  00000000  00000000  0000104c  2**0
+ 11 .debug_loc    00000338  00000000  00000000  000012dd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000038  00000000  00000000  00001615  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -109,150 +111,147 @@ Disassembly of section .text:
   92:	d0 e4       	ldi	r29, 0x40	; 64
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
-  98:	15 d0       	rcall	.+42     	; 0xc4 <main>
-  9a:	4e c0       	rjmp	.+156    	; 0x138 <_exit>
+  98:	52 d0       	rcall	.+164    	; 0x13e <main>
+  9a:	58 c0       	rjmp	.+176    	; 0x14c <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
 
 0000009e <USART_Init>:
-//baud_rate = 1000000
-
-
-void USART_Init(void) {
-	/*Set baud rate.*/
-	UBRR0H = (unsigned char)(0);
-  9e:	10 92 c5 00 	sts	0x00C5, r1
-	UBRR0L = (unsigned char)(0); 
-  a2:	10 92 c4 00 	sts	0x00C4, r1
-	/* Enable reciever and transmitter.*/
-	UCSR0B = (1<<RXEN0)|(1<<TXEN0); 
-  a6:	88 e1       	ldi	r24, 0x18	; 24
-  a8:	80 93 c1 00 	sts	0x00C1, r24
-	/*Set frame format. Asynchronous mode, no parity, 1 stopbit, char size 8.  */
-	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00); 
-  ac:	86 e0       	ldi	r24, 0x06	; 6
-  ae:	80 93 c2 00 	sts	0x00C2, r24
-  b2:	08 95       	ret
-
-000000b4 <USART_Transmit>:
+	
+	checksum = ~checksum;
+	
+	USART_Transmit(checksum);
 	
 }
+  9e:	84 e0       	ldi	r24, 0x04	; 4
+  a0:	8a b9       	out	0x0a, r24	; 10
+  a2:	10 92 c5 00 	sts	0x00C5, r1
+  a6:	10 92 c4 00 	sts	0x00C4, r1
+  aa:	88 e1       	ldi	r24, 0x18	; 24
+  ac:	80 93 c1 00 	sts	0x00C1, r24
+  b0:	86 e0       	ldi	r24, 0x06	; 6
+  b2:	80 93 c2 00 	sts	0x00C2, r24
+  b6:	08 95       	ret
 
-void USART_Transmit( unsigned char data) {
-	/*Wait for empty transmit buffer*/
-	while( !(UCSR0A & (1<<UDRE0)) ) // UDREn == Data Register Empty (indicates whether the transmit buffer is ready to recieve new data. 
-  b4:	e0 ec       	ldi	r30, 0xC0	; 192
-  b6:	f0 e0       	ldi	r31, 0x00	; 0
-  b8:	90 81       	ld	r25, Z
-  ba:	95 ff       	sbrs	r25, 5
-  bc:	fd cf       	rjmp	.-6      	; 0xb8 <USART_Transmit+0x4>
-	; 
-	/*Put data into buffer, sends the data*/
-	UDR0 = data; //UDREn cleared. 
-  be:	80 93 c6 00 	sts	0x00C6, r24
-  c2:	08 95       	ret
+000000b8 <USART_Transmit>:
+  b8:	5a 9a       	sbi	0x0b, 2	; 11
+  ba:	e0 ec       	ldi	r30, 0xC0	; 192
+  bc:	f0 e0       	ldi	r31, 0x00	; 0
+  be:	90 81       	ld	r25, Z
+  c0:	95 ff       	sbrs	r25, 5
+  c2:	fd cf       	rjmp	.-6      	; 0xbe <USART_Transmit+0x6>
+  c4:	80 93 c6 00 	sts	0x00C6, r24
+  c8:	08 95       	ret
 
-000000c4 <main>:
+000000ca <move_Servo2_3>:
+
+void move_Servo2_3(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h){
+  ca:	0f 93       	push	r16
+  cc:	1f 93       	push	r17
+  ce:	cf 93       	push	r28
+  d0:	df 93       	push	r29
+  d2:	08 2f       	mov	r16, r24
+  d4:	16 2f       	mov	r17, r22
+  d6:	d4 2f       	mov	r29, r20
+  d8:	c2 2f       	mov	r28, r18
+	
+	byte checksum;
+	
+	USART_Transmit(0xFF); //start byte
+  da:	8f ef       	ldi	r24, 0xFF	; 255
+  dc:	ed df       	rcall	.-38     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0xFF);	//start byte
+  de:	8f ef       	ldi	r24, 0xFF	; 255
+  e0:	eb df       	rcall	.-42     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0xFE); //broadcast ID
+  e2:	8e ef       	ldi	r24, 0xFE	; 254
+  e4:	e9 df       	rcall	.-46     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0x0E); //length is 14
+  e6:	8e e0       	ldi	r24, 0x0E	; 14
+  e8:	e7 df       	rcall	.-50     	; 0xb8 <USART_Transmit>
+	USART_Transmit(SYNC_WRITE); // //instruction = sync_data (2 servo)
+  ea:	83 e8       	ldi	r24, 0x83	; 131
+  ec:	e5 df       	rcall	.-54     	; 0xb8 <USART_Transmit>
+	USART_Transmit(GOAL_POSITION_L); //
+  ee:	8e e1       	ldi	r24, 0x1E	; 30
+  f0:	e3 df       	rcall	.-58     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0x04); //data length is 4
+  f2:	84 e0       	ldi	r24, 0x04	; 4
+  f4:	e1 df       	rcall	.-62     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0x02); //  servo 2
+  f6:	82 e0       	ldi	r24, 0x02	; 2
+  f8:	df df       	rcall	.-66     	; 0xb8 <USART_Transmit>
+	USART_Transmit(pos_l);	//send low byte of position
+  fa:	80 2f       	mov	r24, r16
+  fc:	dd df       	rcall	.-70     	; 0xb8 <USART_Transmit>
+	USART_Transmit(pos_h);	//send high byte of position
+  fe:	81 2f       	mov	r24, r17
+ 100:	db df       	rcall	.-74     	; 0xb8 <USART_Transmit>
+	USART_Transmit(speed_l); //send low byte of speed
+ 102:	8d 2f       	mov	r24, r29
+ 104:	d9 df       	rcall	.-78     	; 0xb8 <USART_Transmit>
+	USART_Transmit(speed_h); //send high byte of speed
+ 106:	8c 2f       	mov	r24, r28
+ 108:	d7 df       	rcall	.-82     	; 0xb8 <USART_Transmit>
+	USART_Transmit(0x03); //servo 3
+ 10a:	83 e0       	ldi	r24, 0x03	; 3
+ 10c:	d5 df       	rcall	.-86     	; 0xb8 <USART_Transmit>
+	USART_Transmit(pos_l);	//send low byte of position
+ 10e:	80 2f       	mov	r24, r16
+ 110:	d3 df       	rcall	.-90     	; 0xb8 <USART_Transmit>
+	USART_Transmit(pos_h);	//send high byte of position
+ 112:	81 2f       	mov	r24, r17
+ 114:	d1 df       	rcall	.-94     	; 0xb8 <USART_Transmit>
+	USART_Transmit(speed_l); //send low byte of speed
+ 116:	8d 2f       	mov	r24, r29
+ 118:	cf df       	rcall	.-98     	; 0xb8 <USART_Transmit>
+	USART_Transmit(speed_h); //send high byte of speed
+ 11a:	8c 2f       	mov	r24, r28
+ 11c:	cd df       	rcall	.-102    	; 0xb8 <USART_Transmit>
+	
+	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + 0x02 + pos_l + pos_h + speed_l + speed_h + 0x03 + pos_l + pos_h + speed_l + speed_h;
+ 11e:	00 0f       	add	r16, r16
+ 120:	0a 54       	subi	r16, 0x4A	; 74
+ 122:	01 0f       	add	r16, r17
+ 124:	10 0f       	add	r17, r16
+ 126:	1d 0f       	add	r17, r29
+ 128:	d1 0f       	add	r29, r17
+ 12a:	dc 0f       	add	r29, r28
+ 12c:	8d 2f       	mov	r24, r29
+ 12e:	8c 0f       	add	r24, r28
+	
+	checksum = ~checksum;
+	
+	USART_Transmit(checksum);
+ 130:	80 95       	com	r24
+ 132:	c2 df       	rcall	.-124    	; 0xb8 <USART_Transmit>
+	
 }
+ 134:	df 91       	pop	r29
+ 136:	cf 91       	pop	r28
+ 138:	1f 91       	pop	r17
+ 13a:	0f 91       	pop	r16
+ 13c:	08 95       	ret
 
+0000013e <main>:
 
 int main(void)
 {
-			USART_Init(); 
-  c4:	ec df       	rcall	.-40     	; 0x9e <USART_Init>
-    while(1)
-    {
+	 		
+	USART_Init();
+ 13e:	af df       	rcall	.-162    	; 0x9e <USART_Init>
+	
+	move_Servo2_3(0xAA, 0x03, 0x40, 0x00);
+ 140:	20 e0       	ldi	r18, 0x00	; 0
+ 142:	40 e4       	ldi	r20, 0x40	; 64
+ 144:	63 e0       	ldi	r22, 0x03	; 3
+ 146:	8a ea       	ldi	r24, 0xAA	; 170
+ 148:	c0 df       	rcall	.-128    	; 0xca <move_Servo2_3>
+ 14a:	ff cf       	rjmp	.-2      	; 0x14a <main+0xc>
 
-		//USCR = 0x
-		USART_Transmit(0xFF);
-  c6:	8f ef       	ldi	r24, 0xFF	; 255
-  c8:	f5 df       	rcall	.-22     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0xFF);
-  ca:	8f ef       	ldi	r24, 0xFF	; 255
-  cc:	f3 df       	rcall	.-26     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0xFE);
-  ce:	8e ef       	ldi	r24, 0xFE	; 254
-  d0:	f1 df       	rcall	.-30     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x18);
-  d2:	88 e1       	ldi	r24, 0x18	; 24
-  d4:	ef df       	rcall	.-34     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x83);
-  d6:	83 e8       	ldi	r24, 0x83	; 131
-  d8:	ed df       	rcall	.-38     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x1E);
-  da:	8e e1       	ldi	r24, 0x1E	; 30
-  dc:	eb df       	rcall	.-42     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x04);
-  de:	84 e0       	ldi	r24, 0x04	; 4
-  e0:	e9 df       	rcall	.-46     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x00);
-  e2:	80 e0       	ldi	r24, 0x00	; 0
-  e4:	e7 df       	rcall	.-50     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x10);
-  e6:	80 e1       	ldi	r24, 0x10	; 16
-  e8:	e5 df       	rcall	.-54     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x00);
-  ea:	80 e0       	ldi	r24, 0x00	; 0
-  ec:	e3 df       	rcall	.-58     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x50);
-  ee:	80 e5       	ldi	r24, 0x50	; 80
-  f0:	e1 df       	rcall	.-62     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x01);
-  f2:	81 e0       	ldi	r24, 0x01	; 1
-  f4:	df df       	rcall	.-66     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x01);
-  f6:	81 e0       	ldi	r24, 0x01	; 1
-  f8:	dd df       	rcall	.-70     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x20);
-  fa:	80 e2       	ldi	r24, 0x20	; 32
-  fc:	db df       	rcall	.-74     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x02);
-  fe:	82 e0       	ldi	r24, 0x02	; 2
- 100:	d9 df       	rcall	.-78     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x60);
- 102:	80 e6       	ldi	r24, 0x60	; 96
- 104:	d7 df       	rcall	.-82     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x03);
- 106:	83 e0       	ldi	r24, 0x03	; 3
- 108:	d5 df       	rcall	.-86     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x02);
- 10a:	82 e0       	ldi	r24, 0x02	; 2
- 10c:	d3 df       	rcall	.-90     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x30);
- 10e:	80 e3       	ldi	r24, 0x30	; 48
- 110:	d1 df       	rcall	.-94     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x00);
- 112:	80 e0       	ldi	r24, 0x00	; 0
- 114:	cf df       	rcall	.-98     	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x70);
- 116:	80 e7       	ldi	r24, 0x70	; 112
- 118:	cd df       	rcall	.-102    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x01);
- 11a:	81 e0       	ldi	r24, 0x01	; 1
- 11c:	cb df       	rcall	.-106    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x03);
- 11e:	83 e0       	ldi	r24, 0x03	; 3
- 120:	c9 df       	rcall	.-110    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x20);
- 122:	80 e2       	ldi	r24, 0x20	; 32
- 124:	c7 df       	rcall	.-114    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x02);
- 126:	82 e0       	ldi	r24, 0x02	; 2
- 128:	c5 df       	rcall	.-118    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x80);
- 12a:	80 e8       	ldi	r24, 0x80	; 128
- 12c:	c3 df       	rcall	.-122    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x03);
- 12e:	83 e0       	ldi	r24, 0x03	; 3
- 130:	c1 df       	rcall	.-126    	; 0xb4 <USART_Transmit>
-		USART_Transmit(0x12);
- 132:	82 e1       	ldi	r24, 0x12	; 18
- 134:	bf df       	rcall	.-130    	; 0xb4 <USART_Transmit>
- 136:	c7 cf       	rjmp	.-114    	; 0xc6 <main+0x2>
+0000014c <_exit>:
+ 14c:	f8 94       	cli
 
-00000138 <_exit>:
- 138:	f8 94       	cli
-
-0000013a <__stop_program>:
- 13a:	ff cf       	rjmp	.-2      	; 0x13a <__stop_program>
+0000014e <__stop_program>:
+ 14e:	ff cf       	rjmp	.-2      	; 0x14e <__stop_program>
