@@ -3,31 +3,31 @@ Servo.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00000150  000001c4  2**0
+  0 .data         00000000  00800100  00000154  000001c8  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000150  00000000  00000000  00000074  2**1
+  1 .text         00000154  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .stab         000006cc  00000000  00000000  000001c4  2**2
+  2 .stab         000006cc  00000000  00000000  000001c8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      00000097  00000000  00000000  00000890  2**0
+  3 .stabstr      00000097  00000000  00000000  00000894  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .comment      0000002f  00000000  00000000  00000927  2**0
+  4 .comment      0000002f  00000000  00000000  0000092b  2**0
                   CONTENTS, READONLY
-  5 .debug_aranges 00000048  00000000  00000000  00000956  2**0
+  5 .debug_aranges 00000050  00000000  00000000  0000095a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000434  00000000  00000000  0000099e  2**0
+  6 .debug_info   0000064d  00000000  00000000  000009aa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000126  00000000  00000000  00000dd2  2**0
+  7 .debug_abbrev 000001bd  00000000  00000000  00000ff7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000024f  00000000  00000000  00000ef8  2**0
+  8 .debug_line   00000330  00000000  00000000  000011b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000009c  00000000  00000000  00001148  2**2
+  9 .debug_frame  000000c4  00000000  00000000  000014e4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000000f9  00000000  00000000  000011e4  2**0
+ 10 .debug_str    0000018d  00000000  00000000  000015a8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000338  00000000  00000000  000012dd  2**0
+ 11 .debug_loc    0000038b  00000000  00000000  00001735  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000038  00000000  00000000  00001615  2**0
+ 12 .debug_ranges 00000040  00000000  00000000  00001ac0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -111,17 +111,17 @@ Disassembly of section .text:
   92:	d0 e4       	ldi	r29, 0x40	; 64
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
-  98:	52 d0       	rcall	.+164    	; 0x13e <main>
-  9a:	58 c0       	rjmp	.+176    	; 0x14c <_exit>
+  98:	4e d0       	rcall	.+156    	; 0x136 <main>
+  9a:	5a c0       	rjmp	.+180    	; 0x150 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
 
 0000009e <USART_Init>:
+	move_Double_Servo(0x00, 0x00, 0x50, 0x00, 0x04, 0x05);
+	move_Double_Servo(0xAA, 0x03, 0x50, 0x00, 0x02, 0x03);
+	move_Single_Servo(0xFF, 0x01, 0x20, 0x00, 0x01);
 	
-	checksum = ~checksum;
-	
-	USART_Transmit(checksum);
 	
 }
   9e:	84 e0       	ldi	r24, 0x04	; 4
@@ -144,114 +144,88 @@ Disassembly of section .text:
   c4:	80 93 c6 00 	sts	0x00C6, r24
   c8:	08 95       	ret
 
-000000ca <move_Servo2_3>:
-
-void move_Servo2_3(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h){
-  ca:	0f 93       	push	r16
-  cc:	1f 93       	push	r17
+000000ca <move_Double_Servo>:
+  ca:	ef 92       	push	r14
+  cc:	0f 93       	push	r16
   ce:	cf 93       	push	r28
   d0:	df 93       	push	r29
-  d2:	08 2f       	mov	r16, r24
-  d4:	16 2f       	mov	r17, r22
-  d6:	d4 2f       	mov	r29, r20
-  d8:	c2 2f       	mov	r28, r18
-	
-	byte checksum;
-	
-	USART_Transmit(0xFF); //start byte
+  d2:	d4 2f       	mov	r29, r20
+  d4:	c2 2f       	mov	r28, r18
+  d6:	8f ef       	ldi	r24, 0xFF	; 255
+  d8:	ef df       	rcall	.-34     	; 0xb8 <USART_Transmit>
   da:	8f ef       	ldi	r24, 0xFF	; 255
   dc:	ed df       	rcall	.-38     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0xFF);	//start byte
-  de:	8f ef       	ldi	r24, 0xFF	; 255
+  de:	8e ef       	ldi	r24, 0xFE	; 254
   e0:	eb df       	rcall	.-42     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0xFE); //broadcast ID
-  e2:	8e ef       	ldi	r24, 0xFE	; 254
+  e2:	8e e0       	ldi	r24, 0x0E	; 14
   e4:	e9 df       	rcall	.-46     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0x0E); //length is 14
-  e6:	8e e0       	ldi	r24, 0x0E	; 14
+  e6:	83 e8       	ldi	r24, 0x83	; 131
   e8:	e7 df       	rcall	.-50     	; 0xb8 <USART_Transmit>
-	USART_Transmit(SYNC_WRITE); // //instruction = sync_data (2 servo)
-  ea:	83 e8       	ldi	r24, 0x83	; 131
+  ea:	8e e1       	ldi	r24, 0x1E	; 30
   ec:	e5 df       	rcall	.-54     	; 0xb8 <USART_Transmit>
-	USART_Transmit(GOAL_POSITION_L); //
-  ee:	8e e1       	ldi	r24, 0x1E	; 30
+  ee:	84 e0       	ldi	r24, 0x04	; 4
   f0:	e3 df       	rcall	.-58     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0x04); //data length is 4
-  f2:	84 e0       	ldi	r24, 0x04	; 4
+  f2:	80 2f       	mov	r24, r16
   f4:	e1 df       	rcall	.-62     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0x02); //  servo 2
-  f6:	82 e0       	ldi	r24, 0x02	; 2
+  f6:	82 ed       	ldi	r24, 0xD2	; 210
   f8:	df df       	rcall	.-66     	; 0xb8 <USART_Transmit>
-	USART_Transmit(pos_l);	//send low byte of position
-  fa:	80 2f       	mov	r24, r16
+  fa:	80 e0       	ldi	r24, 0x00	; 0
   fc:	dd df       	rcall	.-70     	; 0xb8 <USART_Transmit>
-	USART_Transmit(pos_h);	//send high byte of position
-  fe:	81 2f       	mov	r24, r17
+  fe:	8d 2f       	mov	r24, r29
  100:	db df       	rcall	.-74     	; 0xb8 <USART_Transmit>
-	USART_Transmit(speed_l); //send low byte of speed
- 102:	8d 2f       	mov	r24, r29
+ 102:	8c 2f       	mov	r24, r28
  104:	d9 df       	rcall	.-78     	; 0xb8 <USART_Transmit>
-	USART_Transmit(speed_h); //send high byte of speed
- 106:	8c 2f       	mov	r24, r28
+ 106:	8e 2d       	mov	r24, r14
  108:	d7 df       	rcall	.-82     	; 0xb8 <USART_Transmit>
-	USART_Transmit(0x03); //servo 3
- 10a:	83 e0       	ldi	r24, 0x03	; 3
+ 10a:	8a e2       	ldi	r24, 0x2A	; 42
  10c:	d5 df       	rcall	.-86     	; 0xb8 <USART_Transmit>
-	USART_Transmit(pos_l);	//send low byte of position
- 10e:	80 2f       	mov	r24, r16
+ 10e:	83 e0       	ldi	r24, 0x03	; 3
  110:	d3 df       	rcall	.-90     	; 0xb8 <USART_Transmit>
-	USART_Transmit(pos_h);	//send high byte of position
- 112:	81 2f       	mov	r24, r17
+ 112:	8d 2f       	mov	r24, r29
  114:	d1 df       	rcall	.-94     	; 0xb8 <USART_Transmit>
-	USART_Transmit(speed_l); //send low byte of speed
- 116:	8d 2f       	mov	r24, r29
+ 116:	8c 2f       	mov	r24, r28
  118:	cf df       	rcall	.-98     	; 0xb8 <USART_Transmit>
-	USART_Transmit(speed_h); //send high byte of speed
- 11a:	8c 2f       	mov	r24, r28
- 11c:	cd df       	rcall	.-102    	; 0xb8 <USART_Transmit>
-	
-	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + 0x02 + pos_l + pos_h + speed_l + speed_h + 0x03 + pos_l + pos_h + speed_l + speed_h;
- 11e:	00 0f       	add	r16, r16
- 120:	0a 54       	subi	r16, 0x4A	; 74
- 122:	01 0f       	add	r16, r17
- 124:	10 0f       	add	r17, r16
- 126:	1d 0f       	add	r17, r29
- 128:	d1 0f       	add	r29, r17
- 12a:	dc 0f       	add	r29, r28
- 12c:	8d 2f       	mov	r24, r29
- 12e:	8c 0f       	add	r24, r28
-	
-	checksum = ~checksum;
-	
-	USART_Transmit(checksum);
- 130:	80 95       	com	r24
- 132:	c2 df       	rcall	.-124    	; 0xb8 <USART_Transmit>
-	
-}
- 134:	df 91       	pop	r29
- 136:	cf 91       	pop	r28
- 138:	1f 91       	pop	r17
- 13a:	0f 91       	pop	r16
- 13c:	08 95       	ret
+ 11a:	dd 0f       	add	r29, r29
+ 11c:	d0 55       	subi	r29, 0x50	; 80
+ 11e:	dc 0f       	add	r29, r28
+ 120:	cd 0f       	add	r28, r29
+ 122:	0c 0f       	add	r16, r28
+ 124:	80 2f       	mov	r24, r16
+ 126:	8e 0d       	add	r24, r14
+ 128:	80 95       	com	r24
+ 12a:	c6 df       	rcall	.-116    	; 0xb8 <USART_Transmit>
+ 12c:	df 91       	pop	r29
+ 12e:	cf 91       	pop	r28
+ 130:	0f 91       	pop	r16
+ 132:	ef 90       	pop	r14
+ 134:	08 95       	ret
 
-0000013e <main>:
+00000136 <main>:
 
 int main(void)
 {
 	 		
 	USART_Init();
- 13e:	af df       	rcall	.-162    	; 0x9e <USART_Init>
+ 136:	b3 df       	rcall	.-154    	; 0x9e <USART_Init>
 	
-	move_Servo2_3(0xAA, 0x03, 0x40, 0x00);
- 140:	20 e0       	ldi	r18, 0x00	; 0
- 142:	40 e4       	ldi	r20, 0x40	; 64
- 144:	63 e0       	ldi	r22, 0x03	; 3
- 146:	8a ea       	ldi	r24, 0xAA	; 170
- 148:	c0 df       	rcall	.-128    	; 0xca <move_Servo2_3>
- 14a:	ff cf       	rjmp	.-2      	; 0x14a <main+0xc>
+	//default_Position();
+	
+	move_Double_Servo(0xFF, 0x01, 0x40, 0x00, 0x02, 0x03);
+ 138:	0f 2e       	mov	r0, r31
+ 13a:	f3 e0       	ldi	r31, 0x03	; 3
+ 13c:	ef 2e       	mov	r14, r31
+ 13e:	f1 2c       	mov	r15, r1
+ 140:	f0 2d       	mov	r31, r0
+ 142:	02 e0       	ldi	r16, 0x02	; 2
+ 144:	20 e0       	ldi	r18, 0x00	; 0
+ 146:	40 e4       	ldi	r20, 0x40	; 64
+ 148:	61 e0       	ldi	r22, 0x01	; 1
+ 14a:	8f ef       	ldi	r24, 0xFF	; 255
+ 14c:	be df       	rcall	.-132    	; 0xca <move_Double_Servo>
+ 14e:	ff cf       	rjmp	.-2      	; 0x14e <main+0x18>
 
-0000014c <_exit>:
- 14c:	f8 94       	cli
+00000150 <_exit>:
+ 150:	f8 94       	cli
 
-0000014e <__stop_program>:
- 14e:	ff cf       	rjmp	.-2      	; 0x14e <__stop_program>
+00000152 <__stop_program>:
+ 152:	ff cf       	rjmp	.-2      	; 0x152 <__stop_program>

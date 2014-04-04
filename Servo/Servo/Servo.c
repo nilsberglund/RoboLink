@@ -17,7 +17,7 @@
 //baud_rate = 1000000 for the robot arm
 
 void USART_Init(void) {
-	DDRD = (1<<DDD2); //Setting D2 to output to controll the tri-state
+	DDRD = (1<<DDD2); //Setting D2 to output to control the tri-state
 	/*Set baud rate.*/
 	UBRR0H = (unsigned char)(0);  //baudvalue = (f_cpu/baudrate*16) -1
 	UBRR0L = (unsigned char)(0); 
@@ -45,13 +45,13 @@ unsigned char USART_Recieve(void){
 	return data; 
 }
 
-void move_Servo6(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h){
+void move_Single_Servo(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID){
 	
 	byte checksum;
 	
-	USART_Transmit(0xFF); //start byte
 	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(0x06);	//ID 6
+	USART_Transmit(0xFF);	//start byte
+	USART_Transmit(servo_ID);	//servo ID
 	USART_Transmit(0x07);	//length = 7
 	USART_Transmit(WRITE);	//instruction = write_data
 	USART_Transmit(GOAL_POSITION_L);	//address = goal position(L)
@@ -60,7 +60,7 @@ void move_Servo6(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h)
 	USART_Transmit(speed_l); //send low byte of speed
 	USART_Transmit(speed_h); //send high byte of speed
 	
-	checksum = 0x06 + 0x07 + WRITE + GOAL_POSITION_L + pos_l + pos_h + speed_l + speed_h;
+	checksum = servo_ID + 0x07 + WRITE + GOAL_POSITION_L + pos_l + pos_h + speed_l + speed_h;
 	
 	checksum = ~checksum;
 	
@@ -68,33 +68,66 @@ void move_Servo6(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h)
 	
 }
 
-void move_Servo2_3(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h){
+void move_Double_Servo(uint8_t pos_l, uint8_t pos_h, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2){
 	
 	byte checksum;
 	
-	USART_Transmit(0xFF); //start byte
+	//uint8_t s1_deg = ...
+	
+	//uint8_t s2_deg = 300 - ...
+	
+	//s1_low_byte = ...
+	//s1_high_byte = ...
+	
+	//s2_low_byte = ...
+	//s2_high_byte = ...
+	
 	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(0xFE); //broadcast ID
-	USART_Transmit(0x0E); //length is 14
-	USART_Transmit(SYNC_WRITE); // //instruction = sync_data (2 servo)
-	USART_Transmit(GOAL_POSITION_L); //
-	USART_Transmit(0x04); //data length is 4
-	USART_Transmit(0x02); //  servo 2
-	USART_Transmit(pos_l);	//send low byte of position
-	USART_Transmit(pos_h);	//send high byte of position
+	USART_Transmit(0xFF);	//start byte
+	USART_Transmit(0xFE);	//broadcast ID
+	USART_Transmit(0x0E);	//length is 14
+	USART_Transmit(SYNC_WRITE);			//instruction = sync_data (2 servo)
+	USART_Transmit(GOAL_POSITION_L);	//
+	USART_Transmit(0x04);	//data length is 4
+	USART_Transmit(servo_ID1);	//servo id1
+	//USART_Transmit(pos_l);	//send low byte of position
+	//USART_Transmit(pos_h);	//send high byte of position
+	
+	USART_Transmit(0xD2);
+	USART_Transmit(0x00);
+	
 	USART_Transmit(speed_l); //send low byte of speed
 	USART_Transmit(speed_h); //send high byte of speed
-	USART_Transmit(0x03); //servo 3
-	USART_Transmit(pos_l);	//send low byte of position
-	USART_Transmit(pos_h);	//send high byte of position
+	USART_Transmit(servo_ID2); //servo id2
+	//USART_Transmit(pos_l);	//send low byte of position
+	//USART_Transmit(pos_h);	//send high byte of position
+	
+	USART_Transmit(0x2A);
+	USART_Transmit(0x03);
+	
+	
 	USART_Transmit(speed_l); //send low byte of speed
 	USART_Transmit(speed_h); //send high byte of speed
 	
-	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + 0x02 + pos_l + pos_h + speed_l + speed_h + 0x03 + pos_l + pos_h + speed_l + speed_h;
+	//checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + servo_ID1 + pos_l + pos_h + speed_l + speed_h + servo_ID2 + pos_l + pos_h + speed_l + speed_h;
+	
+	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + servo_ID1 + 0xD2 + 0x00 + speed_l + speed_h + servo_ID2 + 0x2A + 0x03 + speed_l + speed_h;
 	
 	checksum = ~checksum;
 	
 	USART_Transmit(checksum);
+}
+
+void default_Position(){
+	
+	move_Single_Servo(0xFF, 0x01, 0x50, 0x01, 0x07);
+	move_Single_Servo(0xAA, 0x03, 0x50, 0x01, 0x06);
+	move_Double_Servo(0xFF, 0x01, 0x50, 0x00, 0x02, 0x03);
+	_delay_ms(500);
+	move_Double_Servo(0x00, 0x00, 0x50, 0x00, 0x04, 0x05);
+	move_Double_Servo(0xAA, 0x03, 0x50, 0x00, 0x02, 0x03);
+	move_Single_Servo(0xFF, 0x01, 0x20, 0x00, 0x01);
+	
 	
 }
 
@@ -103,9 +136,9 @@ int main(void)
 	 		
 	USART_Init();
 	
-	move_Servo2_3(0xAA, 0x03, 0x40, 0x00);
+	//default_Position();
 	
-	//move_Servo6(0xFF, 0x03, 0x50, 0x00);
+	move_Double_Servo(0xFF, 0x01, 0x40, 0x00, 0x02, 0x03);
 	
     while(1)
     {
