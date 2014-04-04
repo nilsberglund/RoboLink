@@ -3,33 +3,33 @@ Slave_Communication.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000000e8  0000017c  2**0
+  0 .data         00000000  00800100  000000f2  00000186  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000e8  00000000  00000000  00000094  2**1
+  1 .text         000000f2  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000001  00800100  00800100  0000017c  2**0
+  2 .bss          00000001  00800100  00800100  00000186  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  0000017c  2**2
+  3 .stab         000006cc  00000000  00000000  00000188  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000848  2**0
+  4 .stabstr      00000097  00000000  00000000  00000854  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  000008df  2**0
+  5 .comment      0000002f  00000000  00000000  000008eb  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 00000038  00000000  00000000  0000090e  2**0
+  6 .debug_aranges 00000038  00000000  00000000  0000091a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000018f  00000000  00000000  00000946  2**0
+  7 .debug_info   0000010a  00000000  00000000  00000952  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000145  00000000  00000000  00000ad5  2**0
+  8 .debug_abbrev 000000df  00000000  00000000  00000a5c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000206  00000000  00000000  00000c1a  2**0
+  9 .debug_line   0000015c  00000000  00000000  00000b3b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000064  00000000  00000000  00000e20  2**2
+ 10 .debug_frame  00000064  00000000  00000000  00000c98  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000137  00000000  00000000  00000e84  2**0
+ 11 .debug_str    000000e4  00000000  00000000  00000cfc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000003c  00000000  00000000  00000fbb  2**0
+ 12 .debug_loc    0000003c  00000000  00000000  00000de0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000028  00000000  00000000  00000ff7  2**0
+ 13 .debug_ranges 00000028  00000000  00000000  00000e1c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,7 +73,7 @@ Disassembly of section .text:
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	39 c0       	rjmp	.+114    	; 0xc0 <__vector_19>
+  4c:	30 c0       	rjmp	.+96     	; 0xae <__vector_19>
   4e:	00 00       	nop
   50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
   52:	00 00       	nop
@@ -127,63 +127,90 @@ Disassembly of section .text:
   a2:	a1 30       	cpi	r26, 0x01	; 1
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
-  a8:	09 d0       	rcall	.+18     	; 0xbc <main>
-  aa:	1c c0       	rjmp	.+56     	; 0xe4 <_exit>
+  a8:	1e d0       	rcall	.+60     	; 0xe6 <main>
+  aa:	21 c0       	rjmp	.+66     	; 0xee <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
 
-000000ae <SPI_Init_Slave>:
-{
-	PORTB = (1 << INT_Req); // Sets INT_Req high. I.e throws interrupt.
-	_delay_us(2);
-	PORTB = (0 << INT_Req); // Sets INT_Req low. Interrupt finished.
-	
-	SPDR = data;
-  ae:	56 9a       	sbi	0x0a, 6	; 10
-  b0:	26 9a       	sbi	0x04, 6	; 4
-  b2:	23 9a       	sbi	0x04, 3	; 4
-  b4:	8b ec       	ldi	r24, 0xCB	; 203
-  b6:	8c bd       	out	0x2c, r24	; 44
-  b8:	78 94       	sei
-  ba:	08 95       	ret
-
-000000bc <main>:
-  bc:	f8 df       	rcall	.-16     	; 0xae <SPI_Init_Slave>
-  be:	ff cf       	rjmp	.-2      	; 0xbe <main+0x2>
-
-000000c0 <__vector_19>:
-	/*Wait for transmission complete*/
-}
+000000ae <__vector_19>:
+void SPI_Slave_Init();
+uint8_t received_data;
+void Slave_TX(uint8_t);
 
 ISR(SPI_STC_vect)
 {
-  c0:	1f 92       	push	r1
-  c2:	0f 92       	push	r0
-  c4:	0f b6       	in	r0, 0x3f	; 63
-  c6:	0f 92       	push	r0
-  c8:	11 24       	eor	r1, r1
-  ca:	8f 93       	push	r24
+  ae:	1f 92       	push	r1
+  b0:	0f 92       	push	r0
+  b2:	0f b6       	in	r0, 0x3f	; 63
+  b4:	0f 92       	push	r0
+  b6:	11 24       	eor	r1, r1
+  b8:	8f 93       	push	r24
 	received_data = SPDR;
-  cc:	8e b5       	in	r24, 0x2e	; 46
-  ce:	80 93 00 01 	sts	0x0100, r24
+  ba:	8e b5       	in	r24, 0x2e	; 46
+  bc:	80 93 00 01 	sts	0x0100, r24
+	PORTD = received_data;
+  c0:	8b b9       	out	0x0b, r24	; 11
+}
+  c2:	8f 91       	pop	r24
+  c4:	0f 90       	pop	r0
+  c6:	0f be       	out	0x3f, r0	; 63
+  c8:	0f 90       	pop	r0
+  ca:	1f 90       	pop	r1
+  cc:	18 95       	reti
+
+000000ce <SPI_Slave_Init>:
+}
+
+void SPI_Slave_Init()
+{
+	//Outputs: PORTB6 = MISO, PORTB3 = Int. 
+	DDRB = 0x48;
+  ce:	88 e4       	ldi	r24, 0x48	; 72
+  d0:	84 b9       	out	0x04, r24	; 4
 	
-	if(received_data == 0xAB)
-  d2:	8b 3a       	cpi	r24, 0xAB	; 171
-  d4:	09 f4       	brne	.+2      	; 0xd8 <__vector_19+0x18>
-	{
-		PORTD |= (1 << PORTD6);
-  d6:	5e 9a       	sbi	0x0b, 6	; 11
-	}
-  d8:	8f 91       	pop	r24
-  da:	0f 90       	pop	r0
-  dc:	0f be       	out	0x3f, r0	; 63
-  de:	0f 90       	pop	r0
-  e0:	1f 90       	pop	r1
-  e2:	18 95       	reti
+	DDRD = 0xFF;
+  d2:	8f ef       	ldi	r24, 0xFF	; 255
+  d4:	8a b9       	out	0x0a, r24	; 10
+	
+	//SPIE = 1, SPE = 1
+	SPCR = 0xC0;
+  d6:	80 ec       	ldi	r24, 0xC0	; 192
+  d8:	8c bd       	out	0x2c, r24	; 44
+	sei();
+  da:	78 94       	sei
+  dc:	08 95       	ret
 
-000000e4 <_exit>:
-  e4:	f8 94       	cli
+000000de <Slave_TX>:
+}
 
-000000e6 <__stop_program>:
-  e6:	ff cf       	rjmp	.-2      	; 0xe6 <__stop_program>
+void  Slave_TX(uint8_t data)
+{
+	SPDR = data;
+  de:	8e bd       	out	0x2e, r24	; 46
+	PORTB |= (1 << PORTB3);
+  e0:	2b 9a       	sbi	0x05, 3	; 5
+	PORTB &= ~(1 << PORTB3);
+  e2:	2b 98       	cbi	0x05, 3	; 5
+  e4:	08 95       	ret
+
+000000e6 <main>:
+	PORTD = received_data;
+}
+
+int main(void)
+{
+	SPI_Slave_Init();	
+  e6:	f3 df       	rcall	.-26     	; 0xce <SPI_Slave_Init>
+    while(1)
+    {
+	Slave_TX(0xAA);
+  e8:	8a ea       	ldi	r24, 0xAA	; 170
+  ea:	f9 df       	rcall	.-14     	; 0xde <Slave_TX>
+  ec:	fd cf       	rjmp	.-6      	; 0xe8 <main+0x2>
+
+000000ee <_exit>:
+  ee:	f8 94       	cli
+
+000000f0 <__stop_program>:
+  f0:	ff cf       	rjmp	.-2      	; 0xf0 <__stop_program>

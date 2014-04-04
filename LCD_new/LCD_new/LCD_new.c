@@ -245,7 +245,28 @@ int main(void)
 	 
 	 hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_ON, HD44780_L_DISP_B_ON);
 	 
-	 hd44780_l_write(&low_conf, 0x48);
+	 //0x42 0x4f 0x4f 0x42 0x49 0x45 0x53
+	 
+	 hd44780_l_write(&low_conf, 0x42);
+	 hd44780_l_write(&low_conf, 0x4f);
+	 hd44780_l_write(&low_conf, 0x4f);
+	 hd44780_l_write(&low_conf, 0x42);
+	 hd44780_l_write(&low_conf, 0x49);
+	 hd44780_l_write(&low_conf, 0x45);
+	 hd44780_l_write(&low_conf, 0x53);
+	 
+	 hd44780_l_write(&low_conf, 0x42);
+	 hd44780_l_write(&low_conf, 0x4f);
+	 hd44780_l_write(&low_conf, 0x4f);
+	 hd44780_l_write(&low_conf, 0x42);
+	 hd44780_l_write(&low_conf, 0x49);
+	 hd44780_l_write(&low_conf, 0x45);
+	 hd44780_l_write(&low_conf, 0x53);
+	 
+	 
+	 
+	 
+	
 	
     while(1)
     {
