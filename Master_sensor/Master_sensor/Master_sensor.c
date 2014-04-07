@@ -8,53 +8,49 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
-/* Ports */
-#define SS_COM PORTB3
-#define SS_CON PORTB4
-#define MOSI PORTB5
-#define MISO PORTB6
-#define SCK PORTB7
-
-/*Variables*/
-int Slave_COM	= 1;
-int Slave_CON = 2;
-int selected_slave; 
-int received_data;
+ 
+uint8_t received_data;
  
 /* Functions */
 void SPI_Init_Master();
-void Slave_Select(int);
 void Master_TX(uint8_t);
-void Master_RX(uint8_t);
+
+ISR(INT2_vect)
+{
+	PORTB &= ~(1 << PORTB4);
+	
+	Master_TX(0x01);
+	
+	if(received_data == 0xAA)
+	{
+		PORTD = (1 << PORTD6);
+	}
+}
 
 int main(void)
 {
 	SPI_Init_Master();
-	
+	PORTB |= (1 << PORTB4);
     while(1)
     {
-
+	//Master_TX(0xAA);
     }
 }
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()
 {
-			
-		/* PORTB5 MOSI, PORTB6 MISO, PORTB7 SCK, PORTB4 SS_CON, PORTB3 SS_COM. Sets I/O ports */
-		//DDRB |= (1 << PORTB5)|(0 << PORTB6)|(1 << PORTB7)|(1 << PORTB4)|(1 << PORTB3); 
-		DDRB |= (1<<MOSI)|(0 << MISO)|(1<<SCK)|(1<<SS_COM)|(1<<SS_CON);
-		
-		/*Sets the SPI Control Register. SPE = SPI Enable. MSTR = Master Select. Master if 1 << MSTR. SPIE = SPI Interrupt Enable. CPOL = Clock Polarity. If 1 << CPOL SCK is High when idle. CPHA = Clock Phase. 
-		0 << CPHA => Leading edge sample , trailing edge Setup. SPR0 = SPI clock rate select. 1 << SPR0, 0 << SPR1 fck/16.*/
-		SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPR1)|(1<<SPIE)|(1 << CPOL) | (0 << CPHA);
-		
-		EICRA = 0x3C; //Interrupt control register. Rising edge-triggered interrupts. 
-		EIMSK = 6; //Interrupt mask register
-		
-		sei(); 
 
+	DDRD = 0xFF;
+	DDRB = 0xB0;
+	
+	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR);
+	
+	EICRA = 0x30;
+	EIMSK = 0x04;
+	
+	sei();
+			
 }
 
 
@@ -64,57 +60,10 @@ void Master_TX(uint8_t data)
 		SPDR = data;
 		/* Wait for transmission complete */
 		while(!(SPSR & (1<<SPIF)));
+		
+		received_data = SPDR;
 }
 
-void Master_RX(uint8_t dummydata)
-{
-	SPDR = dummydata;
-	while(!(SPSR & (1<<SPIF)));
-	
-	received_data = SPDR;
-}
-
-
-/* Sets slave */
-void Slave_Select(int slave)
-{
-	selected_slave = slave;
-	if(selected_slave == Slave_COM)
-	{
-		PORTB |= (1 << PORTB3)|(0 << PORTB4);
-	}
-	else
-	{
-		PORTB |= (0 << PORTB3)|(1 << PORTB4);
-	}
-	
-}
-
-/*Interrupt from communication slave. INT1.*/
-ISR(INT1_vect)
-{
-	Slave_Select(Slave_COM);
-	Master_RX(1);
-	
-	if((received_data & 0x80) == 1)
-	{
-		Slave_Select(Slave_CON);
-		Master_TX(received_data);	
-	}
-}
-
-/*Interrupt from control slave. INT2.*/
-ISR(INT2_vect)
-{
-	Slave_Select(Slave_CON);	
-	Master_RX(2);
-	
-	if((received_data & 0x80) == 1)
-	{
-		Slave_Select(Slave_COM);
-		Master_TX(received_data);
-	}
-}
 
 
 

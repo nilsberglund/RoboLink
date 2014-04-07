@@ -15,7 +15,6 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
  .text          0x00000000        0x0 Slave_Communication.o
  .bss           0x00000000        0x0 Slave_Communication.o
- COMMON         0x00000000        0x1 Slave_Communication.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -157,7 +156,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0xb4
+.text           0x00000000       0xf4
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -228,7 +227,6 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x000000ac                __vector_11
                 0x000000ac                __vector_13
                 0x000000ac                __vector_17
-                0x000000ac                __vector_19
                 0x000000ac                __vector_7
                 0x000000ac                __vector_27
                 0x000000ac                __vector_5
@@ -248,13 +246,22 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x000000ac                __vector_20
                 0x000000ae                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x000000ae        0x2 Slave_Communication.o
-                0x000000ae                main
-                0x000000b0                . = ALIGN (0x2)
+ .text.__vector_19
+                0x000000ae       0x22 Slave_Communication.o
+                0x000000ae                __vector_19
+ .text.SPI_Init_Slave
+                0x000000d0       0x10 Slave_Communication.o
+                0x000000d0                SPI_Init_Slave
+ .text.Slave_TX
+                0x000000e0        0x8 Slave_Communication.o
+                0x000000e0                Slave_TX
+ .text.main     0x000000e8        0x8 Slave_Communication.o
+                0x000000e8                main
+                0x000000f0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000b0        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x000000b0                _exit
-                0x000000b0                exit
+ .fini9         0x000000f0        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x000000f0                _exit
+                0x000000f0                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -273,11 +280,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000b0        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x000000f0        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000000b4                _etext = .
+                0x000000f4                _etext = .
 
-.data           0x00800100        0x0 load address 0x000000b4
+.data           0x00800100        0x0 load address 0x000000f4
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -292,21 +299,23 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800100                _edata = .
                 0x00800100                PROVIDE (__data_end, .)
 
-.bss            0x00800100        0x0
+.bss            0x00800100        0x1
                 0x00800100                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
-                0x00800100                PROVIDE (__bss_end, .)
-                0x000000b4                __data_load_start = LOADADDR (.data)
-                0x000000b4                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800100        0x1 Slave_Communication.o
+                0x00800100                received_data
+                0x00800101                PROVIDE (__bss_end, .)
+                0x000000f4                __data_load_start = LOADADDR (.data)
+                0x000000f4                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800100        0x0
-                0x00800100                PROVIDE (__noinit_start, .)
+.noinit         0x00800101        0x0
+                0x00800101                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800100                PROVIDE (__noinit_end, .)
-                0x00800100                _end = .
-                0x00800100                PROVIDE (__heap_start, .)
+                0x00800101                PROVIDE (__noinit_end, .)
+                0x00800101                _end = .
+                0x00800101                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -364,38 +373,39 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x20
+.debug_aranges  0x00000000       0x38
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 Slave_Communication.o
+                0x00000000       0x38 Slave_Communication.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000       0xc9
+.debug_info     0x00000000      0x10a
  *(.debug_info)
- .debug_info    0x00000000       0xc9 Slave_Communication.o
+ .debug_info    0x00000000      0x10a Slave_Communication.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000       0x90
+.debug_abbrev   0x00000000       0xdf
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0x90 Slave_Communication.o
+ .debug_abbrev  0x00000000       0xdf Slave_Communication.o
 
-.debug_line     0x00000000       0xe0
+.debug_line     0x00000000      0x15c
  *(.debug_line)
- .debug_line    0x00000000       0xe0 Slave_Communication.o
+ .debug_line    0x00000000      0x15c Slave_Communication.o
 
-.debug_frame    0x00000000       0x24
+.debug_frame    0x00000000       0x64
  *(.debug_frame)
- .debug_frame   0x00000000       0x24 Slave_Communication.o
+ .debug_frame   0x00000000       0x64 Slave_Communication.o
 
-.debug_str      0x00000000       0xe1
+.debug_str      0x00000000       0xe4
  *(.debug_str)
- .debug_str     0x00000000       0xe1 Slave_Communication.o
-                                0x115 (size before relaxing)
+ .debug_str     0x00000000       0xe4 Slave_Communication.o
+                                0x11d (size before relaxing)
 
-.debug_loc
+.debug_loc      0x00000000       0x3c
  *(.debug_loc)
+ .debug_loc     0x00000000       0x3c Slave_Communication.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -403,9 +413,9 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x10
+.debug_ranges   0x00000000       0x28
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x10 Slave_Communication.o
+ .debug_ranges  0x00000000       0x28 Slave_Communication.o
 
 .debug_macro
  *(.debug_macro)
