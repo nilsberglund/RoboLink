@@ -3,31 +3,31 @@ Servo.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00000154  000001c8  2**0
+  0 .data         00000000  00800100  0000024e  000002c2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000154  00000000  00000000  00000074  2**1
+  1 .text         0000024e  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .stab         000006cc  00000000  00000000  000001c8  2**2
+  2 .stab         000006cc  00000000  00000000  000002c4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      00000097  00000000  00000000  00000894  2**0
+  3 .stabstr      00000097  00000000  00000000  00000990  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .comment      0000002f  00000000  00000000  0000092b  2**0
+  4 .comment      0000002f  00000000  00000000  00000a27  2**0
                   CONTENTS, READONLY
-  5 .debug_aranges 00000050  00000000  00000000  0000095a  2**0
+  5 .debug_aranges 00000060  00000000  00000000  00000a56  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000064d  00000000  00000000  000009aa  2**0
+  6 .debug_info   000006e2  00000000  00000000  00000ab6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000001bd  00000000  00000000  00000ff7  2**0
+  7 .debug_abbrev 0000015a  00000000  00000000  00001198  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000330  00000000  00000000  000011b4  2**0
+  8 .debug_line   00000330  00000000  00000000  000012f2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000c4  00000000  00000000  000014e4  2**2
+  9 .debug_frame  00000100  00000000  00000000  00001624  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000018d  00000000  00000000  000015a8  2**0
+ 10 .debug_str    000001a9  00000000  00000000  00001724  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000038b  00000000  00000000  00001735  2**0
+ 11 .debug_loc    000003ad  00000000  00000000  000018cd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000040  00000000  00000000  00001ac0  2**0
+ 12 .debug_ranges 00000050  00000000  00000000  00001c7a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -35,73 +35,73 @@ Disassembly of section .text:
 00000000 <__vectors>:
    0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
    2:	00 00       	nop
-   4:	4b c0       	rjmp	.+150    	; 0x9c <__bad_interrupt>
+   4:	58 c0       	rjmp	.+176    	; 0xb6 <__bad_interrupt>
    6:	00 00       	nop
-   8:	49 c0       	rjmp	.+146    	; 0x9c <__bad_interrupt>
+   8:	56 c0       	rjmp	.+172    	; 0xb6 <__bad_interrupt>
    a:	00 00       	nop
-   c:	47 c0       	rjmp	.+142    	; 0x9c <__bad_interrupt>
+   c:	54 c0       	rjmp	.+168    	; 0xb6 <__bad_interrupt>
    e:	00 00       	nop
-  10:	45 c0       	rjmp	.+138    	; 0x9c <__bad_interrupt>
+  10:	52 c0       	rjmp	.+164    	; 0xb6 <__bad_interrupt>
   12:	00 00       	nop
-  14:	43 c0       	rjmp	.+134    	; 0x9c <__bad_interrupt>
+  14:	50 c0       	rjmp	.+160    	; 0xb6 <__bad_interrupt>
   16:	00 00       	nop
-  18:	41 c0       	rjmp	.+130    	; 0x9c <__bad_interrupt>
+  18:	4e c0       	rjmp	.+156    	; 0xb6 <__bad_interrupt>
   1a:	00 00       	nop
-  1c:	3f c0       	rjmp	.+126    	; 0x9c <__bad_interrupt>
+  1c:	4c c0       	rjmp	.+152    	; 0xb6 <__bad_interrupt>
   1e:	00 00       	nop
-  20:	3d c0       	rjmp	.+122    	; 0x9c <__bad_interrupt>
+  20:	4a c0       	rjmp	.+148    	; 0xb6 <__bad_interrupt>
   22:	00 00       	nop
-  24:	3b c0       	rjmp	.+118    	; 0x9c <__bad_interrupt>
+  24:	48 c0       	rjmp	.+144    	; 0xb6 <__bad_interrupt>
   26:	00 00       	nop
-  28:	39 c0       	rjmp	.+114    	; 0x9c <__bad_interrupt>
+  28:	46 c0       	rjmp	.+140    	; 0xb6 <__bad_interrupt>
   2a:	00 00       	nop
-  2c:	37 c0       	rjmp	.+110    	; 0x9c <__bad_interrupt>
+  2c:	44 c0       	rjmp	.+136    	; 0xb6 <__bad_interrupt>
   2e:	00 00       	nop
-  30:	35 c0       	rjmp	.+106    	; 0x9c <__bad_interrupt>
+  30:	42 c0       	rjmp	.+132    	; 0xb6 <__bad_interrupt>
   32:	00 00       	nop
-  34:	33 c0       	rjmp	.+102    	; 0x9c <__bad_interrupt>
+  34:	40 c0       	rjmp	.+128    	; 0xb6 <__bad_interrupt>
   36:	00 00       	nop
-  38:	31 c0       	rjmp	.+98     	; 0x9c <__bad_interrupt>
+  38:	3e c0       	rjmp	.+124    	; 0xb6 <__bad_interrupt>
   3a:	00 00       	nop
-  3c:	2f c0       	rjmp	.+94     	; 0x9c <__bad_interrupt>
+  3c:	3c c0       	rjmp	.+120    	; 0xb6 <__bad_interrupt>
   3e:	00 00       	nop
-  40:	2d c0       	rjmp	.+90     	; 0x9c <__bad_interrupt>
+  40:	3a c0       	rjmp	.+116    	; 0xb6 <__bad_interrupt>
   42:	00 00       	nop
-  44:	2b c0       	rjmp	.+86     	; 0x9c <__bad_interrupt>
+  44:	38 c0       	rjmp	.+112    	; 0xb6 <__bad_interrupt>
   46:	00 00       	nop
-  48:	29 c0       	rjmp	.+82     	; 0x9c <__bad_interrupt>
+  48:	36 c0       	rjmp	.+108    	; 0xb6 <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	27 c0       	rjmp	.+78     	; 0x9c <__bad_interrupt>
+  4c:	34 c0       	rjmp	.+104    	; 0xb6 <__bad_interrupt>
   4e:	00 00       	nop
-  50:	25 c0       	rjmp	.+74     	; 0x9c <__bad_interrupt>
+  50:	32 c0       	rjmp	.+100    	; 0xb6 <__bad_interrupt>
   52:	00 00       	nop
-  54:	23 c0       	rjmp	.+70     	; 0x9c <__bad_interrupt>
+  54:	30 c0       	rjmp	.+96     	; 0xb6 <__bad_interrupt>
   56:	00 00       	nop
-  58:	21 c0       	rjmp	.+66     	; 0x9c <__bad_interrupt>
+  58:	2e c0       	rjmp	.+92     	; 0xb6 <__bad_interrupt>
   5a:	00 00       	nop
-  5c:	1f c0       	rjmp	.+62     	; 0x9c <__bad_interrupt>
+  5c:	2c c0       	rjmp	.+88     	; 0xb6 <__bad_interrupt>
   5e:	00 00       	nop
-  60:	1d c0       	rjmp	.+58     	; 0x9c <__bad_interrupt>
+  60:	2a c0       	rjmp	.+84     	; 0xb6 <__bad_interrupt>
   62:	00 00       	nop
-  64:	1b c0       	rjmp	.+54     	; 0x9c <__bad_interrupt>
+  64:	28 c0       	rjmp	.+80     	; 0xb6 <__bad_interrupt>
   66:	00 00       	nop
-  68:	19 c0       	rjmp	.+50     	; 0x9c <__bad_interrupt>
+  68:	26 c0       	rjmp	.+76     	; 0xb6 <__bad_interrupt>
   6a:	00 00       	nop
-  6c:	17 c0       	rjmp	.+46     	; 0x9c <__bad_interrupt>
+  6c:	24 c0       	rjmp	.+72     	; 0xb6 <__bad_interrupt>
   6e:	00 00       	nop
-  70:	15 c0       	rjmp	.+42     	; 0x9c <__bad_interrupt>
+  70:	22 c0       	rjmp	.+68     	; 0xb6 <__bad_interrupt>
   72:	00 00       	nop
-  74:	13 c0       	rjmp	.+38     	; 0x9c <__bad_interrupt>
+  74:	20 c0       	rjmp	.+64     	; 0xb6 <__bad_interrupt>
   76:	00 00       	nop
-  78:	11 c0       	rjmp	.+34     	; 0x9c <__bad_interrupt>
+  78:	1e c0       	rjmp	.+60     	; 0xb6 <__bad_interrupt>
   7a:	00 00       	nop
-  7c:	0f c0       	rjmp	.+30     	; 0x9c <__bad_interrupt>
+  7c:	1c c0       	rjmp	.+56     	; 0xb6 <__bad_interrupt>
   7e:	00 00       	nop
-  80:	0d c0       	rjmp	.+26     	; 0x9c <__bad_interrupt>
+  80:	1a c0       	rjmp	.+52     	; 0xb6 <__bad_interrupt>
   82:	00 00       	nop
-  84:	0b c0       	rjmp	.+22     	; 0x9c <__bad_interrupt>
+  84:	18 c0       	rjmp	.+48     	; 0xb6 <__bad_interrupt>
   86:	00 00       	nop
-  88:	09 c0       	rjmp	.+18     	; 0x9c <__bad_interrupt>
+  88:	16 c0       	rjmp	.+44     	; 0xb6 <__bad_interrupt>
 	...
 
 0000008c <__ctors_end>:
@@ -111,121 +111,261 @@ Disassembly of section .text:
   92:	d0 e4       	ldi	r29, 0x40	; 64
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
-  98:	4e d0       	rcall	.+156    	; 0x136 <main>
-  9a:	5a c0       	rjmp	.+180    	; 0x150 <_exit>
 
-0000009c <__bad_interrupt>:
-  9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	ee e4       	ldi	r30, 0x4E	; 78
+  a0:	f2 e0       	ldi	r31, 0x02	; 2
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	a0 30       	cpi	r26, 0x00	; 0
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+  b2:	c8 d0       	rcall	.+400    	; 0x244 <main>
+  b4:	ca c0       	rjmp	.+404    	; 0x24a <_exit>
 
-0000009e <USART_Init>:
-	move_Double_Servo(0x00, 0x00, 0x50, 0x00, 0x04, 0x05);
-	move_Double_Servo(0xAA, 0x03, 0x50, 0x00, 0x02, 0x03);
-	move_Single_Servo(0xFF, 0x01, 0x20, 0x00, 0x01);
+000000b6 <__bad_interrupt>:
+  b6:	a4 cf       	rjmp	.-184    	; 0x0 <__vectors>
+
+000000b8 <USART_Init>:
+		move_Single_Servo(servo1_Pos, 0x50, 0x00, 0x01);
+	} 
+	if (dir == ROTATE_DIRECTION_CLOCKWISE && (servo1_Pos - 50) > 0)
+	{
+		servo1_Pos -= 50;
+		move_Single_Servo(servo1_Pos, 0x50, 0x00, 0x01);
+  b8:	84 e0       	ldi	r24, 0x04	; 4
+  ba:	8a b9       	out	0x0a, r24	; 10
+  bc:	10 92 c5 00 	sts	0x00C5, r1
+  c0:	10 92 c4 00 	sts	0x00C4, r1
+  c4:	88 e1       	ldi	r24, 0x18	; 24
+  c6:	80 93 c1 00 	sts	0x00C1, r24
+  ca:	86 e0       	ldi	r24, 0x06	; 6
+  cc:	80 93 c2 00 	sts	0x00C2, r24
+  d0:	08 95       	ret
+
+000000d2 <USART_Transmit>:
+  d2:	5a 9a       	sbi	0x0b, 2	; 11
+  d4:	e0 ec       	ldi	r30, 0xC0	; 192
+  d6:	f0 e0       	ldi	r31, 0x00	; 0
+  d8:	90 81       	ld	r25, Z
+  da:	95 ff       	sbrs	r25, 5
+  dc:	fd cf       	rjmp	.-6      	; 0xd8 <USART_Transmit+0x6>
+  de:	80 93 c6 00 	sts	0x00C6, r24
+  e2:	08 95       	ret
+
+000000e4 <move_Single_Servo>:
+  e4:	ff 92       	push	r15
+  e6:	0f 93       	push	r16
+  e8:	1f 93       	push	r17
+  ea:	cf 93       	push	r28
+  ec:	df 93       	push	r29
+  ee:	00 d0       	rcall	.+0      	; 0xf0 <move_Single_Servo+0xc>
+  f0:	cd b7       	in	r28, 0x3d	; 61
+  f2:	de b7       	in	r29, 0x3e	; 62
+  f4:	f6 2e       	mov	r15, r22
+  f6:	04 2f       	mov	r16, r20
+  f8:	12 2f       	mov	r17, r18
+  fa:	89 83       	std	Y+1, r24	; 0x01
+  fc:	9a 83       	std	Y+2, r25	; 0x02
+  fe:	8f ef       	ldi	r24, 0xFF	; 255
+ 100:	e8 df       	rcall	.-48     	; 0xd2 <USART_Transmit>
+ 102:	8f ef       	ldi	r24, 0xFF	; 255
+ 104:	e6 df       	rcall	.-52     	; 0xd2 <USART_Transmit>
+ 106:	81 2f       	mov	r24, r17
+ 108:	e4 df       	rcall	.-56     	; 0xd2 <USART_Transmit>
+ 10a:	87 e0       	ldi	r24, 0x07	; 7
+ 10c:	e2 df       	rcall	.-60     	; 0xd2 <USART_Transmit>
+ 10e:	83 e0       	ldi	r24, 0x03	; 3
+ 110:	e0 df       	rcall	.-64     	; 0xd2 <USART_Transmit>
+ 112:	8e e1       	ldi	r24, 0x1E	; 30
+ 114:	de df       	rcall	.-68     	; 0xd2 <USART_Transmit>
+ 116:	89 81       	ldd	r24, Y+1	; 0x01
+ 118:	dc df       	rcall	.-72     	; 0xd2 <USART_Transmit>
+ 11a:	8a 81       	ldd	r24, Y+2	; 0x02
+ 11c:	da df       	rcall	.-76     	; 0xd2 <USART_Transmit>
+ 11e:	8f 2d       	mov	r24, r15
+ 120:	d8 df       	rcall	.-80     	; 0xd2 <USART_Transmit>
+ 122:	80 2f       	mov	r24, r16
+ 124:	d6 df       	rcall	.-84     	; 0xd2 <USART_Transmit>
+ 126:	99 81       	ldd	r25, Y+1	; 0x01
+ 128:	8a 81       	ldd	r24, Y+2	; 0x02
+ 12a:	89 0f       	add	r24, r25
+ 12c:	88 5d       	subi	r24, 0xD8	; 216
+ 12e:	f8 0e       	add	r15, r24
+ 130:	0f 0d       	add	r16, r15
+ 132:	80 2f       	mov	r24, r16
+ 134:	81 0f       	add	r24, r17
+ 136:	80 95       	com	r24
+ 138:	cc df       	rcall	.-104    	; 0xd2 <USART_Transmit>
+ 13a:	0f 90       	pop	r0
+ 13c:	0f 90       	pop	r0
+ 13e:	df 91       	pop	r29
+ 140:	cf 91       	pop	r28
+ 142:	1f 91       	pop	r17
+ 144:	0f 91       	pop	r16
+ 146:	ff 90       	pop	r15
+ 148:	08 95       	ret
+
+0000014a <move_Double_Servo>:
+ 14a:	ef 92       	push	r14
+ 14c:	ff 92       	push	r15
+ 14e:	0f 93       	push	r16
+ 150:	1f 93       	push	r17
+ 152:	cf 93       	push	r28
+ 154:	df 93       	push	r29
+ 156:	00 d0       	rcall	.+0      	; 0x158 <move_Double_Servo+0xe>
+ 158:	00 d0       	rcall	.+0      	; 0x15a <move_Double_Servo+0x10>
+ 15a:	00 d0       	rcall	.+0      	; 0x15c <move_Double_Servo+0x12>
+ 15c:	cd b7       	in	r28, 0x3d	; 61
+ 15e:	de b7       	in	r29, 0x3e	; 62
+ 160:	f6 2e       	mov	r15, r22
+ 162:	14 2f       	mov	r17, r20
+ 164:	e2 2e       	mov	r14, r18
+ 166:	af ef       	ldi	r26, 0xFF	; 255
+ 168:	b3 e0       	ldi	r27, 0x03	; 3
+ 16a:	a8 1b       	sub	r26, r24
+ 16c:	b9 0b       	sbc	r27, r25
+ 16e:	ba 83       	std	Y+2, r27	; 0x02
+ 170:	a9 83       	std	Y+1, r26	; 0x01
+ 172:	8b 83       	std	Y+3, r24	; 0x03
+ 174:	9c 83       	std	Y+4, r25	; 0x04
+ 176:	e9 81       	ldd	r30, Y+1	; 0x01
+ 178:	fa 81       	ldd	r31, Y+2	; 0x02
+ 17a:	ed 83       	std	Y+5, r30	; 0x05
+ 17c:	e9 81       	ldd	r30, Y+1	; 0x01
+ 17e:	fa 81       	ldd	r31, Y+2	; 0x02
+ 180:	fe 83       	std	Y+6, r31	; 0x06
+ 182:	8f ef       	ldi	r24, 0xFF	; 255
+ 184:	a6 df       	rcall	.-180    	; 0xd2 <USART_Transmit>
+ 186:	8f ef       	ldi	r24, 0xFF	; 255
+ 188:	a4 df       	rcall	.-184    	; 0xd2 <USART_Transmit>
+ 18a:	8e ef       	ldi	r24, 0xFE	; 254
+ 18c:	a2 df       	rcall	.-188    	; 0xd2 <USART_Transmit>
+ 18e:	8e e0       	ldi	r24, 0x0E	; 14
+ 190:	a0 df       	rcall	.-192    	; 0xd2 <USART_Transmit>
+ 192:	83 e8       	ldi	r24, 0x83	; 131
+ 194:	9e df       	rcall	.-196    	; 0xd2 <USART_Transmit>
+ 196:	8e e1       	ldi	r24, 0x1E	; 30
+ 198:	9c df       	rcall	.-200    	; 0xd2 <USART_Transmit>
+ 19a:	84 e0       	ldi	r24, 0x04	; 4
+ 19c:	9a df       	rcall	.-204    	; 0xd2 <USART_Transmit>
+ 19e:	8e 2d       	mov	r24, r14
+ 1a0:	98 df       	rcall	.-208    	; 0xd2 <USART_Transmit>
+ 1a2:	8b 81       	ldd	r24, Y+3	; 0x03
+ 1a4:	96 df       	rcall	.-212    	; 0xd2 <USART_Transmit>
+ 1a6:	8c 81       	ldd	r24, Y+4	; 0x04
+ 1a8:	94 df       	rcall	.-216    	; 0xd2 <USART_Transmit>
+ 1aa:	8f 2d       	mov	r24, r15
+ 1ac:	92 df       	rcall	.-220    	; 0xd2 <USART_Transmit>
+ 1ae:	81 2f       	mov	r24, r17
+ 1b0:	90 df       	rcall	.-224    	; 0xd2 <USART_Transmit>
+ 1b2:	80 2f       	mov	r24, r16
+ 1b4:	8e df       	rcall	.-228    	; 0xd2 <USART_Transmit>
+ 1b6:	8d 81       	ldd	r24, Y+5	; 0x05
+ 1b8:	8c df       	rcall	.-232    	; 0xd2 <USART_Transmit>
+ 1ba:	8e 81       	ldd	r24, Y+6	; 0x06
+ 1bc:	8a df       	rcall	.-236    	; 0xd2 <USART_Transmit>
+ 1be:	8f 2d       	mov	r24, r15
+ 1c0:	88 df       	rcall	.-240    	; 0xd2 <USART_Transmit>
+ 1c2:	81 2f       	mov	r24, r17
+ 1c4:	86 df       	rcall	.-244    	; 0xd2 <USART_Transmit>
+ 1c6:	3b 81       	ldd	r19, Y+3	; 0x03
+ 1c8:	8c 81       	ldd	r24, Y+4	; 0x04
+ 1ca:	2d 81       	ldd	r18, Y+5	; 0x05
+ 1cc:	9e 81       	ldd	r25, Y+6	; 0x06
+ 1ce:	83 0f       	add	r24, r19
+ 1d0:	8f 54       	subi	r24, 0x4F	; 79
+ 1d2:	82 0f       	add	r24, r18
+ 1d4:	89 0f       	add	r24, r25
+ 1d6:	8f 0d       	add	r24, r15
+ 1d8:	f8 0e       	add	r15, r24
+ 1da:	f1 0e       	add	r15, r17
+ 1dc:	1f 0d       	add	r17, r15
+ 1de:	e1 0e       	add	r14, r17
+ 1e0:	8e 2d       	mov	r24, r14
+ 1e2:	80 0f       	add	r24, r16
+ 1e4:	80 95       	com	r24
+ 1e6:	75 df       	rcall	.-278    	; 0xd2 <USART_Transmit>
+ 1e8:	26 96       	adiw	r28, 0x06	; 6
+ 1ea:	0f b6       	in	r0, 0x3f	; 63
+ 1ec:	f8 94       	cli
+ 1ee:	de bf       	out	0x3e, r29	; 62
+ 1f0:	0f be       	out	0x3f, r0	; 63
+ 1f2:	cd bf       	out	0x3d, r28	; 61
+ 1f4:	df 91       	pop	r29
+ 1f6:	cf 91       	pop	r28
+ 1f8:	1f 91       	pop	r17
+ 1fa:	0f 91       	pop	r16
+ 1fc:	ff 90       	pop	r15
+ 1fe:	ef 90       	pop	r14
+ 200:	08 95       	ret
+
+00000202 <pickup_Default_Position>:
+	}
+}
+
+void pickup_Default_Position(){
+ 202:	0f 93       	push	r16
+ 204:	1f 93       	push	r17
 	
+	move_Double_Servo(0x288, 0xF0, 0x00, 0x02, 0x03);
+ 206:	03 e0       	ldi	r16, 0x03	; 3
+ 208:	10 e0       	ldi	r17, 0x00	; 0
+ 20a:	22 e0       	ldi	r18, 0x02	; 2
+ 20c:	40 e0       	ldi	r20, 0x00	; 0
+ 20e:	60 ef       	ldi	r22, 0xF0	; 240
+ 210:	88 e8       	ldi	r24, 0x88	; 136
+ 212:	92 e0       	ldi	r25, 0x02	; 2
+ 214:	9a df       	rcall	.-204    	; 0x14a <move_Double_Servo>
+	move_Double_Servo(0x288, 0xF0, 0x00, 0x04, 0x05);
+ 216:	05 e0       	ldi	r16, 0x05	; 5
+ 218:	10 e0       	ldi	r17, 0x00	; 0
+ 21a:	24 e0       	ldi	r18, 0x04	; 4
+ 21c:	40 e0       	ldi	r20, 0x00	; 0
+ 21e:	60 ef       	ldi	r22, 0xF0	; 240
+ 220:	88 e8       	ldi	r24, 0x88	; 136
+ 222:	92 e0       	ldi	r25, 0x02	; 2
+ 224:	92 df       	rcall	.-220    	; 0x14a <move_Double_Servo>
+	move_Single_Servo(0x1FF, 0xF0, 0x00, 0x06);
+ 226:	26 e0       	ldi	r18, 0x06	; 6
+ 228:	40 e0       	ldi	r20, 0x00	; 0
+ 22a:	60 ef       	ldi	r22, 0xF0	; 240
+ 22c:	8f ef       	ldi	r24, 0xFF	; 255
+ 22e:	91 e0       	ldi	r25, 0x01	; 1
+ 230:	59 df       	rcall	.-334    	; 0xe4 <move_Single_Servo>
+	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);
+ 232:	27 e0       	ldi	r18, 0x07	; 7
+ 234:	41 e0       	ldi	r20, 0x01	; 1
+ 236:	60 e5       	ldi	r22, 0x50	; 80
+ 238:	8f ef       	ldi	r24, 0xFF	; 255
+ 23a:	91 e0       	ldi	r25, 0x01	; 1
+ 23c:	53 df       	rcall	.-346    	; 0xe4 <move_Single_Servo>
 	
 }
-  9e:	84 e0       	ldi	r24, 0x04	; 4
-  a0:	8a b9       	out	0x0a, r24	; 10
-  a2:	10 92 c5 00 	sts	0x00C5, r1
-  a6:	10 92 c4 00 	sts	0x00C4, r1
-  aa:	88 e1       	ldi	r24, 0x18	; 24
-  ac:	80 93 c1 00 	sts	0x00C1, r24
-  b0:	86 e0       	ldi	r24, 0x06	; 6
-  b2:	80 93 c2 00 	sts	0x00C2, r24
-  b6:	08 95       	ret
+ 23e:	1f 91       	pop	r17
+ 240:	0f 91       	pop	r16
+ 242:	08 95       	ret
 
-000000b8 <USART_Transmit>:
-  b8:	5a 9a       	sbi	0x0b, 2	; 11
-  ba:	e0 ec       	ldi	r30, 0xC0	; 192
-  bc:	f0 e0       	ldi	r31, 0x00	; 0
-  be:	90 81       	ld	r25, Z
-  c0:	95 ff       	sbrs	r25, 5
-  c2:	fd cf       	rjmp	.-6      	; 0xbe <USART_Transmit+0x6>
-  c4:	80 93 c6 00 	sts	0x00C6, r24
-  c8:	08 95       	ret
-
-000000ca <move_Double_Servo>:
-  ca:	ef 92       	push	r14
-  cc:	0f 93       	push	r16
-  ce:	cf 93       	push	r28
-  d0:	df 93       	push	r29
-  d2:	d4 2f       	mov	r29, r20
-  d4:	c2 2f       	mov	r28, r18
-  d6:	8f ef       	ldi	r24, 0xFF	; 255
-  d8:	ef df       	rcall	.-34     	; 0xb8 <USART_Transmit>
-  da:	8f ef       	ldi	r24, 0xFF	; 255
-  dc:	ed df       	rcall	.-38     	; 0xb8 <USART_Transmit>
-  de:	8e ef       	ldi	r24, 0xFE	; 254
-  e0:	eb df       	rcall	.-42     	; 0xb8 <USART_Transmit>
-  e2:	8e e0       	ldi	r24, 0x0E	; 14
-  e4:	e9 df       	rcall	.-46     	; 0xb8 <USART_Transmit>
-  e6:	83 e8       	ldi	r24, 0x83	; 131
-  e8:	e7 df       	rcall	.-50     	; 0xb8 <USART_Transmit>
-  ea:	8e e1       	ldi	r24, 0x1E	; 30
-  ec:	e5 df       	rcall	.-54     	; 0xb8 <USART_Transmit>
-  ee:	84 e0       	ldi	r24, 0x04	; 4
-  f0:	e3 df       	rcall	.-58     	; 0xb8 <USART_Transmit>
-  f2:	80 2f       	mov	r24, r16
-  f4:	e1 df       	rcall	.-62     	; 0xb8 <USART_Transmit>
-  f6:	82 ed       	ldi	r24, 0xD2	; 210
-  f8:	df df       	rcall	.-66     	; 0xb8 <USART_Transmit>
-  fa:	80 e0       	ldi	r24, 0x00	; 0
-  fc:	dd df       	rcall	.-70     	; 0xb8 <USART_Transmit>
-  fe:	8d 2f       	mov	r24, r29
- 100:	db df       	rcall	.-74     	; 0xb8 <USART_Transmit>
- 102:	8c 2f       	mov	r24, r28
- 104:	d9 df       	rcall	.-78     	; 0xb8 <USART_Transmit>
- 106:	8e 2d       	mov	r24, r14
- 108:	d7 df       	rcall	.-82     	; 0xb8 <USART_Transmit>
- 10a:	8a e2       	ldi	r24, 0x2A	; 42
- 10c:	d5 df       	rcall	.-86     	; 0xb8 <USART_Transmit>
- 10e:	83 e0       	ldi	r24, 0x03	; 3
- 110:	d3 df       	rcall	.-90     	; 0xb8 <USART_Transmit>
- 112:	8d 2f       	mov	r24, r29
- 114:	d1 df       	rcall	.-94     	; 0xb8 <USART_Transmit>
- 116:	8c 2f       	mov	r24, r28
- 118:	cf df       	rcall	.-98     	; 0xb8 <USART_Transmit>
- 11a:	dd 0f       	add	r29, r29
- 11c:	d0 55       	subi	r29, 0x50	; 80
- 11e:	dc 0f       	add	r29, r28
- 120:	cd 0f       	add	r28, r29
- 122:	0c 0f       	add	r16, r28
- 124:	80 2f       	mov	r24, r16
- 126:	8e 0d       	add	r24, r14
- 128:	80 95       	com	r24
- 12a:	c6 df       	rcall	.-116    	; 0xb8 <USART_Transmit>
- 12c:	df 91       	pop	r29
- 12e:	cf 91       	pop	r28
- 130:	0f 91       	pop	r16
- 132:	ef 90       	pop	r14
- 134:	08 95       	ret
-
-00000136 <main>:
+00000244 <main>:
 
 int main(void)
 {
 	 		
 	USART_Init();
- 136:	b3 df       	rcall	.-154    	; 0x9e <USART_Init>
+ 244:	39 df       	rcall	.-398    	; 0xb8 <USART_Init>
 	
-	//default_Position();
-	
-	move_Double_Servo(0xFF, 0x01, 0x40, 0x00, 0x02, 0x03);
- 138:	0f 2e       	mov	r0, r31
- 13a:	f3 e0       	ldi	r31, 0x03	; 3
- 13c:	ef 2e       	mov	r14, r31
- 13e:	f1 2c       	mov	r15, r1
- 140:	f0 2d       	mov	r31, r0
- 142:	02 e0       	ldi	r16, 0x02	; 2
- 144:	20 e0       	ldi	r18, 0x00	; 0
- 146:	40 e4       	ldi	r20, 0x40	; 64
- 148:	61 e0       	ldi	r22, 0x01	; 1
- 14a:	8f ef       	ldi	r24, 0xFF	; 255
- 14c:	be df       	rcall	.-132    	; 0xca <move_Double_Servo>
- 14e:	ff cf       	rjmp	.-2      	; 0x14e <main+0x18>
+	pickup_Default_Position();
+ 246:	dd df       	rcall	.-70     	; 0x202 <pickup_Default_Position>
+ 248:	ff cf       	rjmp	.-2      	; 0x248 <main+0x4>
 
-00000150 <_exit>:
- 150:	f8 94       	cli
+0000024a <_exit>:
+ 24a:	f8 94       	cli
 
-00000152 <__stop_program>:
- 152:	ff cf       	rjmp	.-2      	; 0x152 <__stop_program>
+0000024c <__stop_program>:
+ 24c:	ff cf       	rjmp	.-2      	; 0x24c <__stop_program>

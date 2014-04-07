@@ -85,4 +85,7 @@ typedef unsigned int word;
 #define DEFAULT_BAUD_RATE 34 //57600bps at 16MHz
 
 
+//Egna konstanter
+#define ROTATE_DIRECTION_CLOCKWISE  0
+#define ROTATE_DIRECTION_COUNTERCLOCKWISE  1
 
