@@ -2,5 +2,5 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Master_sensor.c
+Master_communication.c
 

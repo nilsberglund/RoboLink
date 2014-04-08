@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>Slave_Communication</AssemblyName>
-    <Name>Slave_Communication</Name>
+    <Name>Slave_sensor</Name>
     <RootNamespace>Slave_Communication</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -109,7 +109,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Slave_Communication.c">
+    <Compile Include="Slave_sensor.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

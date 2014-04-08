@@ -8,15 +8,19 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-uint8_t received_data;
+uint8_t instruction_data;
+uint8_t sensor_data;
 
 void SPI_Init_Slave();
 void Slave_TX(uint8_t);
 
 ISR(SPI_STC_vect)
 {
-	received_data = SPDR;
-	PORTD = SPDR;
+	instruction_data = SPDR;
+	if(instruction_data == 0b00000100)
+	{
+		Slave_TX( sensor_data);
+	}
 }
 
 
@@ -25,9 +29,8 @@ int main(void)
 	SPI_Init_Slave();
     while(1)
     {
-		Slave_TX(0xAA);
+		
     }
-
 }
 
 void SPI_Init_Slave()

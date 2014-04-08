@@ -3,54 +3,54 @@ Archive member included because of file (symbol)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o (exit)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_copy_data.o)
-                              Master_sensor.o (__do_copy_data)
+                              Master_communication.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_clear_bss.o)
-                              Master_sensor.o (__do_clear_bss)
+                              Master_communication.o (__do_clear_bss)
 
 Allocating common symbols
 Common symbol       size              file
 
-robot_arm_data      0x1               Master_sensor.o
-sensor_data         0x1               Master_sensor.o
-RFID                0xa               Master_sensor.o
-wanted_data         0x1               Master_sensor.o
+robot_arm_data      0x1               Master_communication.o
+sensor_data         0x1               Master_communication.o
+RFID                0xa               Master_communication.o
+wanted_data         0x1               Master_communication.o
 wheel_steering_data
-                    0x1               Master_sensor.o
-received_data       0x1               Master_sensor.o
-i                   0x1               Master_sensor.o
+                    0x1               Master_communication.o
+received_data       0x1               Master_communication.o
+i                   0x1               Master_communication.o
 
 Discarded input sections
 
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
- .text          0x00000000        0x0 Master_sensor.o
- .bss           0x00000000        0x0 Master_sensor.o
+ .text          0x00000000        0x0 Master_communication.o
+ .bss           0x00000000        0x0 Master_communication.o
  .text.Slave_Select
-                0x00000000       0x22 Master_sensor.o
+                0x00000000       0x22 Master_communication.o
  .text.TX_Protocol
-                0x00000000       0x70 Master_sensor.o
+                0x00000000       0x70 Master_communication.o
  .text.TX_sensor_data
-                0x00000000       0x1a Master_sensor.o
+                0x00000000       0x1a Master_communication.o
  .text.RX_sensor_data
-                0x00000000       0x22 Master_sensor.o
+                0x00000000       0x22 Master_communication.o
  .text.TX_wheel_data
-                0x00000000       0x1a Master_sensor.o
+                0x00000000       0x1a Master_communication.o
  .text.RX_wheel_data
-                0x00000000       0x22 Master_sensor.o
+                0x00000000       0x22 Master_communication.o
  .text.TX_arm_data
-                0x00000000       0x1a Master_sensor.o
+                0x00000000       0x1a Master_communication.o
  .text.RX_arm_data
-                0x00000000       0x22 Master_sensor.o
+                0x00000000       0x22 Master_communication.o
  .text.TX_RFID_data
-                0x00000000       0x36 Master_sensor.o
- .data.rs       0x00000000        0x1 Master_sensor.o
- .data.as       0x00000000        0x1 Master_sensor.o
- .data.ws       0x00000000        0x1 Master_sensor.o
- .data.ss       0x00000000        0x1 Master_sensor.o
- .bss.No_Slave  0x00000000        0x1 Master_sensor.o
+                0x00000000       0x36 Master_communication.o
+ .data.rs       0x00000000        0x1 Master_communication.o
+ .data.as       0x00000000        0x1 Master_communication.o
+ .data.ws       0x00000000        0x1 Master_communication.o
+ .data.ss       0x00000000        0x1 Master_communication.o
+ .bss.No_Slave  0x00000000        0x1 Master_communication.o
  .data.Control_Slave
-                0x00000000        0x1 Master_sensor.o
+                0x00000000        0x1 Master_communication.o
  .data.Sensor_Slave
-                0x00000000        0x1 Master_sensor.o
+                0x00000000        0x1 Master_communication.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -107,7 +107,7 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
-LOAD Master_sensor.o
+LOAD Master_communication.o
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51\libm.a
 END GROUP
@@ -297,18 +297,18 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x000000c8                . = ALIGN (0x2)
  *(.text.*)
  .text.SPI_Init_Master
-                0x000000c8       0x1c Master_sensor.o
+                0x000000c8       0x1c Master_communication.o
                 0x000000c8                SPI_Init_Master
- .text.main     0x000000e4        0x6 Master_sensor.o
+ .text.main     0x000000e4        0x6 Master_communication.o
                 0x000000e4                main
  .text.Master_TX
-                0x000000ea        0xc Master_sensor.o
+                0x000000ea        0xc Master_communication.o
                 0x000000ea                Master_TX
  .text.__vector_3
-                0x000000f6       0x86 Master_sensor.o
+                0x000000f6       0x86 Master_communication.o
                 0x000000f6                __vector_3
  .text.__vector_2
-                0x0000017c       0x56 Master_sensor.o
+                0x0000017c       0x56 Master_communication.o
                 0x0000017c                __vector_2
                 0x000001d2                . = ALIGN (0x2)
  *(.fini9)
@@ -341,16 +341,16 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
- .data          0x00800100        0x0 Master_sensor.o
+ .data          0x00800100        0x0 Master_communication.o
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_copy_data.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_clear_bss.o)
  *(.data*)
- .data.ar       0x00800100        0x1 Master_sensor.o
+ .data.ar       0x00800100        0x1 Master_communication.o
                 0x00800100                ar
- .data.wr       0x00800101        0x1 Master_sensor.o
+ .data.wr       0x00800101        0x1 Master_communication.o
                 0x00800101                wr
- .data.sr       0x00800102        0x1 Master_sensor.o
+ .data.sr       0x00800102        0x1 Master_communication.o
                 0x00800102                sr
  *(.rodata)
  *(.rodata*)
@@ -365,7 +365,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x00800104       0x10 Master_sensor.o
+ COMMON         0x00800104       0x10 Master_communication.o
                 0x00800104                robot_arm_data
                 0x00800105                sensor_data
                 0x00800106                RFID
@@ -425,7 +425,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 
 .comment        0x00000000       0x2f
  *(.comment)
- .comment       0x00000000       0x2f Master_sensor.o
+ .comment       0x00000000       0x2f Master_communication.o
                                  0x30 (size before relaxing)
 
 .debug
@@ -443,36 +443,36 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_aranges  0x00000000       0x88
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x88 Master_sensor.o
+                0x00000000       0x88 Master_communication.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
 .debug_info     0x00000000      0x4f7
  *(.debug_info)
- .debug_info    0x00000000      0x4f7 Master_sensor.o
+ .debug_info    0x00000000      0x4f7 Master_communication.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x16a
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x16a Master_sensor.o
+ .debug_abbrev  0x00000000      0x16a Master_communication.o
 
-.debug_line     0x00000000      0x372
+.debug_line     0x00000000      0x379
  *(.debug_line)
- .debug_line    0x00000000      0x372 Master_sensor.o
+ .debug_line    0x00000000      0x379 Master_communication.o
 
 .debug_frame    0x00000000      0x198
  *(.debug_frame)
- .debug_frame   0x00000000      0x198 Master_sensor.o
+ .debug_frame   0x00000000      0x198 Master_communication.o
 
-.debug_str      0x00000000      0x1c7
+.debug_str      0x00000000      0x1ce
  *(.debug_str)
- .debug_str     0x00000000      0x1c7 Master_sensor.o
-                                0x20c (size before relaxing)
+ .debug_str     0x00000000      0x1ce Master_communication.o
+                                0x213 (size before relaxing)
 
 .debug_loc      0x00000000      0x2c9
  *(.debug_loc)
- .debug_loc     0x00000000      0x2c9 Master_sensor.o
+ .debug_loc     0x00000000      0x2c9 Master_communication.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -482,9 +482,9 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 
 .debug_ranges   0x00000000       0x78
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x78 Master_sensor.o
+ .debug_ranges  0x00000000       0x78 Master_communication.o
 
 .debug_macro
  *(.debug_macro)
-OUTPUT(Master_sensor.elf elf32-avr)
+OUTPUT(Master_communication.elf elf32-avr)
 LOAD linker stubs

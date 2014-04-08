@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>Master_sensor</AssemblyName>
-    <Name>Master_sensor</Name>
+    <Name>Master_communication</Name>
     <RootNamespace>Master_sensor</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -109,7 +109,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Master_sensor.c">
+    <Compile Include="Master_communication.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

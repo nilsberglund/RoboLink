@@ -1,5 +1,5 @@
 
-Master_sensor.elf:     file format elf32-avr
+Master_communication.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 0000016a  00000000  00000000  00000f81  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000372  00000000  00000000  000010eb  2**0
+  9 .debug_line   00000379  00000000  00000000  000010eb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000198  00000000  00000000  00001460  2**2
+ 10 .debug_frame  00000198  00000000  00000000  00001464  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001c7  00000000  00000000  000015f8  2**0
+ 11 .debug_str    000001ce  00000000  00000000  000015fc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000002c9  00000000  00000000  000017bf  2**0
+ 12 .debug_loc    000002c9  00000000  00000000  000017ca  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000078  00000000  00000000  00001a88  2**0
+ 13 .debug_ranges 00000078  00000000  00000000  00001a93  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
