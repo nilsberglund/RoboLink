@@ -2,21 +2,21 @@
  * Servo.c
  *
  * Created: 3/30/2014 12:16:02 PM
- *  Author: susba199
+ * Author: susba199
+ * baud rate is 1000000 for the robot arm
  */ 
 
-
-//TODO: Function calculating the checksum. Function converting degrees to hex. 300 degrees is 0x3FF
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include "servo.h"
 #include <util/delay.h>
 
-uint16_t servo1_Pos = 0x1FF;
-
-
-
-//baud_rate = 1000000 for the robot arm
+uint16_t joint1_Pos = 0x1FF; //servo 1
+uint16_t joint2_Pos = 0x1FF; //servo 2 & 3
+uint16_t joint3_Pos = 0x1FF; //servo 4 & 5
+uint16_t joint4_Pos = 0x1FF; //servo 6
+uint16_t joint5_Pos = 0x1FF; //servo 7
+uint16_t joint6_Pos = 0x1FF; //servo 8
 
 void USART_Init(void) {
 	DDRD = (1<<DDD2); //Setting D2 to output to control the tri-state
@@ -39,13 +39,14 @@ void USART_Transmit( unsigned char data) {
 	UDR0 = data; //UDREn cleared. 
 }
 
-unsigned char USART_Recieve(void){
-	
-	char data;
-	PORTD &= ~(1 << PORTD2);
-	data = UDR0;
-	return data; 
-}
+//receive is never used
+// unsigned char USART_Recieve(void){
+// 	
+// 	char data;
+// 	PORTD &= ~(1 << PORTD2);
+// 	data = UDR0;
+// 	return data; 
+// }
 
 void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID){
 	
@@ -112,28 +113,22 @@ void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 
 void default_Position(){
 	
-	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);
-	move_Single_Servo(0x3EE, 0x50, 0x01, 0x06);
+	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07); //setting servo 7 straight
+	move_Single_Servo(0x3EE, 0x50, 0x01, 0x06); //setting servo 6 to straight up
 	move_Double_Servo(0x1FF, 0x50, 0x00, 0x02, 0x03); //0x1FF is straight upwards
 	move_Double_Servo(0xCC, 0x50, 0x00, 0x04, 0x05); //0xCC (60 deg) is 0 degree position for servo 4 and 5
 	move_Double_Servo(0xCC, 0x50, 0x00, 0x02, 0x03); //0xCC (60 deg) is 0 degree position for servo 2 and 3
-	move_Single_Servo(0x1FF, 0x20, 0x00, 0x01);
+	move_Single_Servo(0x1FF, 0x20, 0x00, 0x01); //setting servo one to point forward
+	move_Single_Servo(0x1FF, 0x50, 0x00, 0x08); //opening the claw
 	
-}
-
-void rotate_Arm(uint8_t dir){
+	//updating positions
+	joint1_Pos = 0x1FF;
+	joint2_Pos = 0xCC;
+	joint3_Pos = 0xCC;
+	joint4_Pos = 0x3EE;
+	joint5_Pos = 0x1FF;
+	joint6_Pos = 0x1FF;
 	
-	
-	if (dir == ROTATE_DIRECTION_COUNTERCLOCKWISE && (servo1_Pos + 50) < 1023)
-	{
-		servo1_Pos += 50;
-		move_Single_Servo(servo1_Pos, 0x50, 0x00, 0x01);
-	} 
-	if (dir == ROTATE_DIRECTION_CLOCKWISE && (servo1_Pos - 50) > 0)
-	{
-		servo1_Pos -= 50;
-		move_Single_Servo(servo1_Pos, 0x50, 0x00, 0x01);
-	}
 }
 
 void pickup_Default_Position(){
@@ -142,7 +137,97 @@ void pickup_Default_Position(){
 	move_Double_Servo(0x288, 0xF0, 0x00, 0x04, 0x05);
 	move_Single_Servo(0x1FF, 0xF0, 0x00, 0x06);
 	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);
+	move_Single_Servo(0x1FF, 0x50, 0x00, 0x08);
 	
+	//updating positions
+	joint2_Pos = 0x288;
+	joint3_Pos = 0x288;
+	joint4_Pos = 0x1FF;
+	joint5_Pos = 0x1FF;
+	joint6_Pos = 0x1FF;
+}
+
+
+void move_Arm(uint8_t joint, _Bool direction){
+	
+	if (joint == 1)
+	{
+		if (direction == 0 && (joint1_Pos - 50) > 0)
+		{
+			joint1_Pos -= 50;
+			move_Single_Servo(joint1_Pos, 0x50, 0x00, 0x01);
+		} 
+		else if(direction == 1 && (joint1_Pos + 50) < 1023)
+		{
+			joint1_Pos += 50;
+			move_Single_Servo(joint1_Pos, 0x50, 0x00, 0x01);
+		}
+	}
+	else if(joint == 2)
+	{
+		if (direction == 0 && (joint2_Pos - 50) > 0xCD)
+		{
+			joint2_Pos -= 50;
+			move_Double_Servo(joint2_Pos, 0x50, 0x00, 0x02, 0x03);
+		}
+		else if(direction == 1 && (joint2_Pos + 50) < 0x322)
+		{
+			joint2_Pos += 50;
+			move_Double_Servo(joint2_Pos, 0x50, 0x00, 0x02, 0x03);
+		}
+	}
+	else if(joint == 3)
+	{
+		if (direction == 0 && (joint3_Pos - 50) > 0xCD)
+		{
+			joint3_Pos -= 50;
+			move_Double_Servo(joint3_Pos, 0x50, 0x00, 0x04, 0x05);
+		}
+		else if(direction == 1 && (joint3_Pos + 50) < 0x322)
+		{
+			joint3_Pos += 50;
+			move_Single_Servo(joint3_Pos, 0x50, 0x00, 0x04, 0x05);
+		}
+	}
+	else if (joint == 4)
+	{
+		if (direction == 0 && (joint4_Pos - 50) > 0) //kolla gränserna
+		{
+			joint4_Pos -= 50;
+			move_Single_Servo(joint4_Pos, 0x50, 0x00, 0x06);
+		}
+		else if(direction == 1 && (joint4_Pos + 50) < 1023) //kolla gränserna
+		{
+			joint4_Pos += 50;
+			move_Single_Servo(joint4_Pos, 0x50, 0x00, 0x06);
+		}
+	}
+	else if (joint == 5)
+	{
+		if (direction == 0 && (joint5_Pos - 50) > 0)
+		{
+			joint5_Pos -= 50;
+			move_Single_Servo(joint5_Pos, 0x50, 0x00, 0x07);
+		}
+		else if(direction == 1 && (joint5_Pos + 50) < 1023)
+		{
+			joint5_Pos += 50;
+			move_Single_Servo(joint5_Pos, 0x50, 0x00, 0x07);
+		}
+	}
+	else if (joint == 6)
+	{
+		if (direction == 0 && (joint6_Pos - 50) > 0) //kolla gränserna
+		{
+			joint6_Pos -= 50;
+			move_Single_Servo(joint6_Pos, 0x50, 0x00, 0x08);
+		}
+		else if(direction == 1 && (joint6_Pos + 50) < 1023) //kolla gränserna
+		{
+			joint6_Pos += 50;
+			move_Single_Servo(joint6_Pos, 0x50, 0x00, 0x08);
+		}
+	}
 }
 
 int main(void)
