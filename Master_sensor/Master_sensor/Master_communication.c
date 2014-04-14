@@ -4,12 +4,11 @@
  * Created: 3/30/2014 3:27:11 PM
  *  Author: albal214
  */ 
-//#define F_CPU 1000000UL
+
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
-//#include <util/delay.h>
-
 
 /* Variables */ 
 uint8_t received_data;
@@ -80,8 +79,7 @@ int main(void)
 	TX_sensor_data();
     while(1)
     {
-		//RX_wheel_data();
-		
+
 
     }
 }
@@ -94,7 +92,7 @@ void SPI_Init_Master()
 	//Sets MOSI, SCK and SS as outputs
 	DDRB = 0xB0;
 	PORTB |= (1 << PORTB3)|(1 << PORTB4);
-	//Sets the SPI-control register. Master settings and interrupt enable
+	//Sets the SPI-control register. Master settings and interrupt enable. SPR0, SPR1 sets clock to f/128.. 
 	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
 	//Enables interrupt 2
 	EICRA = 0x30;
@@ -179,8 +177,6 @@ void TX_sensor_data()
 	Slave_Select(Control_Slave);
 	TX_Protocol(ss);
 	sensor_data = 0xAA;
-	
-	//_delay_ms(100);
 	Slave_Select(No_Slave);
 	Slave_Select(Control_Slave);
 	Master_TX(sensor_data);

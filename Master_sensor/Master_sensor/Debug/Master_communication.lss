@@ -165,7 +165,7 @@ void SPI_Init_Master()
   d0:	85 b1       	in	r24, 0x05	; 5
   d2:	88 61       	ori	r24, 0x18	; 24
   d4:	85 b9       	out	0x05, r24	; 5
-	//Sets the SPI-control register. Master settings and interrupt enable
+	//Sets the SPI-control register. Master settings and interrupt enable. SPR0, SPR1 sets clock to f/128.. 
 	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
   d6:	8c b5       	in	r24, 0x2c	; 44
   d8:	83 6d       	ori	r24, 0xD3	; 211
@@ -472,8 +472,6 @@ void TX_sensor_data()
 	sensor_data = 0xAA;
  26a:	8a ea       	ldi	r24, 0xAA	; 170
  26c:	80 93 0c 01 	sts	0x010C, r24
-	
-	//_delay_ms(100);
 	Slave_Select(No_Slave);
  270:	80 91 0a 01 	lds	r24, 0x010A
  274:	b8 df       	rcall	.-144    	; 0x1e6 <Slave_Select>

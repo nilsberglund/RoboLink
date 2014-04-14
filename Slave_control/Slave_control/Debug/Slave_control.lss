@@ -161,8 +161,8 @@ void SPI_Init_Slave()
   cc:	88 e4       	ldi	r24, 0x48	; 72
   ce:	84 b9       	out	0x04, r24	; 4
 			
-			SPCR = 0xC0;
-  d0:	80 ec       	ldi	r24, 0xC0	; 192
+			SPCR = 0xC3;
+  d0:	83 ec       	ldi	r24, 0xC3	; 195
   d2:	8c bd       	out	0x2c, r24	; 44
 			
 			sei(); 
