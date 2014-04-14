@@ -17,19 +17,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .debug_aranges 00000060  00000000  00000000  00001edb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   000002c3  00000000  00000000  00001f3b  2**0
+  7 .debug_info   000002dc  00000000  00000000  00001f3b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000124  00000000  00000000  000021fe  2**0
+  8 .debug_abbrev 0000013c  00000000  00000000  00002217  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000211  00000000  00000000  00002322  2**0
+  9 .debug_line   00000210  00000000  00000000  00002353  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000000bc  00000000  00000000  00002534  2**2
+ 10 .debug_frame  000000bc  00000000  00000000  00002564  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000182  00000000  00000000  000025f0  2**0
+ 11 .debug_str    00000177  00000000  00000000  00002620  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000013b  00000000  00000000  00002772  2**0
+ 12 .debug_loc    0000013b  00000000  00000000  00002797  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000050  00000000  00000000  000028ad  2**0
+ 13 .debug_ranges 00000050  00000000  00000000  000028d2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -196,7 +196,7 @@ void drive(int right_dir, int left_dir, int speed_left, int speed_right)
   fe:	08 95       	ret
 
 00000100 <drive_forward>:
-}
+//////////////////Drive functions////////////////////// 
 
 /* Function allowing the robot to move forwards */
 void drive_forward()
@@ -226,10 +226,9 @@ int main(void)
  120:	c6 df       	rcall	.-116    	; 0xae <driving_setup>
 	sei();
  122:	78 94       	sei
-	while(1)
-    {
-		
-		drive_forward();
+	
+			for(int test =0; test<50000; test++){
+				drive_forward();
  124:	ed df       	rcall	.-38     	; 0x100 <drive_forward>
  126:	fe cf       	rjmp	.-4      	; 0x124 <main+0x10>
 

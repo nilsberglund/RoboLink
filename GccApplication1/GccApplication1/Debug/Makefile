@@ -36,6 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../digitalLineSensorValues.c \
 ../GccApplication1.c
 
 
@@ -46,15 +47,19 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+digitalLineSensorValues.o \
 GccApplication1.o
 
 OBJS_AS_ARGS +=  \
+digitalLineSensorValues.o \
 GccApplication1.o
 
 C_DEPS +=  \
+digitalLineSensorValues.d \
 GccApplication1.d
 
 C_DEPS_AS_ARGS +=  \
+digitalLineSensorValues.d \
 GccApplication1.d
 
 OUTPUT_FILE_PATH +=GccApplication1.elf
@@ -68,6 +73,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
