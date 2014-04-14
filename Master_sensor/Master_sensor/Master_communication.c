@@ -4,10 +4,12 @@
  * Created: 3/30/2014 3:27:11 PM
  *  Author: albal214
  */ 
-
+//#define F_CPU 1000000UL
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
+//#include <util/delay.h>
+
 
 /* Variables */ 
 uint8_t received_data;
@@ -75,9 +77,12 @@ int main(void)
 {
 	SPI_Init_Master();
 	PORTB |= (1 << PORTB4);
+	TX_sensor_data();
     while(1)
     {
-	//Master_TX(0xAA);
+		//RX_wheel_data();
+		
+
     }
 }
 
@@ -88,24 +93,26 @@ void SPI_Init_Master()
 	DDRD = 0xFF;
 	//Sets MOSI, SCK and SS as outputs
 	DDRB = 0xB0;
+	PORTB |= (1 << PORTB3)|(1 << PORTB4);
 	//Sets the SPI-control register. Master settings and interrupt enable
-	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR);
+	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
 	//Enables interrupt 2
 	EICRA = 0x30;
 	EIMSK = 0x04;
 	//Enable global interrupt
 	sei();
+	
 			
 }
 
 //Master transmission to slave
-uint8_t Master_TX(uint8_t data)
+uint8_t Master_TX(volatile uint8_t data)
 {
 		/* Start transmission */
 		SPDR = data;
 		/* Wait for transmission complete */
 		while(!(SPSR & (1<<SPIF)));
-		
+			
 		return SPDR;
 }
 
@@ -114,13 +121,15 @@ void Slave_Select(uint8_t slave)
 {
 	if(slave == Control_Slave)
 	{
-		PORTB &= ~(1 << PORTB4);
 		PORTB |= (1 << PORTB3);
+		PORTB &= ~(1 << PORTB4);
+
 	}
 	else if (slave == Sensor_Slave)
 	{
-		PORTB &= ~(1 << PORTB3);
 		PORTB |= (1 << PORTB4);
+		PORTB &= ~(1 << PORTB3);
+		
 	}
 	else
 	{
@@ -132,6 +141,7 @@ void Slave_Select(uint8_t slave)
 // a = arm, s = sensor data, w = wheel data, r = rfid data
 void TX_Protocol(uint8_t component)
 {
+
 	if(component == ss)
 	{
 		Master_TX(0b10000100);
@@ -168,6 +178,11 @@ void TX_sensor_data()
 {
 	Slave_Select(Control_Slave);
 	TX_Protocol(ss);
+	sensor_data = 0xAA;
+	
+	//_delay_ms(100);
+	Slave_Select(No_Slave);
+	Slave_Select(Control_Slave);
 	Master_TX(sensor_data);
 }
 
