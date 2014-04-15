@@ -179,7 +179,8 @@ public class GUI2 extends javax.swing.JFrame {
 		
 		//functions for all the buttons
 		
-		btnConnect.addActionListener(new java.awt.event.ActionListener() {
+		//connect button
+		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				btnConnectActionPerformed(evt);
 			}
@@ -194,8 +195,8 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 		});
 
-		
-		btnDisconnect.addActionListener(new java.awt.event.ActionListener() {
+		//disconnect button
+		btnDisconnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				btnDisconnectActionPerformed(evt);
 
@@ -206,6 +207,8 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 		});
 		
+		
+		//Calibration button
 		btnCalibration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				btnCalibrationActionPerformed(evt);
@@ -213,11 +216,14 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 
 			private void btnCalibrationActionPerformed(ActionEvent evt) {
-				communicator.writeData(1);
+				byte temp = 1;
+				communicator.writeData(temp);
 				
 			}
 		});
 		
+		
+		//bodyforward button
 		btnBodyForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				btnBodyForwardActionPerformed(evt);
@@ -225,7 +231,8 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 
 			private void btnBodyForwardActionPerformed(ActionEvent evt) {
-				communicator.writeData(2);
+				byte temp = 2;
+				communicator.writeData(temp);
 				
 			}
 		});
