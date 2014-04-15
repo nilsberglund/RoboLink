@@ -47,12 +47,12 @@
           <JtagDevicesBefore>0</JtagDevicesBefore>
           <JtagDevicesAfter>1</JtagDevicesAfter>
           <JtagInstrBitsBefore>0</JtagInstrBitsBefore>
-          <JtagInstrBitsAfter>0</JtagInstrBitsAfter>
+          <JtagInstrBitsAfter>4</JtagInstrBitsAfter>
         </InterfaceProperties>
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200012651</ToolNumber>
+      <ToolNumber>J30200006284</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
     <avrtoolinterface>JTAG</avrtoolinterface>

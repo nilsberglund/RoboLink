@@ -3,33 +3,33 @@ Master_communication.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000a  00800100  0000028e  00000322  2**0
+  0 .data         0000000a  00800100  000002ac  00000340  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000028e  00000000  00000000  00000094  2**1
+  1 .text         000002ac  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000011  0080010a  0080010a  0000032c  2**0
+  2 .bss          00000012  0080010a  0080010a  0000034a  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  0000032c  2**2
+  3 .stab         000006cc  00000000  00000000  0000034c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  000009f8  2**0
+  4 .stabstr      00000097  00000000  00000000  00000a18  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000a8f  2**0
+  5 .comment      0000002f  00000000  00000000  00000aaf  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 00000088  00000000  00000000  00000abe  2**0
+  6 .debug_aranges 00000090  00000000  00000000  00000ade  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000517  00000000  00000000  00000b46  2**0
+  7 .debug_info   00000553  00000000  00000000  00000b6e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000018d  00000000  00000000  0000105d  2**0
+  8 .debug_abbrev 0000018d  00000000  00000000  000010c1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000397  00000000  00000000  000011ea  2**0
+  9 .debug_line   000003c2  00000000  00000000  0000124e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001a8  00000000  00000000  00001584  2**2
+ 10 .debug_frame  000001c8  00000000  00000000  00001610  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001ce  00000000  00000000  0000172c  2**0
+ 11 .debug_str    000001de  00000000  00000000  000017d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000311  00000000  00000000  000018fa  2**0
+ 12 .debug_loc    00000378  00000000  00000000  000019b6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000078  00000000  00000000  00001c0b  2**0
+ 13 .debug_ranges 00000080  00000000  00000000  00001d2e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -39,9 +39,9 @@ Disassembly of section .text:
    2:	00 00       	nop
    4:	60 c0       	rjmp	.+192    	; 0xc6 <__bad_interrupt>
    6:	00 00       	nop
-   8:	c3 c0       	rjmp	.+390    	; 0x190 <__vector_2>
+   8:	d2 c0       	rjmp	.+420    	; 0x1ae <__vector_2>
    a:	00 00       	nop
-   c:	7e c0       	rjmp	.+252    	; 0x10a <__vector_3>
+   c:	8d c0       	rjmp	.+282    	; 0x128 <__vector_3>
    e:	00 00       	nop
   10:	5a c0       	rjmp	.+180    	; 0xc6 <__bad_interrupt>
   12:	00 00       	nop
@@ -118,7 +118,7 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	ee e8       	ldi	r30, 0x8E	; 142
+  9e:	ec ea       	ldi	r30, 0xAC	; 172
   a0:	f2 e0       	ldi	r31, 0x02	; 2
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
@@ -139,11 +139,11 @@ Disassembly of section .text:
   ba:	1d 92       	st	X+, r1
 
 000000bc <.do_clear_bss_start>:
-  bc:	ab 31       	cpi	r26, 0x1B	; 27
+  bc:	ac 31       	cpi	r26, 0x1C	; 28
   be:	b2 07       	cpc	r27, r18
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
-  c2:	df d0       	rcall	.+446    	; 0x282 <main>
-  c4:	e2 c0       	rjmp	.+452    	; 0x28a <_exit>
+  c2:	ee d0       	rcall	.+476    	; 0x2a0 <main>
+  c4:	f1 c0       	rjmp	.+482    	; 0x2a8 <_exit>
 
 000000c6 <__bad_interrupt>:
   c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
@@ -166,9 +166,9 @@ void SPI_Init_Master()
   d2:	88 61       	ori	r24, 0x18	; 24
   d4:	85 b9       	out	0x05, r24	; 5
 	//Sets the SPI-control register. Master settings and interrupt enable. SPR0, SPR1 sets clock to f/128.. 
-	SPCR |= (1 << SPIE)|(1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
+	SPCR |= (1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
   d6:	8c b5       	in	r24, 0x2c	; 44
-  d8:	83 6d       	ori	r24, 0xD3	; 211
+  d8:	83 65       	ori	r24, 0x53	; 83
   da:	8c bd       	out	0x2c, r24	; 44
 	//Enables interrupt 2
 	EICRA = 0x30;
@@ -187,7 +187,7 @@ void SPI_Init_Master()
 }
 
 //Master transmission to slave
-uint8_t Master_TX(volatile uint8_t data)
+void Master_TX(volatile uint8_t data)
 {
   ea:	cf 93       	push	r28
   ec:	df 93       	push	r29
@@ -196,6 +196,7 @@ uint8_t Master_TX(volatile uint8_t data)
   f2:	de b7       	in	r29, 0x3e	; 62
   f4:	89 83       	std	Y+1, r24	; 0x01
 		/* Start transmission */
+
 		SPDR = data;
   f6:	89 81       	ldd	r24, Y+1	; 0x01
   f8:	8e bd       	out	0x2e, r24	; 46
@@ -204,300 +205,331 @@ uint8_t Master_TX(volatile uint8_t data)
   fa:	0d b4       	in	r0, 0x2d	; 45
   fc:	07 fe       	sbrs	r0, 7
   fe:	fd cf       	rjmp	.-6      	; 0xfa <Master_TX+0x10>
-			
-		return SPDR;
- 100:	8e b5       	in	r24, 0x2e	; 46
-}
- 102:	0f 90       	pop	r0
- 104:	df 91       	pop	r29
- 106:	cf 91       	pop	r28
- 108:	08 95       	ret
 
-0000010a <__vector_3>:
-	sensor_data = Master_TX(0x01);	
+}
+ 100:	0f 90       	pop	r0
+ 102:	df 91       	pop	r29
+ 104:	cf 91       	pop	r28
+ 106:	08 95       	ret
+
+00000108 <Master_RX>:
+
+uint8_t Master_RX(volatile uint8_t data){
+ 108:	cf 93       	push	r28
+ 10a:	df 93       	push	r29
+ 10c:	1f 92       	push	r1
+ 10e:	cd b7       	in	r28, 0x3d	; 61
+ 110:	de b7       	in	r29, 0x3e	; 62
+ 112:	89 83       	std	Y+1, r24	; 0x01
+
+		/* Start transmission */
+		SPDR = data;
+ 114:	89 81       	ldd	r24, Y+1	; 0x01
+ 116:	8e bd       	out	0x2e, r24	; 46
+		/* Wait for transmission complete */
+		while(!(SPSR & (1<<SPIF)));
+ 118:	0d b4       	in	r0, 0x2d	; 45
+ 11a:	07 fe       	sbrs	r0, 7
+ 11c:	fd cf       	rjmp	.-6      	; 0x118 <Master_RX+0x10>
+		
+		return SPDR;
+ 11e:	8e b5       	in	r24, 0x2e	; 46
+}
+ 120:	0f 90       	pop	r0
+ 122:	df 91       	pop	r29
+ 124:	cf 91       	pop	r28
+ 126:	08 95       	ret
+
+00000128 <__vector_3>:
+	sensor_data = Master_RX(0x01);	
 }
 
 //Receive function. Data is transmitted from the control slave
 ISR(INT2_vect)
 {
- 10a:	1f 92       	push	r1
- 10c:	0f 92       	push	r0
- 10e:	0f b6       	in	r0, 0x3f	; 63
- 110:	0f 92       	push	r0
- 112:	11 24       	eor	r1, r1
- 114:	0b b6       	in	r0, 0x3b	; 59
- 116:	0f 92       	push	r0
- 118:	2f 93       	push	r18
- 11a:	3f 93       	push	r19
- 11c:	4f 93       	push	r20
- 11e:	5f 93       	push	r21
- 120:	6f 93       	push	r22
- 122:	7f 93       	push	r23
- 124:	8f 93       	push	r24
- 126:	9f 93       	push	r25
- 128:	af 93       	push	r26
- 12a:	bf 93       	push	r27
- 12c:	ef 93       	push	r30
- 12e:	ff 93       	push	r31
+ 128:	1f 92       	push	r1
+ 12a:	0f 92       	push	r0
+ 12c:	0f b6       	in	r0, 0x3f	; 63
+ 12e:	0f 92       	push	r0
+ 130:	11 24       	eor	r1, r1
+ 132:	0b b6       	in	r0, 0x3b	; 59
+ 134:	0f 92       	push	r0
+ 136:	2f 93       	push	r18
+ 138:	3f 93       	push	r19
+ 13a:	4f 93       	push	r20
+ 13c:	5f 93       	push	r21
+ 13e:	6f 93       	push	r22
+ 140:	7f 93       	push	r23
+ 142:	8f 93       	push	r24
+ 144:	9f 93       	push	r25
+ 146:	af 93       	push	r26
+ 148:	bf 93       	push	r27
+ 14a:	ef 93       	push	r30
+ 14c:	ff 93       	push	r31
 	PORTB &= ~(1 << PORTB4);
- 130:	2c 98       	cbi	0x05, 4	; 5
+ 14e:	2c 98       	cbi	0x05, 4	; 5
 	//case wanted data : 0x01 = wheel, 0x10 = arm, 0x11 = RFID, 0x02 = sensor_data
 	if(wanted_data == wr)
- 132:	80 91 17 01 	lds	r24, 0x0117
- 136:	90 91 03 01 	lds	r25, 0x0103
- 13a:	89 13       	cpse	r24, r25
- 13c:	05 c0       	rjmp	.+10     	; 0x148 <__vector_3+0x3e>
+ 150:	80 91 17 01 	lds	r24, 0x0117
+ 154:	90 91 03 01 	lds	r25, 0x0103
+ 158:	89 13       	cpse	r24, r25
+ 15a:	05 c0       	rjmp	.+10     	; 0x166 <__vector_3+0x3e>
 	{
-		wheel_steering_data = Master_TX(0x01);
- 13e:	81 e0       	ldi	r24, 0x01	; 1
- 140:	d4 df       	rcall	.-88     	; 0xea <Master_TX>
- 142:	80 93 18 01 	sts	0x0118, r24
- 146:	11 c0       	rjmp	.+34     	; 0x16a <__vector_3+0x60>
+		wheel_steering_data = Master_RX(0x01);
+ 15c:	81 e0       	ldi	r24, 0x01	; 1
+ 15e:	d4 df       	rcall	.-88     	; 0x108 <Master_RX>
+ 160:	80 93 18 01 	sts	0x0118, r24
+ 164:	11 c0       	rjmp	.+34     	; 0x188 <__vector_3+0x60>
 	}
 	else if(wanted_data == sr)
- 148:	90 91 05 01 	lds	r25, 0x0105
- 14c:	89 13       	cpse	r24, r25
- 14e:	05 c0       	rjmp	.+10     	; 0x15a <__vector_3+0x50>
+ 166:	90 91 05 01 	lds	r25, 0x0105
+ 16a:	89 13       	cpse	r24, r25
+ 16c:	05 c0       	rjmp	.+10     	; 0x178 <__vector_3+0x50>
 	{
-		sensor_data = Master_TX(0x01);
- 150:	81 e0       	ldi	r24, 0x01	; 1
- 152:	cb df       	rcall	.-106    	; 0xea <Master_TX>
- 154:	80 93 0c 01 	sts	0x010C, r24
- 158:	08 c0       	rjmp	.+16     	; 0x16a <__vector_3+0x60>
+		sensor_data = Master_RX(0x01);
+ 16e:	81 e0       	ldi	r24, 0x01	; 1
+ 170:	cb df       	rcall	.-106    	; 0x108 <Master_RX>
+ 172:	80 93 0c 01 	sts	0x010C, r24
+ 176:	08 c0       	rjmp	.+16     	; 0x188 <__vector_3+0x60>
 	}
 	else if(wanted_data == ar)
- 15a:	90 91 01 01 	lds	r25, 0x0101
- 15e:	89 13       	cpse	r24, r25
- 160:	04 c0       	rjmp	.+8      	; 0x16a <__vector_3+0x60>
+ 178:	90 91 01 01 	lds	r25, 0x0101
+ 17c:	89 13       	cpse	r24, r25
+ 17e:	04 c0       	rjmp	.+8      	; 0x188 <__vector_3+0x60>
 	{
-		robot_arm_data = Master_TX(0x01);
- 162:	81 e0       	ldi	r24, 0x01	; 1
- 164:	c2 df       	rcall	.-124    	; 0xea <Master_TX>
- 166:	80 93 0b 01 	sts	0x010B, r24
+		robot_arm_data = Master_RX(0x01);
+ 180:	81 e0       	ldi	r24, 0x01	; 1
+ 182:	c2 df       	rcall	.-124    	; 0x108 <Master_RX>
+ 184:	80 93 0b 01 	sts	0x010B, r24
 	}
 }
- 16a:	ff 91       	pop	r31
- 16c:	ef 91       	pop	r30
- 16e:	bf 91       	pop	r27
- 170:	af 91       	pop	r26
- 172:	9f 91       	pop	r25
- 174:	8f 91       	pop	r24
- 176:	7f 91       	pop	r23
- 178:	6f 91       	pop	r22
- 17a:	5f 91       	pop	r21
- 17c:	4f 91       	pop	r20
- 17e:	3f 91       	pop	r19
- 180:	2f 91       	pop	r18
- 182:	0f 90       	pop	r0
- 184:	0b be       	out	0x3b, r0	; 59
- 186:	0f 90       	pop	r0
- 188:	0f be       	out	0x3f, r0	; 63
- 18a:	0f 90       	pop	r0
- 18c:	1f 90       	pop	r1
- 18e:	18 95       	reti
+ 188:	ff 91       	pop	r31
+ 18a:	ef 91       	pop	r30
+ 18c:	bf 91       	pop	r27
+ 18e:	af 91       	pop	r26
+ 190:	9f 91       	pop	r25
+ 192:	8f 91       	pop	r24
+ 194:	7f 91       	pop	r23
+ 196:	6f 91       	pop	r22
+ 198:	5f 91       	pop	r21
+ 19a:	4f 91       	pop	r20
+ 19c:	3f 91       	pop	r19
+ 19e:	2f 91       	pop	r18
+ 1a0:	0f 90       	pop	r0
+ 1a2:	0b be       	out	0x3b, r0	; 59
+ 1a4:	0f 90       	pop	r0
+ 1a6:	0f be       	out	0x3f, r0	; 63
+ 1a8:	0f 90       	pop	r0
+ 1aa:	1f 90       	pop	r1
+ 1ac:	18 95       	reti
 
-00000190 <__vector_2>:
+000001ae <__vector_2>:
 void TX_RFID_data();
 
 
 //Receive function. Data is transmitted from the sensor slave.
 ISR(INT1_vect)
 {
- 190:	1f 92       	push	r1
- 192:	0f 92       	push	r0
- 194:	0f b6       	in	r0, 0x3f	; 63
- 196:	0f 92       	push	r0
- 198:	11 24       	eor	r1, r1
- 19a:	0b b6       	in	r0, 0x3b	; 59
- 19c:	0f 92       	push	r0
- 19e:	2f 93       	push	r18
- 1a0:	3f 93       	push	r19
- 1a2:	4f 93       	push	r20
- 1a4:	5f 93       	push	r21
- 1a6:	6f 93       	push	r22
- 1a8:	7f 93       	push	r23
- 1aa:	8f 93       	push	r24
- 1ac:	9f 93       	push	r25
- 1ae:	af 93       	push	r26
- 1b0:	bf 93       	push	r27
- 1b2:	ef 93       	push	r30
- 1b4:	ff 93       	push	r31
+ 1ae:	1f 92       	push	r1
+ 1b0:	0f 92       	push	r0
+ 1b2:	0f b6       	in	r0, 0x3f	; 63
+ 1b4:	0f 92       	push	r0
+ 1b6:	11 24       	eor	r1, r1
+ 1b8:	0b b6       	in	r0, 0x3b	; 59
+ 1ba:	0f 92       	push	r0
+ 1bc:	2f 93       	push	r18
+ 1be:	3f 93       	push	r19
+ 1c0:	4f 93       	push	r20
+ 1c2:	5f 93       	push	r21
+ 1c4:	6f 93       	push	r22
+ 1c6:	7f 93       	push	r23
+ 1c8:	8f 93       	push	r24
+ 1ca:	9f 93       	push	r25
+ 1cc:	af 93       	push	r26
+ 1ce:	bf 93       	push	r27
+ 1d0:	ef 93       	push	r30
+ 1d2:	ff 93       	push	r31
 	PORTB &= ~(1 << PORTB3);
- 1b6:	2b 98       	cbi	0x05, 3	; 5
-	sensor_data = Master_TX(0x01);	
- 1b8:	81 e0       	ldi	r24, 0x01	; 1
- 1ba:	97 df       	rcall	.-210    	; 0xea <Master_TX>
- 1bc:	80 93 0c 01 	sts	0x010C, r24
+ 1d4:	2b 98       	cbi	0x05, 3	; 5
+	sensor_data = Master_RX(0x01);	
+ 1d6:	81 e0       	ldi	r24, 0x01	; 1
+ 1d8:	97 df       	rcall	.-210    	; 0x108 <Master_RX>
+ 1da:	80 93 0c 01 	sts	0x010C, r24
 }
- 1c0:	ff 91       	pop	r31
- 1c2:	ef 91       	pop	r30
- 1c4:	bf 91       	pop	r27
- 1c6:	af 91       	pop	r26
- 1c8:	9f 91       	pop	r25
- 1ca:	8f 91       	pop	r24
- 1cc:	7f 91       	pop	r23
- 1ce:	6f 91       	pop	r22
- 1d0:	5f 91       	pop	r21
- 1d2:	4f 91       	pop	r20
- 1d4:	3f 91       	pop	r19
- 1d6:	2f 91       	pop	r18
- 1d8:	0f 90       	pop	r0
- 1da:	0b be       	out	0x3b, r0	; 59
- 1dc:	0f 90       	pop	r0
- 1de:	0f be       	out	0x3f, r0	; 63
- 1e0:	0f 90       	pop	r0
- 1e2:	1f 90       	pop	r1
- 1e4:	18 95       	reti
+ 1de:	ff 91       	pop	r31
+ 1e0:	ef 91       	pop	r30
+ 1e2:	bf 91       	pop	r27
+ 1e4:	af 91       	pop	r26
+ 1e6:	9f 91       	pop	r25
+ 1e8:	8f 91       	pop	r24
+ 1ea:	7f 91       	pop	r23
+ 1ec:	6f 91       	pop	r22
+ 1ee:	5f 91       	pop	r21
+ 1f0:	4f 91       	pop	r20
+ 1f2:	3f 91       	pop	r19
+ 1f4:	2f 91       	pop	r18
+ 1f6:	0f 90       	pop	r0
+ 1f8:	0b be       	out	0x3b, r0	; 59
+ 1fa:	0f 90       	pop	r0
+ 1fc:	0f be       	out	0x3f, r0	; 63
+ 1fe:	0f 90       	pop	r0
+ 200:	1f 90       	pop	r1
+ 202:	18 95       	reti
 
-000001e6 <Slave_Select>:
-}
+00000204 <Slave_Select>:
+
 
 //Selects slave. PORTB4 = Control_Slave, PORTB3 = Sensor_Slave
 void Slave_Select(uint8_t slave)
 {
 	if(slave == Control_Slave)
- 1e6:	90 91 07 01 	lds	r25, 0x0107
- 1ea:	89 13       	cpse	r24, r25
- 1ec:	03 c0       	rjmp	.+6      	; 0x1f4 <Slave_Select+0xe>
+ 204:	90 91 07 01 	lds	r25, 0x0107
+ 208:	89 13       	cpse	r24, r25
+ 20a:	03 c0       	rjmp	.+6      	; 0x212 <Slave_Select+0xe>
 	{
 		PORTB |= (1 << PORTB3);
- 1ee:	2b 9a       	sbi	0x05, 3	; 5
+ 20c:	2b 9a       	sbi	0x05, 3	; 5
 		PORTB &= ~(1 << PORTB4);
- 1f0:	2c 98       	cbi	0x05, 4	; 5
- 1f2:	08 95       	ret
+ 20e:	2c 98       	cbi	0x05, 4	; 5
+ 210:	08 95       	ret
 
 	}
 	else if (slave == Sensor_Slave)
- 1f4:	90 91 08 01 	lds	r25, 0x0108
- 1f8:	89 13       	cpse	r24, r25
- 1fa:	03 c0       	rjmp	.+6      	; 0x202 <Slave_Select+0x1c>
+ 212:	90 91 08 01 	lds	r25, 0x0108
+ 216:	89 13       	cpse	r24, r25
+ 218:	03 c0       	rjmp	.+6      	; 0x220 <Slave_Select+0x1c>
 	{
 		PORTB |= (1 << PORTB4);
- 1fc:	2c 9a       	sbi	0x05, 4	; 5
+ 21a:	2c 9a       	sbi	0x05, 4	; 5
 		PORTB &= ~(1 << PORTB3);
- 1fe:	2b 98       	cbi	0x05, 3	; 5
- 200:	08 95       	ret
+ 21c:	2b 98       	cbi	0x05, 3	; 5
+ 21e:	08 95       	ret
 		
 	}
 	else
 	{
 		PORTB |= (1 << PORTB4);
- 202:	2c 9a       	sbi	0x05, 4	; 5
+ 220:	2c 9a       	sbi	0x05, 4	; 5
 		PORTB |= (1 << PORTB3);
- 204:	2b 9a       	sbi	0x05, 3	; 5
- 206:	08 95       	ret
+ 222:	2b 9a       	sbi	0x05, 3	; 5
+ 224:	08 95       	ret
 
-00000208 <TX_Protocol>:
+00000226 <TX_Protocol>:
 
 // a = arm, s = sensor data, w = wheel data, r = rfid data
 void TX_Protocol(uint8_t component)
 {
 
 	if(component == ss)
- 208:	90 91 06 01 	lds	r25, 0x0106
- 20c:	89 13       	cpse	r24, r25
- 20e:	02 c0       	rjmp	.+4      	; 0x214 <TX_Protocol+0xc>
+ 226:	90 91 06 01 	lds	r25, 0x0106
+ 22a:	89 13       	cpse	r24, r25
+ 22c:	02 c0       	rjmp	.+4      	; 0x232 <TX_Protocol+0xc>
 	{
 		Master_TX(0b10000100);
- 210:	84 e8       	ldi	r24, 0x84	; 132
- 212:	6b cf       	rjmp	.-298    	; 0xea <Master_TX>
+ 22e:	84 e8       	ldi	r24, 0x84	; 132
+ 230:	5c cf       	rjmp	.-328    	; 0xea <Master_TX>
 	}
 	else if(component == ws)
- 214:	90 91 04 01 	lds	r25, 0x0104
- 218:	89 13       	cpse	r24, r25
- 21a:	02 c0       	rjmp	.+4      	; 0x220 <TX_Protocol+0x18>
+ 232:	90 91 04 01 	lds	r25, 0x0104
+ 236:	89 13       	cpse	r24, r25
+ 238:	02 c0       	rjmp	.+4      	; 0x23e <TX_Protocol+0x18>
 	{
 		Master_TX(0b10000101);
- 21c:	85 e8       	ldi	r24, 0x85	; 133
- 21e:	65 cf       	rjmp	.-310    	; 0xea <Master_TX>
+ 23a:	85 e8       	ldi	r24, 0x85	; 133
+ 23c:	56 cf       	rjmp	.-340    	; 0xea <Master_TX>
 	}
 	else if(component == as)
- 220:	90 91 02 01 	lds	r25, 0x0102
- 224:	89 13       	cpse	r24, r25
- 226:	02 c0       	rjmp	.+4      	; 0x22c <TX_Protocol+0x24>
+ 23e:	90 91 02 01 	lds	r25, 0x0102
+ 242:	89 13       	cpse	r24, r25
+ 244:	02 c0       	rjmp	.+4      	; 0x24a <TX_Protocol+0x24>
 	{
 		Master_TX(0b10000110);
- 228:	86 e8       	ldi	r24, 0x86	; 134
- 22a:	5f cf       	rjmp	.-322    	; 0xea <Master_TX>
+ 246:	86 e8       	ldi	r24, 0x86	; 134
+ 248:	50 cf       	rjmp	.-352    	; 0xea <Master_TX>
 	}
 	else if(component == sr)
- 22c:	90 91 05 01 	lds	r25, 0x0105
- 230:	89 13       	cpse	r24, r25
- 232:	02 c0       	rjmp	.+4      	; 0x238 <TX_Protocol+0x30>
+ 24a:	90 91 05 01 	lds	r25, 0x0105
+ 24e:	89 13       	cpse	r24, r25
+ 250:	02 c0       	rjmp	.+4      	; 0x256 <TX_Protocol+0x30>
 	{
 		Master_TX(0b00000100);
- 234:	84 e0       	ldi	r24, 0x04	; 4
- 236:	59 cf       	rjmp	.-334    	; 0xea <Master_TX>
+ 252:	84 e0       	ldi	r24, 0x04	; 4
+ 254:	4a cf       	rjmp	.-364    	; 0xea <Master_TX>
 	}
 	else if(component == wr)
- 238:	90 91 03 01 	lds	r25, 0x0103
- 23c:	89 13       	cpse	r24, r25
- 23e:	02 c0       	rjmp	.+4      	; 0x244 <TX_Protocol+0x3c>
+ 256:	90 91 03 01 	lds	r25, 0x0103
+ 25a:	89 13       	cpse	r24, r25
+ 25c:	02 c0       	rjmp	.+4      	; 0x262 <TX_Protocol+0x3c>
 	{
 		Master_TX(0b00000101);
- 240:	85 e0       	ldi	r24, 0x05	; 5
- 242:	53 cf       	rjmp	.-346    	; 0xea <Master_TX>
+ 25e:	85 e0       	ldi	r24, 0x05	; 5
+ 260:	44 cf       	rjmp	.-376    	; 0xea <Master_TX>
 	}
 	else if(component == ar)
- 244:	90 91 01 01 	lds	r25, 0x0101
- 248:	89 13       	cpse	r24, r25
- 24a:	02 c0       	rjmp	.+4      	; 0x250 <TX_Protocol+0x48>
+ 262:	90 91 01 01 	lds	r25, 0x0101
+ 266:	89 13       	cpse	r24, r25
+ 268:	02 c0       	rjmp	.+4      	; 0x26e <TX_Protocol+0x48>
 	{
 		Master_TX(0b00000110);
- 24c:	86 e0       	ldi	r24, 0x06	; 6
- 24e:	4d cf       	rjmp	.-358    	; 0xea <Master_TX>
+ 26a:	86 e0       	ldi	r24, 0x06	; 6
+ 26c:	3e cf       	rjmp	.-388    	; 0xea <Master_TX>
 	}
 	else if(component == rs)
- 250:	90 91 00 01 	lds	r25, 0x0100
- 254:	89 13       	cpse	r24, r25
- 256:	02 c0       	rjmp	.+4      	; 0x25c <TX_Protocol+0x54>
+ 26e:	90 91 00 01 	lds	r25, 0x0100
+ 272:	89 13       	cpse	r24, r25
+ 274:	02 c0       	rjmp	.+4      	; 0x27a <TX_Protocol+0x54>
 	{
 		Master_TX(0b10101011);
- 258:	8b ea       	ldi	r24, 0xAB	; 171
- 25a:	47 cf       	rjmp	.-370    	; 0xea <Master_TX>
- 25c:	08 95       	ret
+ 276:	8b ea       	ldi	r24, 0xAB	; 171
+ 278:	38 cf       	rjmp	.-400    	; 0xea <Master_TX>
+ 27a:	08 95       	ret
 
-0000025e <TX_sensor_data>:
+0000027c <TX_sensor_data>:
 
 
 /* Function that transmits sensor data to the control slave. */
 void TX_sensor_data()
 {
 	Slave_Select(Control_Slave);
- 25e:	80 91 07 01 	lds	r24, 0x0107
- 262:	c1 df       	rcall	.-126    	; 0x1e6 <Slave_Select>
+ 27c:	80 91 07 01 	lds	r24, 0x0107
+ 280:	c1 df       	rcall	.-126    	; 0x204 <Slave_Select>
 	TX_Protocol(ss);
- 264:	80 91 06 01 	lds	r24, 0x0106
- 268:	cf df       	rcall	.-98     	; 0x208 <TX_Protocol>
+ 282:	80 91 06 01 	lds	r24, 0x0106
+ 286:	cf df       	rcall	.-98     	; 0x226 <TX_Protocol>
 	sensor_data = 0xAA;
- 26a:	8a ea       	ldi	r24, 0xAA	; 170
- 26c:	80 93 0c 01 	sts	0x010C, r24
+ 288:	8a ea       	ldi	r24, 0xAA	; 170
+ 28a:	80 93 0c 01 	sts	0x010C, r24
 	Slave_Select(No_Slave);
- 270:	80 91 0a 01 	lds	r24, 0x010A
- 274:	b8 df       	rcall	.-144    	; 0x1e6 <Slave_Select>
+ 28e:	80 91 0a 01 	lds	r24, 0x010A
+ 292:	b8 df       	rcall	.-144    	; 0x204 <Slave_Select>
 	Slave_Select(Control_Slave);
- 276:	80 91 07 01 	lds	r24, 0x0107
- 27a:	b5 df       	rcall	.-150    	; 0x1e6 <Slave_Select>
+ 294:	80 91 07 01 	lds	r24, 0x0107
+ 298:	b5 df       	rcall	.-150    	; 0x204 <Slave_Select>
 	Master_TX(sensor_data);
- 27c:	80 91 0c 01 	lds	r24, 0x010C
- 280:	34 cf       	rjmp	.-408    	; 0xea <Master_TX>
+ 29a:	80 91 0c 01 	lds	r24, 0x010C
+ 29e:	25 cf       	rjmp	.-438    	; 0xea <Master_TX>
 
-00000282 <main>:
+000002a0 <main>:
+	}
 }
-
 
 int main(void)
 {
 	SPI_Init_Master();
- 282:	22 df       	rcall	.-444    	; 0xc8 <SPI_Init_Master>
+ 2a0:	13 df       	rcall	.-474    	; 0xc8 <SPI_Init_Master>
 	PORTB |= (1 << PORTB4);
- 284:	2c 9a       	sbi	0x05, 4	; 5
+ 2a2:	2c 9a       	sbi	0x05, 4	; 5
+
+
+    while(1)
+    {
+	//RX_wheel_data();
 	TX_sensor_data();
- 286:	eb df       	rcall	.-42     	; 0x25e <TX_sensor_data>
- 288:	ff cf       	rjmp	.-2      	; 0x288 <main+0x6>
+ 2a4:	eb df       	rcall	.-42     	; 0x27c <TX_sensor_data>
+ 2a6:	fe cf       	rjmp	.-4      	; 0x2a4 <main+0x4>
 
-0000028a <_exit>:
- 28a:	f8 94       	cli
+000002a8 <_exit>:
+ 2a8:	f8 94       	cli
 
-0000028c <__stop_program>:
- 28c:	ff cf       	rjmp	.-2      	; 0x28c <__stop_program>
+000002aa <__stop_program>:
+ 2aa:	ff cf       	rjmp	.-2      	; 0x2aa <__stop_program>
