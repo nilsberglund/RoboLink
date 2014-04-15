@@ -9,7 +9,7 @@
 #include <avr/interrupt.h>
 
 uint8_t instruction_data;
-uint8_t sensor_data;
+uint8_t sensor_data; //from line sensor-file
 
 void SPI_Init_Slave();
 void Slave_TX(uint8_t);
