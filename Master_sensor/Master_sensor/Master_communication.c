@@ -83,6 +83,7 @@ int main(void)
     {
 	//RX_wheel_data();
 	TX_sensor_data();
+	RX_wheel_data();
     }
 }
 

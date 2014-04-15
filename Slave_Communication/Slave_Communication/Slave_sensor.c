@@ -19,7 +19,7 @@ ISR(SPI_STC_vect)
 	instruction_data = SPDR;
 	if(instruction_data == 0b00000100)
 	{
-		Slave_TX( sensor_data);
+		Slave_TX(sensor_data);
 	}
 }
 
@@ -38,10 +38,11 @@ void SPI_Init_Slave()
 			DDRD = 0xFF;
 			DDRB = 0x48;
 			
-			SPCR = 0xC0;
+			SPCR = 0xC3;
 			
 			sei(); 
 	}
+	
 	
 void Slave_TX(uint8_t data)
 	{

@@ -146,8 +146,8 @@ void SPI_Init_Slave()
   b2:	88 e4       	ldi	r24, 0x48	; 72
   b4:	84 b9       	out	0x04, r24	; 4
 			
-			SPCR = 0xC0;
-  b6:	80 ec       	ldi	r24, 0xC0	; 192
+			SPCR = 0xC3;
+  b6:	83 ec       	ldi	r24, 0xC3	; 195
   b8:	8c bd       	out	0x2c, r24	; 44
 			
 			sei(); 
@@ -211,7 +211,7 @@ ISR(SPI_STC_vect)
   f6:	84 30       	cpi	r24, 0x04	; 4
   f8:	19 f4       	brne	.+6      	; 0x100 <__vector_19+0x36>
 	{
-		Slave_TX( sensor_data);
+		Slave_TX(sensor_data);
   fa:	80 91 00 01 	lds	r24, 0x0100
   fe:	e1 df       	rcall	.-62     	; 0xc2 <Slave_TX>
 	}
