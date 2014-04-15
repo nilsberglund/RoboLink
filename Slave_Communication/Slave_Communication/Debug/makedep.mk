@@ -2,5 +2,5 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Slave_Communication.c
+Slave_sensor.c
 
