@@ -8,10 +8,16 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+char ReceivedByte; //the byte received by the AVR
+
+ISR(USART0_RX_vect)
+{
+	ReceivedByte = UDR0;
+}
 
 int main(void)
 {
-	char ReceivedByte; //the byte received by the AVR
+	
 	
 	UCSR0B = (1<<RXEN0) | (1<<TXEN0); //Enable RX0 and TX0
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); //set data length to 8-bit;
@@ -27,9 +33,4 @@ int main(void)
 		//while (( UCSR0A & (1 << UDRE0 )) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
 		//UDR0 = ReceivedByte ; // Echo back the received byte back to the computer
 	}
-}
-
-ISR(USART0_RX_vect)
-{
-	
 }
