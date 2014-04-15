@@ -213,7 +213,8 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 
 			private void btnCalibrationActionPerformed(ActionEvent evt) {
-				communicator.writeData(1);
+				byte temp = 1;
+				communicator.writeData(temp);
 				
 			}
 		});
@@ -225,7 +226,8 @@ public class GUI2 extends javax.swing.JFrame {
 			}
 
 			private void btnBodyForwardActionPerformed(ActionEvent evt) {
-				communicator.writeData(2);
+				byte temp = 2;
+				communicator.writeData(temp);
 				
 			}
 		});

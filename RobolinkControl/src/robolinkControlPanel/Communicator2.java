@@ -1,10 +1,12 @@
 package robolinkControlPanel;
 
 import gnu.io.*;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
@@ -43,6 +45,7 @@ public class Communicator2 implements SerialPortEventListener
 	//a string for recording what goes on in the program
 	//this string is written to the GUI
 	String logText = "";
+	String telText = "";
 
 	public Communicator2(GUI2 window)
 	{
@@ -83,7 +86,7 @@ public class Communicator2 implements SerialPortEventListener
 		try
 		{
 			//the method below returns an object of type CommPort
-			commPort = selectedPortIdentifier.open("TigerControlPanel", TIMEOUT);
+			commPort = selectedPortIdentifier.open("RoboLink Master Control Panel", TIMEOUT);
 			//the CommPort object can be casted to a SerialPort object
 			serialPort = (SerialPort)commPort;
 
@@ -94,7 +97,9 @@ public class Communicator2 implements SerialPortEventListener
 			logText = selectedPort + " opened successfully.";
 			window.txtLog.setForeground(Color.black);
 			window.txtLog.append(logText + "\n");
-
+			
+			serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+			System.out.println(serialPort.getBaudRate());
 			//CODE ON SETTING BAUD RATE ETC OMITTED
 			//XBEE PAIR ASSUMED TO HAVE SAME SETTINGS ALREADY
 
@@ -128,7 +133,8 @@ public class Communicator2 implements SerialPortEventListener
 			//
 			input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
-			writeData(0);
+			byte temp = 0;
+			writeData(temp);
 
 			successful = true;
 			return successful;
@@ -161,13 +167,14 @@ public class Communicator2 implements SerialPortEventListener
 
 	//disconnect the serial port
 	//pre: an open serial port
-	//post: clsoed serial port
+	//post: closed serial port
 	public void disconnect()
 	{
 		//close the serial port
 		try
 		{
-			writeData(0);
+			byte temp = 0;
+			writeData(temp);
 
 			serialPort.removeEventListener();
 			serialPort.close();
@@ -210,9 +217,9 @@ public class Communicator2 implements SerialPortEventListener
 
 				if (singleData != NEW_LINE_ASCII)
 				{
-					logText = new String(new byte[] {singleData});
+					telText = new String(new byte[] {singleData});
 					//window.txtLog.append(logText);
-					window.txtTel.append(logText);
+					window.txtTel.append(telText);
 				}
 				else
 				{
@@ -231,7 +238,7 @@ public class Communicator2 implements SerialPortEventListener
 	//method that can be called to send data
 	//pre: open serial port
 	//post: data sent to the other device
-	public void writeData(int Data)
+	public void writeData(byte Data)
 	{
 		try
 		{
