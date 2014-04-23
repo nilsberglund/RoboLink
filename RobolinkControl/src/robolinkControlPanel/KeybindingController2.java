@@ -56,16 +56,16 @@ public class KeybindingController2 {
 
 	public void toggleControls() {
 		if (window.communicator.getConnected() == true) {
-			window.btnArmBackward.setEnabled(true);
-			window.btnArmDown.setEnabled(true);
-			window.btnArmForward.setEnabled(true);
-			window.btnArmLeft.setEnabled(true);
-			window.btnArmRight.setEnabled(true);
-			window.btnArmUp.setEnabled(true);
+			window.btnJoint4LB.setEnabled(true);
+			window.btnJoint2LB.setEnabled(true);
+			window.btnJoint3LB.setEnabled(true);
+			window.btnJoint6LB.setEnabled(true);
+			window.btnJoint5LB.setEnabled(true);
+			window.btnJoint1LB.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
 			window.btnBodyForward.setEnabled(true);
-			window.btnBodyLeft.setEnabled(true);
-			window.btnBodyRight.setEnabled(true);
+			window.btnBodyForwardLeft.setEnabled(true);
+			window.btnBodyForwardRight.setEnabled(true);
 			window.btnBodyStop.setEnabled(true);
 			window.btnDisconnect.setEnabled(true);
 			window.btnCalibration.setEnabled(true);
@@ -73,16 +73,16 @@ public class KeybindingController2 {
 			window.cboxPorts.setEnabled(false);
 		}
 		else {
-			window.btnArmBackward.setEnabled(false);
-			window.btnArmDown.setEnabled(false);
-			window.btnArmForward.setEnabled(false);
-			window.btnArmLeft.setEnabled(false);
-			window.btnArmRight.setEnabled(false);
-			window.btnArmUp.setEnabled(false);
+			window.btnJoint4LB.setEnabled(false);
+			window.btnJoint2LB.setEnabled(false);
+			window.btnJoint3LB.setEnabled(false);
+			window.btnJoint6LB.setEnabled(false);
+			window.btnJoint5LB.setEnabled(false);
+			window.btnJoint1LB.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
 			window.btnBodyForward.setEnabled(false);
-			window.btnBodyLeft.setEnabled(false);
-			window.btnBodyRight.setEnabled(false);
+			window.btnBodyForwardLeft.setEnabled(false);
+			window.btnBodyForwardRight.setEnabled(false);
 			window.btnBodyStop.setEnabled(false);
 			window.btnDisconnect.setEnabled(false);
 			window.btnCalibration.setEnabled(false);
