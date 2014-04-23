@@ -3,33 +3,33 @@ Control-module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000003c8  0000045c  2**0
+  0 .data         00000000  00800100  00000416  000004aa  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000003c8  00000000  00000000  00000094  2**1
+  1 .text         00000416  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000017  00800100  00800100  0000045c  2**0
+  2 .bss          00000017  00800100  00800100  000004aa  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  0000045c  2**2
+  3 .stab         000006cc  00000000  00000000  000004ac  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000b28  2**0
+  4 .stabstr      00000097  00000000  00000000  00000b78  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000bbf  2**0
+  5 .comment      0000002f  00000000  00000000  00000c0f  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000b8  00000000  00000000  00000bee  2**0
+  6 .debug_aranges 000000b8  00000000  00000000  00000c3e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   000008ef  00000000  00000000  00000ca6  2**0
+  7 .debug_info   00000913  00000000  00000000  00000cf6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000033c  00000000  00000000  00001595  2**0
+  8 .debug_abbrev 00000343  00000000  00000000  00001609  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000637  00000000  00000000  000018d1  2**0
+  9 .debug_line   00000637  00000000  00000000  0000194c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001ac  00000000  00000000  00001f08  2**2
+ 10 .debug_frame  000001ac  00000000  00000000  00001f84  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000028a  00000000  00000000  000020b4  2**0
+ 11 .debug_str    0000028a  00000000  00000000  00002130  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000048f  00000000  00000000  0000233e  2**0
+ 12 .debug_loc    0000048f  00000000  00000000  000023ba  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000088  00000000  00000000  000027cd  2**0
+ 13 .debug_ranges 00000088  00000000  00000000  00002849  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,7 +73,7 @@ Disassembly of section .text:
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	16 c1       	rjmp	.+556    	; 0x27a <__vector_19>
+  4c:	17 c1       	rjmp	.+558    	; 0x27c <__vector_19>
   4e:	00 00       	nop
   50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
   52:	00 00       	nop
@@ -128,7 +128,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	02 d0       	rcall	.+4      	; 0xae <main>
-  aa:	8c c1       	rjmp	.+792    	; 0x3c4 <_exit>
+  aa:	b3 c1       	rjmp	.+870    	; 0x412 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -140,16 +140,16 @@ Disassembly of section .text:
 int main(void)
 {
 	SPI_Init_Slave();
-  ae:	c4 d0       	rcall	.+392    	; 0x238 <SPI_Init_Slave>
+  ae:	c5 d0       	rcall	.+394    	; 0x23a <SPI_Init_Slave>
 	driving_setup();
-  b0:	73 d0       	rcall	.+230    	; 0x198 <driving_setup>
+  b0:	74 d0       	rcall	.+232    	; 0x19a <driving_setup>
 	//init_arm()
 	//init_LCD()
 	
     while(1)
     {
         controlAlgorithm(); 
-  b2:	a5 d0       	rcall	.+330    	; 0x1fe <controlAlgorithm>
+  b2:	a6 d0       	rcall	.+332    	; 0x200 <controlAlgorithm>
   b4:	fe cf       	rjmp	.-4      	; 0xb2 <main+0x4>
 
 000000b6 <getError>:
@@ -180,539 +180,564 @@ int8_t    getError()
   ce:	8d 83       	std	Y+5, r24	; 0x05
   d0:	8d 81       	ldd	r24, Y+5	; 0x05
   d2:	88 23       	and	r24, r24
-  d4:	f9 f0       	breq	.+62     	; 0x114 <getError+0x5e>
+  d4:	e9 f0       	breq	.+58     	; 0x110 <getError+0x5a>
 	{
 		res = (sensor_data >> noShift & 0x01);
-  d6:	20 91 02 01 	lds	r18, 0x0102
-  da:	30 e0       	ldi	r19, 0x00	; 0
-  dc:	8d 81       	ldd	r24, Y+5	; 0x05
-  de:	a9 01       	movw	r20, r18
-  e0:	02 c0       	rjmp	.+4      	; 0xe6 <getError+0x30>
-  e2:	55 95       	asr	r21
-  e4:	47 95       	ror	r20
-  e6:	8a 95       	dec	r24
-  e8:	e2 f7       	brpl	.-8      	; 0xe2 <getError+0x2c>
-  ea:	ca 01       	movw	r24, r20
-  ec:	81 70       	andi	r24, 0x01	; 1
-  ee:	99 27       	eor	r25, r25
-  f0:	89 83       	std	Y+1, r24	; 0x01
+  d6:	80 91 02 01 	lds	r24, 0x0102
+  da:	2d 81       	ldd	r18, Y+5	; 0x05
+  dc:	90 e0       	ldi	r25, 0x00	; 0
+  de:	02 c0       	rjmp	.+4      	; 0xe4 <getError+0x2e>
+  e0:	95 95       	asr	r25
+  e2:	87 95       	ror	r24
+  e4:	2a 95       	dec	r18
+  e6:	e2 f7       	brpl	.-8      	; 0xe0 <getError+0x2a>
+  e8:	81 70       	andi	r24, 0x01	; 1
+  ea:	99 27       	eor	r25, r25
+  ec:	89 83       	std	Y+1, r24	; 0x01
 		if(res == 1)
-  f2:	89 81       	ldd	r24, Y+1	; 0x01
-  f4:	81 30       	cpi	r24, 0x01	; 1
-  f6:	41 f4       	brne	.+16     	; 0x108 <getError+0x52>
+  ee:	89 81       	ldd	r24, Y+1	; 0x01
+  f0:	81 30       	cpi	r24, 0x01	; 1
+  f2:	41 f4       	brne	.+16     	; 0x104 <getError+0x4e>
 		{
 			marker = marker + (8- noShift);
-  f8:	8a 81       	ldd	r24, Y+2	; 0x02
-  fa:	9d 81       	ldd	r25, Y+5	; 0x05
-  fc:	89 1b       	sub	r24, r25
-  fe:	88 5f       	subi	r24, 0xF8	; 248
- 100:	8a 83       	std	Y+2, r24	; 0x02
+  f4:	8a 81       	ldd	r24, Y+2	; 0x02
+  f6:	9d 81       	ldd	r25, Y+5	; 0x05
+  f8:	89 1b       	sub	r24, r25
+  fa:	88 5f       	subi	r24, 0xF8	; 248
+  fc:	8a 83       	std	Y+2, r24	; 0x02
 			counter1++;
- 102:	8b 81       	ldd	r24, Y+3	; 0x03
- 104:	8f 5f       	subi	r24, 0xFF	; 255
- 106:	8b 83       	std	Y+3, r24	; 0x03
+  fe:	8b 81       	ldd	r24, Y+3	; 0x03
+ 100:	8f 5f       	subi	r24, 0xFF	; 255
+ 102:	8b 83       	std	Y+3, r24	; 0x03
 	volatile int8_t res = 0;
 	volatile int8_t marker = 0;
 	volatile uint8_t counter1 = 0;
 	volatile int8_t error = 0;
 
 	for (volatile uint8_t noShift = 7; noShift > 0; noShift--)
- 108:	8d 81       	ldd	r24, Y+5	; 0x05
- 10a:	81 50       	subi	r24, 0x01	; 1
- 10c:	8d 83       	std	Y+5, r24	; 0x05
- 10e:	8d 81       	ldd	r24, Y+5	; 0x05
- 110:	81 11       	cpse	r24, r1
- 112:	e4 cf       	rjmp	.-56     	; 0xdc <getError+0x26>
+ 104:	8d 81       	ldd	r24, Y+5	; 0x05
+ 106:	81 50       	subi	r24, 0x01	; 1
+ 108:	8d 83       	std	Y+5, r24	; 0x05
+ 10a:	8d 81       	ldd	r24, Y+5	; 0x05
+ 10c:	81 11       	cpse	r24, r1
+ 10e:	e3 cf       	rjmp	.-58     	; 0xd6 <getError+0x20>
 		{
 			marker = marker + (8- noShift);
 			counter1++;
 		}
 	}
 	if(counter1 == 1)
- 114:	8b 81       	ldd	r24, Y+3	; 0x03
- 116:	81 30       	cpi	r24, 0x01	; 1
- 118:	31 f4       	brne	.+12     	; 0x126 <getError+0x70>
+ 110:	8b 81       	ldd	r24, Y+3	; 0x03
+ 112:	81 30       	cpi	r24, 0x01	; 1
+ 114:	31 f4       	brne	.+12     	; 0x122 <getError+0x6c>
 	{
 		error = marker + (marker-1);
- 11a:	9a 81       	ldd	r25, Y+2	; 0x02
- 11c:	8a 81       	ldd	r24, Y+2	; 0x02
- 11e:	89 0f       	add	r24, r25
- 120:	81 50       	subi	r24, 0x01	; 1
- 122:	8c 83       	std	Y+4, r24	; 0x04
- 124:	1b c0       	rjmp	.+54     	; 0x15c <getError+0xa6>
+ 116:	9a 81       	ldd	r25, Y+2	; 0x02
+ 118:	8a 81       	ldd	r24, Y+2	; 0x02
+ 11a:	89 0f       	add	r24, r25
+ 11c:	81 50       	subi	r24, 0x01	; 1
+ 11e:	8c 83       	std	Y+4, r24	; 0x04
+ 120:	1b c0       	rjmp	.+54     	; 0x158 <getError+0xa2>
 	} else if(counter1 == 2)
- 126:	8b 81       	ldd	r24, Y+3	; 0x03
- 128:	82 30       	cpi	r24, 0x02	; 2
- 12a:	21 f4       	brne	.+8      	; 0x134 <getError+0x7e>
+ 122:	8b 81       	ldd	r24, Y+3	; 0x03
+ 124:	82 30       	cpi	r24, 0x02	; 2
+ 126:	21 f4       	brne	.+8      	; 0x130 <getError+0x7a>
 
 	{
 		error = marker-1;
- 12c:	8a 81       	ldd	r24, Y+2	; 0x02
- 12e:	81 50       	subi	r24, 0x01	; 1
- 130:	8c 83       	std	Y+4, r24	; 0x04
- 132:	14 c0       	rjmp	.+40     	; 0x15c <getError+0xa6>
+ 128:	8a 81       	ldd	r24, Y+2	; 0x02
+ 12a:	81 50       	subi	r24, 0x01	; 1
+ 12c:	8c 83       	std	Y+4, r24	; 0x04
+ 12e:	14 c0       	rjmp	.+40     	; 0x158 <getError+0xa2>
 	} else if(counter1 == 3)
- 134:	8b 81       	ldd	r24, Y+3	; 0x03
- 136:	83 30       	cpi	r24, 0x03	; 3
- 138:	79 f4       	brne	.+30     	; 0x158 <getError+0xa2>
+ 130:	8b 81       	ldd	r24, Y+3	; 0x03
+ 132:	83 30       	cpi	r24, 0x03	; 3
+ 134:	79 f4       	brne	.+30     	; 0x154 <getError+0x9e>
 
 	{
 		error = marker*2;
- 13a:	8a 81       	ldd	r24, Y+2	; 0x02
- 13c:	88 0f       	add	r24, r24
- 13e:	8c 83       	std	Y+4, r24	; 0x04
+ 136:	8a 81       	ldd	r24, Y+2	; 0x02
+ 138:	88 0f       	add	r24, r24
+ 13a:	8c 83       	std	Y+4, r24	; 0x04
 		error = error/(0b00000011);
- 140:	8c 81       	ldd	r24, Y+4	; 0x04
- 142:	96 e5       	ldi	r25, 0x56	; 86
- 144:	89 02       	muls	r24, r25
- 146:	91 2d       	mov	r25, r1
- 148:	11 24       	eor	r1, r1
- 14a:	87 fd       	sbrc	r24, 7
- 14c:	93 95       	inc	r25
- 14e:	9c 83       	std	Y+4, r25	; 0x04
+ 13c:	8c 81       	ldd	r24, Y+4	; 0x04
+ 13e:	96 e5       	ldi	r25, 0x56	; 86
+ 140:	89 02       	muls	r24, r25
+ 142:	91 2d       	mov	r25, r1
+ 144:	11 24       	eor	r1, r1
+ 146:	87 fd       	sbrc	r24, 7
+ 148:	93 95       	inc	r25
+ 14a:	9c 83       	std	Y+4, r25	; 0x04
 		error = error - 1;
- 150:	8c 81       	ldd	r24, Y+4	; 0x04
- 152:	81 50       	subi	r24, 0x01	; 1
- 154:	8c 83       	std	Y+4, r24	; 0x04
- 156:	02 c0       	rjmp	.+4      	; 0x15c <getError+0xa6>
+ 14c:	8c 81       	ldd	r24, Y+4	; 0x04
+ 14e:	81 50       	subi	r24, 0x01	; 1
+ 150:	8c 83       	std	Y+4, r24	; 0x04
+ 152:	02 c0       	rjmp	.+4      	; 0x158 <getError+0xa2>
 
 	} else
 	{
 		error = marker;
- 158:	8a 81       	ldd	r24, Y+2	; 0x02
- 15a:	8c 83       	std	Y+4, r24	; 0x04
+ 154:	8a 81       	ldd	r24, Y+2	; 0x02
+ 156:	8c 83       	std	Y+4, r24	; 0x04
 	}
 	error = 7 - error;
- 15c:	9c 81       	ldd	r25, Y+4	; 0x04
- 15e:	87 e0       	ldi	r24, 0x07	; 7
- 160:	89 1b       	sub	r24, r25
- 162:	8c 83       	std	Y+4, r24	; 0x04
+ 158:	9c 81       	ldd	r25, Y+4	; 0x04
+ 15a:	87 e0       	ldi	r24, 0x07	; 7
+ 15c:	89 1b       	sub	r24, r25
+ 15e:	8c 83       	std	Y+4, r24	; 0x04
 	return error;
- 164:	8c 81       	ldd	r24, Y+4	; 0x04
+ 160:	8c 81       	ldd	r24, Y+4	; 0x04
 }
+ 162:	0f 90       	pop	r0
+ 164:	0f 90       	pop	r0
  166:	0f 90       	pop	r0
  168:	0f 90       	pop	r0
  16a:	0f 90       	pop	r0
- 16c:	0f 90       	pop	r0
- 16e:	0f 90       	pop	r0
- 170:	df 91       	pop	r29
- 172:	cf 91       	pop	r28
- 174:	08 95       	ret
+ 16c:	df 91       	pop	r29
+ 16e:	cf 91       	pop	r28
+ 170:	08 95       	ret
 
-00000176 <calculateSpeed>:
+00000172 <calculateSpeed>:
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
 }
 
 int8_t calculateSpeed(int8_t error)
 {
- 176:	cf 93       	push	r28
- 178:	df 93       	push	r29
- 17a:	1f 92       	push	r1
- 17c:	cd b7       	in	r28, 0x3d	; 61
- 17e:	de b7       	in	r29, 0x3e	; 62
+ 172:	cf 93       	push	r28
+ 174:	df 93       	push	r29
+ 176:	1f 92       	push	r1
+ 178:	cd b7       	in	r28, 0x3d	; 61
+ 17a:	de b7       	in	r29, 0x3e	; 62
 	volatile int8_t speed = 0;
- 180:	19 82       	std	Y+1, r1	; 0x01
+ 17c:	19 82       	std	Y+1, r1	; 0x01
 	int8_t Kp = 4;
 	int8_t Kd = 1;
 	
-	speed = Kp * error;
- 182:	98 2f       	mov	r25, r24
- 184:	99 0f       	add	r25, r25
- 186:	99 0f       	add	r25, r25
- 188:	99 83       	std	Y+1, r25	; 0x01
+	speed = Kp * error + Kd * prevError;
+ 17e:	28 2f       	mov	r18, r24
+ 180:	22 0f       	add	r18, r18
+ 182:	22 0f       	add	r18, r18
+ 184:	90 91 10 01 	lds	r25, 0x0110
+ 188:	92 0f       	add	r25, r18
+ 18a:	99 83       	std	Y+1, r25	; 0x01
 
 	prevError = error;
- 18a:	80 93 10 01 	sts	0x0110, r24
+ 18c:	80 93 10 01 	sts	0x0110, r24
 	return speed;
- 18e:	89 81       	ldd	r24, Y+1	; 0x01
+ 190:	89 81       	ldd	r24, Y+1	; 0x01
 }
- 190:	0f 90       	pop	r0
- 192:	df 91       	pop	r29
- 194:	cf 91       	pop	r28
- 196:	08 95       	ret
+ 192:	0f 90       	pop	r0
+ 194:	df 91       	pop	r29
+ 196:	cf 91       	pop	r28
+ 198:	08 95       	ret
 
-00000198 <driving_setup>:
+0000019a <driving_setup>:
 
 void driving_setup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
- 198:	81 ef       	ldi	r24, 0xF1	; 241
- 19a:	80 93 80 00 	sts	0x0080, r24
+ 19a:	81 ef       	ldi	r24, 0xF1	; 241
+ 19c:	80 93 80 00 	sts	0x0080, r24
 	TCCR1B = 2; //Sets the prescaling to 8
- 19e:	82 e0       	ldi	r24, 0x02	; 2
- 1a0:	80 93 81 00 	sts	0x0081, r24
+ 1a0:	82 e0       	ldi	r24, 0x02	; 2
+ 1a2:	80 93 81 00 	sts	0x0081, r24
 	TIMSK1 |= (1 << OCIE1A)|(1 << OCIE0B); //Enables the compare interrupts
- 1a4:	ef e6       	ldi	r30, 0x6F	; 111
- 1a6:	f0 e0       	ldi	r31, 0x00	; 0
- 1a8:	80 81       	ld	r24, Z
- 1aa:	86 60       	ori	r24, 0x06	; 6
- 1ac:	80 83       	st	Z, r24
+ 1a6:	ef e6       	ldi	r30, 0x6F	; 111
+ 1a8:	f0 e0       	ldi	r31, 0x00	; 0
+ 1aa:	80 81       	ld	r24, Z
+ 1ac:	86 60       	ori	r24, 0x06	; 6
+ 1ae:	80 83       	st	Z, r24
 	TCNT1 = 0;
- 1ae:	10 92 85 00 	sts	0x0085, r1
- 1b2:	10 92 84 00 	sts	0x0084, r1
+ 1b0:	10 92 85 00 	sts	0x0085, r1
+ 1b4:	10 92 84 00 	sts	0x0084, r1
 	OCR1A = 0;
- 1b6:	10 92 89 00 	sts	0x0089, r1
- 1ba:	10 92 88 00 	sts	0x0088, r1
+ 1b8:	10 92 89 00 	sts	0x0089, r1
+ 1bc:	10 92 88 00 	sts	0x0088, r1
 	OCR1B = 0;
- 1be:	10 92 8b 00 	sts	0x008B, r1
- 1c2:	10 92 8a 00 	sts	0x008A, r1
+ 1c0:	10 92 8b 00 	sts	0x008B, r1
+ 1c4:	10 92 8a 00 	sts	0x008A, r1
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
- 1c6:	8a b1       	in	r24, 0x0a	; 10
- 1c8:	80 6f       	ori	r24, 0xF0	; 240
- 1ca:	8a b9       	out	0x0a, r24	; 10
- 1cc:	08 95       	ret
+ 1c8:	8a b1       	in	r24, 0x0a	; 10
+ 1ca:	80 6f       	ori	r24, 0xF0	; 240
+ 1cc:	8a b9       	out	0x0a, r24	; 10
+ 1ce:	08 95       	ret
 
-000001ce <drive>:
+000001d0 <drive>:
 }
 
 void drive(int right_dir, int left_dir, uint8_t leftSpeed, uint8_t rightSpeed)
 {
 	if(right_dir == 1)
- 1ce:	01 97       	sbiw	r24, 0x01	; 1
- 1d0:	19 f4       	brne	.+6      	; 0x1d8 <drive+0xa>
+ 1d0:	01 97       	sbiw	r24, 0x01	; 1
+ 1d2:	19 f4       	brne	.+6      	; 0x1da <drive+0xa>
 	{
 	PORTD |= (0 << PORTD7);
- 1d2:	8b b1       	in	r24, 0x0b	; 11
- 1d4:	8b b9       	out	0x0b, r24	; 11
- 1d6:	01 c0       	rjmp	.+2      	; 0x1da <drive+0xc>
+ 1d4:	8b b1       	in	r24, 0x0b	; 11
+ 1d6:	8b b9       	out	0x0b, r24	; 11
+ 1d8:	01 c0       	rjmp	.+2      	; 0x1dc <drive+0xc>
 	}
 	else
 	{
 	PORTD |= (1 << PORTD7);
- 1d8:	5f 9a       	sbi	0x0b, 7	; 11
+ 1da:	5f 9a       	sbi	0x0b, 7	; 11
 	}
 	if(left_dir == 1)
- 1da:	61 30       	cpi	r22, 0x01	; 1
- 1dc:	71 05       	cpc	r23, r1
- 1de:	11 f4       	brne	.+4      	; 0x1e4 <drive+0x16>
+ 1dc:	61 30       	cpi	r22, 0x01	; 1
+ 1de:	71 05       	cpc	r23, r1
+ 1e0:	11 f4       	brne	.+4      	; 0x1e6 <drive+0x16>
 	{
 		PORTD |= (1 << PORTD6);
- 1e0:	5e 9a       	sbi	0x0b, 6	; 11
- 1e2:	02 c0       	rjmp	.+4      	; 0x1e8 <drive+0x1a>
+ 1e2:	5e 9a       	sbi	0x0b, 6	; 11
+ 1e4:	02 c0       	rjmp	.+4      	; 0x1ea <drive+0x1a>
 	}
 	else
 	{
 		PORTD |= (0 << PORTD6);
- 1e4:	8b b1       	in	r24, 0x0b	; 11
- 1e6:	8b b9       	out	0x0b, r24	; 11
+ 1e6:	8b b1       	in	r24, 0x0b	; 11
+ 1e8:	8b b9       	out	0x0b, r24	; 11
 	}
 	OCR1A = leftSpeed;
- 1e8:	50 e0       	ldi	r21, 0x00	; 0
- 1ea:	50 93 89 00 	sts	0x0089, r21
- 1ee:	40 93 88 00 	sts	0x0088, r20
+ 1ea:	50 e0       	ldi	r21, 0x00	; 0
+ 1ec:	50 93 89 00 	sts	0x0089, r21
+ 1f0:	40 93 88 00 	sts	0x0088, r20
 	OCR1B = rightSpeed;
- 1f2:	30 e0       	ldi	r19, 0x00	; 0
- 1f4:	30 93 8b 00 	sts	0x008B, r19
- 1f8:	20 93 8a 00 	sts	0x008A, r18
- 1fc:	08 95       	ret
+ 1f4:	30 e0       	ldi	r19, 0x00	; 0
+ 1f6:	30 93 8b 00 	sts	0x008B, r19
+ 1fa:	20 93 8a 00 	sts	0x008A, r18
+ 1fe:	08 95       	ret
 
-000001fe <controlAlgorithm>:
+00000200 <controlAlgorithm>:
 	error = 7 - error;
 	return error;
 }
 
 void controlAlgorithm()
 {
- 1fe:	1f 93       	push	r17
- 200:	cf 93       	push	r28
- 202:	df 93       	push	r29
- 204:	00 d0       	rcall	.+0      	; 0x206 <controlAlgorithm+0x8>
- 206:	cd b7       	in	r28, 0x3d	; 61
- 208:	de b7       	in	r29, 0x3e	; 62
+ 200:	1f 93       	push	r17
+ 202:	cf 93       	push	r28
+ 204:	df 93       	push	r29
+ 206:	00 d0       	rcall	.+0      	; 0x208 <controlAlgorithm+0x8>
+ 208:	cd b7       	in	r28, 0x3d	; 61
+ 20a:	de b7       	in	r29, 0x3e	; 62
 	int8_t error;
 	volatile int8_t rightWheelSpeed;
 	volatile int8_t leftWheelSpeed;
-	int8_t midspeed = 123;
+	int8_t midspeed = 170;
 
 	error = getError();
- 20a:	55 df       	rcall	.-342    	; 0xb6 <getError>
- 20c:	18 2f       	mov	r17, r24
+ 20c:	54 df       	rcall	.-344    	; 0xb6 <getError>
+ 20e:	18 2f       	mov	r17, r24
 	rightWheelSpeed = midspeed + calculateSpeed(error);
- 20e:	b3 df       	rcall	.-154    	; 0x176 <calculateSpeed>
- 210:	85 58       	subi	r24, 0x85	; 133
- 212:	89 83       	std	Y+1, r24	; 0x01
+ 210:	b0 df       	rcall	.-160    	; 0x172 <calculateSpeed>
+ 212:	86 55       	subi	r24, 0x56	; 86
+ 214:	89 83       	std	Y+1, r24	; 0x01
 	leftWheelSpeed = midspeed - calculateSpeed(error);
- 214:	81 2f       	mov	r24, r17
- 216:	af df       	rcall	.-162    	; 0x176 <calculateSpeed>
- 218:	9b e7       	ldi	r25, 0x7B	; 123
- 21a:	98 1b       	sub	r25, r24
- 21c:	9a 83       	std	Y+2, r25	; 0x02
+ 216:	81 2f       	mov	r24, r17
+ 218:	ac df       	rcall	.-168    	; 0x172 <calculateSpeed>
+ 21a:	9a ea       	ldi	r25, 0xAA	; 170
+ 21c:	98 1b       	sub	r25, r24
+ 21e:	9a 83       	std	Y+2, r25	; 0x02
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
- 21e:	29 81       	ldd	r18, Y+1	; 0x01
- 220:	4a 81       	ldd	r20, Y+2	; 0x02
- 222:	61 e0       	ldi	r22, 0x01	; 1
- 224:	70 e0       	ldi	r23, 0x00	; 0
- 226:	81 e0       	ldi	r24, 0x01	; 1
- 228:	90 e0       	ldi	r25, 0x00	; 0
- 22a:	d1 df       	rcall	.-94     	; 0x1ce <drive>
+ 220:	29 81       	ldd	r18, Y+1	; 0x01
+ 222:	4a 81       	ldd	r20, Y+2	; 0x02
+ 224:	61 e0       	ldi	r22, 0x01	; 1
+ 226:	70 e0       	ldi	r23, 0x00	; 0
+ 228:	81 e0       	ldi	r24, 0x01	; 1
+ 22a:	90 e0       	ldi	r25, 0x00	; 0
+ 22c:	d1 df       	rcall	.-94     	; 0x1d0 <drive>
 }
- 22c:	0f 90       	pop	r0
  22e:	0f 90       	pop	r0
- 230:	df 91       	pop	r29
- 232:	cf 91       	pop	r28
- 234:	1f 91       	pop	r17
- 236:	08 95       	ret
+ 230:	0f 90       	pop	r0
+ 232:	df 91       	pop	r29
+ 234:	cf 91       	pop	r28
+ 236:	1f 91       	pop	r17
+ 238:	08 95       	ret
 
-00000238 <SPI_Init_Slave>:
+0000023a <SPI_Init_Slave>:
 }
 
 void SPI_Init_Slave()
 	{
 
 			DDRD = 0xFF;
- 238:	8f ef       	ldi	r24, 0xFF	; 255
- 23a:	8a b9       	out	0x0a, r24	; 10
+ 23a:	8f ef       	ldi	r24, 0xFF	; 255
+ 23c:	8a b9       	out	0x0a, r24	; 10
 			DDRB = 0x48;
- 23c:	88 e4       	ldi	r24, 0x48	; 72
- 23e:	84 b9       	out	0x04, r24	; 4
+ 23e:	88 e4       	ldi	r24, 0x48	; 72
+ 240:	84 b9       	out	0x04, r24	; 4
 			
 			SPCR = 0xC3;
- 240:	83 ec       	ldi	r24, 0xC3	; 195
- 242:	8c bd       	out	0x2c, r24	; 44
+ 242:	83 ec       	ldi	r24, 0xC3	; 195
+ 244:	8c bd       	out	0x2c, r24	; 44
 			
 			sei(); 
- 244:	78 94       	sei
+ 246:	78 94       	sei
 			
 			wheel_steering_data = 0x22;
- 246:	82 e2       	ldi	r24, 0x22	; 34
- 248:	80 93 0e 01 	sts	0x010E, r24
+ 248:	82 e2       	ldi	r24, 0x22	; 34
+ 24a:	80 93 0e 01 	sts	0x010E, r24
 			
 			waiting_for_instruction = 1;
- 24c:	81 e0       	ldi	r24, 0x01	; 1
- 24e:	80 93 12 01 	sts	0x0112, r24
+ 24e:	81 e0       	ldi	r24, 0x01	; 1
+ 250:	80 93 12 01 	sts	0x0112, r24
 			component = 0;
- 252:	10 92 0f 01 	sts	0x010F, r1
+ 254:	10 92 0f 01 	sts	0x010F, r1
 			sensor = 1;
- 256:	80 93 14 01 	sts	0x0114, r24
+ 258:	80 93 14 01 	sts	0x0114, r24
 			arm = 2;
- 25a:	82 e0       	ldi	r24, 0x02	; 2
- 25c:	80 93 15 01 	sts	0x0115, r24
+ 25c:	82 e0       	ldi	r24, 0x02	; 2
+ 25e:	80 93 15 01 	sts	0x0115, r24
 			wheel = 3;
- 260:	83 e0       	ldi	r24, 0x03	; 3
- 262:	80 93 01 01 	sts	0x0101, r24
+ 262:	83 e0       	ldi	r24, 0x03	; 3
+ 264:	80 93 01 01 	sts	0x0101, r24
 			RFIDcomp = 4;
- 266:	84 e0       	ldi	r24, 0x04	; 4
- 268:	80 93 16 01 	sts	0x0116, r24
+ 268:	84 e0       	ldi	r24, 0x04	; 4
+ 26a:	80 93 16 01 	sts	0x0116, r24
 			RFID_counter = 0;
- 26c:	10 92 0d 01 	sts	0x010D, r1
- 270:	08 95       	ret
+ 26e:	10 92 0d 01 	sts	0x010D, r1
+ 272:	08 95       	ret
 
-00000272 <Slave_TX>:
+00000274 <Slave_TX>:
 	}
 	
 void Slave_TX(uint8_t data)
 {
 	SPDR = data;
- 272:	8e bd       	out	0x2e, r24	; 46
+ 274:	8e bd       	out	0x2e, r24	; 46
 	PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
- 274:	2b 9a       	sbi	0x05, 3	; 5
+ 276:	2b 9a       	sbi	0x05, 3	; 5
 	PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
- 276:	2b 98       	cbi	0x05, 3	; 5
- 278:	08 95       	ret
+ 278:	2b 98       	cbi	0x05, 3	; 5
+ 27a:	08 95       	ret
 
-0000027a <__vector_19>:
+0000027c <__vector_19>:
 #include <avr/interrupt.h>
 #include <stdbool.h>
 #include "Slave_control.h"
 
 ISR(SPI_STC_vect)
 {
- 27a:	1f 92       	push	r1
- 27c:	0f 92       	push	r0
- 27e:	0f b6       	in	r0, 0x3f	; 63
- 280:	0f 92       	push	r0
- 282:	11 24       	eor	r1, r1
- 284:	0b b6       	in	r0, 0x3b	; 59
- 286:	0f 92       	push	r0
- 288:	2f 93       	push	r18
- 28a:	3f 93       	push	r19
- 28c:	4f 93       	push	r20
- 28e:	5f 93       	push	r21
- 290:	6f 93       	push	r22
- 292:	7f 93       	push	r23
- 294:	8f 93       	push	r24
- 296:	9f 93       	push	r25
- 298:	af 93       	push	r26
- 29a:	bf 93       	push	r27
- 29c:	ef 93       	push	r30
- 29e:	ff 93       	push	r31
- 2a0:	cf 93       	push	r28
- 2a2:	df 93       	push	r29
- 2a4:	1f 92       	push	r1
- 2a6:	cd b7       	in	r28, 0x3d	; 61
- 2a8:	de b7       	in	r29, 0x3e	; 62
+ 27c:	1f 92       	push	r1
+ 27e:	0f 92       	push	r0
+ 280:	0f b6       	in	r0, 0x3f	; 63
+ 282:	0f 92       	push	r0
+ 284:	11 24       	eor	r1, r1
+ 286:	0b b6       	in	r0, 0x3b	; 59
+ 288:	0f 92       	push	r0
+ 28a:	2f 93       	push	r18
+ 28c:	3f 93       	push	r19
+ 28e:	4f 93       	push	r20
+ 290:	5f 93       	push	r21
+ 292:	6f 93       	push	r22
+ 294:	7f 93       	push	r23
+ 296:	8f 93       	push	r24
+ 298:	9f 93       	push	r25
+ 29a:	af 93       	push	r26
+ 29c:	bf 93       	push	r27
+ 29e:	ef 93       	push	r30
+ 2a0:	ff 93       	push	r31
+ 2a2:	cf 93       	push	r28
+ 2a4:	df 93       	push	r29
+ 2a6:	1f 92       	push	r1
+ 2a8:	cd b7       	in	r28, 0x3d	; 61
+ 2aa:	de b7       	in	r29, 0x3e	; 62
 	volatile uint8_t data = SPDR;
- 2aa:	8e b5       	in	r24, 0x2e	; 46
- 2ac:	89 83       	std	Y+1, r24	; 0x01
+ 2ac:	8e b5       	in	r24, 0x2e	; 46
+ 2ae:	89 83       	std	Y+1, r24	; 0x01
 	
 	if(waiting_for_instruction)
- 2ae:	80 91 12 01 	lds	r24, 0x0112
- 2b2:	88 23       	and	r24, r24
- 2b4:	b9 f1       	breq	.+110    	; 0x324 <__vector_19+0xaa>
+ 2b0:	80 91 12 01 	lds	r24, 0x0112
+ 2b4:	88 23       	and	r24, r24
+ 2b6:	09 f4       	brne	.+2      	; 0x2ba <__vector_19+0x3e>
+ 2b8:	47 c0       	rjmp	.+142    	; 0x348 <__vector_19+0xcc>
 	{
 		if(data == 0b10000100)
- 2b6:	89 81       	ldd	r24, Y+1	; 0x01
- 2b8:	84 38       	cpi	r24, 0x84	; 132
- 2ba:	39 f4       	brne	.+14     	; 0x2ca <__vector_19+0x50>
+ 2ba:	89 81       	ldd	r24, Y+1	; 0x01
+ 2bc:	84 38       	cpi	r24, 0x84	; 132
+ 2be:	59 f4       	brne	.+22     	; 0x2d6 <__vector_19+0x5a>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2bc:	10 92 12 01 	sts	0x0112, r1
+ 2c0:	90 91 12 01 	lds	r25, 0x0112
+ 2c4:	81 e0       	ldi	r24, 0x01	; 1
+ 2c6:	89 27       	eor	r24, r25
+ 2c8:	80 93 12 01 	sts	0x0112, r24
 			component = sensor;
- 2c0:	80 91 14 01 	lds	r24, 0x0114
- 2c4:	80 93 0f 01 	sts	0x010F, r24
- 2c8:	67 c0       	rjmp	.+206    	; 0x398 <__vector_19+0x11e>
+ 2cc:	80 91 14 01 	lds	r24, 0x0114
+ 2d0:	80 93 0f 01 	sts	0x010F, r24
+ 2d4:	88 c0       	rjmp	.+272    	; 0x3e6 <__vector_19+0x16a>
 		} else if (data == 0b10000101)
- 2ca:	89 81       	ldd	r24, Y+1	; 0x01
- 2cc:	85 38       	cpi	r24, 0x85	; 133
- 2ce:	39 f4       	brne	.+14     	; 0x2de <__vector_19+0x64>
+ 2d6:	89 81       	ldd	r24, Y+1	; 0x01
+ 2d8:	85 38       	cpi	r24, 0x85	; 133
+ 2da:	59 f4       	brne	.+22     	; 0x2f2 <__vector_19+0x76>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2d0:	10 92 12 01 	sts	0x0112, r1
+ 2dc:	90 91 12 01 	lds	r25, 0x0112
+ 2e0:	81 e0       	ldi	r24, 0x01	; 1
+ 2e2:	89 27       	eor	r24, r25
+ 2e4:	80 93 12 01 	sts	0x0112, r24
 			component = wheel;
- 2d4:	80 91 01 01 	lds	r24, 0x0101
- 2d8:	80 93 0f 01 	sts	0x010F, r24
- 2dc:	5d c0       	rjmp	.+186    	; 0x398 <__vector_19+0x11e>
-		} else if(data == 0b10000110)
- 2de:	89 81       	ldd	r24, Y+1	; 0x01
- 2e0:	86 38       	cpi	r24, 0x86	; 134
- 2e2:	39 f4       	brne	.+14     	; 0x2f2 <__vector_19+0x78>
-		{
-			waiting_for_instruction = !waiting_for_instruction;
- 2e4:	10 92 12 01 	sts	0x0112, r1
-			component = arm;
- 2e8:	80 91 15 01 	lds	r24, 0x0115
+ 2e8:	80 91 01 01 	lds	r24, 0x0101
  2ec:	80 93 0f 01 	sts	0x010F, r24
- 2f0:	53 c0       	rjmp	.+166    	; 0x398 <__vector_19+0x11e>
-		}	else if(data == 0b10101011)
+ 2f0:	7a c0       	rjmp	.+244    	; 0x3e6 <__vector_19+0x16a>
+		} else if(data == 0b10000110)
  2f2:	89 81       	ldd	r24, Y+1	; 0x01
- 2f4:	8b 3a       	cpi	r24, 0xAB	; 171
- 2f6:	39 f4       	brne	.+14     	; 0x306 <__vector_19+0x8c>
+ 2f4:	86 38       	cpi	r24, 0x86	; 134
+ 2f6:	59 f4       	brne	.+22     	; 0x30e <__vector_19+0x92>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2f8:	10 92 12 01 	sts	0x0112, r1
+ 2f8:	90 91 12 01 	lds	r25, 0x0112
+ 2fc:	81 e0       	ldi	r24, 0x01	; 1
+ 2fe:	89 27       	eor	r24, r25
+ 300:	80 93 12 01 	sts	0x0112, r24
+			component = arm;
+ 304:	80 91 15 01 	lds	r24, 0x0115
+ 308:	80 93 0f 01 	sts	0x010F, r24
+ 30c:	6c c0       	rjmp	.+216    	; 0x3e6 <__vector_19+0x16a>
+		}	else if(data == 0b10101011)
+ 30e:	89 81       	ldd	r24, Y+1	; 0x01
+ 310:	8b 3a       	cpi	r24, 0xAB	; 171
+ 312:	59 f4       	brne	.+22     	; 0x32a <__vector_19+0xae>
+		{
+			waiting_for_instruction = !waiting_for_instruction;
+ 314:	90 91 12 01 	lds	r25, 0x0112
+ 318:	81 e0       	ldi	r24, 0x01	; 1
+ 31a:	89 27       	eor	r24, r25
+ 31c:	80 93 12 01 	sts	0x0112, r24
 			component = RFIDcomp;
- 2fc:	80 91 16 01 	lds	r24, 0x0116
- 300:	80 93 0f 01 	sts	0x010F, r24
- 304:	49 c0       	rjmp	.+146    	; 0x398 <__vector_19+0x11e>
+ 320:	80 91 16 01 	lds	r24, 0x0116
+ 324:	80 93 0f 01 	sts	0x010F, r24
+ 328:	5e c0       	rjmp	.+188    	; 0x3e6 <__vector_19+0x16a>
 		}	else if(data == 0b00000101)
- 306:	89 81       	ldd	r24, Y+1	; 0x01
- 308:	85 30       	cpi	r24, 0x05	; 5
- 30a:	21 f4       	brne	.+8      	; 0x314 <__vector_19+0x9a>
+ 32a:	89 81       	ldd	r24, Y+1	; 0x01
+ 32c:	85 30       	cpi	r24, 0x05	; 5
+ 32e:	21 f4       	brne	.+8      	; 0x338 <__vector_19+0xbc>
 		{
 			Slave_TX(wheel_steering_data);
- 30c:	80 91 0e 01 	lds	r24, 0x010E
- 310:	b0 df       	rcall	.-160    	; 0x272 <Slave_TX>
- 312:	42 c0       	rjmp	.+132    	; 0x398 <__vector_19+0x11e>
+ 330:	80 91 0e 01 	lds	r24, 0x010E
+ 334:	9f df       	rcall	.-194    	; 0x274 <Slave_TX>
+ 336:	57 c0       	rjmp	.+174    	; 0x3e6 <__vector_19+0x16a>
 		}	else if(data == 0b00000110)
- 314:	89 81       	ldd	r24, Y+1	; 0x01
- 316:	86 30       	cpi	r24, 0x06	; 6
- 318:	09 f0       	breq	.+2      	; 0x31c <__vector_19+0xa2>
- 31a:	3e c0       	rjmp	.+124    	; 0x398 <__vector_19+0x11e>
+ 338:	89 81       	ldd	r24, Y+1	; 0x01
+ 33a:	86 30       	cpi	r24, 0x06	; 6
+ 33c:	09 f0       	breq	.+2      	; 0x340 <__vector_19+0xc4>
+ 33e:	53 c0       	rjmp	.+166    	; 0x3e6 <__vector_19+0x16a>
 		{
 			Slave_TX(robot_arm_data);
- 31c:	80 91 00 01 	lds	r24, 0x0100
- 320:	a8 df       	rcall	.-176    	; 0x272 <Slave_TX>
- 322:	3a c0       	rjmp	.+116    	; 0x398 <__vector_19+0x11e>
+ 340:	80 91 00 01 	lds	r24, 0x0100
+ 344:	97 df       	rcall	.-210    	; 0x274 <Slave_TX>
+ 346:	4f c0       	rjmp	.+158    	; 0x3e6 <__vector_19+0x16a>
 		}
 	} else
 	{
 		if(component == sensor)
- 324:	80 91 0f 01 	lds	r24, 0x010F
- 328:	90 91 14 01 	lds	r25, 0x0114
- 32c:	89 13       	cpse	r24, r25
- 32e:	07 c0       	rjmp	.+14     	; 0x33e <__vector_19+0xc4>
+ 348:	90 91 0f 01 	lds	r25, 0x010F
+ 34c:	80 91 14 01 	lds	r24, 0x0114
+ 350:	98 13       	cpse	r25, r24
+ 352:	0a c0       	rjmp	.+20     	; 0x368 <__vector_19+0xec>
 		{
 			sensor_data = data;
- 330:	89 81       	ldd	r24, Y+1	; 0x01
- 332:	80 93 02 01 	sts	0x0102, r24
+ 354:	89 81       	ldd	r24, Y+1	; 0x01
+ 356:	80 93 02 01 	sts	0x0102, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 336:	81 e0       	ldi	r24, 0x01	; 1
- 338:	80 93 12 01 	sts	0x0112, r24
- 33c:	2d c0       	rjmp	.+90     	; 0x398 <__vector_19+0x11e>
+ 35a:	90 91 12 01 	lds	r25, 0x0112
+ 35e:	81 e0       	ldi	r24, 0x01	; 1
+ 360:	89 27       	eor	r24, r25
+ 362:	80 93 12 01 	sts	0x0112, r24
+ 366:	3f c0       	rjmp	.+126    	; 0x3e6 <__vector_19+0x16a>
 		}else if (component == arm)
- 33e:	90 91 15 01 	lds	r25, 0x0115
- 342:	89 13       	cpse	r24, r25
- 344:	07 c0       	rjmp	.+14     	; 0x354 <__vector_19+0xda>
+ 368:	90 91 0f 01 	lds	r25, 0x010F
+ 36c:	80 91 15 01 	lds	r24, 0x0115
+ 370:	98 13       	cpse	r25, r24
+ 372:	0a c0       	rjmp	.+20     	; 0x388 <__vector_19+0x10c>
 		{
 			robot_arm_data = data;
- 346:	89 81       	ldd	r24, Y+1	; 0x01
- 348:	80 93 00 01 	sts	0x0100, r24
+ 374:	89 81       	ldd	r24, Y+1	; 0x01
+ 376:	80 93 00 01 	sts	0x0100, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 34c:	81 e0       	ldi	r24, 0x01	; 1
- 34e:	80 93 12 01 	sts	0x0112, r24
- 352:	22 c0       	rjmp	.+68     	; 0x398 <__vector_19+0x11e>
+ 37a:	90 91 12 01 	lds	r25, 0x0112
+ 37e:	81 e0       	ldi	r24, 0x01	; 1
+ 380:	89 27       	eor	r24, r25
+ 382:	80 93 12 01 	sts	0x0112, r24
+ 386:	2f c0       	rjmp	.+94     	; 0x3e6 <__vector_19+0x16a>
 		} else if (component == wheel)
- 354:	90 91 01 01 	lds	r25, 0x0101
- 358:	89 13       	cpse	r24, r25
- 35a:	07 c0       	rjmp	.+14     	; 0x36a <__vector_19+0xf0>
+ 388:	90 91 0f 01 	lds	r25, 0x010F
+ 38c:	80 91 01 01 	lds	r24, 0x0101
+ 390:	98 13       	cpse	r25, r24
+ 392:	0a c0       	rjmp	.+20     	; 0x3a8 <__vector_19+0x12c>
 		{
 			wheel_steering_data = data;
- 35c:	89 81       	ldd	r24, Y+1	; 0x01
- 35e:	80 93 0e 01 	sts	0x010E, r24
+ 394:	89 81       	ldd	r24, Y+1	; 0x01
+ 396:	80 93 0e 01 	sts	0x010E, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 362:	81 e0       	ldi	r24, 0x01	; 1
- 364:	80 93 12 01 	sts	0x0112, r24
- 368:	17 c0       	rjmp	.+46     	; 0x398 <__vector_19+0x11e>
+ 39a:	90 91 12 01 	lds	r25, 0x0112
+ 39e:	81 e0       	ldi	r24, 0x01	; 1
+ 3a0:	89 27       	eor	r24, r25
+ 3a2:	80 93 12 01 	sts	0x0112, r24
+ 3a6:	1f c0       	rjmp	.+62     	; 0x3e6 <__vector_19+0x16a>
 		} else if (component == RFIDcomp)
- 36a:	90 91 16 01 	lds	r25, 0x0116
- 36e:	89 13       	cpse	r24, r25
- 370:	13 c0       	rjmp	.+38     	; 0x398 <__vector_19+0x11e>
+ 3a8:	90 91 0f 01 	lds	r25, 0x010F
+ 3ac:	80 91 16 01 	lds	r24, 0x0116
+ 3b0:	98 13       	cpse	r25, r24
+ 3b2:	19 c0       	rjmp	.+50     	; 0x3e6 <__vector_19+0x16a>
 		{
 			
 			RFID[RFID_counter] = data;
- 372:	80 91 0d 01 	lds	r24, 0x010D
- 376:	99 81       	ldd	r25, Y+1	; 0x01
- 378:	e8 2f       	mov	r30, r24
- 37a:	f0 e0       	ldi	r31, 0x00	; 0
- 37c:	ed 5f       	subi	r30, 0xFD	; 253
- 37e:	fe 4f       	sbci	r31, 0xFE	; 254
- 380:	90 83       	st	Z, r25
+ 3b4:	e0 91 0d 01 	lds	r30, 0x010D
+ 3b8:	f0 e0       	ldi	r31, 0x00	; 0
+ 3ba:	89 81       	ldd	r24, Y+1	; 0x01
+ 3bc:	ed 5f       	subi	r30, 0xFD	; 253
+ 3be:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3c0:	80 83       	st	Z, r24
 			if(RFID_counter == 9)
- 382:	89 30       	cpi	r24, 0x09	; 9
- 384:	31 f4       	brne	.+12     	; 0x392 <__vector_19+0x118>
+ 3c2:	80 91 0d 01 	lds	r24, 0x010D
+ 3c6:	89 30       	cpi	r24, 0x09	; 9
+ 3c8:	49 f4       	brne	.+18     	; 0x3dc <__vector_19+0x160>
 			{
 				waiting_for_instruction = !waiting_for_instruction;
- 386:	81 e0       	ldi	r24, 0x01	; 1
- 388:	80 93 12 01 	sts	0x0112, r24
+ 3ca:	90 91 12 01 	lds	r25, 0x0112
+ 3ce:	81 e0       	ldi	r24, 0x01	; 1
+ 3d0:	89 27       	eor	r24, r25
+ 3d2:	80 93 12 01 	sts	0x0112, r24
 				RFID_counter = 0;
- 38c:	10 92 0d 01 	sts	0x010D, r1
- 390:	03 c0       	rjmp	.+6      	; 0x398 <__vector_19+0x11e>
+ 3d6:	10 92 0d 01 	sts	0x010D, r1
+ 3da:	05 c0       	rjmp	.+10     	; 0x3e6 <__vector_19+0x16a>
 			} else
 			{
 				RFID_counter++;
- 392:	8f 5f       	subi	r24, 0xFF	; 255
- 394:	80 93 0d 01 	sts	0x010D, r24
+ 3dc:	80 91 0d 01 	lds	r24, 0x010D
+ 3e0:	8f 5f       	subi	r24, 0xFF	; 255
+ 3e2:	80 93 0d 01 	sts	0x010D, r24
 			}
 		}
 	}
 }
- 398:	0f 90       	pop	r0
- 39a:	df 91       	pop	r29
- 39c:	cf 91       	pop	r28
- 39e:	ff 91       	pop	r31
- 3a0:	ef 91       	pop	r30
- 3a2:	bf 91       	pop	r27
- 3a4:	af 91       	pop	r26
- 3a6:	9f 91       	pop	r25
- 3a8:	8f 91       	pop	r24
- 3aa:	7f 91       	pop	r23
- 3ac:	6f 91       	pop	r22
- 3ae:	5f 91       	pop	r21
- 3b0:	4f 91       	pop	r20
- 3b2:	3f 91       	pop	r19
- 3b4:	2f 91       	pop	r18
- 3b6:	0f 90       	pop	r0
- 3b8:	0b be       	out	0x3b, r0	; 59
- 3ba:	0f 90       	pop	r0
- 3bc:	0f be       	out	0x3f, r0	; 63
- 3be:	0f 90       	pop	r0
- 3c0:	1f 90       	pop	r1
- 3c2:	18 95       	reti
+ 3e6:	0f 90       	pop	r0
+ 3e8:	df 91       	pop	r29
+ 3ea:	cf 91       	pop	r28
+ 3ec:	ff 91       	pop	r31
+ 3ee:	ef 91       	pop	r30
+ 3f0:	bf 91       	pop	r27
+ 3f2:	af 91       	pop	r26
+ 3f4:	9f 91       	pop	r25
+ 3f6:	8f 91       	pop	r24
+ 3f8:	7f 91       	pop	r23
+ 3fa:	6f 91       	pop	r22
+ 3fc:	5f 91       	pop	r21
+ 3fe:	4f 91       	pop	r20
+ 400:	3f 91       	pop	r19
+ 402:	2f 91       	pop	r18
+ 404:	0f 90       	pop	r0
+ 406:	0b be       	out	0x3b, r0	; 59
+ 408:	0f 90       	pop	r0
+ 40a:	0f be       	out	0x3f, r0	; 63
+ 40c:	0f 90       	pop	r0
+ 40e:	1f 90       	pop	r1
+ 410:	18 95       	reti
 
-000003c4 <_exit>:
- 3c4:	f8 94       	cli
+00000412 <_exit>:
+ 412:	f8 94       	cli
 
-000003c6 <__stop_program>:
- 3c6:	ff cf       	rjmp	.-2      	; 0x3c6 <__stop_program>
+00000414 <__stop_program>:
+ 414:	ff cf       	rjmp	.-2      	; 0x414 <__stop_program>

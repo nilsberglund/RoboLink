@@ -186,7 +186,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3c8
+.text           0x00000000      0x416
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -279,33 +279,33 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .text.main     0x000000ae        0x8 Control_module.o
                 0x000000ae                main
  .text.getError
-                0x000000b6       0xc0 Control_wheel_steering.o
+                0x000000b6       0xbc Control_wheel_steering.o
                 0x000000b6                getError
  .text.calculateSpeed
-                0x00000176       0x22 Control_wheel_steering.o
-                0x00000176                calculateSpeed
+                0x00000172       0x28 Control_wheel_steering.o
+                0x00000172                calculateSpeed
  .text.driving_setup
-                0x00000198       0x36 Control_wheel_steering.o
-                0x00000198                driving_setup
- .text.drive    0x000001ce       0x30 Control_wheel_steering.o
-                0x000001ce                drive
+                0x0000019a       0x36 Control_wheel_steering.o
+                0x0000019a                driving_setup
+ .text.drive    0x000001d0       0x30 Control_wheel_steering.o
+                0x000001d0                drive
  .text.controlAlgorithm
-                0x000001fe       0x3a Control_wheel_steering.o
-                0x000001fe                controlAlgorithm
+                0x00000200       0x3a Control_wheel_steering.o
+                0x00000200                controlAlgorithm
  .text.SPI_Init_Slave
-                0x00000238       0x3a Slave_control.o
-                0x00000238                SPI_Init_Slave
+                0x0000023a       0x3a Slave_control.o
+                0x0000023a                SPI_Init_Slave
  .text.Slave_TX
-                0x00000272        0x8 Slave_control.o
-                0x00000272                Slave_TX
+                0x00000274        0x8 Slave_control.o
+                0x00000274                Slave_TX
  .text.__vector_19
-                0x0000027a      0x14a Slave_control.o
-                0x0000027a                __vector_19
-                0x000003c4                . = ALIGN (0x2)
+                0x0000027c      0x196 Slave_control.o
+                0x0000027c                __vector_19
+                0x00000412                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003c4        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x000003c4                _exit
-                0x000003c4                exit
+ .fini9         0x00000412        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x00000412                _exit
+                0x00000412                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -324,11 +324,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003c4        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000412        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003c8                _etext = .
+                0x00000416                _etext = .
 
-.data           0x00800100        0x0 load address 0x000003c8
+.data           0x00800100        0x0 load address 0x00000416
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -366,8 +366,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800115                arm
                 0x00800116                RFIDcomp
                 0x00800117                PROVIDE (__bss_end, .)
-                0x000003c8                __data_load_start = LOADADDR (.data)
-                0x000003c8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000416                __data_load_start = LOADADDR (.data)
+                0x00000416                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800117        0x0
                 0x00800117                PROVIDE (__noinit_start, .)
@@ -446,18 +446,18 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x8ef
+.debug_info     0x00000000      0x913
  *(.debug_info)
- .debug_info    0x00000000      0x1f5 Control_module.o
- .debug_info    0x000001f5      0x519 Control_wheel_steering.o
- .debug_info    0x0000070e      0x1e1 Slave_control.o
+ .debug_info    0x00000000      0x204 Control_module.o
+ .debug_info    0x00000204      0x524 Control_wheel_steering.o
+ .debug_info    0x00000728      0x1eb Slave_control.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x33c
+.debug_abbrev   0x00000000      0x343
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xb9 Control_module.o
- .debug_abbrev  0x000000b9      0x19c Control_wheel_steering.o
- .debug_abbrev  0x00000255       0xe7 Slave_control.o
+ .debug_abbrev  0x00000000       0xc0 Control_module.o
+ .debug_abbrev  0x000000c0      0x19c Control_wheel_steering.o
+ .debug_abbrev  0x0000025c       0xe7 Slave_control.o
 
 .debug_line     0x00000000      0x637
  *(.debug_line)
