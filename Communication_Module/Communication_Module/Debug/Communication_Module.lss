@@ -3,33 +3,33 @@ Communication_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000002e0  00000374  2**0
+  0 .data         00000000  00800100  000002da  0000036e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000002e0  00000000  00000000  00000094  2**1
+  1 .text         000002da  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000001b  00800100  00800100  00000374  2**0
+  2 .bss          0000001b  00800100  00800100  0000036e  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00000374  2**2
+  3 .stab         000006cc  00000000  00000000  00000370  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000a40  2**0
+  4 .stabstr      00000097  00000000  00000000  00000a3c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000ad7  2**0
+  5 .comment      0000002f  00000000  00000000  00000ad3  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000a8  00000000  00000000  00000b06  2**0
+  6 .debug_aranges 000000a8  00000000  00000000  00000b02  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000746  00000000  00000000  00000bae  2**0
+  7 .debug_info   0000074b  00000000  00000000  00000baa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000022a  00000000  00000000  000012f4  2**0
+  8 .debug_abbrev 00000231  00000000  00000000  000012f5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000506  00000000  00000000  0000151e  2**0
+  9 .debug_line   00000500  00000000  00000000  00001526  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001dc  00000000  00000000  00001a24  2**2
+ 10 .debug_frame  000001dc  00000000  00000000  00001a28  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000208  00000000  00000000  00001c00  2**0
+ 11 .debug_str    00000208  00000000  00000000  00001c04  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000378  00000000  00000000  00001e08  2**0
+ 12 .debug_loc    00000378  00000000  00000000  00001e0c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000088  00000000  00000000  00002180  2**0
+ 13 .debug_ranges 00000088  00000000  00000000  00002184  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -128,7 +128,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	02 d0       	rcall	.+4      	; 0xae <main>
-  aa:	18 c1       	rjmp	.+560    	; 0x2dc <_exit>
+  aa:	15 c1       	rjmp	.+554    	; 0x2d6 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -144,7 +144,7 @@ int main(void)
     while(1)
     {
      RX_sensor_data();
-  b0:	08 d1       	rcall	.+528    	; 0x2c2 <RX_sensor_data>
+  b0:	05 d1       	rcall	.+522    	; 0x2bc <RX_sensor_data>
 	 TX_sensor_data();
   b2:	f5 d0       	rcall	.+490    	; 0x29e <TX_sensor_data>
   b4:	fd cf       	rjmp	.-6      	; 0xb0 <main+0x2>
@@ -172,11 +172,11 @@ void SPI_Init_Master()
   c6:	83 65       	ori	r24, 0x53	; 83
   c8:	8c bd       	out	0x2c, r24	; 44
 	//Enables interrupt 2
-	EICRA = 0x30;
-  ca:	80 e3       	ldi	r24, 0x30	; 48
+	EICRA = 0x3C;
+  ca:	8c e3       	ldi	r24, 0x3C	; 60
   cc:	80 93 69 00 	sts	0x0069, r24
-	EIMSK = 0x04;
-  d0:	84 e0       	ldi	r24, 0x04	; 4
+	EIMSK = 0x06;
+  d0:	86 e0       	ldi	r24, 0x06	; 6
   d2:	8d bb       	out	0x1d, r24	; 29
 	//Enable global interrupt
 	sei();
@@ -198,12 +198,12 @@ void SPI_Init_Master()
   ee:	93 e0       	ldi	r25, 0x03	; 3
   f0:	90 93 0d 01 	sts	0x010D, r25
 	wr = 4;
-  f4:	80 93 16 01 	sts	0x0116, r24
+  f4:	94 e0       	ldi	r25, 0x04	; 4
+  f6:	90 93 16 01 	sts	0x0116, r25
 	as = 5;
-  f8:	85 e0       	ldi	r24, 0x05	; 5
-  fa:	80 93 13 01 	sts	0x0113, r24
+  fa:	95 e0       	ldi	r25, 0x05	; 5
+  fc:	90 93 13 01 	sts	0x0113, r25
 	ar = 6;
-  fe:	86 e0       	ldi	r24, 0x06	; 6
  100:	80 93 17 01 	sts	0x0117, r24
 	rs = 7;
  104:	87 e0       	ldi	r24, 0x07	; 7
@@ -377,7 +377,7 @@ ISR(INT1_vect)
  1f0:	bf 93       	push	r27
  1f2:	ef 93       	push	r30
  1f4:	ff 93       	push	r31
-	PORTB &= ~(1 << PORTB3);		//slave select
+	PORTB &= ~(1 << PORTB3);	//slave select
  1f6:	2b 98       	cbi	0x05, 3	; 5
 	sensor_data = Master_RX(0x01);	//sending dummy
  1f8:	81 e0       	ldi	r24, 0x01	; 1
@@ -524,40 +524,37 @@ void TX_sensor_data()
 	TX_Protocol(ss);
  2a4:	80 91 0e 01 	lds	r24, 0x010E
  2a8:	cf df       	rcall	.-98     	; 0x248 <TX_Protocol>
-	sensor_data = 0xAA;
- 2aa:	8a ea       	ldi	r24, 0xAA	; 170
- 2ac:	80 93 01 01 	sts	0x0101, r24
 	Slave_Select(No_Slave);
- 2b0:	80 91 18 01 	lds	r24, 0x0118
- 2b4:	b8 df       	rcall	.-144    	; 0x226 <Slave_Select>
+ 2aa:	80 91 18 01 	lds	r24, 0x0118
+ 2ae:	bb df       	rcall	.-138    	; 0x226 <Slave_Select>
 	Slave_Select(Control_Slave);
- 2b6:	80 91 1a 01 	lds	r24, 0x011A
- 2ba:	b5 df       	rcall	.-150    	; 0x226 <Slave_Select>
+ 2b0:	80 91 1a 01 	lds	r24, 0x011A
+ 2b4:	b8 df       	rcall	.-144    	; 0x226 <Slave_Select>
 	Master_TX(sensor_data);
- 2bc:	80 91 01 01 	lds	r24, 0x0101
- 2c0:	25 cf       	rjmp	.-438    	; 0x10c <Master_TX>
+ 2b6:	80 91 01 01 	lds	r24, 0x0101
+ 2ba:	28 cf       	rjmp	.-432    	; 0x10c <Master_TX>
 
-000002c2 <RX_sensor_data>:
+000002bc <RX_sensor_data>:
 
 
 /* Function that tells the sensor slave to transmit sensor data. */
 void RX_sensor_data()
 {
 	wanted_data = sr;
- 2c2:	80 91 19 01 	lds	r24, 0x0119
- 2c6:	80 93 0c 01 	sts	0x010C, r24
+ 2bc:	80 91 19 01 	lds	r24, 0x0119
+ 2c0:	80 93 0c 01 	sts	0x010C, r24
 	Slave_Select(Sensor_Slave);
- 2ca:	80 91 14 01 	lds	r24, 0x0114
- 2ce:	ab df       	rcall	.-170    	; 0x226 <Slave_Select>
+ 2c4:	80 91 14 01 	lds	r24, 0x0114
+ 2c8:	ae df       	rcall	.-164    	; 0x226 <Slave_Select>
 	TX_Protocol(sr);
- 2d0:	80 91 19 01 	lds	r24, 0x0119
- 2d4:	b9 df       	rcall	.-142    	; 0x248 <TX_Protocol>
+ 2ca:	80 91 19 01 	lds	r24, 0x0119
+ 2ce:	bc df       	rcall	.-136    	; 0x248 <TX_Protocol>
 	Slave_Select(No_Slave);
- 2d6:	80 91 18 01 	lds	r24, 0x0118
- 2da:	a5 cf       	rjmp	.-182    	; 0x226 <Slave_Select>
+ 2d0:	80 91 18 01 	lds	r24, 0x0118
+ 2d4:	a8 cf       	rjmp	.-176    	; 0x226 <Slave_Select>
 
-000002dc <_exit>:
- 2dc:	f8 94       	cli
+000002d6 <_exit>:
+ 2d6:	f8 94       	cli
 
-000002de <__stop_program>:
- 2de:	ff cf       	rjmp	.-2      	; 0x2de <__stop_program>
+000002d8 <__stop_program>:
+ 2d8:	ff cf       	rjmp	.-2      	; 0x2d8 <__stop_program>

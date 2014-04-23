@@ -73,7 +73,7 @@ void initADC() {
 	ch = 0;										// Make sure that we start on first channel
 	DDRA = 0x00;								// Configure PortA as input for analog readings
 	DDRB |= (1<<DDB2) | (1<<DDB1) | (1<<DDB0); 	// Configure PortB as output, pin PB0, PB1, PB2.
-	PORTB = 0;									// MUX-address = 0 =>Tänd lampa 0,		ändra sen till bara dom lägsta bitarna.
+	PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);									// MUX-address = 0 =>Tänd lampa 0,		ändra sen till bara dom lägsta bitarna.
 	ADMUX = 0x20;								// AREF, left justify (msb-lsb configuration), Data registers and select ADC0 as input channel. skapa loop som växlar mellan ADC0 och ADC6.
 	ADCSRA = 0x8B;								// Enable the ADC and its interrupt feature
 	// and set the ACD clock pre-scalar to clk/64
@@ -103,7 +103,33 @@ void defaultMode() {
 		ch = 0;
 	}
 	
-	PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+	switch (ch)
+	{
+		case 0 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		case 1 : 
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB0);
+		case 2 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB1);
+		case 3 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB1)|(1<<PORTB0);
+			
+		case 4 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB2);
+		case 5 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB2)|(1<<PORTB0);
+		case 6 :
+			PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+			PORTB |= (1<<PORTB2)|(1<<PORTB1);
+		case 7 :
+			PORTB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+	}
+	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
 	analogRead(ch);						//Read analog value on new channel
 	
 
@@ -127,7 +153,33 @@ void calibrationMode() {
 		ch = 0;
 	}
 	
-	PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
+	switch (ch)
+	{
+		case 0 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		case 1 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB0);
+		case 2 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB1);
+		case 3 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB1)|(1<<PORTB0);
+		
+		case 4 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB2);
+		case 5 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB2)|(1<<PORTB0);
+		case 6 :
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+		PORTB |= (1<<PORTB2)|(1<<PORTB1);
+		case 7 :
+		PORTB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+	}
+	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
 	analogRead(ch);						//Read analog value on new channel
 	
 

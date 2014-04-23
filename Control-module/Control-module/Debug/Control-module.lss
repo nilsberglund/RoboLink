@@ -3,33 +3,33 @@ Control-module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000003c8  0000045c  2**0
+  0 .data         00000000  00800100  000003c2  00000456  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000003c8  00000000  00000000  00000094  2**1
+  1 .text         000003c2  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000017  00800100  00800100  0000045c  2**0
+  2 .bss          00000017  00800100  00800100  00000456  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  0000045c  2**2
+  3 .stab         000006cc  00000000  00000000  00000458  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000b28  2**0
+  4 .stabstr      00000097  00000000  00000000  00000b24  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000bbf  2**0
+  5 .comment      0000002f  00000000  00000000  00000bbb  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000b8  00000000  00000000  00000bee  2**0
+  6 .debug_aranges 000000b8  00000000  00000000  00000bea  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   000008ef  00000000  00000000  00000ca6  2**0
+  7 .debug_info   000008ef  00000000  00000000  00000ca2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000033c  00000000  00000000  00001595  2**0
+  8 .debug_abbrev 0000033c  00000000  00000000  00001591  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000637  00000000  00000000  000018d1  2**0
+  9 .debug_line   00000631  00000000  00000000  000018cd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001ac  00000000  00000000  00001f08  2**2
+ 10 .debug_frame  000001ac  00000000  00000000  00001f00  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000028a  00000000  00000000  000020b4  2**0
+ 11 .debug_str    0000028a  00000000  00000000  000020ac  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000048f  00000000  00000000  0000233e  2**0
+ 12 .debug_loc    0000048f  00000000  00000000  00002336  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000088  00000000  00000000  000027cd  2**0
+ 13 .debug_ranges 00000088  00000000  00000000  000027c5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,7 +73,7 @@ Disassembly of section .text:
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	16 c1       	rjmp	.+556    	; 0x27a <__vector_19>
+  4c:	13 c1       	rjmp	.+550    	; 0x274 <__vector_19>
   4e:	00 00       	nop
   50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
   52:	00 00       	nop
@@ -128,7 +128,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	02 d0       	rcall	.+4      	; 0xae <main>
-  aa:	8c c1       	rjmp	.+792    	; 0x3c4 <_exit>
+  aa:	89 c1       	rjmp	.+786    	; 0x3be <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -475,244 +475,242 @@ void SPI_Init_Slave()
 			sei(); 
  244:	78 94       	sei
 			
-			wheel_steering_data = 0x22;
- 246:	82 e2       	ldi	r24, 0x22	; 34
- 248:	80 93 0e 01 	sts	0x010E, r24
 			
 			waiting_for_instruction = 1;
- 24c:	81 e0       	ldi	r24, 0x01	; 1
- 24e:	80 93 12 01 	sts	0x0112, r24
+ 246:	81 e0       	ldi	r24, 0x01	; 1
+ 248:	80 93 12 01 	sts	0x0112, r24
 			component = 0;
- 252:	10 92 0f 01 	sts	0x010F, r1
+ 24c:	10 92 0f 01 	sts	0x010F, r1
 			sensor = 1;
- 256:	80 93 14 01 	sts	0x0114, r24
+ 250:	80 93 14 01 	sts	0x0114, r24
 			arm = 2;
- 25a:	82 e0       	ldi	r24, 0x02	; 2
- 25c:	80 93 15 01 	sts	0x0115, r24
+ 254:	82 e0       	ldi	r24, 0x02	; 2
+ 256:	80 93 15 01 	sts	0x0115, r24
 			wheel = 3;
- 260:	83 e0       	ldi	r24, 0x03	; 3
- 262:	80 93 01 01 	sts	0x0101, r24
+ 25a:	83 e0       	ldi	r24, 0x03	; 3
+ 25c:	80 93 01 01 	sts	0x0101, r24
 			RFIDcomp = 4;
- 266:	84 e0       	ldi	r24, 0x04	; 4
- 268:	80 93 16 01 	sts	0x0116, r24
+ 260:	84 e0       	ldi	r24, 0x04	; 4
+ 262:	80 93 16 01 	sts	0x0116, r24
 			RFID_counter = 0;
- 26c:	10 92 0d 01 	sts	0x010D, r1
- 270:	08 95       	ret
+ 266:	10 92 0d 01 	sts	0x010D, r1
+ 26a:	08 95       	ret
 
-00000272 <Slave_TX>:
+0000026c <Slave_TX>:
 	}
 	
 void Slave_TX(uint8_t data)
 {
 	SPDR = data;
- 272:	8e bd       	out	0x2e, r24	; 46
+ 26c:	8e bd       	out	0x2e, r24	; 46
 	PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
- 274:	2b 9a       	sbi	0x05, 3	; 5
+ 26e:	2b 9a       	sbi	0x05, 3	; 5
 	PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
- 276:	2b 98       	cbi	0x05, 3	; 5
- 278:	08 95       	ret
+ 270:	2b 98       	cbi	0x05, 3	; 5
+ 272:	08 95       	ret
 
-0000027a <__vector_19>:
+00000274 <__vector_19>:
 #include <avr/interrupt.h>
 #include <stdbool.h>
 #include "Slave_control.h"
 
 ISR(SPI_STC_vect)
 {
- 27a:	1f 92       	push	r1
- 27c:	0f 92       	push	r0
- 27e:	0f b6       	in	r0, 0x3f	; 63
+ 274:	1f 92       	push	r1
+ 276:	0f 92       	push	r0
+ 278:	0f b6       	in	r0, 0x3f	; 63
+ 27a:	0f 92       	push	r0
+ 27c:	11 24       	eor	r1, r1
+ 27e:	0b b6       	in	r0, 0x3b	; 59
  280:	0f 92       	push	r0
- 282:	11 24       	eor	r1, r1
- 284:	0b b6       	in	r0, 0x3b	; 59
- 286:	0f 92       	push	r0
- 288:	2f 93       	push	r18
- 28a:	3f 93       	push	r19
- 28c:	4f 93       	push	r20
- 28e:	5f 93       	push	r21
- 290:	6f 93       	push	r22
- 292:	7f 93       	push	r23
- 294:	8f 93       	push	r24
- 296:	9f 93       	push	r25
- 298:	af 93       	push	r26
- 29a:	bf 93       	push	r27
- 29c:	ef 93       	push	r30
- 29e:	ff 93       	push	r31
- 2a0:	cf 93       	push	r28
- 2a2:	df 93       	push	r29
- 2a4:	1f 92       	push	r1
- 2a6:	cd b7       	in	r28, 0x3d	; 61
- 2a8:	de b7       	in	r29, 0x3e	; 62
-	volatile uint8_t data = SPDR;
- 2aa:	8e b5       	in	r24, 0x2e	; 46
- 2ac:	89 83       	std	Y+1, r24	; 0x01
+ 282:	2f 93       	push	r18
+ 284:	3f 93       	push	r19
+ 286:	4f 93       	push	r20
+ 288:	5f 93       	push	r21
+ 28a:	6f 93       	push	r22
+ 28c:	7f 93       	push	r23
+ 28e:	8f 93       	push	r24
+ 290:	9f 93       	push	r25
+ 292:	af 93       	push	r26
+ 294:	bf 93       	push	r27
+ 296:	ef 93       	push	r30
+ 298:	ff 93       	push	r31
+ 29a:	cf 93       	push	r28
+ 29c:	df 93       	push	r29
+ 29e:	1f 92       	push	r1
+ 2a0:	cd b7       	in	r28, 0x3d	; 61
+ 2a2:	de b7       	in	r29, 0x3e	; 62
+	volatile uint8_t data;
+	data = SPDR;
+ 2a4:	8e b5       	in	r24, 0x2e	; 46
+ 2a6:	89 83       	std	Y+1, r24	; 0x01
 	
 	if(waiting_for_instruction)
- 2ae:	80 91 12 01 	lds	r24, 0x0112
- 2b2:	88 23       	and	r24, r24
- 2b4:	b9 f1       	breq	.+110    	; 0x324 <__vector_19+0xaa>
+ 2a8:	80 91 12 01 	lds	r24, 0x0112
+ 2ac:	88 23       	and	r24, r24
+ 2ae:	b9 f1       	breq	.+110    	; 0x31e <__vector_19+0xaa>
 	{
 		if(data == 0b10000100)
- 2b6:	89 81       	ldd	r24, Y+1	; 0x01
- 2b8:	84 38       	cpi	r24, 0x84	; 132
- 2ba:	39 f4       	brne	.+14     	; 0x2ca <__vector_19+0x50>
+ 2b0:	89 81       	ldd	r24, Y+1	; 0x01
+ 2b2:	84 38       	cpi	r24, 0x84	; 132
+ 2b4:	39 f4       	brne	.+14     	; 0x2c4 <__vector_19+0x50>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2bc:	10 92 12 01 	sts	0x0112, r1
+ 2b6:	10 92 12 01 	sts	0x0112, r1
 			component = sensor;
- 2c0:	80 91 14 01 	lds	r24, 0x0114
- 2c4:	80 93 0f 01 	sts	0x010F, r24
- 2c8:	67 c0       	rjmp	.+206    	; 0x398 <__vector_19+0x11e>
+ 2ba:	80 91 14 01 	lds	r24, 0x0114
+ 2be:	80 93 0f 01 	sts	0x010F, r24
+ 2c2:	67 c0       	rjmp	.+206    	; 0x392 <__vector_19+0x11e>
 		} else if (data == 0b10000101)
- 2ca:	89 81       	ldd	r24, Y+1	; 0x01
- 2cc:	85 38       	cpi	r24, 0x85	; 133
- 2ce:	39 f4       	brne	.+14     	; 0x2de <__vector_19+0x64>
+ 2c4:	89 81       	ldd	r24, Y+1	; 0x01
+ 2c6:	85 38       	cpi	r24, 0x85	; 133
+ 2c8:	39 f4       	brne	.+14     	; 0x2d8 <__vector_19+0x64>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2d0:	10 92 12 01 	sts	0x0112, r1
+ 2ca:	10 92 12 01 	sts	0x0112, r1
 			component = wheel;
- 2d4:	80 91 01 01 	lds	r24, 0x0101
- 2d8:	80 93 0f 01 	sts	0x010F, r24
- 2dc:	5d c0       	rjmp	.+186    	; 0x398 <__vector_19+0x11e>
+ 2ce:	80 91 01 01 	lds	r24, 0x0101
+ 2d2:	80 93 0f 01 	sts	0x010F, r24
+ 2d6:	5d c0       	rjmp	.+186    	; 0x392 <__vector_19+0x11e>
 		} else if(data == 0b10000110)
- 2de:	89 81       	ldd	r24, Y+1	; 0x01
- 2e0:	86 38       	cpi	r24, 0x86	; 134
- 2e2:	39 f4       	brne	.+14     	; 0x2f2 <__vector_19+0x78>
+ 2d8:	89 81       	ldd	r24, Y+1	; 0x01
+ 2da:	86 38       	cpi	r24, 0x86	; 134
+ 2dc:	39 f4       	brne	.+14     	; 0x2ec <__vector_19+0x78>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2e4:	10 92 12 01 	sts	0x0112, r1
+ 2de:	10 92 12 01 	sts	0x0112, r1
 			component = arm;
- 2e8:	80 91 15 01 	lds	r24, 0x0115
- 2ec:	80 93 0f 01 	sts	0x010F, r24
- 2f0:	53 c0       	rjmp	.+166    	; 0x398 <__vector_19+0x11e>
+ 2e2:	80 91 15 01 	lds	r24, 0x0115
+ 2e6:	80 93 0f 01 	sts	0x010F, r24
+ 2ea:	53 c0       	rjmp	.+166    	; 0x392 <__vector_19+0x11e>
 		}	else if(data == 0b10101011)
- 2f2:	89 81       	ldd	r24, Y+1	; 0x01
- 2f4:	8b 3a       	cpi	r24, 0xAB	; 171
- 2f6:	39 f4       	brne	.+14     	; 0x306 <__vector_19+0x8c>
+ 2ec:	89 81       	ldd	r24, Y+1	; 0x01
+ 2ee:	8b 3a       	cpi	r24, 0xAB	; 171
+ 2f0:	39 f4       	brne	.+14     	; 0x300 <__vector_19+0x8c>
 		{
 			waiting_for_instruction = !waiting_for_instruction;
- 2f8:	10 92 12 01 	sts	0x0112, r1
+ 2f2:	10 92 12 01 	sts	0x0112, r1
 			component = RFIDcomp;
- 2fc:	80 91 16 01 	lds	r24, 0x0116
- 300:	80 93 0f 01 	sts	0x010F, r24
- 304:	49 c0       	rjmp	.+146    	; 0x398 <__vector_19+0x11e>
+ 2f6:	80 91 16 01 	lds	r24, 0x0116
+ 2fa:	80 93 0f 01 	sts	0x010F, r24
+ 2fe:	49 c0       	rjmp	.+146    	; 0x392 <__vector_19+0x11e>
 		}	else if(data == 0b00000101)
- 306:	89 81       	ldd	r24, Y+1	; 0x01
- 308:	85 30       	cpi	r24, 0x05	; 5
- 30a:	21 f4       	brne	.+8      	; 0x314 <__vector_19+0x9a>
+ 300:	89 81       	ldd	r24, Y+1	; 0x01
+ 302:	85 30       	cpi	r24, 0x05	; 5
+ 304:	21 f4       	brne	.+8      	; 0x30e <__vector_19+0x9a>
 		{
 			Slave_TX(wheel_steering_data);
- 30c:	80 91 0e 01 	lds	r24, 0x010E
- 310:	b0 df       	rcall	.-160    	; 0x272 <Slave_TX>
- 312:	42 c0       	rjmp	.+132    	; 0x398 <__vector_19+0x11e>
+ 306:	80 91 0e 01 	lds	r24, 0x010E
+ 30a:	b0 df       	rcall	.-160    	; 0x26c <Slave_TX>
+ 30c:	42 c0       	rjmp	.+132    	; 0x392 <__vector_19+0x11e>
 		}	else if(data == 0b00000110)
- 314:	89 81       	ldd	r24, Y+1	; 0x01
- 316:	86 30       	cpi	r24, 0x06	; 6
- 318:	09 f0       	breq	.+2      	; 0x31c <__vector_19+0xa2>
- 31a:	3e c0       	rjmp	.+124    	; 0x398 <__vector_19+0x11e>
+ 30e:	89 81       	ldd	r24, Y+1	; 0x01
+ 310:	86 30       	cpi	r24, 0x06	; 6
+ 312:	09 f0       	breq	.+2      	; 0x316 <__vector_19+0xa2>
+ 314:	3e c0       	rjmp	.+124    	; 0x392 <__vector_19+0x11e>
 		{
 			Slave_TX(robot_arm_data);
- 31c:	80 91 00 01 	lds	r24, 0x0100
- 320:	a8 df       	rcall	.-176    	; 0x272 <Slave_TX>
- 322:	3a c0       	rjmp	.+116    	; 0x398 <__vector_19+0x11e>
+ 316:	80 91 00 01 	lds	r24, 0x0100
+ 31a:	a8 df       	rcall	.-176    	; 0x26c <Slave_TX>
+ 31c:	3a c0       	rjmp	.+116    	; 0x392 <__vector_19+0x11e>
 		}
 	} else
 	{
 		if(component == sensor)
- 324:	80 91 0f 01 	lds	r24, 0x010F
- 328:	90 91 14 01 	lds	r25, 0x0114
- 32c:	89 13       	cpse	r24, r25
- 32e:	07 c0       	rjmp	.+14     	; 0x33e <__vector_19+0xc4>
+ 31e:	80 91 0f 01 	lds	r24, 0x010F
+ 322:	90 91 14 01 	lds	r25, 0x0114
+ 326:	89 13       	cpse	r24, r25
+ 328:	07 c0       	rjmp	.+14     	; 0x338 <__vector_19+0xc4>
 		{
 			sensor_data = data;
- 330:	89 81       	ldd	r24, Y+1	; 0x01
- 332:	80 93 02 01 	sts	0x0102, r24
+ 32a:	89 81       	ldd	r24, Y+1	; 0x01
+ 32c:	80 93 02 01 	sts	0x0102, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 336:	81 e0       	ldi	r24, 0x01	; 1
- 338:	80 93 12 01 	sts	0x0112, r24
- 33c:	2d c0       	rjmp	.+90     	; 0x398 <__vector_19+0x11e>
+ 330:	81 e0       	ldi	r24, 0x01	; 1
+ 332:	80 93 12 01 	sts	0x0112, r24
+ 336:	2d c0       	rjmp	.+90     	; 0x392 <__vector_19+0x11e>
 		}else if (component == arm)
- 33e:	90 91 15 01 	lds	r25, 0x0115
- 342:	89 13       	cpse	r24, r25
- 344:	07 c0       	rjmp	.+14     	; 0x354 <__vector_19+0xda>
+ 338:	90 91 15 01 	lds	r25, 0x0115
+ 33c:	89 13       	cpse	r24, r25
+ 33e:	07 c0       	rjmp	.+14     	; 0x34e <__vector_19+0xda>
 		{
 			robot_arm_data = data;
- 346:	89 81       	ldd	r24, Y+1	; 0x01
- 348:	80 93 00 01 	sts	0x0100, r24
+ 340:	89 81       	ldd	r24, Y+1	; 0x01
+ 342:	80 93 00 01 	sts	0x0100, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 34c:	81 e0       	ldi	r24, 0x01	; 1
- 34e:	80 93 12 01 	sts	0x0112, r24
- 352:	22 c0       	rjmp	.+68     	; 0x398 <__vector_19+0x11e>
+ 346:	81 e0       	ldi	r24, 0x01	; 1
+ 348:	80 93 12 01 	sts	0x0112, r24
+ 34c:	22 c0       	rjmp	.+68     	; 0x392 <__vector_19+0x11e>
 		} else if (component == wheel)
- 354:	90 91 01 01 	lds	r25, 0x0101
- 358:	89 13       	cpse	r24, r25
- 35a:	07 c0       	rjmp	.+14     	; 0x36a <__vector_19+0xf0>
+ 34e:	90 91 01 01 	lds	r25, 0x0101
+ 352:	89 13       	cpse	r24, r25
+ 354:	07 c0       	rjmp	.+14     	; 0x364 <__vector_19+0xf0>
 		{
 			wheel_steering_data = data;
- 35c:	89 81       	ldd	r24, Y+1	; 0x01
- 35e:	80 93 0e 01 	sts	0x010E, r24
+ 356:	89 81       	ldd	r24, Y+1	; 0x01
+ 358:	80 93 0e 01 	sts	0x010E, r24
 			waiting_for_instruction = !waiting_for_instruction;
- 362:	81 e0       	ldi	r24, 0x01	; 1
- 364:	80 93 12 01 	sts	0x0112, r24
- 368:	17 c0       	rjmp	.+46     	; 0x398 <__vector_19+0x11e>
+ 35c:	81 e0       	ldi	r24, 0x01	; 1
+ 35e:	80 93 12 01 	sts	0x0112, r24
+ 362:	17 c0       	rjmp	.+46     	; 0x392 <__vector_19+0x11e>
 		} else if (component == RFIDcomp)
- 36a:	90 91 16 01 	lds	r25, 0x0116
- 36e:	89 13       	cpse	r24, r25
- 370:	13 c0       	rjmp	.+38     	; 0x398 <__vector_19+0x11e>
+ 364:	90 91 16 01 	lds	r25, 0x0116
+ 368:	89 13       	cpse	r24, r25
+ 36a:	13 c0       	rjmp	.+38     	; 0x392 <__vector_19+0x11e>
 		{
 			
 			RFID[RFID_counter] = data;
- 372:	80 91 0d 01 	lds	r24, 0x010D
- 376:	99 81       	ldd	r25, Y+1	; 0x01
- 378:	e8 2f       	mov	r30, r24
- 37a:	f0 e0       	ldi	r31, 0x00	; 0
- 37c:	ed 5f       	subi	r30, 0xFD	; 253
- 37e:	fe 4f       	sbci	r31, 0xFE	; 254
- 380:	90 83       	st	Z, r25
+ 36c:	80 91 0d 01 	lds	r24, 0x010D
+ 370:	99 81       	ldd	r25, Y+1	; 0x01
+ 372:	e8 2f       	mov	r30, r24
+ 374:	f0 e0       	ldi	r31, 0x00	; 0
+ 376:	ed 5f       	subi	r30, 0xFD	; 253
+ 378:	fe 4f       	sbci	r31, 0xFE	; 254
+ 37a:	90 83       	st	Z, r25
 			if(RFID_counter == 9)
- 382:	89 30       	cpi	r24, 0x09	; 9
- 384:	31 f4       	brne	.+12     	; 0x392 <__vector_19+0x118>
+ 37c:	89 30       	cpi	r24, 0x09	; 9
+ 37e:	31 f4       	brne	.+12     	; 0x38c <__vector_19+0x118>
 			{
 				waiting_for_instruction = !waiting_for_instruction;
- 386:	81 e0       	ldi	r24, 0x01	; 1
- 388:	80 93 12 01 	sts	0x0112, r24
+ 380:	81 e0       	ldi	r24, 0x01	; 1
+ 382:	80 93 12 01 	sts	0x0112, r24
 				RFID_counter = 0;
- 38c:	10 92 0d 01 	sts	0x010D, r1
- 390:	03 c0       	rjmp	.+6      	; 0x398 <__vector_19+0x11e>
+ 386:	10 92 0d 01 	sts	0x010D, r1
+ 38a:	03 c0       	rjmp	.+6      	; 0x392 <__vector_19+0x11e>
 			} else
 			{
 				RFID_counter++;
- 392:	8f 5f       	subi	r24, 0xFF	; 255
- 394:	80 93 0d 01 	sts	0x010D, r24
+ 38c:	8f 5f       	subi	r24, 0xFF	; 255
+ 38e:	80 93 0d 01 	sts	0x010D, r24
 			}
 		}
 	}
 }
- 398:	0f 90       	pop	r0
- 39a:	df 91       	pop	r29
- 39c:	cf 91       	pop	r28
- 39e:	ff 91       	pop	r31
- 3a0:	ef 91       	pop	r30
- 3a2:	bf 91       	pop	r27
- 3a4:	af 91       	pop	r26
- 3a6:	9f 91       	pop	r25
- 3a8:	8f 91       	pop	r24
- 3aa:	7f 91       	pop	r23
- 3ac:	6f 91       	pop	r22
- 3ae:	5f 91       	pop	r21
- 3b0:	4f 91       	pop	r20
- 3b2:	3f 91       	pop	r19
- 3b4:	2f 91       	pop	r18
- 3b6:	0f 90       	pop	r0
- 3b8:	0b be       	out	0x3b, r0	; 59
- 3ba:	0f 90       	pop	r0
- 3bc:	0f be       	out	0x3f, r0	; 63
- 3be:	0f 90       	pop	r0
- 3c0:	1f 90       	pop	r1
- 3c2:	18 95       	reti
+ 392:	0f 90       	pop	r0
+ 394:	df 91       	pop	r29
+ 396:	cf 91       	pop	r28
+ 398:	ff 91       	pop	r31
+ 39a:	ef 91       	pop	r30
+ 39c:	bf 91       	pop	r27
+ 39e:	af 91       	pop	r26
+ 3a0:	9f 91       	pop	r25
+ 3a2:	8f 91       	pop	r24
+ 3a4:	7f 91       	pop	r23
+ 3a6:	6f 91       	pop	r22
+ 3a8:	5f 91       	pop	r21
+ 3aa:	4f 91       	pop	r20
+ 3ac:	3f 91       	pop	r19
+ 3ae:	2f 91       	pop	r18
+ 3b0:	0f 90       	pop	r0
+ 3b2:	0b be       	out	0x3b, r0	; 59
+ 3b4:	0f 90       	pop	r0
+ 3b6:	0f be       	out	0x3f, r0	; 63
+ 3b8:	0f 90       	pop	r0
+ 3ba:	1f 90       	pop	r1
+ 3bc:	18 95       	reti
 
-000003c4 <_exit>:
- 3c4:	f8 94       	cli
+000003be <_exit>:
+ 3be:	f8 94       	cli
 
-000003c6 <__stop_program>:
- 3c6:	ff cf       	rjmp	.-2      	; 0x3c6 <__stop_program>
+000003c0 <__stop_program>:
+ 3c0:	ff cf       	rjmp	.-2      	; 0x3c0 <__stop_program>

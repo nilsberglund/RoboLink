@@ -10,10 +10,10 @@
 #define MASTER_COMMUNICATION_H_
 
 /* Variables */
-uint8_t received_data;
-uint8_t sensor_data;
-uint8_t wheel_steering_data;
-uint8_t	robot_arm_data;
+volatile uint8_t received_data;
+volatile uint8_t sensor_data;
+volatile uint8_t wheel_steering_data;
+volatile uint8_t robot_arm_data;
 
 uint8_t Sensor_Slave;
 uint8_t Control_Slave;
@@ -29,6 +29,7 @@ uint8_t wanted_data;
 unsigned char RFID[10];
 uint8_t i;
 uint8_t dummy;
+
 
 /* Functions */
 void SPI_Init_Master();

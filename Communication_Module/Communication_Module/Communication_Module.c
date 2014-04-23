@@ -5,7 +5,6 @@
  *  Author: susba199
  */ 
 
-
 #include <avr/io.h>
 #include "Communication_Module.h"
 #include "Master_communication.h"

@@ -10,8 +10,8 @@
 #define SLAVE_SENSOR_H_
 
 /*------Variables-------*/
-uint8_t instruction_data;
-uint8_t sensor_data; //from line sensor-file
+volatile uint8_t instruction_data;
+volatile uint8_t sensor_data; //from line sensor-file
 
 /*------Functions-------*/
 void SPI_Init_Slave();
