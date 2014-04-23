@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Sensor_Module", "Sensor_Module\Sensor_Module.cproj", "{70A3AAB7-5ACA-46C3-98D1-029665E5C2BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70A3AAB7-5ACA-46C3-98D1-029665E5C2BA}.Debug|AVR.ActiveCfg = Debug|AVR
+		{70A3AAB7-5ACA-46C3-98D1-029665E5C2BA}.Debug|AVR.Build.0 = Debug|AVR
+		{70A3AAB7-5ACA-46C3-98D1-029665E5C2BA}.Release|AVR.ActiveCfg = Release|AVR
+		{70A3AAB7-5ACA-46C3-98D1-029665E5C2BA}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

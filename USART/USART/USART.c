@@ -23,7 +23,7 @@ int main(void)
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); //set data length to 8-bit;
 	UBRR0H = 0;
 	UBRR0L = 0x07; //Sets baudvalue in AVR to 7, which gives baude rate 115200. baudvalue = (Fcpu/baudrate*16)-1
-	UCSR0B |= (1 << RXCIE0) //Enable rx complete interrupt
+	UCSR0B |= (1 << RXCIE0); //Enable rx complete interrupt
 	sei();
 	
 	while(1)

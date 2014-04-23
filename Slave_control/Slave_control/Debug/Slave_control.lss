@@ -168,8 +168,8 @@ void SPI_Init_Slave()
 			sei(); 
   d4:	78 94       	sei
 			
-			wheel_steering_data = 0xAA;
-  d6:	8a ea       	ldi	r24, 0xAA	; 170
+			wheel_steering_data = 0x22;
+  d6:	82 e2       	ldi	r24, 0x22	; 34
   d8:	80 93 14 01 	sts	0x0114, r24
   dc:	08 95       	ret
 
@@ -184,7 +184,7 @@ int main(void)
   e0:	ff cf       	rjmp	.-2      	; 0xe0 <main+0x2>
 
 000000e2 <Slave_TX>:
-			wheel_steering_data = 0xAA;
+			wheel_steering_data = 0x22;
 	}
 	
 void Slave_TX(uint8_t data)

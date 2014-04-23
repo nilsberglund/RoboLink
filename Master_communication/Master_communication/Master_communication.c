@@ -50,8 +50,8 @@ void TX_RFID_data();
 //Receive function. Data is transmitted from the sensor slave.
 ISR(INT1_vect)
 {
-	PORTB &= ~(1 << PORTB3);
-	sensor_data = Master_RX(0x01);	
+	PORTB &= ~(1 << PORTB3);		//slave select
+	sensor_data = Master_RX(0x01);	//sending dummy
 }
 
 //Receive function. Data is transmitted from the control slave
@@ -83,6 +83,7 @@ int main(void)
     {
 	//RX_wheel_data();
 	TX_sensor_data();
+	RX_wheel_data();
     }
 }
 

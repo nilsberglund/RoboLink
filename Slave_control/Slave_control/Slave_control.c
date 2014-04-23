@@ -110,7 +110,7 @@ void SPI_Init_Slave()
 			
 			sei(); 
 			
-			wheel_steering_data = 0xAA;
+			wheel_steering_data = 0x22;
 	}
 	
 void Slave_TX(uint8_t data)
