@@ -54,7 +54,7 @@ void controlAlgorithm()
 	int8_t error;
 	volatile int8_t rightWheelSpeed;
 	volatile int8_t leftWheelSpeed;
-	int8_t midspeed = 123;
+	int8_t midspeed = 170;
 
 	error = getError();
 	rightWheelSpeed = midspeed + calculateSpeed(error);
@@ -69,7 +69,7 @@ int8_t calculateSpeed(int8_t error)
 	int8_t Kp = 4;
 	int8_t Kd = 1;
 	
-	speed = Kp * error;
+	speed = Kp * error + Kd * prevError;
 
 	prevError = error;
 	return speed;

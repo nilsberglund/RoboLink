@@ -11,18 +11,18 @@
 
 /*--------variables---------*/
 
-uint8_t data;
-uint8_t sensor_data;
-uint8_t robot_arm_data;
-uint8_t wheel_steering_data;
-unsigned char RFID[10];
-_Bool waiting_for_instruction;
-uint8_t component; 
-uint8_t sensor;
-uint8_t arm;
-uint8_t wheel;
-uint8_t RFIDcomp;
-uint8_t RFID_counter;
+volatile uint8_t data;
+volatile uint8_t sensor_data;
+volatile uint8_t robot_arm_data;
+volatile uint8_t wheel_steering_data;
+volatile unsigned char RFID[10];
+volatile _Bool waiting_for_instruction;
+volatile uint8_t component; 
+volatile uint8_t sensor;
+volatile uint8_t arm;
+volatile uint8_t wheel;
+volatile uint8_t RFIDcomp;
+volatile uint8_t RFID_counter;
 
 /*--------Functions---------*/
 
