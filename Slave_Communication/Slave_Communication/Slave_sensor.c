@@ -19,7 +19,7 @@ ISR(SPI_STC_vect)
 	instruction_data = SPDR;
 	if(instruction_data == 0b00000100)
 	{
-		Slave_TX( sensor_data);
+		Slave_TX(sensor_data);
 	}
 }
 
