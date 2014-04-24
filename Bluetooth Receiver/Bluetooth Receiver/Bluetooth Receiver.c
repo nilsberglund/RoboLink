@@ -8,22 +8,40 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-char ReceivedByte; //the byte received by the AVR
+char instrByte; //the byte received by the AVR, transmitted from computer
+
 
 ISR(USART0_RX_vect)
 {
-	ReceivedByte = UDR0;
+	instrByte = UDR0;
+	transmitData(instrByte);
+}
+
+void transmitData(char instrByte)
+{
+	cli();	//Disable global interrupts
+	while ( !(UCSR0A & (1<<RXC0)) ) //wait for byte to be received
+	switch (instrByte) {
+		case 0x01: //DRIVE instruction value
+			// TODO: send DRIVE data byte over SPI to control AVR
+		case 0x02: //ARM instruction value
+			// TODO: send ARM data byte over SPI to control AVR
+		case 0x03: //CAL instruction value
+			// TODO: send CAL data byte over SPI to sensor AVR
+	}
+	sei(); //Enable global interrupts again
+}
+
+void setupBluetoothRXTX()
+{
+	UCSR0B = (1<<RXEN0) | (1<<TXEN0) | (1 << RXCIE0); //Enable RX0, TX0 and RX complete interrupt
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); //set data length to 8-bit;
+	UBRR0H = 0x00;
+	UBRR0L = 0x07; //Sets baudvalue in AVR to 7, which gives baude rate 115200. baudvalue = (Fcpu/baudrate*16)-1	
 }
 
 int main(void)
 {
-	
-	
-	UCSR0B = (1<<RXEN0) | (1<<TXEN0); //Enable RX0 and TX0
-	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); //set data length to 8-bit;
-	UBRR0H = 0;
-	UBRR0L = 0x07; //Sets baudvalue in AVR to 7, which gives baude rate 115200. baudvalue = (Fcpu/baudrate*16)-1
-	UCSR0B |= (1 << RXCIE0) //Enable rx complete interrupt
 	sei();
 	
 	while(1)

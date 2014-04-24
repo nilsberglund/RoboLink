@@ -80,6 +80,7 @@ public class KeybindingController2 {
 			window.btnJoint6LS.setEnabled(true);
 			window.btnJoint6RB.setEnabled(true);
 			window.btnJoint6RS.setEnabled(true);
+			window.btnDPP.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
 			window.btnBodyForward.setEnabled(true);
 			window.btnBodyForwardLeft.setEnabled(true);
@@ -115,6 +116,7 @@ public class KeybindingController2 {
 			window.btnJoint6LS.setEnabled(false);
 			window.btnJoint6RB.setEnabled(false);
 			window.btnJoint6RS.setEnabled(false);
+			window.btnDPP.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
 			window.btnBodyForward.setEnabled(false);
 			window.btnBodyForwardLeft.setEnabled(false);

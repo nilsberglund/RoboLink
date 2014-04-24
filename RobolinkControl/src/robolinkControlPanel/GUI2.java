@@ -62,6 +62,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte J6RB = 14;
 	final public byte J6RS = 6;
 	
+	final public byte DPP = 32;
+	
 	public JButton btnConnect;
 	public JButton btnDisconnect;
 	
@@ -225,6 +227,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6RB.setActionCommand("J6RB");
 		btnJoint6RS.setActionCommand("J6RS");
 		
+		btnDPP.setActionCommand("DPP");
+		
 		//Instantiating the sliders, text areas etc
 		speedSlider = new JSlider(JSlider.VERTICAL, 1, 5, 1); //vertical layout, minlvl 1, maxlvl 5, start 1
 
@@ -273,6 +277,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6LS.addActionListener(this);
 		btnJoint6RB.addActionListener(this);
 		btnJoint6RS.addActionListener(this);
+		btnDPP.addActionListener(this);
 
 
 		//CONPANEL
@@ -506,6 +511,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("J6RS".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J6RS);
+		}
+		else if ("DPP".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DPP);
 		}
 	}
 
