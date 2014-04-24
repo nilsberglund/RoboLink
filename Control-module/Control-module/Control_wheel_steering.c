@@ -18,12 +18,12 @@ int8_t    getError()
 	volatile uint8_t counter1 = 0;
 	volatile int8_t error = 0;
 
-	for (volatile uint8_t noShift = 7; noShift > 0; noShift--)
+	for (volatile uint8_t noShift = 6; noShift >= 0; noShift--)
 	{
 		res = (sensor_data >> noShift & 0x01);
 		if(res == 1)
 		{
-			marker = marker + (8- noShift);
+			marker = marker + (7 - noShift);
 			counter1++;
 		}
 	}
@@ -66,10 +66,10 @@ void controlAlgorithm()
 int8_t calculateSpeed(int8_t error)
 {
 	volatile int8_t speed = 0;
-	int8_t Kp = 4;
+	int8_t Kp = 1;
 	int8_t Kd = 1;
 	
-	speed = Kp * error + Kd * prevError;
+	speed = Kp * error + Kd * (error - prevError);
 
 	prevError = error;
 	return speed;

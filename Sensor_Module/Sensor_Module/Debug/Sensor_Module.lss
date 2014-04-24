@@ -3,33 +3,33 @@ Sensor_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  0000039e  00000432  2**0
+  0 .data         00000000  00800100  0000046e  00000502  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000039e  00000000  00000000  00000094  2**1
+  1 .text         0000046e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000025  00800100  00800100  00000432  2**0
+  2 .bss          00000025  00800100  00800100  00000502  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00000434  2**2
+  3 .stab         000006cc  00000000  00000000  00000504  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000b00  2**0
+  4 .stabstr      00000097  00000000  00000000  00000bd0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000b97  2**0
+  5 .comment      0000002f  00000000  00000000  00000c67  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000a8  00000000  00000000  00000bc6  2**0
+  6 .debug_aranges 000000a8  00000000  00000000  00000c96  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000527  00000000  00000000  00000c6e  2**0
+  7 .debug_info   00000552  00000000  00000000  00000d3e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000002b7  00000000  00000000  00001195  2**0
+  8 .debug_abbrev 000002b6  00000000  00000000  00001290  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   0000052e  00000000  00000000  0000144c  2**0
+  9 .debug_line   00000618  00000000  00000000  00001546  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001e0  00000000  00000000  0000197c  2**2
+ 10 .debug_frame  000001e0  00000000  00000000  00001b60  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001d7  00000000  00000000  00001b5c  2**0
+ 11 .debug_str    000001d7  00000000  00000000  00001d40  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000002ee  00000000  00000000  00001d33  2**0
+ 12 .debug_loc    00000356  00000000  00000000  00001f17  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000078  00000000  00000000  00002021  2**0
+ 13 .debug_ranges 00000078  00000000  00000000  0000226d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -37,7 +37,7 @@ Disassembly of section .text:
 00000000 <__vectors>:
    0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
    2:	00 00       	nop
-   4:	7d c0       	rjmp	.+250    	; 0x100 <__vector_1>
+   4:	8c c0       	rjmp	.+280    	; 0x11e <__vector_1>
    6:	00 00       	nop
    8:	51 c0       	rjmp	.+162    	; 0xac <__bad_interrupt>
    a:	00 00       	nop
@@ -73,7 +73,7 @@ Disassembly of section .text:
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	78 c1       	rjmp	.+752    	; 0x33e <__vector_19>
+  4c:	de c1       	rjmp	.+956    	; 0x40a <__vector_19>
   4e:	00 00       	nop
   50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
   52:	00 00       	nop
@@ -83,7 +83,7 @@ Disassembly of section .text:
   5a:	00 00       	nop
   5c:	27 c0       	rjmp	.+78     	; 0xac <__bad_interrupt>
   5e:	00 00       	nop
-  60:	25 c1       	rjmp	.+586    	; 0x2ac <__vector_24>
+  60:	8d c1       	rjmp	.+794    	; 0x37c <__vector_24>
   62:	00 00       	nop
   64:	23 c0       	rjmp	.+70     	; 0xac <__bad_interrupt>
   66:	00 00       	nop
@@ -127,8 +127,8 @@ Disassembly of section .text:
   a2:	a5 32       	cpi	r26, 0x25	; 37
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
-  a8:	38 d1       	rcall	.+624    	; 0x31a <main>
-  aa:	77 c1       	rjmp	.+750    	; 0x39a <_exit>
+  a8:	a0 d1       	rcall	.+832    	; 0x3ea <main>
+  aa:	df c1       	rjmp	.+958    	; 0x46a <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -148,8 +148,8 @@ void initADC() {
   b8:	84 b1       	in	r24, 0x04	; 4
   ba:	87 60       	ori	r24, 0x07	; 7
   bc:	84 b9       	out	0x04, r24	; 4
-	PORTB = 0;									// MUX-address = 0 =>Tänd lampa 0,		ändra sen till bara dom lägsta bitarna.
-  be:	15 b8       	out	0x05, r1	; 5
+	PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);									// MUX-address = 0 =>Tänd lampa 0,		ändra sen till bara dom lägsta bitarna.
+  be:	28 98       	cbi	0x05, 0	; 5
 	ADMUX = 0x20;								// AREF, left justify (msb-lsb configuration), Data registers and select ADC0 as input channel. skapa loop som växlar mellan ADC0 och ADC6.
   c0:	80 e2       	ldi	r24, 0x20	; 32
   c2:	80 93 7c 00 	sts	0x007C, r24
@@ -170,508 +170,679 @@ void initADC() {
 	EIMSK =0x01;
   dc:	81 e0       	ldi	r24, 0x01	; 1
   de:	8d bb       	out	0x1d, r24	; 29
-	
+	for(int i=0; i<7; i++)
+	{
+			channelThresholds[i] = 100;
+  e0:	84 e6       	ldi	r24, 0x64	; 100
+  e2:	80 93 1b 01 	sts	0x011B, r24
+  e6:	80 93 1c 01 	sts	0x011C, r24
+  ea:	80 93 1d 01 	sts	0x011D, r24
+  ee:	80 93 1e 01 	sts	0x011E, r24
+  f2:	80 93 1f 01 	sts	0x011F, r24
+  f6:	80 93 20 01 	sts	0x0120, r24
+  fa:	80 93 21 01 	sts	0x0121, r24
+	}
 	sei(); 
-  e0:	78 94       	sei
-  e2:	08 95       	ret
+  fe:	78 94       	sei
+ 100:	08 95       	ret
 
-000000e4 <analogRead>:
+00000102 <analogRead>:
 }
 
 void analogRead (int ch){
 	ADMUX &= 0xF8;									// Set 3 lsb:s to 0
-  e4:	ec e7       	ldi	r30, 0x7C	; 124
-  e6:	f0 e0       	ldi	r31, 0x00	; 0
-  e8:	90 81       	ld	r25, Z
-  ea:	98 7f       	andi	r25, 0xF8	; 248
-  ec:	90 83       	st	Z, r25
+ 102:	ec e7       	ldi	r30, 0x7C	; 124
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	90 81       	ld	r25, Z
+ 108:	98 7f       	andi	r25, 0xF8	; 248
+ 10a:	90 83       	st	Z, r25
 	ADMUX |= ch;									// Select pin ADC0..ADC6 using MUX.
-  ee:	90 81       	ld	r25, Z
-  f0:	89 2b       	or	r24, r25
-  f2:	80 83       	st	Z, r24
+ 10c:	90 81       	ld	r25, Z
+ 10e:	89 2b       	or	r24, r25
+ 110:	80 83       	st	Z, r24
 	ADCSRA |=(1<<ADSC);								// Start conversion
-  f4:	ea e7       	ldi	r30, 0x7A	; 122
-  f6:	f0 e0       	ldi	r31, 0x00	; 0
-  f8:	80 81       	ld	r24, Z
-  fa:	80 64       	ori	r24, 0x40	; 64
-  fc:	80 83       	st	Z, r24
-  fe:	08 95       	ret
+ 112:	ea e7       	ldi	r30, 0x7A	; 122
+ 114:	f0 e0       	ldi	r31, 0x00	; 0
+ 116:	80 81       	ld	r24, Z
+ 118:	80 64       	ori	r24, 0x40	; 64
+ 11a:	80 83       	st	Z, r24
+ 11c:	08 95       	ret
 
-00000100 <__vector_1>:
+0000011e <__vector_1>:
 	}
 
 
 }
 
 ISR(INT0_vect) {						// First ADC conversion after button press
- 100:	1f 92       	push	r1
- 102:	0f 92       	push	r0
- 104:	0f b6       	in	r0, 0x3f	; 63
- 106:	0f 92       	push	r0
- 108:	11 24       	eor	r1, r1
- 10a:	0b b6       	in	r0, 0x3b	; 59
- 10c:	0f 92       	push	r0
- 10e:	2f 93       	push	r18
- 110:	3f 93       	push	r19
- 112:	4f 93       	push	r20
- 114:	5f 93       	push	r21
- 116:	6f 93       	push	r22
- 118:	7f 93       	push	r23
- 11a:	8f 93       	push	r24
- 11c:	9f 93       	push	r25
- 11e:	af 93       	push	r26
- 120:	bf 93       	push	r27
- 122:	ef 93       	push	r30
- 124:	ff 93       	push	r31
+ 11e:	1f 92       	push	r1
+ 120:	0f 92       	push	r0
+ 122:	0f b6       	in	r0, 0x3f	; 63
+ 124:	0f 92       	push	r0
+ 126:	11 24       	eor	r1, r1
+ 128:	0b b6       	in	r0, 0x3b	; 59
+ 12a:	0f 92       	push	r0
+ 12c:	2f 93       	push	r18
+ 12e:	3f 93       	push	r19
+ 130:	4f 93       	push	r20
+ 132:	5f 93       	push	r21
+ 134:	6f 93       	push	r22
+ 136:	7f 93       	push	r23
+ 138:	8f 93       	push	r24
+ 13a:	9f 93       	push	r25
+ 13c:	af 93       	push	r26
+ 13e:	bf 93       	push	r27
+ 140:	ef 93       	push	r30
+ 142:	ff 93       	push	r31
 	ch = 0;
- 126:	10 92 24 01 	sts	0x0124, r1
- 12a:	10 92 23 01 	sts	0x0123, r1
+ 144:	10 92 24 01 	sts	0x0124, r1
+ 148:	10 92 23 01 	sts	0x0123, r1
 	caliMode = 1;
- 12e:	81 e0       	ldi	r24, 0x01	; 1
- 130:	90 e0       	ldi	r25, 0x00	; 0
- 132:	90 93 1a 01 	sts	0x011A, r25
- 136:	80 93 19 01 	sts	0x0119, r24
+ 14c:	81 e0       	ldi	r24, 0x01	; 1
+ 14e:	90 e0       	ldi	r25, 0x00	; 0
+ 150:	90 93 1a 01 	sts	0x011A, r25
+ 154:	80 93 19 01 	sts	0x0119, r24
 	buttonPushed++;
- 13a:	80 91 02 01 	lds	r24, 0x0102
- 13e:	90 91 03 01 	lds	r25, 0x0103
- 142:	01 96       	adiw	r24, 0x01	; 1
+ 158:	80 91 02 01 	lds	r24, 0x0102
+ 15c:	90 91 03 01 	lds	r25, 0x0103
+ 160:	01 96       	adiw	r24, 0x01	; 1
 	if (buttonPushed == 3)
- 144:	83 30       	cpi	r24, 0x03	; 3
- 146:	91 05       	cpc	r25, r1
- 148:	29 f0       	breq	.+10     	; 0x154 <__vector_1+0x54>
+ 162:	83 30       	cpi	r24, 0x03	; 3
+ 164:	91 05       	cpc	r25, r1
+ 166:	29 f0       	breq	.+10     	; 0x172 <__vector_1+0x54>
 }
 
 ISR(INT0_vect) {						// First ADC conversion after button press
 	ch = 0;
 	caliMode = 1;
 	buttonPushed++;
- 14a:	90 93 03 01 	sts	0x0103, r25
- 14e:	80 93 02 01 	sts	0x0102, r24
- 152:	06 c0       	rjmp	.+12     	; 0x160 <__vector_1+0x60>
+ 168:	90 93 03 01 	sts	0x0103, r25
+ 16c:	80 93 02 01 	sts	0x0102, r24
+ 170:	06 c0       	rjmp	.+12     	; 0x17e <__vector_1+0x60>
 	if (buttonPushed == 3)
 	{
 		buttonPushed = 1;
- 154:	81 e0       	ldi	r24, 0x01	; 1
- 156:	90 e0       	ldi	r25, 0x00	; 0
- 158:	90 93 03 01 	sts	0x0103, r25
- 15c:	80 93 02 01 	sts	0x0102, r24
+ 172:	81 e0       	ldi	r24, 0x01	; 1
+ 174:	90 e0       	ldi	r25, 0x00	; 0
+ 176:	90 93 03 01 	sts	0x0103, r25
+ 17a:	80 93 02 01 	sts	0x0102, r24
 	}
 	analogRead(ch);
- 160:	80 e0       	ldi	r24, 0x00	; 0
- 162:	90 e0       	ldi	r25, 0x00	; 0
- 164:	bf df       	rcall	.-130    	; 0xe4 <analogRead>
+ 17e:	80 e0       	ldi	r24, 0x00	; 0
+ 180:	90 e0       	ldi	r25, 0x00	; 0
+ 182:	bf df       	rcall	.-130    	; 0x102 <analogRead>
 }
- 166:	ff 91       	pop	r31
- 168:	ef 91       	pop	r30
- 16a:	bf 91       	pop	r27
- 16c:	af 91       	pop	r26
- 16e:	9f 91       	pop	r25
- 170:	8f 91       	pop	r24
- 172:	7f 91       	pop	r23
- 174:	6f 91       	pop	r22
- 176:	5f 91       	pop	r21
- 178:	4f 91       	pop	r20
- 17a:	3f 91       	pop	r19
- 17c:	2f 91       	pop	r18
- 17e:	0f 90       	pop	r0
- 180:	0b be       	out	0x3b, r0	; 59
- 182:	0f 90       	pop	r0
- 184:	0f be       	out	0x3f, r0	; 63
- 186:	0f 90       	pop	r0
- 188:	1f 90       	pop	r1
- 18a:	18 95       	reti
+ 184:	ff 91       	pop	r31
+ 186:	ef 91       	pop	r30
+ 188:	bf 91       	pop	r27
+ 18a:	af 91       	pop	r26
+ 18c:	9f 91       	pop	r25
+ 18e:	8f 91       	pop	r24
+ 190:	7f 91       	pop	r23
+ 192:	6f 91       	pop	r22
+ 194:	5f 91       	pop	r21
+ 196:	4f 91       	pop	r20
+ 198:	3f 91       	pop	r19
+ 19a:	2f 91       	pop	r18
+ 19c:	0f 90       	pop	r0
+ 19e:	0b be       	out	0x3b, r0	; 59
+ 1a0:	0f 90       	pop	r0
+ 1a2:	0f be       	out	0x3f, r0	; 63
+ 1a4:	0f 90       	pop	r0
+ 1a6:	1f 90       	pop	r1
+ 1a8:	18 95       	reti
 
-0000018c <calcThresholds>:
+000001aa <calcThresholds>:
 
 
 
 ////////////////////////////Mathematical functions//////////////////////////////////////////
 
 void calcThresholds(){
- 18c:	cf 93       	push	r28
- 18e:	df 93       	push	r29
- 190:	e2 e1       	ldi	r30, 0x12	; 18
- 192:	f1 e0       	ldi	r31, 0x01	; 1
- 194:	cb e0       	ldi	r28, 0x0B	; 11
- 196:	d1 e0       	ldi	r29, 0x01	; 1
- 198:	ab e1       	ldi	r26, 0x1B	; 27
- 19a:	b1 e0       	ldi	r27, 0x01	; 1
- 19c:	29 e1       	ldi	r18, 0x19	; 25
- 19e:	31 e0       	ldi	r19, 0x01	; 1
+ 1aa:	cf 93       	push	r28
+ 1ac:	df 93       	push	r29
+ 1ae:	e2 e1       	ldi	r30, 0x12	; 18
+ 1b0:	f1 e0       	ldi	r31, 0x01	; 1
+ 1b2:	cb e0       	ldi	r28, 0x0B	; 11
+ 1b4:	d1 e0       	ldi	r29, 0x01	; 1
+ 1b6:	ab e1       	ldi	r26, 0x1B	; 27
+ 1b8:	b1 e0       	ldi	r27, 0x01	; 1
+ 1ba:	29 e1       	ldi	r18, 0x19	; 25
+ 1bc:	31 e0       	ldi	r19, 0x01	; 1
 	for (int i=0; i<7; i++)
 	{
 		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
- 1a0:	81 91       	ld	r24, Z+
- 1a2:	49 91       	ld	r20, Y+
- 1a4:	90 e0       	ldi	r25, 0x00	; 0
- 1a6:	84 1b       	sub	r24, r20
- 1a8:	91 09       	sbc	r25, r1
- 1aa:	0a f4       	brpl	.+2      	; 0x1ae <calcThresholds+0x22>
- 1ac:	01 96       	adiw	r24, 0x01	; 1
- 1ae:	95 95       	asr	r25
- 1b0:	87 95       	ror	r24
- 1b2:	84 0f       	add	r24, r20
- 1b4:	8d 93       	st	X+, r24
+ 1be:	81 91       	ld	r24, Z+
+ 1c0:	49 91       	ld	r20, Y+
+ 1c2:	90 e0       	ldi	r25, 0x00	; 0
+ 1c4:	84 1b       	sub	r24, r20
+ 1c6:	91 09       	sbc	r25, r1
+ 1c8:	0a f4       	brpl	.+2      	; 0x1cc <calcThresholds+0x22>
+ 1ca:	01 96       	adiw	r24, 0x01	; 1
+ 1cc:	95 95       	asr	r25
+ 1ce:	87 95       	ror	r24
+ 1d0:	84 0f       	add	r24, r20
+ 1d2:	8d 93       	st	X+, r24
 
 
 ////////////////////////////Mathematical functions//////////////////////////////////////////
 
 void calcThresholds(){
 	for (int i=0; i<7; i++)
- 1b6:	e2 17       	cp	r30, r18
- 1b8:	f3 07       	cpc	r31, r19
- 1ba:	91 f7       	brne	.-28     	; 0x1a0 <calcThresholds+0x14>
+ 1d4:	e2 17       	cp	r30, r18
+ 1d6:	f3 07       	cpc	r31, r19
+ 1d8:	91 f7       	brne	.-28     	; 0x1be <calcThresholds+0x14>
 	{
 		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
 	}
 }
- 1bc:	df 91       	pop	r29
- 1be:	cf 91       	pop	r28
- 1c0:	08 95       	ret
+ 1da:	df 91       	pop	r29
+ 1dc:	cf 91       	pop	r28
+ 1de:	08 95       	ret
 
-000001c2 <calibrationMode>:
+000001e0 <calibrationMode>:
 	
 
 }
 
 void calibrationMode() {
 	if (buttonPushed == 1){ //calibrate light 
- 1c2:	80 91 02 01 	lds	r24, 0x0102
- 1c6:	90 91 03 01 	lds	r25, 0x0103
- 1ca:	81 30       	cpi	r24, 0x01	; 1
- 1cc:	91 05       	cpc	r25, r1
- 1ce:	51 f4       	brne	.+20     	; 0x1e4 <calibrationMode+0x22>
-		lightVector[ch] = adcValue;	//Add values in darkVector for first calibration
- 1d0:	e0 91 23 01 	lds	r30, 0x0123
- 1d4:	f0 91 24 01 	lds	r31, 0x0124
- 1d8:	e5 5f       	subi	r30, 0xF5	; 245
- 1da:	fe 4f       	sbci	r31, 0xFE	; 254
- 1dc:	80 91 22 01 	lds	r24, 0x0122
- 1e0:	80 83       	st	Z, r24
- 1e2:	0f c0       	rjmp	.+30     	; 0x202 <calibrationMode+0x40>
+ 1e0:	80 91 02 01 	lds	r24, 0x0102
+ 1e4:	90 91 03 01 	lds	r25, 0x0103
+ 1e8:	81 30       	cpi	r24, 0x01	; 1
+ 1ea:	91 05       	cpc	r25, r1
+ 1ec:	51 f4       	brne	.+20     	; 0x202 <calibrationMode+0x22>
+		lightVector[ch] = adcValue;	//Add values in lightVector for first calibration
+ 1ee:	e0 91 23 01 	lds	r30, 0x0123
+ 1f2:	f0 91 24 01 	lds	r31, 0x0124
+ 1f6:	e5 5f       	subi	r30, 0xF5	; 245
+ 1f8:	fe 4f       	sbci	r31, 0xFE	; 254
+ 1fa:	80 91 22 01 	lds	r24, 0x0122
+ 1fe:	80 83       	st	Z, r24
+ 200:	0f c0       	rjmp	.+30     	; 0x220 <calibrationMode+0x40>
 	}
 	
 	if (buttonPushed == 2){ //calibrate dark
- 1e4:	02 97       	sbiw	r24, 0x02	; 2
- 1e6:	69 f4       	brne	.+26     	; 0x202 <calibrationMode+0x40>
-		darkVector[ch] = adcValue;		//Add values in lightVector for second calibration
- 1e8:	80 91 23 01 	lds	r24, 0x0123
- 1ec:	90 91 24 01 	lds	r25, 0x0124
- 1f0:	fc 01       	movw	r30, r24
- 1f2:	ee 5e       	subi	r30, 0xEE	; 238
- 1f4:	fe 4f       	sbci	r31, 0xFE	; 254
- 1f6:	20 91 22 01 	lds	r18, 0x0122
- 1fa:	20 83       	st	Z, r18
+ 202:	02 97       	sbiw	r24, 0x02	; 2
+ 204:	69 f4       	brne	.+26     	; 0x220 <calibrationMode+0x40>
+		darkVector[ch] = adcValue;		//Add values in darkVector for second calibration
+ 206:	80 91 23 01 	lds	r24, 0x0123
+ 20a:	90 91 24 01 	lds	r25, 0x0124
+ 20e:	fc 01       	movw	r30, r24
+ 210:	ee 5e       	subi	r30, 0xEE	; 238
+ 212:	fe 4f       	sbci	r31, 0xFE	; 254
+ 214:	20 91 22 01 	lds	r18, 0x0122
+ 218:	20 83       	st	Z, r18
 		if (ch == 6){
- 1fc:	06 97       	sbiw	r24, 0x06	; 6
- 1fe:	09 f4       	brne	.+2      	; 0x202 <calibrationMode+0x40>
+ 21a:	06 97       	sbiw	r24, 0x06	; 6
+ 21c:	09 f4       	brne	.+2      	; 0x220 <calibrationMode+0x40>
 			calcThresholds();
- 200:	c5 df       	rcall	.-118    	; 0x18c <calcThresholds>
+ 21e:	c5 df       	rcall	.-118    	; 0x1aa <calcThresholds>
 		}
 	}
 	
 	ch++;
- 202:	80 91 23 01 	lds	r24, 0x0123
- 206:	90 91 24 01 	lds	r25, 0x0124
- 20a:	01 96       	adiw	r24, 0x01	; 1
- 20c:	90 93 24 01 	sts	0x0124, r25
- 210:	80 93 23 01 	sts	0x0123, r24
+ 220:	80 91 23 01 	lds	r24, 0x0123
+ 224:	90 91 24 01 	lds	r25, 0x0124
+ 228:	01 96       	adiw	r24, 0x01	; 1
+ 22a:	90 93 24 01 	sts	0x0124, r25
+ 22e:	80 93 23 01 	sts	0x0123, r24
 	if (ch == 7){								//go to next channel
- 214:	07 97       	sbiw	r24, 0x07	; 7
- 216:	41 f4       	brne	.+16     	; 0x228 <calibrationMode+0x66>
+ 232:	87 30       	cpi	r24, 0x07	; 7
+ 234:	91 05       	cpc	r25, r1
+ 236:	49 f4       	brne	.+18     	; 0x24a <calibrationMode+0x6a>
 		caliMode = 0;
- 218:	10 92 1a 01 	sts	0x011A, r1
- 21c:	10 92 19 01 	sts	0x0119, r1
+ 238:	10 92 1a 01 	sts	0x011A, r1
+ 23c:	10 92 19 01 	sts	0x0119, r1
 		ch = 0;
- 220:	10 92 24 01 	sts	0x0124, r1
- 224:	10 92 23 01 	sts	0x0123, r1
+ 240:	10 92 24 01 	sts	0x0124, r1
+ 244:	10 92 23 01 	sts	0x0123, r1
+ 248:	02 c0       	rjmp	.+4      	; 0x24e <calibrationMode+0x6e>
 	}
 	
-	PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
- 228:	80 91 23 01 	lds	r24, 0x0123
- 22c:	85 b9       	out	0x05, r24	; 5
-	analogRead(ch);						//Read analog value on new channel
- 22e:	80 91 23 01 	lds	r24, 0x0123
- 232:	90 91 24 01 	lds	r25, 0x0124
- 236:	56 cf       	rjmp	.-340    	; 0xe4 <analogRead>
-
-00000238 <calcOneByteLineVector>:
+	if (ch == 0)
+ 24a:	00 97       	sbiw	r24, 0x00	; 0
+ 24c:	11 f4       	brne	.+4      	; 0x252 <calibrationMode+0x72>
 	{
-		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
+
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 24e:	28 98       	cbi	0x05, 0	; 5
+ 250:	28 c0       	rjmp	.+80     	; 0x2a2 <calibrationMode+0xc2>
 	}
-}
+		else if(ch ==1)
+ 252:	81 30       	cpi	r24, 0x01	; 1
+ 254:	91 05       	cpc	r25, r1
+ 256:	19 f4       	brne	.+6      	; 0x25e <calibrationMode+0x7e>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 258:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB0);
+ 25a:	28 9a       	sbi	0x05, 0	; 5
+ 25c:	22 c0       	rjmp	.+68     	; 0x2a2 <calibrationMode+0xc2>
+		}
+
+		else if (ch==2)
+ 25e:	82 30       	cpi	r24, 0x02	; 2
+ 260:	91 05       	cpc	r25, r1
+ 262:	19 f4       	brne	.+6      	; 0x26a <calibrationMode+0x8a>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 264:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB1);
+ 266:	29 9a       	sbi	0x05, 1	; 5
+ 268:	1c c0       	rjmp	.+56     	; 0x2a2 <calibrationMode+0xc2>
+		}
+		else if (ch==3)
+ 26a:	83 30       	cpi	r24, 0x03	; 3
+ 26c:	91 05       	cpc	r25, r1
+ 26e:	29 f4       	brne	.+10     	; 0x27a <calibrationMode+0x9a>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 270:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB1)|(1<<PORTB0);
+ 272:	85 b1       	in	r24, 0x05	; 5
+ 274:	83 60       	ori	r24, 0x03	; 3
+ 276:	85 b9       	out	0x05, r24	; 5
+ 278:	14 c0       	rjmp	.+40     	; 0x2a2 <calibrationMode+0xc2>
+		}
+		else if (ch==4)
+ 27a:	84 30       	cpi	r24, 0x04	; 4
+ 27c:	91 05       	cpc	r25, r1
+ 27e:	19 f4       	brne	.+6      	; 0x286 <calibrationMode+0xa6>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 280:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2);
+ 282:	2a 9a       	sbi	0x05, 2	; 5
+ 284:	0e c0       	rjmp	.+28     	; 0x2a2 <calibrationMode+0xc2>
+		}
+		else if (ch==5)
+ 286:	85 30       	cpi	r24, 0x05	; 5
+ 288:	91 05       	cpc	r25, r1
+ 28a:	29 f4       	brne	.+10     	; 0x296 <calibrationMode+0xb6>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 28c:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2)|(1<<PORTB0);
+ 28e:	85 b1       	in	r24, 0x05	; 5
+ 290:	85 60       	ori	r24, 0x05	; 5
+ 292:	85 b9       	out	0x05, r24	; 5
+ 294:	06 c0       	rjmp	.+12     	; 0x2a2 <calibrationMode+0xc2>
+		}	
+		else if (ch==6)
+ 296:	06 97       	sbiw	r24, 0x06	; 6
+ 298:	21 f4       	brne	.+8      	; 0x2a2 <calibrationMode+0xc2>
+		{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 29a:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2)|(1<<PORTB1);
+ 29c:	85 b1       	in	r24, 0x05	; 5
+ 29e:	86 60       	ori	r24, 0x06	; 6
+ 2a0:	85 b9       	out	0x05, r24	; 5
+	}								
+	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
+	analogRead(ch);						//Read analog value on new channel
+ 2a2:	80 91 23 01 	lds	r24, 0x0123
+ 2a6:	90 91 24 01 	lds	r25, 0x0124
+ 2aa:	2b cf       	rjmp	.-426    	; 0x102 <analogRead>
+
+000002ac <calcOneByteLineVector>:
 
 void calcOneByteLineVector(){
- 238:	a4 e0       	ldi	r26, 0x04	; 4
- 23a:	b1 e0       	ldi	r27, 0x01	; 1
- 23c:	eb e1       	ldi	r30, 0x1B	; 27
- 23e:	f1 e0       	ldi	r31, 0x01	; 1
- 240:	60 e0       	ldi	r22, 0x00	; 0
+	
+	//Add millis or counter
+	
+	sensor_data = 0;
+ 2ac:	10 92 00 01 	sts	0x0100, r1
+ 2b0:	a4 e0       	ldi	r26, 0x04	; 4
+ 2b2:	b1 e0       	ldi	r27, 0x01	; 1
+ 2b4:	eb e1       	ldi	r30, 0x1B	; 27
+ 2b6:	f1 e0       	ldi	r31, 0x01	; 1
+	
+	for (int i=0; i<7; i++)
+ 2b8:	80 e0       	ldi	r24, 0x00	; 0
+ 2ba:	90 e0       	ldi	r25, 0x00	; 0
+	{
+		if (newSensorValues[i] > channelThresholds[i])
+		{
+			sensor_data |= (1<<i);
+ 2bc:	41 e0       	ldi	r20, 0x01	; 1
+ 2be:	50 e0       	ldi	r21, 0x00	; 0
+	
+	sensor_data = 0;
+	
+	for (int i=0; i<7; i++)
+	{
+		if (newSensorValues[i] > channelThresholds[i])
+ 2c0:	3d 91       	ld	r19, X+
+ 2c2:	21 91       	ld	r18, Z+
+ 2c4:	23 17       	cp	r18, r19
+ 2c6:	60 f4       	brcc	.+24     	; 0x2e0 <calcOneByteLineVector+0x34>
+		{
+			sensor_data |= (1<<i);
+ 2c8:	60 91 00 01 	lds	r22, 0x0100
+ 2cc:	9a 01       	movw	r18, r20
+ 2ce:	08 2e       	mov	r0, r24
+ 2d0:	02 c0       	rjmp	.+4      	; 0x2d6 <calcOneByteLineVector+0x2a>
+ 2d2:	22 0f       	add	r18, r18
+ 2d4:	33 1f       	adc	r19, r19
+ 2d6:	0a 94       	dec	r0
+ 2d8:	e2 f7       	brpl	.-8      	; 0x2d2 <calcOneByteLineVector+0x26>
+ 2da:	26 2b       	or	r18, r22
+ 2dc:	20 93 00 01 	sts	0x0100, r18
 	
 	//Add millis or counter
 	
 	sensor_data = 0;
 	
 	for (int i=0; i<7; i++)
- 242:	80 e0       	ldi	r24, 0x00	; 0
- 244:	90 e0       	ldi	r25, 0x00	; 0
-	{
-		if (newSensorValues[i] > channelThresholds[i])
+ 2e0:	01 96       	adiw	r24, 0x01	; 1
+ 2e2:	87 30       	cpi	r24, 0x07	; 7
+ 2e4:	91 05       	cpc	r25, r1
+ 2e6:	61 f7       	brne	.-40     	; 0x2c0 <calcOneByteLineVector+0x14>
 		{
 			sensor_data |= (1<<i);
- 246:	41 e0       	ldi	r20, 0x01	; 1
- 248:	50 e0       	ldi	r21, 0x00	; 0
-	
-	sensor_data = 0;
-	
-	for (int i=0; i<7; i++)
-	{
-		if (newSensorValues[i] > channelThresholds[i])
- 24a:	3d 91       	ld	r19, X+
- 24c:	21 91       	ld	r18, Z+
- 24e:	23 17       	cp	r18, r19
- 250:	40 f4       	brcc	.+16     	; 0x262 <calcOneByteLineVector+0x2a>
-		{
-			sensor_data |= (1<<i);
- 252:	9a 01       	movw	r18, r20
- 254:	08 2e       	mov	r0, r24
- 256:	02 c0       	rjmp	.+4      	; 0x25c <calcOneByteLineVector+0x24>
- 258:	22 0f       	add	r18, r18
- 25a:	33 1f       	adc	r19, r19
- 25c:	0a 94       	dec	r0
- 25e:	e2 f7       	brpl	.-8      	; 0x258 <calcOneByteLineVector+0x20>
- 260:	62 2b       	or	r22, r18
-	
-	//Add millis or counter
-	
-	sensor_data = 0;
-	
-	for (int i=0; i<7; i++)
- 262:	01 96       	adiw	r24, 0x01	; 1
- 264:	87 30       	cpi	r24, 0x07	; 7
- 266:	91 05       	cpc	r25, r1
- 268:	81 f7       	brne	.-32     	; 0x24a <calcOneByteLineVector+0x12>
- 26a:	60 93 00 01 	sts	0x0100, r22
- 26e:	08 95       	ret
+		}
+	}
+	//Send to other avr
+}
+ 2e8:	08 95       	ret
 
-00000270 <defaultMode>:
+000002ea <defaultMode>:
 
 
 ////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
 
 void defaultMode() {
 	newSensorValues[ch] = adcValue;
- 270:	80 91 23 01 	lds	r24, 0x0123
- 274:	90 91 24 01 	lds	r25, 0x0124
- 278:	fc 01       	movw	r30, r24
- 27a:	ec 5f       	subi	r30, 0xFC	; 252
- 27c:	fe 4f       	sbci	r31, 0xFE	; 254
- 27e:	20 91 22 01 	lds	r18, 0x0122
- 282:	20 83       	st	Z, r18
+ 2ea:	80 91 23 01 	lds	r24, 0x0123
+ 2ee:	90 91 24 01 	lds	r25, 0x0124
+ 2f2:	fc 01       	movw	r30, r24
+ 2f4:	ec 5f       	subi	r30, 0xFC	; 252
+ 2f6:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2f8:	20 91 22 01 	lds	r18, 0x0122
+ 2fc:	20 83       	st	Z, r18
 	ch++;									//go to next channel
- 284:	01 96       	adiw	r24, 0x01	; 1
- 286:	90 93 24 01 	sts	0x0124, r25
- 28a:	80 93 23 01 	sts	0x0123, r24
+ 2fe:	01 96       	adiw	r24, 0x01	; 1
+ 300:	90 93 24 01 	sts	0x0124, r25
+ 304:	80 93 23 01 	sts	0x0123, r24
 	if (ch==7)
- 28e:	07 97       	sbiw	r24, 0x07	; 7
- 290:	29 f4       	brne	.+10     	; 0x29c <defaultMode+0x2c>
+ 308:	87 30       	cpi	r24, 0x07	; 7
+ 30a:	91 05       	cpc	r25, r1
+ 30c:	31 f4       	brne	.+12     	; 0x31a <defaultMode+0x30>
 	{
 		calcOneByteLineVector();
- 292:	d2 df       	rcall	.-92     	; 0x238 <calcOneByteLineVector>
+ 30e:	ce df       	rcall	.-100    	; 0x2ac <calcOneByteLineVector>
 		ch = 0;
- 294:	10 92 24 01 	sts	0x0124, r1
- 298:	10 92 23 01 	sts	0x0123, r1
+ 310:	10 92 24 01 	sts	0x0124, r1
+ 314:	10 92 23 01 	sts	0x0123, r1
+ 318:	02 c0       	rjmp	.+4      	; 0x31e <defaultMode+0x34>
 	}
 	
-	PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
- 29c:	80 91 23 01 	lds	r24, 0x0123
- 2a0:	85 b9       	out	0x05, r24	; 5
-	analogRead(ch);						//Read analog value on new channel
- 2a2:	80 91 23 01 	lds	r24, 0x0123
- 2a6:	90 91 24 01 	lds	r25, 0x0124
- 2aa:	1c cf       	rjmp	.-456    	; 0xe4 <analogRead>
+	if (ch == 0)
+ 31a:	00 97       	sbiw	r24, 0x00	; 0
+ 31c:	11 f4       	brne	.+4      	; 0x322 <defaultMode+0x38>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 31e:	28 98       	cbi	0x05, 0	; 5
+ 320:	28 c0       	rjmp	.+80     	; 0x372 <defaultMode+0x88>
+	}
+	else if(ch ==1)
+ 322:	81 30       	cpi	r24, 0x01	; 1
+ 324:	91 05       	cpc	r25, r1
+ 326:	19 f4       	brne	.+6      	; 0x32e <defaultMode+0x44>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 328:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB0);
+ 32a:	28 9a       	sbi	0x05, 0	; 5
+ 32c:	22 c0       	rjmp	.+68     	; 0x372 <defaultMode+0x88>
+	}
 
-000002ac <__vector_24>:
+	else if (ch==2)
+ 32e:	82 30       	cpi	r24, 0x02	; 2
+ 330:	91 05       	cpc	r25, r1
+ 332:	19 f4       	brne	.+6      	; 0x33a <defaultMode+0x50>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 334:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB1);
+ 336:	29 9a       	sbi	0x05, 1	; 5
+ 338:	1c c0       	rjmp	.+56     	; 0x372 <defaultMode+0x88>
+	}
+	else if (ch==3)
+ 33a:	83 30       	cpi	r24, 0x03	; 3
+ 33c:	91 05       	cpc	r25, r1
+ 33e:	29 f4       	brne	.+10     	; 0x34a <defaultMode+0x60>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 340:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB1)|(1<<PORTB0);
+ 342:	85 b1       	in	r24, 0x05	; 5
+ 344:	83 60       	ori	r24, 0x03	; 3
+ 346:	85 b9       	out	0x05, r24	; 5
+ 348:	14 c0       	rjmp	.+40     	; 0x372 <defaultMode+0x88>
+	}
+	else if (ch==4)
+ 34a:	84 30       	cpi	r24, 0x04	; 4
+ 34c:	91 05       	cpc	r25, r1
+ 34e:	19 f4       	brne	.+6      	; 0x356 <defaultMode+0x6c>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 350:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2);
+ 352:	2a 9a       	sbi	0x05, 2	; 5
+ 354:	0e c0       	rjmp	.+28     	; 0x372 <defaultMode+0x88>
+	}
+	else if (ch==5)
+ 356:	85 30       	cpi	r24, 0x05	; 5
+ 358:	91 05       	cpc	r25, r1
+ 35a:	29 f4       	brne	.+10     	; 0x366 <defaultMode+0x7c>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 35c:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2)|(1<<PORTB0);
+ 35e:	85 b1       	in	r24, 0x05	; 5
+ 360:	85 60       	ori	r24, 0x05	; 5
+ 362:	85 b9       	out	0x05, r24	; 5
+ 364:	06 c0       	rjmp	.+12     	; 0x372 <defaultMode+0x88>
+	}	
+	else if (ch==6)
+ 366:	06 97       	sbiw	r24, 0x06	; 6
+ 368:	21 f4       	brne	.+8      	; 0x372 <defaultMode+0x88>
+	{
+		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
+ 36a:	28 98       	cbi	0x05, 0	; 5
+		PORTB |= (1<<PORTB2)|(1<<PORTB1);
+ 36c:	85 b1       	in	r24, 0x05	; 5
+ 36e:	86 60       	ori	r24, 0x06	; 6
+ 370:	85 b9       	out	0x05, r24	; 5
+	}									
+	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+	analogRead(ch);						//Read analog value on new channel
+ 372:	80 91 23 01 	lds	r24, 0x0123
+ 376:	90 91 24 01 	lds	r25, 0x0124
+ 37a:	c3 ce       	rjmp	.-634    	; 0x102 <analogRead>
+
+0000037c <__vector_24>:
 uint8_t sensor_data = 0;
 */
 
 ////////////Interupts///////////////
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 {
- 2ac:	1f 92       	push	r1
- 2ae:	0f 92       	push	r0
- 2b0:	0f b6       	in	r0, 0x3f	; 63
- 2b2:	0f 92       	push	r0
- 2b4:	11 24       	eor	r1, r1
- 2b6:	0b b6       	in	r0, 0x3b	; 59
- 2b8:	0f 92       	push	r0
- 2ba:	2f 93       	push	r18
- 2bc:	3f 93       	push	r19
- 2be:	4f 93       	push	r20
- 2c0:	5f 93       	push	r21
- 2c2:	6f 93       	push	r22
- 2c4:	7f 93       	push	r23
- 2c6:	8f 93       	push	r24
- 2c8:	9f 93       	push	r25
- 2ca:	af 93       	push	r26
- 2cc:	bf 93       	push	r27
- 2ce:	ef 93       	push	r30
- 2d0:	ff 93       	push	r31
+ 37c:	1f 92       	push	r1
+ 37e:	0f 92       	push	r0
+ 380:	0f b6       	in	r0, 0x3f	; 63
+ 382:	0f 92       	push	r0
+ 384:	11 24       	eor	r1, r1
+ 386:	0b b6       	in	r0, 0x3b	; 59
+ 388:	0f 92       	push	r0
+ 38a:	2f 93       	push	r18
+ 38c:	3f 93       	push	r19
+ 38e:	4f 93       	push	r20
+ 390:	5f 93       	push	r21
+ 392:	6f 93       	push	r22
+ 394:	7f 93       	push	r23
+ 396:	8f 93       	push	r24
+ 398:	9f 93       	push	r25
+ 39a:	af 93       	push	r26
+ 39c:	bf 93       	push	r27
+ 39e:	ef 93       	push	r30
+ 3a0:	ff 93       	push	r31
 	adcValue = ADCL;					// Must read ADCL before ADCH
- 2d2:	80 91 78 00 	lds	r24, 0x0078
- 2d6:	80 93 22 01 	sts	0x0122, r24
+ 3a2:	80 91 78 00 	lds	r24, 0x0078
+ 3a6:	80 93 22 01 	sts	0x0122, r24
 	adcValue = ADCH;					// Output ADCH to managable byte adcValue
- 2da:	80 91 79 00 	lds	r24, 0x0079
- 2de:	80 93 22 01 	sts	0x0122, r24
+ 3aa:	80 91 79 00 	lds	r24, 0x0079
+ 3ae:	80 93 22 01 	sts	0x0122, r24
 	if (caliMode == 1)
- 2e2:	80 91 19 01 	lds	r24, 0x0119
- 2e6:	90 91 1a 01 	lds	r25, 0x011A
- 2ea:	01 97       	sbiw	r24, 0x01	; 1
- 2ec:	11 f4       	brne	.+4      	; 0x2f2 <__vector_24+0x46>
+ 3b2:	80 91 19 01 	lds	r24, 0x0119
+ 3b6:	90 91 1a 01 	lds	r25, 0x011A
+ 3ba:	01 97       	sbiw	r24, 0x01	; 1
+ 3bc:	11 f4       	brne	.+4      	; 0x3c2 <__vector_24+0x46>
 	{
 		calibrationMode();
- 2ee:	69 df       	rcall	.-302    	; 0x1c2 <calibrationMode>
- 2f0:	01 c0       	rjmp	.+2      	; 0x2f4 <__vector_24+0x48>
+ 3be:	10 df       	rcall	.-480    	; 0x1e0 <calibrationMode>
+ 3c0:	01 c0       	rjmp	.+2      	; 0x3c4 <__vector_24+0x48>
 	}
 	else
 	{
 		defaultMode();
- 2f2:	be df       	rcall	.-132    	; 0x270 <defaultMode>
+ 3c2:	93 df       	rcall	.-218    	; 0x2ea <defaultMode>
 	}
 
 
 }
- 2f4:	ff 91       	pop	r31
- 2f6:	ef 91       	pop	r30
- 2f8:	bf 91       	pop	r27
- 2fa:	af 91       	pop	r26
- 2fc:	9f 91       	pop	r25
- 2fe:	8f 91       	pop	r24
- 300:	7f 91       	pop	r23
- 302:	6f 91       	pop	r22
- 304:	5f 91       	pop	r21
- 306:	4f 91       	pop	r20
- 308:	3f 91       	pop	r19
- 30a:	2f 91       	pop	r18
- 30c:	0f 90       	pop	r0
- 30e:	0b be       	out	0x3b, r0	; 59
- 310:	0f 90       	pop	r0
- 312:	0f be       	out	0x3f, r0	; 63
- 314:	0f 90       	pop	r0
- 316:	1f 90       	pop	r1
- 318:	18 95       	reti
+ 3c4:	ff 91       	pop	r31
+ 3c6:	ef 91       	pop	r30
+ 3c8:	bf 91       	pop	r27
+ 3ca:	af 91       	pop	r26
+ 3cc:	9f 91       	pop	r25
+ 3ce:	8f 91       	pop	r24
+ 3d0:	7f 91       	pop	r23
+ 3d2:	6f 91       	pop	r22
+ 3d4:	5f 91       	pop	r21
+ 3d6:	4f 91       	pop	r20
+ 3d8:	3f 91       	pop	r19
+ 3da:	2f 91       	pop	r18
+ 3dc:	0f 90       	pop	r0
+ 3de:	0b be       	out	0x3b, r0	; 59
+ 3e0:	0f 90       	pop	r0
+ 3e2:	0f be       	out	0x3f, r0	; 63
+ 3e4:	0f 90       	pop	r0
+ 3e6:	1f 90       	pop	r1
+ 3e8:	18 95       	reti
 
-0000031a <main>:
+000003ea <main>:
 #include "SensorCalMajor.h"
 #include "Slave_sensor.h"
 
 int main(void)
 {
 	SPI_Init_Slave();
- 31a:	05 d0       	rcall	.+10     	; 0x326 <SPI_Init_Slave>
+ 3ea:	05 d0       	rcall	.+10     	; 0x3f6 <SPI_Init_Slave>
 	initADC();
- 31c:	c8 de       	rcall	.-624    	; 0xae <initADC>
+ 3ec:	60 de       	rcall	.-832    	; 0xae <initADC>
 	analogRead(0);
- 31e:	80 e0       	ldi	r24, 0x00	; 0
- 320:	90 e0       	ldi	r25, 0x00	; 0
- 322:	e0 de       	rcall	.-576    	; 0xe4 <analogRead>
- 324:	ff cf       	rjmp	.-2      	; 0x324 <main+0xa>
+ 3ee:	80 e0       	ldi	r24, 0x00	; 0
+ 3f0:	90 e0       	ldi	r25, 0x00	; 0
+ 3f2:	87 de       	rcall	.-754    	; 0x102 <analogRead>
+ 3f4:	ff cf       	rjmp	.-2      	; 0x3f4 <main+0xa>
 
-00000326 <SPI_Init_Slave>:
-}
+000003f6 <SPI_Init_Slave>:
 */
 
 void SPI_Init_Slave()
 	{
-			DDRD = 0xFF;
- 326:	8f ef       	ldi	r24, 0xFF	; 255
- 328:	8a b9       	out	0x0a, r24	; 10
+
 			DDRB = 0x48;
- 32a:	88 e4       	ldi	r24, 0x48	; 72
- 32c:	84 b9       	out	0x04, r24	; 4
+ 3f6:	88 e4       	ldi	r24, 0x48	; 72
+ 3f8:	84 b9       	out	0x04, r24	; 4
 			
 			SPCR = 0xC3;
- 32e:	83 ec       	ldi	r24, 0xC3	; 195
- 330:	8c bd       	out	0x2c, r24	; 44
+ 3fa:	83 ec       	ldi	r24, 0xC3	; 195
+ 3fc:	8c bd       	out	0x2c, r24	; 44
 			
 			sei(); 
- 332:	78 94       	sei
- 334:	08 95       	ret
+ 3fe:	78 94       	sei
+ 400:	08 95       	ret
 
-00000336 <Slave_TX>:
+00000402 <Slave_TX>:
 	}
 	
 	
 void Slave_TX(uint8_t data)
 	{
 		SPDR = data;
- 336:	8e bd       	out	0x2e, r24	; 46
+ 402:	8e bd       	out	0x2e, r24	; 46
 		PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
- 338:	2b 9a       	sbi	0x05, 3	; 5
+ 404:	2b 9a       	sbi	0x05, 3	; 5
 		PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
- 33a:	2b 98       	cbi	0x05, 3	; 5
- 33c:	08 95       	ret
+ 406:	2b 98       	cbi	0x05, 3	; 5
+ 408:	08 95       	ret
 
-0000033e <__vector_19>:
+0000040a <__vector_19>:
 void SPI_Init_Slave();
 void Slave_TX(uint8_t);
 */
 
 ISR(SPI_STC_vect)
 {
- 33e:	1f 92       	push	r1
- 340:	0f 92       	push	r0
- 342:	0f b6       	in	r0, 0x3f	; 63
- 344:	0f 92       	push	r0
- 346:	11 24       	eor	r1, r1
- 348:	0b b6       	in	r0, 0x3b	; 59
- 34a:	0f 92       	push	r0
- 34c:	2f 93       	push	r18
- 34e:	3f 93       	push	r19
- 350:	4f 93       	push	r20
- 352:	5f 93       	push	r21
- 354:	6f 93       	push	r22
- 356:	7f 93       	push	r23
- 358:	8f 93       	push	r24
- 35a:	9f 93       	push	r25
- 35c:	af 93       	push	r26
- 35e:	bf 93       	push	r27
- 360:	ef 93       	push	r30
- 362:	ff 93       	push	r31
+ 40a:	1f 92       	push	r1
+ 40c:	0f 92       	push	r0
+ 40e:	0f b6       	in	r0, 0x3f	; 63
+ 410:	0f 92       	push	r0
+ 412:	11 24       	eor	r1, r1
+ 414:	0b b6       	in	r0, 0x3b	; 59
+ 416:	0f 92       	push	r0
+ 418:	2f 93       	push	r18
+ 41a:	3f 93       	push	r19
+ 41c:	4f 93       	push	r20
+ 41e:	5f 93       	push	r21
+ 420:	6f 93       	push	r22
+ 422:	7f 93       	push	r23
+ 424:	8f 93       	push	r24
+ 426:	9f 93       	push	r25
+ 428:	af 93       	push	r26
+ 42a:	bf 93       	push	r27
+ 42c:	ef 93       	push	r30
+ 42e:	ff 93       	push	r31
 	instruction_data = SPDR;
- 364:	8e b5       	in	r24, 0x2e	; 46
- 366:	80 93 01 01 	sts	0x0101, r24
+ 430:	8e b5       	in	r24, 0x2e	; 46
+ 432:	80 93 01 01 	sts	0x0101, r24
 	if(instruction_data == 0b00000100)
- 36a:	84 30       	cpi	r24, 0x04	; 4
- 36c:	19 f4       	brne	.+6      	; 0x374 <__vector_19+0x36>
+ 436:	80 91 01 01 	lds	r24, 0x0101
+ 43a:	84 30       	cpi	r24, 0x04	; 4
+ 43c:	19 f4       	brne	.+6      	; 0x444 <__vector_19+0x3a>
 	{
 		Slave_TX(sensor_data);
- 36e:	80 91 00 01 	lds	r24, 0x0100
- 372:	e1 df       	rcall	.-62     	; 0x336 <Slave_TX>
+ 43e:	80 91 00 01 	lds	r24, 0x0100
+ 442:	df df       	rcall	.-66     	; 0x402 <Slave_TX>
 	}
 }
- 374:	ff 91       	pop	r31
- 376:	ef 91       	pop	r30
- 378:	bf 91       	pop	r27
- 37a:	af 91       	pop	r26
- 37c:	9f 91       	pop	r25
- 37e:	8f 91       	pop	r24
- 380:	7f 91       	pop	r23
- 382:	6f 91       	pop	r22
- 384:	5f 91       	pop	r21
- 386:	4f 91       	pop	r20
- 388:	3f 91       	pop	r19
- 38a:	2f 91       	pop	r18
- 38c:	0f 90       	pop	r0
- 38e:	0b be       	out	0x3b, r0	; 59
- 390:	0f 90       	pop	r0
- 392:	0f be       	out	0x3f, r0	; 63
- 394:	0f 90       	pop	r0
- 396:	1f 90       	pop	r1
- 398:	18 95       	reti
+ 444:	ff 91       	pop	r31
+ 446:	ef 91       	pop	r30
+ 448:	bf 91       	pop	r27
+ 44a:	af 91       	pop	r26
+ 44c:	9f 91       	pop	r25
+ 44e:	8f 91       	pop	r24
+ 450:	7f 91       	pop	r23
+ 452:	6f 91       	pop	r22
+ 454:	5f 91       	pop	r21
+ 456:	4f 91       	pop	r20
+ 458:	3f 91       	pop	r19
+ 45a:	2f 91       	pop	r18
+ 45c:	0f 90       	pop	r0
+ 45e:	0b be       	out	0x3b, r0	; 59
+ 460:	0f 90       	pop	r0
+ 462:	0f be       	out	0x3f, r0	; 63
+ 464:	0f 90       	pop	r0
+ 466:	1f 90       	pop	r1
+ 468:	18 95       	reti
 
-0000039a <_exit>:
- 39a:	f8 94       	cli
+0000046a <_exit>:
+ 46a:	f8 94       	cli
 
-0000039c <__stop_program>:
- 39c:	ff cf       	rjmp	.-2      	; 0x39c <__stop_program>
+0000046c <__stop_program>:
+ 46c:	ff cf       	rjmp	.-2      	; 0x46c <__stop_program>

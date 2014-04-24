@@ -55,7 +55,7 @@ void TX_RFID_data();
 //Receive function. Data is transmitted from the sensor slave.
 ISR(INT1_vect)
 {
-	PORTB &= ~(1 << PORTB3);		//slave select
+	PORTB &= ~(1 << PORTB3);	//slave select
 	sensor_data = Master_RX(0x01);	//sending dummy
 }
 
@@ -100,16 +100,15 @@ int main(void)
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()
 {
-	//Sets all the D ports as outputs
-	DDRD = 0xFF;
+
 	//Sets MOSI, SCK and SS as outputs
 	DDRB = 0xB0;
 	PORTB |= (1 << PORTB3)|(1 << PORTB4);
 	//Sets the SPI-control register. Master settings and interrupt enable. SPR0, SPR1 sets clock to f/128.. 
 	SPCR |= (1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
 	//Enables interrupt 2
-	EICRA = 0x30;
-	EIMSK = 0x04;
+	EICRA = 0x3C;
+	EIMSK = 0x06;
 	//Enable global interrupt
 	sei();
 	
@@ -213,7 +212,6 @@ void TX_sensor_data()
 {
 	Slave_Select(Control_Slave);
 	TX_Protocol(ss);
-	sensor_data = 0xAA;
 	Slave_Select(No_Slave);
 	Slave_Select(Control_Slave);
 	Master_TX(sensor_data);
