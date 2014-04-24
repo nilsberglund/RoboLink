@@ -38,7 +38,7 @@ int main(void)
 
 void SPI_Init_Slave()
 	{
-			DDRD = 0xFF;
+
 			DDRB = 0x48;
 			
 			SPCR = 0xC3;

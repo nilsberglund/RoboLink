@@ -100,8 +100,7 @@ int main(void)
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()
 {
-	//Sets all the D ports as outputs
-	DDRD = 0xFF;
+
 	//Sets MOSI, SCK and SS as outputs
 	DDRB = 0xB0;
 	PORTB |= (1 << PORTB3)|(1 << PORTB4);

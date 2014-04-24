@@ -187,7 +187,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x2da
+.text           0x00000000      0x2d6
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -279,37 +279,37 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .text.main     0x000000ae        0x8 Communication_Module.o
                 0x000000ae                main
  .text.SPI_Init_Master
-                0x000000b6       0x56 Master_communication.o
+                0x000000b6       0x52 Master_communication.o
                 0x000000b6                SPI_Init_Master
  .text.Master_TX
-                0x0000010c       0x1e Master_communication.o
-                0x0000010c                Master_TX
+                0x00000108       0x1e Master_communication.o
+                0x00000108                Master_TX
  .text.Master_RX
-                0x0000012a       0x20 Master_communication.o
-                0x0000012a                Master_RX
+                0x00000126       0x20 Master_communication.o
+                0x00000126                Master_RX
  .text.__vector_3
-                0x0000014a       0x86 Master_communication.o
-                0x0000014a                __vector_3
+                0x00000146       0x86 Master_communication.o
+                0x00000146                __vector_3
  .text.__vector_2
-                0x000001d0       0x56 Master_communication.o
-                0x000001d0                __vector_2
+                0x000001cc       0x56 Master_communication.o
+                0x000001cc                __vector_2
  .text.Slave_Select
-                0x00000226       0x22 Master_communication.o
-                0x00000226                Slave_Select
+                0x00000222       0x22 Master_communication.o
+                0x00000222                Slave_Select
  .text.TX_Protocol
-                0x00000248       0x56 Master_communication.o
-                0x00000248                TX_Protocol
+                0x00000244       0x56 Master_communication.o
+                0x00000244                TX_Protocol
  .text.TX_sensor_data
-                0x0000029e       0x1e Master_communication.o
-                0x0000029e                TX_sensor_data
+                0x0000029a       0x1e Master_communication.o
+                0x0000029a                TX_sensor_data
  .text.RX_sensor_data
-                0x000002bc       0x1a Master_communication.o
-                0x000002bc                RX_sensor_data
-                0x000002d6                . = ALIGN (0x2)
+                0x000002b8       0x1a Master_communication.o
+                0x000002b8                RX_sensor_data
+                0x000002d2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000002d6        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x000002d6                _exit
-                0x000002d6                exit
+ .fini9         0x000002d2        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x000002d2                _exit
+                0x000002d2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -328,11 +328,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000002d6        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x000002d2        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000002da                _etext = .
+                0x000002d6                _etext = .
 
-.data           0x00800100        0x0 load address 0x000002da
+.data           0x00800100        0x0 load address 0x000002d6
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -373,8 +373,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800119                sr
                 0x0080011a                Control_Slave
                 0x0080011b                PROVIDE (__bss_end, .)
-                0x000002da                __data_load_start = LOADADDR (.data)
-                0x000002da                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000002d6                __data_load_start = LOADADDR (.data)
+                0x000002d6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080011b        0x0
                 0x0080011b                PROVIDE (__noinit_start, .)
@@ -461,10 +461,10 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_abbrev  0x00000000       0xc0 Communication_Module.o
  .debug_abbrev  0x000000c0      0x171 Master_communication.o
 
-.debug_line     0x00000000      0x500
+.debug_line     0x00000000      0x4fa
  *(.debug_line)
  .debug_line    0x00000000      0x115 Communication_Module.o
- .debug_line    0x00000115      0x3eb Master_communication.o
+ .debug_line    0x00000115      0x3e5 Master_communication.o
 
 .debug_frame    0x00000000      0x1dc
  *(.debug_frame)
