@@ -3,14 +3,14 @@ Archive member included because of file (symbol)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o (exit)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_copy_data.o)
-                              RFID.o (__do_copy_data)
+                              warehouseMode.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_clear_bss.o)
-                              RFID.o (__do_clear_bss)
+                              warehouseMode.o (__do_clear_bss)
 
 Allocating common symbols
 Common symbol       size              file
 
-low_conf            0x24              RFID.o
+low_conf            0x24              warehouseMode.o
 
 Discarded input sections
 
@@ -25,8 +25,8 @@ Discarded input sections
                 0x00000000       0x1c LCD_new.o
  .text.hd44780_l_set_ddram_addr
                 0x00000000       0x1a LCD_new.o
- .text          0x00000000        0x0 RFID.o
- .bss           0x00000000        0x0 RFID.o
+ .text          0x00000000        0x0 warehouseMode.o
+ .bss           0x00000000        0x0 warehouseMode.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -84,7 +84,7 @@ Linker script and memory map
 Address of section .data set to 0x800100
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
 LOAD LCD_new.o
-LOAD RFID.o
+LOAD warehouseMode.o
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51\libm.a
 END GROUP
@@ -295,18 +295,18 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0000058a      0x2c0 LCD_new.o
                 0x0000058a                hd44780_l_init
  .text.rfid_Read
-                0x0000084a       0x10 RFID.o
+                0x0000084a       0x10 warehouseMode.o
                 0x0000084a                rfid_Read
  .text.__vector_20
-                0x0000085a       0x66 RFID.o
+                0x0000085a       0x66 warehouseMode.o
                 0x0000085a                __vector_20
  .text.rfid_Print_LCD
-                0x000008c0       0x56 RFID.o
+                0x000008c0       0x56 warehouseMode.o
                 0x000008c0                rfid_Print_LCD
  .text.lcd_Setup
-                0x00000916       0xee RFID.o
+                0x00000916       0xee warehouseMode.o
                 0x00000916                lcd_Setup
- .text.main     0x00000a04       0x18 RFID.o
+ .text.main     0x00000a04       0x18 warehouseMode.o
                 0x00000a04                main
                 0x00000a1c                . = ALIGN (0x2)
  *(.fini9)
@@ -340,12 +340,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
  .data          0x00800100        0x0 LCD_new.o
- .data          0x00800100        0x0 RFID.o
+ .data          0x00800100        0x0 warehouseMode.o
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_copy_data.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_clear_bss.o)
  *(.data*)
- .data.loaded   0x00800100        0xc RFID.o
+ .data.loaded   0x00800100        0xc warehouseMode.o
                 0x00800100                loaded
  *(.rodata)
  *(.rodata*)
@@ -358,10 +358,10 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0080010c                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.digit     0x0080010c        0x1 RFID.o
+ .bss.digit     0x0080010c        0x1 warehouseMode.o
                 0x0080010c                digit
  *(COMMON)
- COMMON         0x0080010d       0x24 RFID.o
+ COMMON         0x0080010d       0x24 warehouseMode.o
                 0x0080010d                low_conf
                 0x00800131                PROVIDE (__bss_end, .)
                 0x00000a20                __data_load_start = LOADADDR (.data)
@@ -417,7 +417,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.comment)
  .comment       0x00000000       0x2f LCD_new.o
                                  0x30 (size before relaxing)
- .comment       0x00000000       0x30 RFID.o
+ .comment       0x00000000       0x30 warehouseMode.o
 
 .debug
  *(.debug)
@@ -436,7 +436,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_aranges
                 0x00000000       0x70 LCD_new.o
  .debug_aranges
-                0x00000070       0x40 RFID.o
+                0x00000070       0x40 warehouseMode.o
 
 .debug_pubnames
  *(.debug_pubnames)
@@ -444,35 +444,35 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_info     0x00000000     0x160e
  *(.debug_info)
  .debug_info    0x00000000     0x10b8 LCD_new.o
- .debug_info    0x000010b8      0x556 RFID.o
+ .debug_info    0x000010b8      0x556 warehouseMode.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x3c5
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x1d3 LCD_new.o
- .debug_abbrev  0x000001d3      0x1f2 RFID.o
+ .debug_abbrev  0x000001d3      0x1f2 warehouseMode.o
 
-.debug_line     0x00000000      0x8fc
+.debug_line     0x00000000      0x905
  *(.debug_line)
  .debug_line    0x00000000      0x5da LCD_new.o
- .debug_line    0x000005da      0x322 RFID.o
+ .debug_line    0x000005da      0x32b warehouseMode.o
 
 .debug_frame    0x00000000      0x224
  *(.debug_frame)
  .debug_frame   0x00000000      0x158 LCD_new.o
- .debug_frame   0x00000158       0xcc RFID.o
+ .debug_frame   0x00000158       0xcc warehouseMode.o
 
-.debug_str      0x00000000      0x31f
+.debug_str      0x00000000      0x33a
  *(.debug_str)
- .debug_str     0x00000000      0x2c0 LCD_new.o
-                                0x303 (size before relaxing)
- .debug_str     0x000002c0       0x5f RFID.o
-                                0x274 (size before relaxing)
+ .debug_str     0x00000000      0x2d2 LCD_new.o
+                                0x315 (size before relaxing)
+ .debug_str     0x000002d2       0x68 warehouseMode.o
+                                0x28f (size before relaxing)
 
 .debug_loc      0x00000000     0x13d5
  *(.debug_loc)
  .debug_loc     0x00000000     0x127e LCD_new.o
- .debug_loc     0x0000127e      0x157 RFID.o
+ .debug_loc     0x0000127e      0x157 warehouseMode.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -483,9 +483,9 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_ranges   0x00000000       0x90
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x60 LCD_new.o
- .debug_ranges  0x00000060       0x30 RFID.o
+ .debug_ranges  0x00000060       0x30 warehouseMode.o
 
 .debug_macro
  *(.debug_macro)
-OUTPUT(RFID.elf elf32-avr)
+OUTPUT(warehouseMode.elf elf32-avr)
 LOAD linker stubs
