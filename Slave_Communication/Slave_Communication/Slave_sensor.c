@@ -7,12 +7,15 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "Slave_sensor.h"
 
+/*
 uint8_t instruction_data;
 uint8_t sensor_data; //from line sensor-file
 
 void SPI_Init_Slave();
 void Slave_TX(uint8_t);
+*/
 
 ISR(SPI_STC_vect)
 {
@@ -23,15 +26,15 @@ ISR(SPI_STC_vect)
 	}
 }
 
-
+/*
 int main(void)
 {
-	SPI_Init_Slave();
     while(1)
     {
 		
     }
 }
+*/
 
 void SPI_Init_Slave()
 	{

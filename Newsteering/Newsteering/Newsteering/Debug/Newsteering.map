@@ -499,27 +499,27 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x2c3
+.debug_info     0x00000000      0x2dc
  *(.debug_info)
- .debug_info    0x00000000      0x2c3 Newsteering.o
+ .debug_info    0x00000000      0x2dc Newsteering.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x124
+.debug_abbrev   0x00000000      0x13c
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x124 Newsteering.o
+ .debug_abbrev  0x00000000      0x13c Newsteering.o
 
-.debug_line     0x00000000      0x211
+.debug_line     0x00000000      0x210
  *(.debug_line)
- .debug_line    0x00000000      0x211 Newsteering.o
+ .debug_line    0x00000000      0x210 Newsteering.o
 
 .debug_frame    0x00000000       0xbc
  *(.debug_frame)
  .debug_frame   0x00000000       0xbc Newsteering.o
 
-.debug_str      0x00000000      0x182
+.debug_str      0x00000000      0x177
  *(.debug_str)
- .debug_str     0x00000000      0x182 Newsteering.o
-                                0x1bc (size before relaxing)
+ .debug_str     0x00000000      0x177 Newsteering.o
+                                0x1b1 (size before relaxing)
 
 .debug_loc      0x00000000      0x13b
  *(.debug_loc)

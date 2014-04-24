@@ -1,11 +1,3 @@
-/*
-* RFID.c
-*
-* Created: 3/29/2014 11:53:59 AM
-* Author: nilbe317
-* TODO: Implement rfid on/off function
-*/
-
 #define F_CPU 14745600UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -14,8 +6,10 @@
 
 void rfid_Print_LCD();
 void rfid_Read(uint8_t cardNo, uint8_t digit);
+void lcd_Setup();
 
-uint8_t rfidStream[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
+uint8_t loaded[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
+uint8_t history[4][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}, {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}, {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
 struct hd44780_l_conf low_conf;
 uint8_t digit = 0;
 uint8_t cardNo = 0;
@@ -25,10 +19,8 @@ uint8_t cardNo = 0;
 When the receive of one byte is complete, this interrupt will run.
 */
 ISR(USART0_RX_vect){
-	
-
-	rfid_Read(cardNo,digit);
-	
+		rfid_Read(cardNo,digit);
+		
 	digit++;
 	
 	if (digit == 12) {
@@ -37,16 +29,27 @@ ISR(USART0_RX_vect){
 		
 		//TODO: Shut of card reader to prevent multiple readings of same card.
 		}
+}
 
+
+int main(void)
+{
+lcd_Setup(); //Bör köras först av allt då den även innehåller rfid intrerupt initialisering
+	
+	while(1)
+	{
+		rfid_Print_LCD();
+		_delay_ms(300);
+	}
 }
 
 
 /*
-Reads one byte and stores in in the rfidStream vector.
+Reads one byte and stores in in the loaded vector.
 */
-void rfid_Read(uint8_t digit){
+void rfid_Read(uint8_t cardNo, uint8_t digit){
 	
-	rfidStream[cardNo][digit] = UDR0;
+	loaded[digit] = UDR0;
 }
 
 /*
@@ -64,18 +67,15 @@ void rfid_Print_LCD(){
 	
 	for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
 	{
-		hd44780_l_write(&low_conf, rfidStream[0][i]);
+		hd44780_l_write(&low_conf, loaded[i]);
 	}
 }
 
 
-
-int main(void)
-{
+void lcd_Setup(){
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
 	DDRD = (1 << DDD5)|(1 << DDD6)|(1 << DDD7); //rs, rw and en are outputs
-	
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
 	low_conf.rs_i = 5;
 	low_conf.rw_i = 6;
@@ -102,11 +102,8 @@ int main(void)
 	low_conf.line1_base_addr = 0x00;
 	low_conf.line2_base_addr = 0x40;
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
-	
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
-	
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-	
 	UCSR0B = (1<<RXEN0 | 1<<TXEN0); //Enable RX0 and TX0
 	UCSR0C = (1 << UCSZ01 | 1 << UCSZ00); //set data length to 8-bit;
 	UBRR0H = 0b00000001;
@@ -114,27 +111,21 @@ int main(void)
 	UCSR0B |= (1 << RXCIE0); //Enables the rc complete interrupt
 	sei();
 	
-	
-	
-	while(1)
-	{
-		rfid_Print_LCD();
-		_delay_ms(300);
-	}
 }
+	
 
 
 
-//		if (rfidStream[0] =! 0 || newVector() == true)
+//		if (loaded[0] =! 0 || newVector() == true)
 //boolean newVector(){
 //for(int cardVectors = 0; i<=7; i++){
 //for(int digit = 0; i<=11; i++){
 //
-//rfidStream[i]
+//loaded[i]
 
 //
 //
-//if (rfidStream[digiTemp] == 0x0A || rfidStream[digiTemp] == 0x0D )
+//if (loaded[digiTemp] == 0x0A || loaded[digiTemp] == 0x0D )
 //{
 //hd44780_l_write(&low_conf, 0x5E);
 //}
