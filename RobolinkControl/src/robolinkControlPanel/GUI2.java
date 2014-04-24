@@ -27,6 +27,41 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	//all the variables (buttons, labels etc.)
 	public int speed;
 	
+	//setting up instruction bytes and data bytes
+	final public byte DRIVEINSTR = 1;
+	final public byte ARMINSTR = 2;
+	final public byte CALINSTR = 3;
+	
+	final public byte J1LB = 25;
+	final public byte J1LS = 17;
+	final public byte J1RB = 9;
+	final public byte J1RS = 1;
+	
+	final public byte J2LB = 26;
+	final public byte J2LS = 18;
+	final public byte J2RB = 10;
+	final public byte J2RS = 2;
+	
+	final public byte J3LB = 27;
+	final public byte J3LS = 19;
+	final public byte J3RB = 11;
+	final public byte J3RS = 3;
+	
+	final public byte J4LB = 28;
+	final public byte J4LS = 20;
+	final public byte J4RB = 12;
+	final public byte J4RS = 4;
+	
+	final public byte J5LB = 29;
+	final public byte J5LS = 21;
+	final public byte J5RB = 13;
+	final public byte J5RS = 5;
+	
+	final public byte J6LB = 30;
+	final public byte J6LS = 22;
+	final public byte J6RB = 14;
+	final public byte J6RS = 6;
+	
 	public JButton btnConnect;
 	public JButton btnDisconnect;
 	
@@ -96,7 +131,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 	/**
-	 * Creates instances of the communicator and keybindingcontroller
+	 * Creates instances of the Communicator and Keybindingcontroller
 	 */
 	private void createObjects() {
 		communicator = new Communicator2(this);
@@ -106,9 +141,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 
 	private void initComponents() {
-
-		btnConnect = new JButton();
-		btnDisconnect = new JButton();
+		
+		//Instantiating buttons and adding text
+		btnConnect = new JButton("CONNECT");
+		btnDisconnect = new JButton("DISCONNECT");
 		btnBodyBackward = new JButton("BW");
 		btnBodyForward = new JButton("FW");
 		btnBodyForwardLeft = new JButton("FL");
@@ -146,8 +182,19 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6RB = new JButton("J6 >>");
 		btnJoint6RS = new JButton("J6 >");
 		
+		btnDPP = new JButton("DPP");
+		
 		
 		//setting action commands
+		btnConnect.setActionCommand("connect");
+		btnDisconnect.setActionCommand("disconnect");
+		btnBodyBackward.setActionCommand("BW");
+		btnBodyForward.setActionCommand("FW");
+		btnBodyForwardLeft.setActionCommand("FL");
+		btnBodyForwardRight.setActionCommand("FR");
+		btnBodyStop.setActionCommand("stop");
+		btnCalibration.setActionCommand("calibration");
+		
 		btnJoint1LB.setActionCommand("J1LB");
 		btnJoint1LS.setActionCommand("J1LS");
 		btnJoint1RB.setActionCommand("J1RB");
@@ -178,9 +225,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6RB.setActionCommand("J6RB");
 		btnJoint6RS.setActionCommand("J6RS");
 		
-		
-		btnDPP = new JButton("DPP");
-		
+		//Instantiating the sliders, text areas etc
 		speedSlider = new JSlider(JSlider.VERTICAL, 1, 5, 1); //vertical layout, minlvl 1, maxlvl 5, start 1
 
 		cboxPorts = new JComboBox();
@@ -194,11 +239,43 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		conPanel = new JPanel();
 		navPanel = new JPanel();
 		telPanel = new JPanel();
+		
+		//Adding action listeners
+		btnConnect.addActionListener(this);
+		btnDisconnect.addActionListener(this);
+		btnBodyStop.addActionListener(this);
+		btnBodyForward.addActionListener(this);
+		btnBodyBackward.addActionListener(this);
+		btnBodyForwardLeft.addActionListener(this);
+		btnBodyForwardRight.addActionListener(this);
+		btnCalibration.addActionListener(this);
+		btnJoint1LB.addActionListener(this);
+		btnJoint1LS.addActionListener(this);
+		btnJoint1RB.addActionListener(this);
+		btnJoint1RS.addActionListener(this);
+		btnJoint2LB.addActionListener(this);
+		btnJoint2LS.addActionListener(this);
+		btnJoint2RB.addActionListener(this);
+		btnJoint2RS.addActionListener(this);
+		btnJoint3LB.addActionListener(this);
+		btnJoint3LS.addActionListener(this);
+		btnJoint3RB.addActionListener(this);
+		btnJoint3RS.addActionListener(this);
+		btnJoint4LB.addActionListener(this);
+		btnJoint4LS.addActionListener(this);
+		btnJoint4RB.addActionListener(this);
+		btnJoint4RS.addActionListener(this);
+		btnJoint5LB.addActionListener(this);
+		btnJoint5LS.addActionListener(this);
+		btnJoint5RB.addActionListener(this);
+		btnJoint5RS.addActionListener(this);
+		btnJoint6LB.addActionListener(this);
+		btnJoint6LS.addActionListener(this);
+		btnJoint6RB.addActionListener(this);
+		btnJoint6RS.addActionListener(this);
 
 
 		//CONPANEL
-		btnConnect.setText("CONNECT");
-		btnDisconnect.setText("DISCONNECT");
 		txtLog.setEditable(false);
 		txtLog.setLineWrap(true);
 		txtLog.setFocusable(false);
@@ -290,78 +367,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-
-
-		//functions for all the buttons
-
-		//connect button
-		btnConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnConnectActionPerformed(evt);
-			}
-
-			private void btnConnectActionPerformed(ActionEvent evt) {
-				communicator.connect();
-				if (communicator.getConnected() == true) {
-					if (communicator.initIOStream() == true) {
-						communicator.initListener();
-					}
-				}
-			}
-		});
-
-		//disconnect button
-		btnDisconnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnDisconnectActionPerformed(evt);
-			}
-
-			private void btnDisconnectActionPerformed(ActionEvent evt) {
-				communicator.disconnect();
-			}
-		});
-
-
-		//Calibration button
-		btnCalibration.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnCalibrationActionPerformed(evt);
-			}
-
-			private void btnCalibrationActionPerformed(ActionEvent evt) {
-				byte temp = 1;
-				communicator.writeData(temp);
-			}
-		});
-
-
-		//bodyforward button
-		btnBodyForward.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnBodyForwardActionPerformed(evt);
-			}
-
-			private void btnBodyForwardActionPerformed(ActionEvent evt) {
-				byte temp = 2;
-				communicator.writeData(temp);
-
-			}
-		});
-		
-		//bodybackward button
-		btnBodyBackward.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnBodyBackwardActionPerformed(evt);
-			}
-
-			private void btnBodyBackwardActionPerformed(ActionEvent evt) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		//btnJoint1LB.addActionListener(arg0);
-
 	}
 
 	//slider function
@@ -374,10 +379,134 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		}
 	}
 	
+	//functions for the buttons
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent e) {
+		if("connect".equals(e.getActionCommand())){
+			communicator.connect();
+			if (communicator.getConnected() == true) {
+				if (communicator.initIOStream() == true) {
+					communicator.initListener();
+				}
+			}
+		}
+		else if ("disconnect".equals(e.getActionCommand())) {
+			communicator.disconnect();
+		}
+		else if ("stop".equals(e.getActionCommand())) {
+			// TODO Stop the robot
+		}
+		else if ("FW".equals(e.getActionCommand())) {
+			// TODO Robot forward
+		}
+		else if ("BW".equals(e.getActionCommand())) {
+			// TODO Robot backwards
+		}
+		else if ("FL".equals(e.getActionCommand())) {
+			// TODO Robot forward left
+		}
+		else if ("FR".equals(e.getActionCommand())) {
+			// TODO Robot forward right
+		}
+		else if ("calibration".equals(e.getActionCommand())) {
+			// TODO Calibrate line sensors
+		}
+		else if ("J1LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J1LB);
+		}
+		else if ("J1LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J1LS);
+		}
+		else if ("J1RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J1RB);
+		}
+		else if ("J1RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J1RS);
+		}
+		else if ("J2LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J2LB);
+		}
+		else if ("J2LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J2LS);
+		}
+		else if ("J2RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J2RB);
+		}
+		else if ("J2RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J2RS);
+		}
+		else if ("J3LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J3LB);
+		}
+		else if ("J3LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J3LS);
+		}
+		else if ("J3RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J3RB);
+		}
+		else if ("J3RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J3RS);
+		}
+		else if ("J4LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J4LB);
+		}
+		else if ("J4LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J4LS);
+		}
+		else if ("J4RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J4RB);
+		}
+		else if ("J4RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J4RS);
+		}
+		else if ("J5LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J5LB);
+		}
+		else if ("J5LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J5LS);
+		}
+		else if ("J5RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J5RB);
+		}
+		else if ("J5RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J5RS);
+		}
+		else if ("J6LB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J6LB);
+		}
+		else if ("J6LS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J6LS);
+		}
+		else if ("J6RB".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J6RB);
+		}
+		else if ("J6RS".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J6RS);
+		}
 	}
 
 

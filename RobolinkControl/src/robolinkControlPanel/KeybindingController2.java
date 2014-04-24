@@ -56,12 +56,30 @@ public class KeybindingController2 {
 
 	public void toggleControls() {
 		if (window.communicator.getConnected() == true) {
-			window.btnJoint4LB.setEnabled(true);
-			window.btnJoint2LB.setEnabled(true);
-			window.btnJoint3LB.setEnabled(true);
-			window.btnJoint6LB.setEnabled(true);
-			window.btnJoint5LB.setEnabled(true);
 			window.btnJoint1LB.setEnabled(true);
+			window.btnJoint1LS.setEnabled(true);
+			window.btnJoint1RB.setEnabled(true);
+			window.btnJoint1RS.setEnabled(true);
+			window.btnJoint2LB.setEnabled(true);
+			window.btnJoint2LS.setEnabled(true);
+			window.btnJoint2RB.setEnabled(true);
+			window.btnJoint2RS.setEnabled(true);
+			window.btnJoint3LB.setEnabled(true);
+			window.btnJoint3LS.setEnabled(true);
+			window.btnJoint3RB.setEnabled(true);
+			window.btnJoint3RS.setEnabled(true);
+			window.btnJoint4LB.setEnabled(true);
+			window.btnJoint4LS.setEnabled(true);
+			window.btnJoint4RB.setEnabled(true);
+			window.btnJoint4RS.setEnabled(true);
+			window.btnJoint5LB.setEnabled(true);
+			window.btnJoint5LS.setEnabled(true);
+			window.btnJoint5RB.setEnabled(true);
+			window.btnJoint5RS.setEnabled(true);
+			window.btnJoint6LB.setEnabled(true);
+			window.btnJoint6LS.setEnabled(true);
+			window.btnJoint6RB.setEnabled(true);
+			window.btnJoint6RS.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
 			window.btnBodyForward.setEnabled(true);
 			window.btnBodyForwardLeft.setEnabled(true);
@@ -73,12 +91,30 @@ public class KeybindingController2 {
 			window.cboxPorts.setEnabled(false);
 		}
 		else {
-			window.btnJoint4LB.setEnabled(false);
-			window.btnJoint2LB.setEnabled(false);
-			window.btnJoint3LB.setEnabled(false);
-			window.btnJoint6LB.setEnabled(false);
-			window.btnJoint5LB.setEnabled(false);
 			window.btnJoint1LB.setEnabled(false);
+			window.btnJoint1LS.setEnabled(false);
+			window.btnJoint1RB.setEnabled(false);
+			window.btnJoint1RS.setEnabled(false);
+			window.btnJoint2LB.setEnabled(false);
+			window.btnJoint2LS.setEnabled(false);
+			window.btnJoint2RB.setEnabled(false);
+			window.btnJoint2RS.setEnabled(false);
+			window.btnJoint3LB.setEnabled(false);
+			window.btnJoint3LS.setEnabled(false);
+			window.btnJoint3RB.setEnabled(false);
+			window.btnJoint3RS.setEnabled(false);
+			window.btnJoint4LB.setEnabled(false);
+			window.btnJoint4LS.setEnabled(false);
+			window.btnJoint4RB.setEnabled(false);
+			window.btnJoint4RS.setEnabled(false);
+			window.btnJoint5LB.setEnabled(false);
+			window.btnJoint5LS.setEnabled(false);
+			window.btnJoint5RB.setEnabled(false);
+			window.btnJoint5RS.setEnabled(false);
+			window.btnJoint6LB.setEnabled(false);
+			window.btnJoint6LS.setEnabled(false);
+			window.btnJoint6RB.setEnabled(false);
+			window.btnJoint6RS.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
 			window.btnBodyForward.setEnabled(false);
 			window.btnBodyForwardLeft.setEnabled(false);
