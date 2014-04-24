@@ -57,9 +57,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte J5RB = 13;
 	final public byte J5RS = 5;
 	
-	final public byte J6LB = 30;
 	final public byte J6LS = 22;
-	final public byte J6RB = 14;
 	final public byte J6RS = 6;
 	
 	final public byte DPP = 32;
@@ -100,9 +98,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnJoint5RB;
 	public JButton btnJoint5RS;
 	
-	public JButton btnJoint6LB;
 	public JButton btnJoint6LS;
-	public JButton btnJoint6RB;
 	public JButton btnJoint6RS;
 	
 	public JButton btnDPP;
@@ -179,10 +175,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB = new JButton("J5 >>");
 		btnJoint5RS = new JButton("J5 >");
 		
-		btnJoint6LB = new JButton("J6 <<");
-		btnJoint6LS = new JButton("J6 <");
-		btnJoint6RB = new JButton("J6 >>");
-		btnJoint6RS = new JButton("J6 >");
+		btnJoint6LS = new JButton("OPEN CLAW");
+		btnJoint6RS = new JButton("CLOSE CLAW");
 		
 		btnDPP = new JButton("DPP");
 		
@@ -222,9 +216,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB.setActionCommand("J5RB");
 		btnJoint5RS.setActionCommand("J5RS");
 		
-		btnJoint6LB.setActionCommand("J6LB");
 		btnJoint6LS.setActionCommand("J6LS");
-		btnJoint6RB.setActionCommand("J6RB");
 		btnJoint6RS.setActionCommand("J6RS");
 		
 		btnDPP.setActionCommand("DPP");
@@ -273,9 +265,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5LS.addActionListener(this);
 		btnJoint5RB.addActionListener(this);
 		btnJoint5RS.addActionListener(this);
-		btnJoint6LB.addActionListener(this);
 		btnJoint6LS.addActionListener(this);
-		btnJoint6RB.addActionListener(this);
 		btnJoint6RS.addActionListener(this);
 		btnDPP.addActionListener(this);
 
@@ -344,10 +334,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		navPanel.add(btnJoint5RS);
 		navPanel.add(btnJoint5RB);
 		
-		navPanel.add(btnJoint6LB);
 		navPanel.add(btnJoint6LS);
 		navPanel.add(btnJoint6RS);
-		navPanel.add(btnJoint6RB);
 		navPanel.add(btnDPP);
 
 
@@ -496,17 +484,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J5RS);
 		}
-		else if ("J6LB".equals(e.getActionCommand())) {
-			communicator.writeData(ARMINSTR);
-			communicator.writeData(J6LB);
-		}
 		else if ("J6LS".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J6LS);
-		}
-		else if ("J6RB".equals(e.getActionCommand())) {
-			communicator.writeData(ARMINSTR);
-			communicator.writeData(J6RB);
 		}
 		else if ("J6RS".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
