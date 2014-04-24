@@ -1,5 +1,5 @@
 
-RFID.elf:     file format elf32-avr
+warehouseMode.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 000003c5  00000000  00000000  00002910  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   000008fc  00000000  00000000  00002cd5  2**0
+  9 .debug_line   00000905  00000000  00000000  00002cd5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000224  00000000  00000000  000035d4  2**2
+ 10 .debug_frame  00000224  00000000  00000000  000035dc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000031f  00000000  00000000  000037f8  2**0
+ 11 .debug_str    0000033a  00000000  00000000  00003800  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000013d5  00000000  00000000  00003b17  2**0
+ 12 .debug_loc    000013d5  00000000  00000000  00003b3a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000090  00000000  00000000  00004eec  2**0
+ 13 .debug_ranges 00000090  00000000  00000000  00004f0f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1289,10 +1289,10 @@ ISR(USART0_RX_vect){
  87a:	bf 93       	push	r27
  87c:	ef 93       	push	r30
  87e:	ff 93       	push	r31
-		rfid_Read(digit);
+	rfid_Read(digit);
  880:	80 91 0c 01 	lds	r24, 0x010C
  884:	e2 df       	rcall	.-60     	; 0x84a <rfid_Read>
-		
+	
 	digit++;
  886:	80 91 0c 01 	lds	r24, 0x010C
  88a:	8f 5f       	subi	r24, 0xFF	; 255
@@ -1302,8 +1302,8 @@ ISR(USART0_RX_vect){
 When the receive of one byte is complete, this interrupt will run.
 */
 ISR(USART0_RX_vect){
-		rfid_Read(digit);
-		
+	rfid_Read(digit);
+	
 	digit++;
  890:	80 93 0c 01 	sts	0x010C, r24
  894:	02 c0       	rjmp	.+4      	; 0x89a <__vector_20+0x40>
@@ -1312,7 +1312,7 @@ ISR(USART0_RX_vect){
  896:	10 92 0c 01 	sts	0x010C, r1
 		
 		//TODO: Shut of card reader to prevent multiple readings of same card.
-		}
+	}
 }
  89a:	ff 91       	pop	r31
  89c:	ef 91       	pop	r30
@@ -1539,12 +1539,12 @@ void lcd_Setup(){
  a02:	08 95       	ret
 
 00000a04 <main>:
-		}
+	}
 }
 
 int main(void)
 {
-lcd_Setup(); //Bör köras först av allt då den även innehåller rfid intrerupt initialisering
+	lcd_Setup(); //Bör köras först av allt då den även innehåller rfid intrerupt initialisering
  a04:	88 df       	rcall	.-240    	; 0x916 <lcd_Setup>
 	//rfid_Print_LCD();
 	while(1)

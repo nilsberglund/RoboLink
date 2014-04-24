@@ -12,7 +12,7 @@
 
 ISR(SPI_STC_vect)
 {
-	volatile uint8_t data;
+
 	data = SPDR;
 	
 	if(waiting_for_instruction)
@@ -69,6 +69,7 @@ ISR(SPI_STC_vect)
 		}
 	}
 }
+
 
 void SPI_Init_Slave()
 	{

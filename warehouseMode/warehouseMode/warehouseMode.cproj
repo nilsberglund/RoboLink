@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{d1ed2be0-5ce1-496c-814c-e20901661c32}</ProjectGuid>
+    <ProjectGuid>{404a96b1-6337-4c0f-a594-8a6483595caa}</ProjectGuid>
     <avrdevice>ATmega1284P</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,19 +12,19 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>Communication_Module</AssemblyName>
-    <Name>Communication_Module</Name>
-    <RootNamespace>Communication_Module</RootNamespace>
+    <AssemblyName>warehouseMode</AssemblyName>
+    <Name>warehouseMode</Name>
+    <RootNamespace>warehouseMode</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <RamSnippetAddress />
     <UncachedRange />
-    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <OverrideVtorValue />
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
         <options />
@@ -37,25 +37,6 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
-    <com_atmel_avrdbg_tool_jtagice3plus>
-      <ToolOptions>
-        <InterfaceProperties>
-          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
-          <JtagDbgClock>174360</JtagDbgClock>
-          <JtagInChain>true</JtagInChain>
-          <JtagDevicesBefore>0</JtagDevicesBefore>
-          <JtagDevicesAfter>1</JtagDevicesAfter>
-          <JtagInstrBitsBefore>0</JtagInstrBitsBefore>
-          <JtagInstrBitsAfter>4</JtagInstrBitsAfter>
-        </InterfaceProperties>
-        <InterfaceName>JTAG</InterfaceName>
-      </ToolOptions>
-      <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200006284</ToolNumber>
-      <ToolName>JTAGICE3</ToolName>
-    </com_atmel_avrdbg_tool_jtagice3plus>
-    <avrtoolinterface>JTAG</avrtoolinterface>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -114,16 +95,13 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Communication_Module.c">
+    <Compile Include="hd44780_low.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication_Module.h">
+    <Compile Include="LCD_new.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master_communication.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Master_communication.h">
+    <Compile Include="warehouseMode.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

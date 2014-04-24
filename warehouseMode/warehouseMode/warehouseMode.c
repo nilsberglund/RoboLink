@@ -4,25 +4,45 @@
 #include <avr/interrupt.h>
 #include "hd44780_low.h"
 
-void rfid_Print_LCD();
-void rfid_Read(uint8_t digit);
-void lcd_Setup();
+//Booleans////////////////////////////////////////////////
+_Bool powerRFID = false;
+_Bool streamFilled = false;
+_Bool powerRFID = false;
+_Bool carryItem = false;
+//////////////////////////////////////////////////////////
 
-uint8_t loaded[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
-//uint8_t history[4][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}, {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}, {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
+//Variables////////////////////////////////////////////////////////////////
+uint8_t newStream[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
+uint8_t cargo[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
+uint8_t history[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
+
 struct hd44780_l_conf low_conf;
 uint8_t digit = 0;
+/////////////////////////////////////////////////////////////////////////////
+
+
+///Programs/////////////////////////////////////////////////////
+void setupLCD();
+void pickUpMode();
+void deliveryMode();
+void checkHistory();
+
+void rfid_Print_LCD();
+////////////////////////////////////////////////////////////////////
+
+
 
 
 /*
 When the receive of one byte is complete, this interrupt will run.
 */
 ISR(USART0_RX_vect){
-	rfid_Read(digit);
-	
+	newStream[digit] = UDR0;
 	digit++;
 	if (digit == 12) {
 		digit = 0;
+		streamFilled = true;
+		powerRFID = false;
 		
 		//TODO: Shut of card reader to prevent multiple readings of same card.
 	}
@@ -30,24 +50,64 @@ ISR(USART0_RX_vect){
 
 int main(void)
 {
-	lcd_Setup(); //Bör köras först av allt då den även innehåller rfid intrerupt initialisering
-	//rfid_Print_LCD();
+	setupLCD(); 
+	
+	
+	
 	while(1)
 	{
 		
-		rfid_Print_LCD();
-		_delay_ms(300);
+stationMode();
 	}
 }
 
-
-/*
-Reads one byte and stores in in the loaded vector.
-*/
-void rfid_Read(uint8_t digit){
+void stationMode(){
+	powerRFID = true;
 	
-	loaded[digit] = UDR0;
+	while (streamFilled == false)
+	{
+		//Do nothing and wait for interupts;
+	}
+	
+	if (carryItem == false)
+	{
+		pickUpMode();
+	} 
+	else
+	{
+		deliveryMode();
+	}
+	
+	
 }
+
+
+
+void pickUpMode(){
+	if (checkHistory() == true) //styr upp formalia.. hur funnkar lokal return av bool
+	{
+		// Do nothing
+	} 
+	else
+	{
+		
+	}
+	
+}
+
+void deliveryMode(){
+	
+	
+}
+
+
+_Bool checkHistory(){
+	//jämnför newstream mot history.... returna true om matchning
+}
+
+
+
+
 
 /*
 Prints the entire RFID tag on the display.
@@ -69,7 +129,7 @@ void rfid_Print_LCD(){
 }
 
 
-void lcd_Setup(){
+void setupLCD(){
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
 	DDRB = (1 << DDB2)|(1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs

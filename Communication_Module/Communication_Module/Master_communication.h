@@ -29,6 +29,7 @@ uint8_t wanted_data;
 unsigned char RFID[10];
 uint8_t i;
 uint8_t dummy;
+volatile uint8_t received;
 
 
 /* Functions */
@@ -42,6 +43,7 @@ void TX_arm_data();
 void RX_arm_data();
 void TX_wheel_data();
 void Master_TX(uint8_t);
+void receive_sensor_data();
 
 void RX_wheel_data();
 void TX_RFID_data();

@@ -13,14 +13,17 @@
 
 int8_t    getError()
 {
+	
 	volatile int8_t res = 0;
 	volatile int8_t marker = 0;
 	volatile uint8_t counter1 = 0;
 	volatile int8_t error = 0;
-
-	for (volatile uint8_t noShift = 6; noShift >= 0; noShift--)
+	uint8_t line_data;
+	line_data = sensor_data;	
+	
+	for (int8_t noShift = 6; noShift > 0; noShift--)
 	{
-		res = (sensor_data >> noShift & 0x01);
+		res = ((line_data >> noShift) & 0x01);
 		if(res == 1)
 		{
 			marker = marker + (7 - noShift);
@@ -54,13 +57,14 @@ void controlAlgorithm()
 	int8_t error;
 	volatile int8_t rightWheelSpeed;
 	volatile int8_t leftWheelSpeed;
-	int8_t midspeed = 170;
+	int8_t midspeed = 235;
 
 	error = getError();
 	rightWheelSpeed = midspeed + calculateSpeed(error);
 	leftWheelSpeed = midspeed - calculateSpeed(error);
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+	
 }
 
 int8_t calculateSpeed(int8_t error)
@@ -69,7 +73,7 @@ int8_t calculateSpeed(int8_t error)
 	int8_t Kp = 1;
 	int8_t Kd = 1;
 	
-	speed = Kp * error + Kd * (error - prevError);
+	speed = Kp * error;
 
 	prevError = error;
 	return speed;
@@ -81,8 +85,8 @@ void driving_setup()
 	TCCR1B = 2; //Sets the prescaling to 8
 	TIMSK1 |= (1 << OCIE1A)|(1 << OCIE0B); //Enables the compare interrupts
 	TCNT1 = 0;
-	OCR1A = 0;
-	OCR1B = 0;
+	OCR1A = 248;
+	OCR1B = 248;
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
 }
 
