@@ -95,6 +95,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bluetooth_Receiver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Bluetooth_Receiver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hd44780_low.h">
       <SubType>compile</SubType>
     </Compile>
@@ -102,6 +108,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="warehouseMode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="warehouseMode.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

@@ -3,11 +3,15 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "hd44780_low.h"
+#include "Bluetooth_Receiver.h"
+#include "warehouseMode.h"
 
 //Booleans////////////////////////////////////////////////
 _Bool streamFilled = 0;
 _Bool carryItem = 0;
 _Bool pickUpItem = 0;
+_Bool waitingForStartAbort = 0;
+_Bool waitingForEndPickup = 0;
 
 //////////////////////////////////////////////////////////
 
@@ -16,26 +20,9 @@ uint8_t newStream[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,
 uint8_t cargo[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t history[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
 
-struct hd44780_l_conf low_conf;
 uint8_t digit = 0;
 uint8_t historySize = 0;
 /////////////////////////////////////////////////////////////////////////////
-
-
-///Programs/////////////////////////////////////////////////////
-void setupLCD();
-void stationMode();
-void pickUpMode();
-void deliveryMode();
-_Bool itemInHistory();
-_Bool askUserIfPickUp();
-void printOnLCD(_Bool);
-void manualArmMode();
-_Bool cargoEqualsNewStream();
-void powerRFID(_Bool);
-////////////////////////////////////////////////////////////////////
-
-
 
 /*
 When the receive of one byte is complete, this interrupt will run.
@@ -60,10 +47,11 @@ int main(void)
 	while(1)
 	{
 		//transportMode();
-		stationMode();
 	}
 }
 
+
+/*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	powerRFID(1);
 	
@@ -80,54 +68,75 @@ void stationMode(){
 	{
 		deliveryMode();
 	}
-	
-	
 }
 
 
+/*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
+void waitForUserInputStartAbort()
+{
+	while (waitingForStartAbort == 0) {
+		
+	}
+	waitingForStartAbort = 0;
+}
 
+
+/*Called by pickupMode(). Waiting for the user to finish pick up and press END PICKUP */
+void waitForUserInputEndPickup()
+{
+	while (waitingForEndPickup == 0) {
+		
+	}
+	waitingForEndPickup = 0;
+}
+
+
+/*Called by stationMode(). Enters if not carrying object.*/
 void pickUpMode(){
-	if (itemInHistory() == 1)
+	if (itemInHistory() == 1) //checks if mission completed for this station
 	{
 		// Do nothing -> exit code -> leave station mode
 	}
 	else
 	{
-		//pickUpItem = askUserIfPickUp(); //Tobu GUI input snackas - wait funktion vänta i evighet på abort eller start pickup
+		waitForUserInputStartAbort();
 		
 		if (pickUpItem == 1)
 		{
-			for (uint8_t cntDigit = 0; cntDigit<12; cntDigit++)
+			for (uint8_t cntDigit = 0; cntDigit<12; cntDigit++) //Storing RFID tag in cargo
 			{
 				cargo[cntDigit] = newStream[cntDigit];
 			}
-			carryItem = 1;
-			printOnLCD(1);
-			//manualArmMode(); //Toby snackas -- hur ska vi sen skicka vidare till transport mode // vänta på ENDPICKUP
+			carryItem = 1; // Shows that the robot is carrying an object
+			printOnLCD(1); //Printing cargo RFID tag on display
+			waitForUserInputEndPickup(); // the item has been pickup up and leave stationMode()
 		}
 		else
 		{
 			// Do nothing -> exit code -> leave station mode
 		}
-		
 	}
-	
 }
 
+
+
+/*Called by stationMode(). Enters if carrying object. */
 void deliveryMode(){
 	
-	if (cargoEqualsNewStream()==1)
+	if (cargoEqualsNewStream() == 1) //Checks if the station is the correct station to leave cargo
 	{
-		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) // För över avlämnad last in i historiken
+		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Adds the completed station to history
 		{
 			history[historySize][cntDigit] = cargo[cntDigit];
 		}
 		historySize++;
 		
-		printOnLCD(0); //Skriver ut NO CARGO på LCD
+		printOnLCD(0); //Prints "No Cargo" on LCD
 		carryItem = 0;
-
-		//automaticDropoff(stationDirection); //Detta program måste sluta med att skicka tillbaka användaren till transportMode //stationDirection = global variabel som ändras i linjesensor
+		
+		
+		//stationDirection = global variabel som beskriver sida om tejp för station. tilldelas egentligen så fort man stött på en station
+		//Skicka kommando till styr-AVR och kalla på dropItem(stationDirection)
 		
 	}
 	else
@@ -136,7 +145,7 @@ void deliveryMode(){
 	}
 }
 
-
+/*Called by pickupMode(). */
 _Bool itemInHistory(){
 	uint8_t cntEqualElements = 0;
 	
@@ -161,25 +170,12 @@ _Bool itemInHistory(){
 	return 0; //If no
 }
 
-// _Bool askUserIfPickUp(){
-// 	//Wait for GUI byte
-// 	if ()
-// 	{
-// 		//byte = särskilt värde
-// 		return 0;
-// 	}
-// 	else
-// 	{
-// 		return 1;
-// 	}
-// }
-
 _Bool cargoEqualsNewStream(){
 	for (uint8_t cmpel = 0; cmpel<12; cmpel++)
 	{
 		if (cargo[cmpel] != newStream[cmpel])
 		{
-			return 0; 
+			return 0;
 		}
 	}
 
@@ -190,7 +186,7 @@ void powerRFID(_Bool power){
 	if (power == 1)
 	{
 		//Activate port
-	} 
+	}
 	else
 	{
 		//Deactivate port
@@ -272,6 +268,5 @@ void setupLCD(){
 	UBRR0H = 0b00000000;
 	UBRR0L = 0b00011001; //Sets baudvalue in AVR to 25(1mhz), which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
 	UCSR0B |= (1 << RXCIE0); //Enables the rc complete interrupt
-	sei();
 	
 }

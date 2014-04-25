@@ -21,12 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <avr/io.h>
 
-/*
-F_CPU has to be defined in order to wait accurately after device function calls.
-*/
-#ifndef F_CPU
-	#error HD44780 low-level driver: F_CPU must be defined
-#endif
 
 /*
 Bit definitions for HD44780 functions.

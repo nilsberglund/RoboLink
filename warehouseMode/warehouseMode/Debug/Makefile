@@ -36,6 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Bluetooth_Receiver.c \
 ../LCD_new.c \
 ../warehouseMode.c
 
@@ -47,18 +48,22 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Bluetooth_Receiver.o \
 LCD_new.o \
 warehouseMode.o
 
 OBJS_AS_ARGS +=  \
+Bluetooth_Receiver.o \
 LCD_new.o \
 warehouseMode.o
 
 C_DEPS +=  \
+Bluetooth_Receiver.d \
 LCD_new.d \
 warehouseMode.d
 
 C_DEPS_AS_ARGS +=  \
+Bluetooth_Receiver.d \
 LCD_new.d \
 warehouseMode.d
 
@@ -73,6 +78,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
