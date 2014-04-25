@@ -47,23 +47,23 @@ void USART_Transmit( unsigned char data) {
 // 	return data;
 // }
 
-void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID){
+void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID){ 
 	
 	byte checksum;
 	
-	volatile unsigned char s_low_byte = position; //lower byte of position for servo
-	volatile unsigned char s_high_byte = (position >> 8); //higher byte of position for servo
+	volatile unsigned char s_low_byte = position;			//lower byte of position for servo
+	volatile unsigned char s_high_byte = (position >> 8);	//higher byte of position for servo
 	
-	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(servo_ID);	//servo ID
-	USART_Transmit(0x07);	//length = 7
-	USART_Transmit(WRITE);	//instruction = write_data
+	USART_Transmit(0xFF);			//start byte
+	USART_Transmit(0xFF);			//start byte
+	USART_Transmit(servo_ID);		//servo ID
+	USART_Transmit(0x07);			//length = 7
+	USART_Transmit(WRITE);			//instruction = write_data
 	USART_Transmit(GOAL_POSITION_L);	//address = goal position(L)
-	USART_Transmit(s_low_byte);	//send low byte of position
+	USART_Transmit(s_low_byte);		//send low byte of position
 	USART_Transmit(s_high_byte);	//send high byte of position
-	USART_Transmit(speed_l); //send low byte of speed
-	USART_Transmit(speed_h); //send high byte of speed
+	USART_Transmit(speed_l);		//send low byte of speed
+	USART_Transmit(speed_h);		//send high byte of speed
 	
 	checksum = servo_ID + 0x07 + WRITE + GOAL_POSITION_L + s_low_byte + s_high_byte + speed_l + speed_h;
 	
@@ -79,25 +79,25 @@ void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 	
 	volatile unsigned int tmp = 1023-position;
 	
-	volatile unsigned char s1_low_byte = position; //lower byte of position for servo 1
-	volatile unsigned char s1_high_byte = (position >> 8); //higher byte of position for servo 1
+	volatile unsigned char s1_low_byte = position;			//lower byte of position for servo 1
+	volatile unsigned char s1_high_byte = (position >> 8);	//higher byte of position for servo 1
 	
-	volatile unsigned char s2_low_byte = tmp; //lower byte of position for servo 2
-	volatile unsigned char s2_high_byte = (tmp >> 8); //higher byte of position for servo 2
+	volatile unsigned char s2_low_byte = tmp;			//lower byte of position for servo 2
+	volatile unsigned char s2_high_byte = (tmp >> 8);	//higher byte of position for servo 2
 	
 	USART_Transmit(0xFF);	//start byte
 	USART_Transmit(0xFF);	//start byte
 	USART_Transmit(0xFE);	//broadcast ID
 	USART_Transmit(0x0E);	//length is 14
 	USART_Transmit(SYNC_WRITE);			//instruction = sync_data (2 servo)
-	USART_Transmit(GOAL_POSITION_L);	//
+	USART_Transmit(GOAL_POSITION_L);	
 	USART_Transmit(0x04);	//data length is 4
 	USART_Transmit(servo_ID1);	//servo id1
 	USART_Transmit(s1_low_byte);	//send low byte of position
 	USART_Transmit(s1_high_byte);	//send high byte of position
-	USART_Transmit(speed_l); //send low byte of speed
-	USART_Transmit(speed_h); //send high byte of speed
-	USART_Transmit(servo_ID2); //servo id2
+	USART_Transmit(speed_l);	//send low byte of speed
+	USART_Transmit(speed_h);	//send high byte of speed
+	USART_Transmit(servo_ID2);	//servo id2
 	USART_Transmit(s2_low_byte);	//send low byte of position
 	USART_Transmit(s2_high_byte);	//send high byte of position
 	USART_Transmit(speed_l); //send low byte of speed
@@ -110,14 +110,14 @@ void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 	USART_Transmit(checksum);
 }
 
-void default_Position(){
+void default_Position(){ //Move the arm to default position
 	
-	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07); //setting servo 7 straight
-	move_Single_Servo(0x332, 0x50, 0x01, 0x06); //setting servo 6 to straight up
-	move_Double_Servo(0x1FF, 0x50, 0x00, 0x02, 0x03); //0x1FF is straight upwards
-	move_Double_Servo(0xCC, 0x50, 0x00, 0x04, 0x05); //0xCC (60 deg) is 0 degree position for servo 4 and 5
-	move_Double_Servo(0xCC, 0x50, 0x00, 0x02, 0x03); //0xCC (60 deg) is 0 degree position for servo 2 and 3
-	move_Single_Servo(0x1FF, 0x20, 0x00, 0x01); //setting servo one to point forward
+	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 straight
+	move_Single_Servo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 to straight up
+	move_Double_Servo(0x1FF, 0x50, 0x00, 0x02, 0x03);	//0x1FF is straight upwards
+	move_Double_Servo(0xCC, 0x50, 0x00, 0x04, 0x05);	//0xCC (60 deg) is 0 degree position for servo 4 and 5
+	move_Double_Servo(0xCC, 0x50, 0x00, 0x02, 0x03);	//0xCC (60 deg) is 0 degree position for servo 2 and 3
+	move_Single_Servo(0x1FF, 0x20, 0x00, 0x01);			//setting servo one to point forward
 	
 	
 	//updating positions
@@ -131,9 +131,9 @@ void default_Position(){
 
 void pickup_Default_Position(){
 	
-	move_Double_Servo(0x288, 0xF0, 0x00, 0x02, 0x03); //Servo 2 & 3 in position 190 degrees
+	move_Double_Servo(0x288, 0xF0, 0x00, 0x02, 0x03);	//Servo 2 & 3 in position 190 degrees
 	move_Double_Servo(0x288, 0xF0, 0x00, 0x04, 0x05);
-	move_Single_Servo(0x1FF, 0xF0, 0x00, 0x06); //Servo 6 in position 150 degrees
+	move_Single_Servo(0x1FF, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees
 	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);
 	move_Single_Servo(0x1FF, 0x50, 0x00, 0x08);
 	
@@ -158,9 +158,9 @@ void drop_Item(_Bool side){ //Side = 1 right side, side = 0 left side
 	_delay_ms(3000);
 	
 	//Vad är lämpligt läge på följande servon?
-	move_Double_Servo(0x2CC, 0x60, 0x00, 0x02, 0x03); //Servo 2 and 3 in position 210 degrees
-	move_Double_Servo(0x2CC, 0x60, 0x00, 0x04, 0x05); //Servo 4 and 5 in position 210 degrees
-	move_Single_Servo(0x111, 0x60, 0x00, 0x06); //Servo 6 in position 80 degrees (111)
+	move_Double_Servo(0x2CC, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 210 degrees
+	move_Double_Servo(0x2CC, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
+	move_Single_Servo(0x111, 0x60, 0x00, 0x06);			//Servo 6 in position 80 degrees (111)
 	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);
 	
 	_delay_ms(4000);
