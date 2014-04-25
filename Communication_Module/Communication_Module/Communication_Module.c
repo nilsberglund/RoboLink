@@ -15,7 +15,7 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 	Slave_Select(Sensor_Slave);	//slave select
 	sensor_data = Master_RX(0x01);	//sending dummy
 	Slave_Select(Control_Slave);
-	received = 1;
+	//received = 1;
 }
 
 ISR(INT2_vect)
@@ -32,19 +32,26 @@ ISR(INT2_vect)
 	}
 }
 
+ISR(TIMER0_COMPA_vect)
+{
+	RX_sensor_data();
+}
+
+ISR(TIMER0_COMPB_vect)
+{
+	TX_sensor_data();
+}
+
 int main(void)
 {
 	SPI_Init_Master();
-	sei();
+	
 	
     while(1)
     {
-		RX_sensor_data();
-		while(received == 0)
-		{
-			
-		}
-		TX_sensor_data();
-		received = 0;
+		
     }
 }
+
+
+

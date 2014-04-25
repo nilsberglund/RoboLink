@@ -11,17 +11,17 @@
 #include "Control_wheel_steering.h"
 #include "Slave_control.h"
 
-int8_t    getError()
+int8_t getError()
 {
 	
 	volatile int8_t res = 0;
 	volatile int8_t marker = 0;
 	volatile uint8_t counter1 = 0;
-	volatile int8_t error = 0;
+	error = 0;
 	uint8_t line_data;
 	line_data = sensor_data;	
 	
-	for (int8_t noShift = 6; noShift > 0; noShift--)
+	for (int8_t noShift = 6; noShift >= 0; noShift--)
 	{
 		res = ((line_data >> noShift) & 0x01);
 		if(res == 1)
@@ -46,7 +46,7 @@ int8_t    getError()
 
 	} else
 	{
-		error = marker;
+		error = 7;
 	}
 	error = 7 - error;
 	return error;
@@ -55,25 +55,25 @@ int8_t    getError()
 void controlAlgorithm()
 {
 	int8_t error;
-	volatile int8_t rightWheelSpeed;
-	volatile int8_t leftWheelSpeed;
-	int8_t midspeed = 235;
 
+	
 	error = getError();
-	rightWheelSpeed = midspeed + calculateSpeed(error);
-	leftWheelSpeed = midspeed - calculateSpeed(error);
+	rightWheelSpeed = 200 - calculateSpeed(error);
+	leftWheelSpeed = 200 + calculateSpeed(error);
+	
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+	
 	
 }
 
 int8_t calculateSpeed(int8_t error)
 {
 	volatile int8_t speed = 0;
-	int8_t Kp = 1;
-	int8_t Kd = 1;
+	int8_t Kp = 3;
+	int8_t Kd = 20;
 	
-	speed = Kp * error;
+	speed = Kp * error + Kd * (error - prevError);
 
 	prevError = error;
 	return speed;
@@ -83,14 +83,14 @@ void driving_setup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
 	TCCR1B = 2; //Sets the prescaling to 8
-	TIMSK1 |= (1 << OCIE1A)|(1 << OCIE0B); //Enables the compare interrupts
 	TCNT1 = 0;
 	OCR1A = 248;
 	OCR1B = 248;
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
+	
 }
 
-void drive(int right_dir, int left_dir, uint8_t leftSpeed, uint8_t rightSpeed)
+void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)
 {
 	if(right_dir == 1)
 	{
@@ -108,8 +108,8 @@ void drive(int right_dir, int left_dir, uint8_t leftSpeed, uint8_t rightSpeed)
 	{
 		PORTD |= (0 << PORTD6);
 	}
-	OCR1A = leftSpeed;
-	OCR1B = rightSpeed;
+	OCR1A = rightSpeed;
+	OCR1B = leftSpeed;
 }
 
 void drive_forward(uint8_t speed)

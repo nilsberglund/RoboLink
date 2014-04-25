@@ -18,10 +18,10 @@ volatile uint8_t wheel_steering_data;
 volatile unsigned char RFID[10];
 volatile _Bool waiting_for_instruction;
 volatile uint8_t component; 
-volatile uint8_t sensor;
-volatile uint8_t arm;
-volatile uint8_t wheel;
-volatile uint8_t RFIDcomp;
+static uint8_t sensor;
+static uint8_t arm;
+static uint8_t wheel;
+static uint8_t RFIDcomp;
 volatile uint8_t RFID_counter;
 
 /*--------Functions---------*/

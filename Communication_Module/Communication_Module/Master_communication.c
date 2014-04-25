@@ -25,7 +25,11 @@ void SPI_Init_Master()
 	EICRA = 0b00111100;
 	EIMSK = 0b00000110;
 	//Enable global interrupt
+	sei();
 	
+	TCCR0A = 0;
+	TCCR0B = 0x02;
+	TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;
 	Control_Slave = 2;
@@ -37,7 +41,12 @@ void SPI_Init_Master()
 	as = 5;
 	ar = 6;
 	rs = 7;
-	received = 0;
+	//received = 0;
+	
+	OCR0A = 122;
+	OCR0B = 125;
+	TCNT0 = 0;
+	
 			
 }
 

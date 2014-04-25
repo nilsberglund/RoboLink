@@ -10,12 +10,15 @@
 
 /*-------Variables---------*/
 
-int8_t error;
+volatile int8_t error;
 int8_t prevError;
+volatile int16_t rightWheelSpeed;
+volatile int16_t leftWheelSpeed;
+int16_t midspeed;
 
 /*-------Functions---------*/
 void driving_setup();
-void drive(int, int, uint8_t, uint8_t);
+void drive(int, int, uint16_t, uint16_t);
 void controlAlgorithm();
 int8_t getError();
 int8_t calculateSpeed(int8_t);
