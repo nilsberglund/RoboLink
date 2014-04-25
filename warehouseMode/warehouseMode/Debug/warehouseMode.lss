@@ -3,33 +3,33 @@ warehouseMode.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000c  00800100  00000a20  00000ab4  2**0
+  0 .data         0000003c  00800100  00000b5a  00000bee  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000a20  00000000  00000000  00000094  2**1
+  1 .text         00000b5a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000025  0080010c  0080010c  00000ac0  2**0
+  2 .bss          00000029  0080013c  0080013c  00000c2a  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00000ac0  2**2
+  3 .stab         000006cc  00000000  00000000  00000c2c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  0000118c  2**0
+  4 .stabstr      00000097  00000000  00000000  000012f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00001223  2**0
+  5 .comment      0000002f  00000000  00000000  0000138f  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000b0  00000000  00000000  00001252  2**0
+  6 .debug_aranges 000000d8  00000000  00000000  000013be  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000160e  00000000  00000000  00001302  2**0
+  7 .debug_info   0000184e  00000000  00000000  00001496  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000003c5  00000000  00000000  00002910  2**0
+  8 .debug_abbrev 00000406  00000000  00000000  00002ce4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000905  00000000  00000000  00002cd5  2**0
+  9 .debug_line   000009eb  00000000  00000000  000030ea  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000224  00000000  00000000  000035dc  2**2
+ 10 .debug_frame  0000025c  00000000  00000000  00003ad8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000033a  00000000  00000000  00003800  2**0
+ 11 .debug_str    000003fb  00000000  00000000  00003d34  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000013d5  00000000  00000000  00003b3a  2**0
+ 12 .debug_loc    00001478  00000000  00000000  0000412f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000090  00000000  00000000  00004f0f  2**0
+ 13 .debug_ranges 00000108  00000000  00000000  000055a7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -75,7 +75,7 @@ Disassembly of section .text:
   4a:	00 00       	nop
   4c:	3c c0       	rjmp	.+120    	; 0xc6 <__bad_interrupt>
   4e:	00 00       	nop
-  50:	04 c4       	rjmp	.+2056   	; 0x85a <__vector_20>
+  50:	fc c3       	rjmp	.+2040   	; 0x84a <__vector_20>
   52:	00 00       	nop
   54:	38 c0       	rjmp	.+112    	; 0xc6 <__bad_interrupt>
   56:	00 00       	nop
@@ -118,20 +118,20 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e0 e2       	ldi	r30, 0x20	; 32
-  a0:	fa e0       	ldi	r31, 0x0A	; 10
+  9e:	ea e5       	ldi	r30, 0x5A	; 90
+  a0:	fb e0       	ldi	r31, 0x0B	; 11
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
   a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
   a8:	07 90       	elpm	r0, Z+
   aa:	0d 92       	st	X+, r0
-  ac:	ac 30       	cpi	r26, 0x0C	; 12
+  ac:	ac 33       	cpi	r26, 0x3C	; 60
   ae:	b1 07       	cpc	r27, r17
   b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
 
 000000b2 <__do_clear_bss>:
   b2:	21 e0       	ldi	r18, 0x01	; 1
-  b4:	ac e0       	ldi	r26, 0x0C	; 12
+  b4:	ac e3       	ldi	r26, 0x3C	; 60
   b6:	b1 e0       	ldi	r27, 0x01	; 1
   b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
 
@@ -139,11 +139,11 @@ Disassembly of section .text:
   ba:	1d 92       	st	X+, r1
 
 000000bc <.do_clear_bss_start>:
-  bc:	a1 33       	cpi	r26, 0x31	; 49
+  bc:	a5 36       	cpi	r26, 0x65	; 101
   be:	b2 07       	cpc	r27, r18
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
-  c2:	a0 d4       	rcall	.+2368   	; 0xa04 <main>
-  c4:	ab c4       	rjmp	.+2390   	; 0xa1c <_exit>
+  c2:	46 d5       	rcall	.+2700   	; 0xb50 <main>
+  c4:	48 c5       	rjmp	.+2704   	; 0xb56 <_exit>
 
 000000c6 <__bad_interrupt>:
   c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
@@ -1248,329 +1248,562 @@ static inline void _hd44780_l_ec(const struct hd44780_l_conf* conf) {
  846:	0f 91       	pop	r16
  848:	08 95       	ret
 
-0000084a <rfid_Read>:
-/*
-Reads one byte and stores in in the loaded vector.
-*/
-void rfid_Read(uint8_t digit){
-	
-	loaded[digit] = UDR0;
- 84a:	90 91 c6 00 	lds	r25, 0x00C6
- 84e:	e8 2f       	mov	r30, r24
- 850:	f0 e0       	ldi	r31, 0x00	; 0
- 852:	e0 50       	subi	r30, 0x00	; 0
- 854:	ff 4f       	sbci	r31, 0xFF	; 255
- 856:	90 83       	st	Z, r25
- 858:	08 95       	ret
-
-0000085a <__vector_20>:
-
-
-/*
-When the receive of one byte is complete, this interrupt will run.
-*/
-ISR(USART0_RX_vect){
- 85a:	1f 92       	push	r1
- 85c:	0f 92       	push	r0
- 85e:	0f b6       	in	r0, 0x3f	; 63
- 860:	0f 92       	push	r0
- 862:	11 24       	eor	r1, r1
- 864:	0b b6       	in	r0, 0x3b	; 59
- 866:	0f 92       	push	r0
- 868:	2f 93       	push	r18
- 86a:	3f 93       	push	r19
- 86c:	4f 93       	push	r20
- 86e:	5f 93       	push	r21
- 870:	6f 93       	push	r22
- 872:	7f 93       	push	r23
- 874:	8f 93       	push	r24
- 876:	9f 93       	push	r25
- 878:	af 93       	push	r26
- 87a:	bf 93       	push	r27
- 87c:	ef 93       	push	r30
- 87e:	ff 93       	push	r31
-	rfid_Read(digit);
- 880:	80 91 0c 01 	lds	r24, 0x010C
- 884:	e2 df       	rcall	.-60     	; 0x84a <rfid_Read>
-	
-	digit++;
- 886:	80 91 0c 01 	lds	r24, 0x010C
- 88a:	8f 5f       	subi	r24, 0xFF	; 255
-	if (digit == 12) {
- 88c:	8c 30       	cpi	r24, 0x0C	; 12
- 88e:	19 f0       	breq	.+6      	; 0x896 <__vector_20+0x3c>
-When the receive of one byte is complete, this interrupt will run.
-*/
-ISR(USART0_RX_vect){
-	rfid_Read(digit);
-	
-	digit++;
- 890:	80 93 0c 01 	sts	0x010C, r24
- 894:	02 c0       	rjmp	.+4      	; 0x89a <__vector_20+0x40>
-	if (digit == 12) {
-		digit = 0;
- 896:	10 92 0c 01 	sts	0x010C, r1
-		
-		//TODO: Shut of card reader to prevent multiple readings of same card.
+0000084a <__vector_20>:
 	}
-}
- 89a:	ff 91       	pop	r31
- 89c:	ef 91       	pop	r30
- 89e:	bf 91       	pop	r27
- 8a0:	af 91       	pop	r26
- 8a2:	9f 91       	pop	r25
- 8a4:	8f 91       	pop	r24
- 8a6:	7f 91       	pop	r23
- 8a8:	6f 91       	pop	r22
- 8aa:	5f 91       	pop	r21
- 8ac:	4f 91       	pop	r20
- 8ae:	3f 91       	pop	r19
- 8b0:	2f 91       	pop	r18
- 8b2:	0f 90       	pop	r0
- 8b4:	0b be       	out	0x3b, r0	; 59
- 8b6:	0f 90       	pop	r0
- 8b8:	0f be       	out	0x3f, r0	; 63
- 8ba:	0f 90       	pop	r0
- 8bc:	1f 90       	pop	r1
- 8be:	18 95       	reti
 
-000008c0 <rfid_Print_LCD>:
+	return 1;
 }
 
-/*
-Prints the entire RFID tag on the display.
-*/
-void rfid_Print_LCD(){
- 8c0:	0f 93       	push	r16
- 8c2:	1f 93       	push	r17
- 8c4:	cf 93       	push	r28
- 8c6:	df 93       	push	r29
-	hd44780_l_clear_disp(&low_conf);
- 8c8:	8d e0       	ldi	r24, 0x0D	; 13
- 8ca:	91 e0       	ldi	r25, 0x01	; 1
- 8cc:	0b de       	rcall	.-1002   	; 0x4e4 <hd44780_l_clear_disp>
-	
-	hd44780_l_write(&low_conf, 0x52);	//R
- 8ce:	62 e5       	ldi	r22, 0x52	; 82
- 8d0:	8d e0       	ldi	r24, 0x0D	; 13
- 8d2:	91 e0       	ldi	r25, 0x01	; 1
- 8d4:	4f de       	rcall	.-866    	; 0x574 <hd44780_l_write>
-	hd44780_l_write(&low_conf, 0x46);	//F
- 8d6:	66 e4       	ldi	r22, 0x46	; 70
- 8d8:	8d e0       	ldi	r24, 0x0D	; 13
+void powerRFID(_Bool power){
+ 84a:	1f 92       	push	r1
+ 84c:	0f 92       	push	r0
+ 84e:	0f b6       	in	r0, 0x3f	; 63
+ 850:	0f 92       	push	r0
+ 852:	11 24       	eor	r1, r1
+ 854:	0b b6       	in	r0, 0x3b	; 59
+ 856:	0f 92       	push	r0
+ 858:	8f 93       	push	r24
+ 85a:	9f 93       	push	r25
+ 85c:	ef 93       	push	r30
+ 85e:	ff 93       	push	r31
+ 860:	80 91 3d 01 	lds	r24, 0x013D
+ 864:	90 91 c6 00 	lds	r25, 0x00C6
+ 868:	e8 2f       	mov	r30, r24
+ 86a:	f0 e0       	ldi	r31, 0x00	; 0
+ 86c:	e0 5d       	subi	r30, 0xD0	; 208
+ 86e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 870:	90 83       	st	Z, r25
+ 872:	8f 5f       	subi	r24, 0xFF	; 255
+ 874:	8c 30       	cpi	r24, 0x0C	; 12
+ 876:	19 f0       	breq	.+6      	; 0x87e <__vector_20+0x34>
+ 878:	80 93 3d 01 	sts	0x013D, r24
+ 87c:	05 c0       	rjmp	.+10     	; 0x888 <__vector_20+0x3e>
+ 87e:	10 92 3d 01 	sts	0x013D, r1
+ 882:	81 e0       	ldi	r24, 0x01	; 1
+ 884:	80 93 40 01 	sts	0x0140, r24
+ 888:	ff 91       	pop	r31
+ 88a:	ef 91       	pop	r30
+ 88c:	9f 91       	pop	r25
+ 88e:	8f 91       	pop	r24
+ 890:	0f 90       	pop	r0
+ 892:	0b be       	out	0x3b, r0	; 59
+ 894:	0f 90       	pop	r0
+ 896:	0f be       	out	0x3f, r0	; 63
+ 898:	0f 90       	pop	r0
+ 89a:	1f 90       	pop	r1
+ 89c:	18 95       	reti
+
+0000089e <itemInHistory>:
+ 89e:	1f 93       	push	r17
+ 8a0:	cf 93       	push	r28
+ 8a2:	df 93       	push	r29
+ 8a4:	d0 91 3c 01 	lds	r29, 0x013C
+ 8a8:	d1 11       	cpse	r29, r1
+ 8aa:	12 c0       	rjmp	.+36     	; 0x8d0 <itemInHistory+0x32>
+ 8ac:	80 e0       	ldi	r24, 0x00	; 0
+ 8ae:	26 c0       	rjmp	.+76     	; 0x8fc <itemInHistory+0x5e>
+ 8b0:	71 91       	ld	r23, Z+
+ 8b2:	6d 91       	ld	r22, X+
+ 8b4:	76 13       	cpse	r23, r22
+ 8b6:	01 c0       	rjmp	.+2      	; 0x8ba <itemInHistory+0x1c>
+ 8b8:	cf 5f       	subi	r28, 0xFF	; 255
+ 8ba:	cc 30       	cpi	r28, 0x0C	; 12
+ 8bc:	f1 f0       	breq	.+60     	; 0x8fa <itemInHistory+0x5c>
+ 8be:	e8 17       	cp	r30, r24
+ 8c0:	f9 07       	cpc	r31, r25
+ 8c2:	b1 f7       	brne	.-20     	; 0x8b0 <itemInHistory+0x12>
+ 8c4:	2f 5f       	subi	r18, 0xFF	; 255
+ 8c6:	3f 4f       	sbci	r19, 0xFF	; 255
+ 8c8:	2d 17       	cp	r18, r29
+ 8ca:	48 f0       	brcs	.+18     	; 0x8de <itemInHistory+0x40>
+ 8cc:	80 e0       	ldi	r24, 0x00	; 0
+ 8ce:	16 c0       	rjmp	.+44     	; 0x8fc <itemInHistory+0x5e>
+ 8d0:	20 e0       	ldi	r18, 0x00	; 0
+ 8d2:	30 e0       	ldi	r19, 0x00	; 0
+ 8d4:	40 e3       	ldi	r20, 0x30	; 48
+ 8d6:	51 e0       	ldi	r21, 0x01	; 1
+ 8d8:	8c e3       	ldi	r24, 0x3C	; 60
  8da:	91 e0       	ldi	r25, 0x01	; 1
- 8dc:	4b de       	rcall	.-874    	; 0x574 <hd44780_l_write>
-	hd44780_l_write(&low_conf, 0x49);	//I
- 8de:	69 e4       	ldi	r22, 0x49	; 73
- 8e0:	8d e0       	ldi	r24, 0x0D	; 13
- 8e2:	91 e0       	ldi	r25, 0x01	; 1
- 8e4:	47 de       	rcall	.-882    	; 0x574 <hd44780_l_write>
-	hd44780_l_write(&low_conf, 0x44);	//D
- 8e6:	64 e4       	ldi	r22, 0x44	; 68
- 8e8:	8d e0       	ldi	r24, 0x0D	; 13
- 8ea:	91 e0       	ldi	r25, 0x01	; 1
- 8ec:	43 de       	rcall	.-890    	; 0x574 <hd44780_l_write>
-	hd44780_l_write(&low_conf, 0x3A);	//:
- 8ee:	6a e3       	ldi	r22, 0x3A	; 58
- 8f0:	8d e0       	ldi	r24, 0x0D	; 13
- 8f2:	91 e0       	ldi	r25, 0x01	; 1
- 8f4:	3f de       	rcall	.-898    	; 0x574 <hd44780_l_write>
- 8f6:	c1 e0       	ldi	r28, 0x01	; 1
- 8f8:	d1 e0       	ldi	r29, 0x01	; 1
+ 8dc:	10 e0       	ldi	r17, 0x00	; 0
+ 8de:	fa 01       	movw	r30, r20
+ 8e0:	d9 01       	movw	r26, r18
+ 8e2:	aa 0f       	add	r26, r26
+ 8e4:	bb 1f       	adc	r27, r27
+ 8e6:	a2 0f       	add	r26, r18
+ 8e8:	b3 1f       	adc	r27, r19
+ 8ea:	aa 0f       	add	r26, r26
+ 8ec:	bb 1f       	adc	r27, r27
+ 8ee:	aa 0f       	add	r26, r26
+ 8f0:	bb 1f       	adc	r27, r27
+ 8f2:	a0 50       	subi	r26, 0x00	; 0
+ 8f4:	bf 4f       	sbci	r27, 0xFF	; 255
+ 8f6:	c1 2f       	mov	r28, r17
+ 8f8:	db cf       	rjmp	.-74     	; 0x8b0 <itemInHistory+0x12>
+ 8fa:	81 e0       	ldi	r24, 0x01	; 1
+ 8fc:	df 91       	pop	r29
+ 8fe:	cf 91       	pop	r28
+ 900:	1f 91       	pop	r17
+ 902:	08 95       	ret
+
+00000904 <cargoEqualsNewStream>:
+ 904:	90 91 24 01 	lds	r25, 0x0124
+ 908:	80 91 30 01 	lds	r24, 0x0130
+ 90c:	98 13       	cpse	r25, r24
+ 90e:	0f c0       	rjmp	.+30     	; 0x92e <cargoEqualsNewStream+0x2a>
+ 910:	e5 e2       	ldi	r30, 0x25	; 37
+ 912:	f1 e0       	ldi	r31, 0x01	; 1
+ 914:	a1 e3       	ldi	r26, 0x31	; 49
+ 916:	b1 e0       	ldi	r27, 0x01	; 1
+ 918:	80 e3       	ldi	r24, 0x30	; 48
+ 91a:	91 e0       	ldi	r25, 0x01	; 1
+ 91c:	31 91       	ld	r19, Z+
+ 91e:	2d 91       	ld	r18, X+
+ 920:	32 13       	cpse	r19, r18
+ 922:	07 c0       	rjmp	.+14     	; 0x932 <cargoEqualsNewStream+0x2e>
+ 924:	e8 17       	cp	r30, r24
+ 926:	f9 07       	cpc	r31, r25
+ 928:	c9 f7       	brne	.-14     	; 0x91c <cargoEqualsNewStream+0x18>
+ 92a:	81 e0       	ldi	r24, 0x01	; 1
+ 92c:	08 95       	ret
+ 92e:	80 e0       	ldi	r24, 0x00	; 0
+ 930:	08 95       	ret
+ 932:	80 e0       	ldi	r24, 0x00	; 0
+ 934:	08 95       	ret
+
+00000936 <printOnLCD>:
 }
 
 /*
 Prints the entire RFID tag on the display.
 */
-void rfid_Print_LCD(){
- 8fa:	0b e0       	ldi	r16, 0x0B	; 11
- 8fc:	11 e0       	ldi	r17, 0x01	; 1
-	hd44780_l_write(&low_conf, 0x3A);	//:
-
+void printOnLCD(_Bool shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
+ 936:	0f 93       	push	r16
+ 938:	1f 93       	push	r17
+ 93a:	cf 93       	push	r28
+ 93c:	df 93       	push	r29
+ 93e:	c8 2f       	mov	r28, r24
+	hd44780_l_clear_disp(&low_conf);
+ 940:	81 e4       	ldi	r24, 0x41	; 65
+ 942:	91 e0       	ldi	r25, 0x01	; 1
+ 944:	cf dd       	rcall	.-1122   	; 0x4e4 <hd44780_l_clear_disp>
 	
-	for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
+	if (shipment == 1)
+ 946:	cc 23       	and	r28, r28
+ 948:	01 f1       	breq	.+64     	; 0x98a <printOnLCD+0x54>
 	{
-		hd44780_l_write(&low_conf, loaded[i]);
- 8fe:	69 91       	ld	r22, Y+
- 900:	8d e0       	ldi	r24, 0x0D	; 13
- 902:	91 e0       	ldi	r25, 0x01	; 1
- 904:	37 de       	rcall	.-914    	; 0x574 <hd44780_l_write>
-	hd44780_l_write(&low_conf, 0x49);	//I
-	hd44780_l_write(&low_conf, 0x44);	//D
-	hd44780_l_write(&low_conf, 0x3A);	//:
-
-	
-	for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
- 906:	c0 17       	cp	r28, r16
- 908:	d1 07       	cpc	r29, r17
- 90a:	c9 f7       	brne	.-14     	; 0x8fe <rfid_Print_LCD+0x3e>
-	{
-		hd44780_l_write(&low_conf, loaded[i]);
-	}
+		hd44780_l_write(&low_conf, 0x52);	//R
+ 94a:	62 e5       	ldi	r22, 0x52	; 82
+ 94c:	81 e4       	ldi	r24, 0x41	; 65
+ 94e:	91 e0       	ldi	r25, 0x01	; 1
+ 950:	11 de       	rcall	.-990    	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x46);	//F
+ 952:	66 e4       	ldi	r22, 0x46	; 70
+ 954:	81 e4       	ldi	r24, 0x41	; 65
+ 956:	91 e0       	ldi	r25, 0x01	; 1
+ 958:	0d de       	rcall	.-998    	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x49);	//I
+ 95a:	69 e4       	ldi	r22, 0x49	; 73
+ 95c:	81 e4       	ldi	r24, 0x41	; 65
+ 95e:	91 e0       	ldi	r25, 0x01	; 1
+ 960:	09 de       	rcall	.-1006   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x44);	//D
+ 962:	64 e4       	ldi	r22, 0x44	; 68
+ 964:	81 e4       	ldi	r24, 0x41	; 65
+ 966:	91 e0       	ldi	r25, 0x01	; 1
+ 968:	05 de       	rcall	.-1014   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x3A);	//:
+ 96a:	6a e3       	ldi	r22, 0x3A	; 58
+ 96c:	81 e4       	ldi	r24, 0x41	; 65
+ 96e:	91 e0       	ldi	r25, 0x01	; 1
+ 970:	01 de       	rcall	.-1022   	; 0x574 <hd44780_l_write>
+ 972:	c5 e2       	ldi	r28, 0x25	; 37
+ 974:	d1 e0       	ldi	r29, 0x01	; 1
 }
- 90c:	df 91       	pop	r29
- 90e:	cf 91       	pop	r28
- 910:	1f 91       	pop	r17
- 912:	0f 91       	pop	r16
- 914:	08 95       	ret
 
-00000916 <lcd_Setup>:
+/*
+Prints the entire RFID tag on the display.
+*/
+void printOnLCD(_Bool shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
+ 976:	0f e2       	ldi	r16, 0x2F	; 47
+ 978:	11 e0       	ldi	r17, 0x01	; 1
+		hd44780_l_write(&low_conf, 0x3A);	//:
+
+		
+		for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
+		{
+			hd44780_l_write(&low_conf, cargo[i]);
+ 97a:	69 91       	ld	r22, Y+
+ 97c:	81 e4       	ldi	r24, 0x41	; 65
+ 97e:	91 e0       	ldi	r25, 0x01	; 1
+ 980:	f9 dd       	rcall	.-1038   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x49);	//I
+		hd44780_l_write(&low_conf, 0x44);	//D
+		hd44780_l_write(&low_conf, 0x3A);	//:
+
+		
+		for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
+ 982:	c0 17       	cp	r28, r16
+ 984:	d1 07       	cpc	r29, r17
+ 986:	c9 f7       	brne	.-14     	; 0x97a <printOnLCD+0x44>
+ 988:	20 c0       	rjmp	.+64     	; 0x9ca <printOnLCD+0x94>
+			hd44780_l_write(&low_conf, cargo[i]);
+		}
+	}
+	else
+	{
+		hd44780_l_write(&low_conf, 0x4E);	//N
+ 98a:	6e e4       	ldi	r22, 0x4E	; 78
+ 98c:	81 e4       	ldi	r24, 0x41	; 65
+ 98e:	91 e0       	ldi	r25, 0x01	; 1
+ 990:	f1 dd       	rcall	.-1054   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x4F);	//O
+ 992:	6f e4       	ldi	r22, 0x4F	; 79
+ 994:	81 e4       	ldi	r24, 0x41	; 65
+ 996:	91 e0       	ldi	r25, 0x01	; 1
+ 998:	ed dd       	rcall	.-1062   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x20);	//_
+ 99a:	60 e2       	ldi	r22, 0x20	; 32
+ 99c:	81 e4       	ldi	r24, 0x41	; 65
+ 99e:	91 e0       	ldi	r25, 0x01	; 1
+ 9a0:	e9 dd       	rcall	.-1070   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x43);	//C
+ 9a2:	63 e4       	ldi	r22, 0x43	; 67
+ 9a4:	81 e4       	ldi	r24, 0x41	; 65
+ 9a6:	91 e0       	ldi	r25, 0x01	; 1
+ 9a8:	e5 dd       	rcall	.-1078   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x41);	//A
+ 9aa:	61 e4       	ldi	r22, 0x41	; 65
+ 9ac:	81 e4       	ldi	r24, 0x41	; 65
+ 9ae:	91 e0       	ldi	r25, 0x01	; 1
+ 9b0:	e1 dd       	rcall	.-1086   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x52);	//R
+ 9b2:	62 e5       	ldi	r22, 0x52	; 82
+ 9b4:	81 e4       	ldi	r24, 0x41	; 65
+ 9b6:	91 e0       	ldi	r25, 0x01	; 1
+ 9b8:	dd dd       	rcall	.-1094   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x47);	//G
+ 9ba:	67 e4       	ldi	r22, 0x47	; 71
+ 9bc:	81 e4       	ldi	r24, 0x41	; 65
+ 9be:	91 e0       	ldi	r25, 0x01	; 1
+ 9c0:	d9 dd       	rcall	.-1102   	; 0x574 <hd44780_l_write>
+		hd44780_l_write(&low_conf, 0x4F);	//O
+ 9c2:	6f e4       	ldi	r22, 0x4F	; 79
+ 9c4:	81 e4       	ldi	r24, 0x41	; 65
+ 9c6:	91 e0       	ldi	r25, 0x01	; 1
+ 9c8:	d5 dd       	rcall	.-1110   	; 0x574 <hd44780_l_write>
+
+	}
+	
+
+}
+ 9ca:	df 91       	pop	r29
+ 9cc:	cf 91       	pop	r28
+ 9ce:	1f 91       	pop	r17
+ 9d0:	0f 91       	pop	r16
+ 9d2:	08 95       	ret
+
+000009d4 <deliveryMode>:
+	
+}
+
+void deliveryMode(){
+	
+	if (cargoEqualsNewStream()==1)
+ 9d4:	97 df       	rcall	.-210    	; 0x904 <cargoEqualsNewStream>
+ 9d6:	88 23       	and	r24, r24
+ 9d8:	09 f1       	breq	.+66     	; 0xa1c <deliveryMode+0x48>
+ 9da:	e4 e2       	ldi	r30, 0x24	; 36
+ 9dc:	f1 e0       	ldi	r31, 0x01	; 1
+	{
+		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) // För över avlämnad last in i historiken
+		{
+			history[historySize][cntDigit] = cargo[cntDigit];
+ 9de:	80 91 3c 01 	lds	r24, 0x013C
+ 9e2:	90 e0       	ldi	r25, 0x00	; 0
+		
+	}
+	
+}
+
+void deliveryMode(){
+ 9e4:	dc 01       	movw	r26, r24
+ 9e6:	aa 0f       	add	r26, r26
+ 9e8:	bb 1f       	adc	r27, r27
+ 9ea:	8a 0f       	add	r24, r26
+ 9ec:	9b 1f       	adc	r25, r27
+ 9ee:	dc 01       	movw	r26, r24
+ 9f0:	aa 0f       	add	r26, r26
+ 9f2:	bb 1f       	adc	r27, r27
+ 9f4:	aa 0f       	add	r26, r26
+ 9f6:	bb 1f       	adc	r27, r27
+ 9f8:	a0 50       	subi	r26, 0x00	; 0
+ 9fa:	bf 4f       	sbci	r27, 0xFF	; 255
+ 9fc:	80 e3       	ldi	r24, 0x30	; 48
+ 9fe:	91 e0       	ldi	r25, 0x01	; 1
+	
+	if (cargoEqualsNewStream()==1)
+	{
+		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) // För över avlämnad last in i historiken
+		{
+			history[historySize][cntDigit] = cargo[cntDigit];
+ a00:	21 91       	ld	r18, Z+
+ a02:	2d 93       	st	X+, r18
+
+void deliveryMode(){
+	
+	if (cargoEqualsNewStream()==1)
+	{
+		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) // För över avlämnad last in i historiken
+ a04:	e8 17       	cp	r30, r24
+ a06:	f9 07       	cpc	r31, r25
+ a08:	d9 f7       	brne	.-10     	; 0xa00 <deliveryMode+0x2c>
+		{
+			history[historySize][cntDigit] = cargo[cntDigit];
+		}
+		historySize++;
+ a0a:	80 91 3c 01 	lds	r24, 0x013C
+ a0e:	8f 5f       	subi	r24, 0xFF	; 255
+ a10:	80 93 3c 01 	sts	0x013C, r24
+		
+		printOnLCD(0); //Skriver ut NO CARGO på LCD
+ a14:	80 e0       	ldi	r24, 0x00	; 0
+ a16:	8f df       	rcall	.-226    	; 0x936 <printOnLCD>
+		carryItem = 0;
+ a18:	10 92 3f 01 	sts	0x013F, r1
+ a1c:	08 95       	ret
+
+00000a1e <pickUpMode>:
+}
 
 
-void lcd_Setup(){
- 916:	0f 93       	push	r16
- 918:	cf 93       	push	r28
+
+void pickUpMode(){
+	if (itemInHistory() == 1)
+ a1e:	3f df       	rcall	.-386    	; 0x89e <itemInHistory>
+ a20:	81 11       	cpse	r24, r1
+ a22:	13 c0       	rjmp	.+38     	; 0xa4a <pickUpMode+0x2c>
+	}
+	else
+	{
+		//pickUpItem = askUserIfPickUp(); //Tobu GUI input snackas - wait funktion vänta i evighet på abort eller start pickup
+		
+		if (pickUpItem == 1)
+ a24:	80 91 3e 01 	lds	r24, 0x013E
+ a28:	88 23       	and	r24, r24
+ a2a:	79 f0       	breq	.+30     	; 0xa4a <pickUpMode+0x2c>
+ a2c:	e0 e3       	ldi	r30, 0x30	; 48
+ a2e:	f1 e0       	ldi	r31, 0x01	; 1
+ a30:	a4 e2       	ldi	r26, 0x24	; 36
+ a32:	b1 e0       	ldi	r27, 0x01	; 1
+	
+}
+
+
+
+void pickUpMode(){
+ a34:	8c e3       	ldi	r24, 0x3C	; 60
+ a36:	91 e0       	ldi	r25, 0x01	; 1
+		
+		if (pickUpItem == 1)
+		{
+			for (uint8_t cntDigit = 0; cntDigit<12; cntDigit++)
+			{
+				cargo[cntDigit] = newStream[cntDigit];
+ a38:	21 91       	ld	r18, Z+
+ a3a:	2d 93       	st	X+, r18
+	{
+		//pickUpItem = askUserIfPickUp(); //Tobu GUI input snackas - wait funktion vänta i evighet på abort eller start pickup
+		
+		if (pickUpItem == 1)
+		{
+			for (uint8_t cntDigit = 0; cntDigit<12; cntDigit++)
+ a3c:	e8 17       	cp	r30, r24
+ a3e:	f9 07       	cpc	r31, r25
+ a40:	d9 f7       	brne	.-10     	; 0xa38 <pickUpMode+0x1a>
+			{
+				cargo[cntDigit] = newStream[cntDigit];
+			}
+			carryItem = 1;
+ a42:	81 e0       	ldi	r24, 0x01	; 1
+ a44:	80 93 3f 01 	sts	0x013F, r24
+			printOnLCD(1);
+ a48:	76 cf       	rjmp	.-276    	; 0x936 <printOnLCD>
+ a4a:	08 95       	ret
+
+00000a4c <stationMode>:
+}
+
+void stationMode(){
+	powerRFID(1);
+	
+	while (streamFilled == 0)
+ a4c:	80 91 40 01 	lds	r24, 0x0140
+ a50:	88 23       	and	r24, r24
+ a52:	31 f0       	breq	.+12     	; 0xa60 <stationMode+0x14>
+	{
+		//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
+	}
+	
+	if (carryItem == 0)
+ a54:	80 91 3f 01 	lds	r24, 0x013F
+ a58:	81 11       	cpse	r24, r1
+ a5a:	01 c0       	rjmp	.+2      	; 0xa5e <stationMode+0x12>
+	{
+		pickUpMode();
+ a5c:	e0 cf       	rjmp	.-64     	; 0xa1e <pickUpMode>
+	}
+	else
+	{
+		deliveryMode();
+ a5e:	ba cf       	rjmp	.-140    	; 0x9d4 <deliveryMode>
+ a60:	ff cf       	rjmp	.-2      	; 0xa60 <stationMode+0x14>
+
+00000a62 <setupLCD>:
+	
+
+}
+
+
+void setupLCD(){
+ a62:	0f 93       	push	r16
+ a64:	cf 93       	push	r28
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
- 91a:	8f ef       	ldi	r24, 0xFF	; 255
- 91c:	81 b9       	out	0x01, r24	; 1
+ a66:	8f ef       	ldi	r24, 0xFF	; 255
+ a68:	81 b9       	out	0x01, r24	; 1
 	DDRB = (1 << DDB2)|(1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
- 91e:	97 e0       	ldi	r25, 0x07	; 7
- 920:	94 b9       	out	0x04, r25	; 4
+ a6a:	97 e0       	ldi	r25, 0x07	; 7
+ a6c:	94 b9       	out	0x04, r25	; 4
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
 	low_conf.rs_i = 2;
- 922:	82 e0       	ldi	r24, 0x02	; 2
- 924:	80 93 0d 01 	sts	0x010D, r24
+ a6e:	82 e0       	ldi	r24, 0x02	; 2
+ a70:	80 93 41 01 	sts	0x0141, r24
 	low_conf.rw_i = 1;
- 928:	21 e0       	ldi	r18, 0x01	; 1
- 92a:	20 93 0e 01 	sts	0x010E, r18
+ a74:	21 e0       	ldi	r18, 0x01	; 1
+ a76:	20 93 42 01 	sts	0x0142, r18
 	low_conf.en_i = 0;
- 92e:	10 92 0f 01 	sts	0x010F, r1
+ a7a:	10 92 43 01 	sts	0x0143, r1
 	
 	low_conf.db7_i = 7;
- 932:	90 93 10 01 	sts	0x0110, r25
+ a7e:	90 93 44 01 	sts	0x0144, r25
 	low_conf.db6_i = 6;
- 936:	c6 e0       	ldi	r28, 0x06	; 6
- 938:	c0 93 11 01 	sts	0x0111, r28
+ a82:	c6 e0       	ldi	r28, 0x06	; 6
+ a84:	c0 93 45 01 	sts	0x0145, r28
 	low_conf.db5_i = 5;
- 93c:	95 e0       	ldi	r25, 0x05	; 5
- 93e:	90 93 12 01 	sts	0x0112, r25
+ a88:	95 e0       	ldi	r25, 0x05	; 5
+ a8a:	90 93 46 01 	sts	0x0146, r25
 	low_conf.db4_i = 4;
- 942:	94 e0       	ldi	r25, 0x04	; 4
- 944:	90 93 13 01 	sts	0x0113, r25
+ a8e:	94 e0       	ldi	r25, 0x04	; 4
+ a90:	90 93 47 01 	sts	0x0147, r25
 	low_conf.db3_i = 3;
- 948:	93 e0       	ldi	r25, 0x03	; 3
- 94a:	90 93 14 01 	sts	0x0114, r25
+ a94:	93 e0       	ldi	r25, 0x03	; 3
+ a96:	90 93 48 01 	sts	0x0148, r25
 	low_conf.db2_i = 2;
- 94e:	80 93 15 01 	sts	0x0115, r24
+ a9a:	80 93 49 01 	sts	0x0149, r24
 	low_conf.db1_i = 1;
- 952:	20 93 16 01 	sts	0x0116, r18
+ a9e:	20 93 4a 01 	sts	0x014A, r18
 	low_conf.db0_i = 0;
- 956:	10 92 17 01 	sts	0x0117, r1
+ aa2:	10 92 4b 01 	sts	0x014B, r1
 	low_conf.rs_port = &PORTB;
- 95a:	85 e2       	ldi	r24, 0x25	; 37
- 95c:	90 e0       	ldi	r25, 0x00	; 0
- 95e:	90 93 19 01 	sts	0x0119, r25
- 962:	80 93 18 01 	sts	0x0118, r24
+ aa6:	85 e2       	ldi	r24, 0x25	; 37
+ aa8:	90 e0       	ldi	r25, 0x00	; 0
+ aaa:	90 93 4d 01 	sts	0x014D, r25
+ aae:	80 93 4c 01 	sts	0x014C, r24
 	low_conf.rw_port = &PORTB;
- 966:	90 93 1b 01 	sts	0x011B, r25
- 96a:	80 93 1a 01 	sts	0x011A, r24
+ ab2:	90 93 4f 01 	sts	0x014F, r25
+ ab6:	80 93 4e 01 	sts	0x014E, r24
 	low_conf.en_port = &PORTB;
- 96e:	90 93 1d 01 	sts	0x011D, r25
- 972:	80 93 1c 01 	sts	0x011C, r24
+ aba:	90 93 51 01 	sts	0x0151, r25
+ abe:	80 93 50 01 	sts	0x0150, r24
 	low_conf.db7_port = &PORTA;
- 976:	82 e2       	ldi	r24, 0x22	; 34
- 978:	90 e0       	ldi	r25, 0x00	; 0
- 97a:	90 93 1f 01 	sts	0x011F, r25
- 97e:	80 93 1e 01 	sts	0x011E, r24
+ ac2:	82 e2       	ldi	r24, 0x22	; 34
+ ac4:	90 e0       	ldi	r25, 0x00	; 0
+ ac6:	90 93 53 01 	sts	0x0153, r25
+ aca:	80 93 52 01 	sts	0x0152, r24
 	low_conf.db6_port = &PORTA;
- 982:	90 93 21 01 	sts	0x0121, r25
- 986:	80 93 20 01 	sts	0x0120, r24
+ ace:	90 93 55 01 	sts	0x0155, r25
+ ad2:	80 93 54 01 	sts	0x0154, r24
 	low_conf.db5_port = &PORTA;
- 98a:	90 93 23 01 	sts	0x0123, r25
- 98e:	80 93 22 01 	sts	0x0122, r24
+ ad6:	90 93 57 01 	sts	0x0157, r25
+ ada:	80 93 56 01 	sts	0x0156, r24
 	low_conf.db4_port = &PORTA;
- 992:	90 93 25 01 	sts	0x0125, r25
- 996:	80 93 24 01 	sts	0x0124, r24
+ ade:	90 93 59 01 	sts	0x0159, r25
+ ae2:	80 93 58 01 	sts	0x0158, r24
 	low_conf.db3_port = &PORTA;
- 99a:	90 93 27 01 	sts	0x0127, r25
- 99e:	80 93 26 01 	sts	0x0126, r24
+ ae6:	90 93 5b 01 	sts	0x015B, r25
+ aea:	80 93 5a 01 	sts	0x015A, r24
 	low_conf.db2_port = &PORTA;
- 9a2:	90 93 29 01 	sts	0x0129, r25
- 9a6:	80 93 28 01 	sts	0x0128, r24
+ aee:	90 93 5d 01 	sts	0x015D, r25
+ af2:	80 93 5c 01 	sts	0x015C, r24
 	low_conf.db1_port = &PORTA;
- 9aa:	90 93 2b 01 	sts	0x012B, r25
- 9ae:	80 93 2a 01 	sts	0x012A, r24
+ af6:	90 93 5f 01 	sts	0x015F, r25
+ afa:	80 93 5e 01 	sts	0x015E, r24
 	low_conf.db0_port = &PORTA;
- 9b2:	90 93 2d 01 	sts	0x012D, r25
- 9b6:	80 93 2c 01 	sts	0x012C, r24
+ afe:	90 93 61 01 	sts	0x0161, r25
+ b02:	80 93 60 01 	sts	0x0160, r24
 	low_conf.line1_base_addr = 0x00;
- 9ba:	10 92 2e 01 	sts	0x012E, r1
+ b06:	10 92 62 01 	sts	0x0162, r1
 	low_conf.line2_base_addr = 0x40;
- 9be:	80 e4       	ldi	r24, 0x40	; 64
- 9c0:	80 93 2f 01 	sts	0x012F, r24
+ b0a:	80 e4       	ldi	r24, 0x40	; 64
+ b0c:	80 93 63 01 	sts	0x0163, r24
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
- 9c4:	20 93 30 01 	sts	0x0130, r18
+ b10:	20 93 64 01 	sts	0x0164, r18
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
- 9c8:	00 e0       	ldi	r16, 0x00	; 0
- 9ca:	40 e0       	ldi	r20, 0x00	; 0
- 9cc:	61 e0       	ldi	r22, 0x01	; 1
- 9ce:	8d e0       	ldi	r24, 0x0D	; 13
- 9d0:	91 e0       	ldi	r25, 0x01	; 1
- 9d2:	db dd       	rcall	.-1098   	; 0x58a <hd44780_l_init>
+ b14:	00 e0       	ldi	r16, 0x00	; 0
+ b16:	40 e0       	ldi	r20, 0x00	; 0
+ b18:	61 e0       	ldi	r22, 0x01	; 1
+ b1a:	81 e4       	ldi	r24, 0x41	; 65
+ b1c:	91 e0       	ldi	r25, 0x01	; 1
+ b1e:	35 dd       	rcall	.-1430   	; 0x58a <hd44780_l_init>
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
- 9d4:	20 e0       	ldi	r18, 0x00	; 0
- 9d6:	40 e0       	ldi	r20, 0x00	; 0
- 9d8:	61 e0       	ldi	r22, 0x01	; 1
- 9da:	8d e0       	ldi	r24, 0x0D	; 13
- 9dc:	91 e0       	ldi	r25, 0x01	; 1
- 9de:	9f dd       	rcall	.-1218   	; 0x51e <hd44780_l_disp>
+ b20:	20 e0       	ldi	r18, 0x00	; 0
+ b22:	40 e0       	ldi	r20, 0x00	; 0
+ b24:	61 e0       	ldi	r22, 0x01	; 1
+ b26:	81 e4       	ldi	r24, 0x41	; 65
+ b28:	91 e0       	ldi	r25, 0x01	; 1
+ b2a:	f9 dc       	rcall	.-1550   	; 0x51e <hd44780_l_disp>
 	UCSR0B = (1<<RXEN0 | 1<<TXEN0); //Enable RX0 and TX0
- 9e0:	e1 ec       	ldi	r30, 0xC1	; 193
- 9e2:	f0 e0       	ldi	r31, 0x00	; 0
- 9e4:	88 e1       	ldi	r24, 0x18	; 24
- 9e6:	80 83       	st	Z, r24
+ b2c:	e1 ec       	ldi	r30, 0xC1	; 193
+ b2e:	f0 e0       	ldi	r31, 0x00	; 0
+ b30:	88 e1       	ldi	r24, 0x18	; 24
+ b32:	80 83       	st	Z, r24
 	UCSR0C = (1 << UCSZ01 | 1 << UCSZ00); //set data length to 8-bit;
- 9e8:	c0 93 c2 00 	sts	0x00C2, r28
+ b34:	c0 93 c2 00 	sts	0x00C2, r28
 	UBRR0H = 0b00000000;
- 9ec:	10 92 c5 00 	sts	0x00C5, r1
+ b38:	10 92 c5 00 	sts	0x00C5, r1
 	UBRR0L = 0b00011001; //Sets baudvalue in AVR to 25(1mhz), which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
- 9f0:	89 e1       	ldi	r24, 0x19	; 25
- 9f2:	80 93 c4 00 	sts	0x00C4, r24
+ b3c:	89 e1       	ldi	r24, 0x19	; 25
+ b3e:	80 93 c4 00 	sts	0x00C4, r24
 	UCSR0B |= (1 << RXCIE0); //Enables the rc complete interrupt
- 9f6:	80 81       	ld	r24, Z
- 9f8:	80 68       	ori	r24, 0x80	; 128
- 9fa:	80 83       	st	Z, r24
+ b42:	80 81       	ld	r24, Z
+ b44:	80 68       	ori	r24, 0x80	; 128
+ b46:	80 83       	st	Z, r24
 	sei();
- 9fc:	78 94       	sei
+ b48:	78 94       	sei
 	
- 9fe:	cf 91       	pop	r28
- a00:	0f 91       	pop	r16
- a02:	08 95       	ret
+ b4a:	cf 91       	pop	r28
+ b4c:	0f 91       	pop	r16
+ b4e:	08 95       	ret
 
-00000a04 <main>:
+00000b50 <main>:
 	}
 }
 
 int main(void)
 {
-	lcd_Setup(); //Bör köras först av allt då den även innehåller rfid intrerupt initialisering
- a04:	88 df       	rcall	.-240    	; 0x916 <lcd_Setup>
-	//rfid_Print_LCD();
+	setupLCD();
+ b50:	88 df       	rcall	.-240    	; 0xa62 <setupLCD>
+	
+	
 	while(1)
 	{
-		
-		rfid_Print_LCD();
- a06:	5c df       	rcall	.-328    	; 0x8c0 <rfid_Print_LCD>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+		//transportMode();
+		stationMode();
+ b52:	7c df       	rcall	.-264    	; 0xa4c <stationMode>
+ b54:	fe cf       	rjmp	.-4      	; 0xb52 <main+0x2>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
- a08:	2f ef       	ldi	r18, 0xFF	; 255
- a0a:	8f e7       	ldi	r24, 0x7F	; 127
- a0c:	9d e0       	ldi	r25, 0x0D	; 13
- a0e:	21 50       	subi	r18, 0x01	; 1
- a10:	80 40       	sbci	r24, 0x00	; 0
- a12:	90 40       	sbci	r25, 0x00	; 0
- a14:	e1 f7       	brne	.-8      	; 0xa0e <main+0xa>
- a16:	00 c0       	rjmp	.+0      	; 0xa18 <main+0x14>
- a18:	00 00       	nop
- a1a:	f5 cf       	rjmp	.-22     	; 0xa06 <main+0x2>
+00000b56 <_exit>:
+ b56:	f8 94       	cli
 
-00000a1c <_exit>:
- a1c:	f8 94       	cli
-
-00000a1e <__stop_program>:
- a1e:	ff cf       	rjmp	.-2      	; 0xa1e <__stop_program>
+00000b58 <__stop_program>:
+ b58:	ff cf       	rjmp	.-2      	; 0xb58 <__stop_program>
