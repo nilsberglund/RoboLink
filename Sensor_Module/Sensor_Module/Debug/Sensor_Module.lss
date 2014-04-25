@@ -3,33 +3,33 @@ Sensor_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  0000046e  00000502  2**0
+  0 .data         00000000  00800100  000003d6  0000046a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000046e  00000000  00000000  00000094  2**1
+  1 .text         000003d6  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000025  00800100  00800100  00000502  2**0
+  2 .bss          00000025  00800100  00800100  0000046a  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00000504  2**2
+  3 .stab         000006cc  00000000  00000000  0000046c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000bd0  2**0
+  4 .stabstr      00000097  00000000  00000000  00000b38  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000c67  2**0
+  5 .comment      0000002f  00000000  00000000  00000bcf  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000a8  00000000  00000000  00000c96  2**0
+  6 .debug_aranges 000000a8  00000000  00000000  00000bfe  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000552  00000000  00000000  00000d3e  2**0
+  7 .debug_info   00000552  00000000  00000000  00000ca6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000002b6  00000000  00000000  00001290  2**0
+  8 .debug_abbrev 000002b6  00000000  00000000  000011f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000618  00000000  00000000  00001546  2**0
+  9 .debug_line   00000540  00000000  00000000  000014ae  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001e0  00000000  00000000  00001b60  2**2
+ 10 .debug_frame  000001e0  00000000  00000000  000019f0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001d7  00000000  00000000  00001d40  2**0
+ 11 .debug_str    000001d7  00000000  00000000  00001bd0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000356  00000000  00000000  00001f17  2**0
+ 12 .debug_loc    00000356  00000000  00000000  00001da7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000078  00000000  00000000  0000226d  2**0
+ 13 .debug_ranges 00000078  00000000  00000000  000020fd  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,7 +73,7 @@ Disassembly of section .text:
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
-  4c:	de c1       	rjmp	.+956    	; 0x40a <__vector_19>
+  4c:	92 c1       	rjmp	.+804    	; 0x372 <__vector_19>
   4e:	00 00       	nop
   50:	2d c0       	rjmp	.+90     	; 0xac <__bad_interrupt>
   52:	00 00       	nop
@@ -83,7 +83,7 @@ Disassembly of section .text:
   5a:	00 00       	nop
   5c:	27 c0       	rjmp	.+78     	; 0xac <__bad_interrupt>
   5e:	00 00       	nop
-  60:	8d c1       	rjmp	.+794    	; 0x37c <__vector_24>
+  60:	41 c1       	rjmp	.+642    	; 0x2e4 <__vector_24>
   62:	00 00       	nop
   64:	23 c0       	rjmp	.+70     	; 0xac <__bad_interrupt>
   66:	00 00       	nop
@@ -127,8 +127,8 @@ Disassembly of section .text:
   a2:	a5 32       	cpi	r26, 0x25	; 37
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
-  a8:	a0 d1       	rcall	.+832    	; 0x3ea <main>
-  aa:	df c1       	rjmp	.+958    	; 0x46a <_exit>
+  a8:	54 d1       	rcall	.+680    	; 0x352 <main>
+  aa:	93 c1       	rjmp	.+806    	; 0x3d2 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -144,7 +144,7 @@ void initADC() {
   b2:	10 92 23 01 	sts	0x0123, r1
 	DDRA = 0x00;								// Configure PortA as input for analog readings
   b6:	11 b8       	out	0x01, r1	; 1
-	DDRB |= (1<<DDB2) | (1<<DDB1) | (1<<DDB0); 	// Configure PortB as output, pin PB0, PB1, PB2.
+	DDRB |= (1<<DDB2) | (1<<DDB1) | (1<<DDB0);  // Configure PortB as output, pin PB0, PB1, PB2.
   b8:	84 b1       	in	r24, 0x04	; 4
   ba:	87 60       	ori	r24, 0x07	; 7
   bc:	84 b9       	out	0x04, r24	; 4
@@ -172,8 +172,8 @@ void initADC() {
   de:	8d bb       	out	0x1d, r24	; 29
 	for(int i=0; i<7; i++)
 	{
-			channelThresholds[i] = 100;
-  e0:	84 e6       	ldi	r24, 0x64	; 100
+			channelThresholds[i] = 180;
+  e0:	84 eb       	ldi	r24, 0xB4	; 180
   e2:	80 93 1b 01 	sts	0x011B, r24
   e6:	80 93 1c 01 	sts	0x011C, r24
   ea:	80 93 1d 01 	sts	0x011D, r24
@@ -388,461 +388,315 @@ void calibrationMode() {
  22a:	90 93 24 01 	sts	0x0124, r25
  22e:	80 93 23 01 	sts	0x0123, r24
 	if (ch == 7){								//go to next channel
- 232:	87 30       	cpi	r24, 0x07	; 7
- 234:	91 05       	cpc	r25, r1
- 236:	49 f4       	brne	.+18     	; 0x24a <calibrationMode+0x6a>
+ 232:	07 97       	sbiw	r24, 0x07	; 7
+ 234:	41 f4       	brne	.+16     	; 0x246 <calibrationMode+0x66>
 		caliMode = 0;
- 238:	10 92 1a 01 	sts	0x011A, r1
- 23c:	10 92 19 01 	sts	0x0119, r1
+ 236:	10 92 1a 01 	sts	0x011A, r1
+ 23a:	10 92 19 01 	sts	0x0119, r1
 		ch = 0;
- 240:	10 92 24 01 	sts	0x0124, r1
- 244:	10 92 23 01 	sts	0x0123, r1
- 248:	02 c0       	rjmp	.+4      	; 0x24e <calibrationMode+0x6e>
+ 23e:	10 92 24 01 	sts	0x0124, r1
+ 242:	10 92 23 01 	sts	0x0123, r1
 	}
 	
-	if (ch == 0)
- 24a:	00 97       	sbiw	r24, 0x00	; 0
- 24c:	11 f4       	brne	.+4      	; 0x252 <calibrationMode+0x72>
-	{
-
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 24e:	28 98       	cbi	0x05, 0	; 5
- 250:	28 c0       	rjmp	.+80     	; 0x2a2 <calibrationMode+0xc2>
-	}
-		else if(ch ==1)
- 252:	81 30       	cpi	r24, 0x01	; 1
- 254:	91 05       	cpc	r25, r1
- 256:	19 f4       	brne	.+6      	; 0x25e <calibrationMode+0x7e>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 258:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB0);
- 25a:	28 9a       	sbi	0x05, 0	; 5
- 25c:	22 c0       	rjmp	.+68     	; 0x2a2 <calibrationMode+0xc2>
-		}
-
-		else if (ch==2)
- 25e:	82 30       	cpi	r24, 0x02	; 2
- 260:	91 05       	cpc	r25, r1
- 262:	19 f4       	brne	.+6      	; 0x26a <calibrationMode+0x8a>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 264:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB1);
- 266:	29 9a       	sbi	0x05, 1	; 5
- 268:	1c c0       	rjmp	.+56     	; 0x2a2 <calibrationMode+0xc2>
-		}
-		else if (ch==3)
- 26a:	83 30       	cpi	r24, 0x03	; 3
- 26c:	91 05       	cpc	r25, r1
- 26e:	29 f4       	brne	.+10     	; 0x27a <calibrationMode+0x9a>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 270:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB1)|(1<<PORTB0);
- 272:	85 b1       	in	r24, 0x05	; 5
- 274:	83 60       	ori	r24, 0x03	; 3
- 276:	85 b9       	out	0x05, r24	; 5
- 278:	14 c0       	rjmp	.+40     	; 0x2a2 <calibrationMode+0xc2>
-		}
-		else if (ch==4)
- 27a:	84 30       	cpi	r24, 0x04	; 4
- 27c:	91 05       	cpc	r25, r1
- 27e:	19 f4       	brne	.+6      	; 0x286 <calibrationMode+0xa6>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 280:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2);
- 282:	2a 9a       	sbi	0x05, 2	; 5
- 284:	0e c0       	rjmp	.+28     	; 0x2a2 <calibrationMode+0xc2>
-		}
-		else if (ch==5)
- 286:	85 30       	cpi	r24, 0x05	; 5
- 288:	91 05       	cpc	r25, r1
- 28a:	29 f4       	brne	.+10     	; 0x296 <calibrationMode+0xb6>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 28c:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2)|(1<<PORTB0);
- 28e:	85 b1       	in	r24, 0x05	; 5
- 290:	85 60       	ori	r24, 0x05	; 5
- 292:	85 b9       	out	0x05, r24	; 5
- 294:	06 c0       	rjmp	.+12     	; 0x2a2 <calibrationMode+0xc2>
-		}	
-		else if (ch==6)
- 296:	06 97       	sbiw	r24, 0x06	; 6
- 298:	21 f4       	brne	.+8      	; 0x2a2 <calibrationMode+0xc2>
-		{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 29a:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2)|(1<<PORTB1);
- 29c:	85 b1       	in	r24, 0x05	; 5
- 29e:	86 60       	ori	r24, 0x06	; 6
- 2a0:	85 b9       	out	0x05, r24	; 5
-	}								
-	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
+	PORTB &= 0xF8; 							
+ 246:	85 b1       	in	r24, 0x05	; 5
+ 248:	88 7f       	andi	r24, 0xF8	; 248
+ 24a:	85 b9       	out	0x05, r24	; 5
+	PORTB |= ch;								
+ 24c:	95 b1       	in	r25, 0x05	; 5
+ 24e:	80 91 23 01 	lds	r24, 0x0123
+ 252:	89 2b       	or	r24, r25
+ 254:	85 b9       	out	0x05, r24	; 5
+						//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
 	analogRead(ch);						//Read analog value on new channel
- 2a2:	80 91 23 01 	lds	r24, 0x0123
- 2a6:	90 91 24 01 	lds	r25, 0x0124
- 2aa:	2b cf       	rjmp	.-426    	; 0x102 <analogRead>
+ 256:	80 91 23 01 	lds	r24, 0x0123
+ 25a:	90 91 24 01 	lds	r25, 0x0124
+ 25e:	51 cf       	rjmp	.-350    	; 0x102 <analogRead>
 
-000002ac <calcOneByteLineVector>:
+00000260 <calcOneByteLineVector>:
 
 void calcOneByteLineVector(){
 	
 	//Add millis or counter
 	
 	sensor_data = 0;
- 2ac:	10 92 00 01 	sts	0x0100, r1
- 2b0:	a4 e0       	ldi	r26, 0x04	; 4
- 2b2:	b1 e0       	ldi	r27, 0x01	; 1
- 2b4:	eb e1       	ldi	r30, 0x1B	; 27
- 2b6:	f1 e0       	ldi	r31, 0x01	; 1
+ 260:	10 92 00 01 	sts	0x0100, r1
+ 264:	a4 e0       	ldi	r26, 0x04	; 4
+ 266:	b1 e0       	ldi	r27, 0x01	; 1
+ 268:	eb e1       	ldi	r30, 0x1B	; 27
+ 26a:	f1 e0       	ldi	r31, 0x01	; 1
 	
 	for (int i=0; i<7; i++)
- 2b8:	80 e0       	ldi	r24, 0x00	; 0
- 2ba:	90 e0       	ldi	r25, 0x00	; 0
+ 26c:	80 e0       	ldi	r24, 0x00	; 0
+ 26e:	90 e0       	ldi	r25, 0x00	; 0
 	{
 		if (newSensorValues[i] > channelThresholds[i])
 		{
 			sensor_data |= (1<<i);
- 2bc:	41 e0       	ldi	r20, 0x01	; 1
- 2be:	50 e0       	ldi	r21, 0x00	; 0
+ 270:	41 e0       	ldi	r20, 0x01	; 1
+ 272:	50 e0       	ldi	r21, 0x00	; 0
 	
 	sensor_data = 0;
 	
 	for (int i=0; i<7; i++)
 	{
 		if (newSensorValues[i] > channelThresholds[i])
- 2c0:	3d 91       	ld	r19, X+
- 2c2:	21 91       	ld	r18, Z+
- 2c4:	23 17       	cp	r18, r19
- 2c6:	60 f4       	brcc	.+24     	; 0x2e0 <calcOneByteLineVector+0x34>
+ 274:	3d 91       	ld	r19, X+
+ 276:	21 91       	ld	r18, Z+
+ 278:	23 17       	cp	r18, r19
+ 27a:	60 f4       	brcc	.+24     	; 0x294 <calcOneByteLineVector+0x34>
 		{
 			sensor_data |= (1<<i);
- 2c8:	60 91 00 01 	lds	r22, 0x0100
- 2cc:	9a 01       	movw	r18, r20
- 2ce:	08 2e       	mov	r0, r24
- 2d0:	02 c0       	rjmp	.+4      	; 0x2d6 <calcOneByteLineVector+0x2a>
- 2d2:	22 0f       	add	r18, r18
- 2d4:	33 1f       	adc	r19, r19
- 2d6:	0a 94       	dec	r0
- 2d8:	e2 f7       	brpl	.-8      	; 0x2d2 <calcOneByteLineVector+0x26>
- 2da:	26 2b       	or	r18, r22
- 2dc:	20 93 00 01 	sts	0x0100, r18
+ 27c:	60 91 00 01 	lds	r22, 0x0100
+ 280:	9a 01       	movw	r18, r20
+ 282:	08 2e       	mov	r0, r24
+ 284:	02 c0       	rjmp	.+4      	; 0x28a <calcOneByteLineVector+0x2a>
+ 286:	22 0f       	add	r18, r18
+ 288:	33 1f       	adc	r19, r19
+ 28a:	0a 94       	dec	r0
+ 28c:	e2 f7       	brpl	.-8      	; 0x286 <calcOneByteLineVector+0x26>
+ 28e:	26 2b       	or	r18, r22
+ 290:	20 93 00 01 	sts	0x0100, r18
 	
 	//Add millis or counter
 	
 	sensor_data = 0;
 	
 	for (int i=0; i<7; i++)
- 2e0:	01 96       	adiw	r24, 0x01	; 1
- 2e2:	87 30       	cpi	r24, 0x07	; 7
- 2e4:	91 05       	cpc	r25, r1
- 2e6:	61 f7       	brne	.-40     	; 0x2c0 <calcOneByteLineVector+0x14>
+ 294:	01 96       	adiw	r24, 0x01	; 1
+ 296:	87 30       	cpi	r24, 0x07	; 7
+ 298:	91 05       	cpc	r25, r1
+ 29a:	61 f7       	brne	.-40     	; 0x274 <calcOneByteLineVector+0x14>
 		{
 			sensor_data |= (1<<i);
 		}
 	}
 	//Send to other avr
 }
- 2e8:	08 95       	ret
+ 29c:	08 95       	ret
 
-000002ea <defaultMode>:
+0000029e <defaultMode>:
 
 
 ////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
 
 void defaultMode() {
 	newSensorValues[ch] = adcValue;
- 2ea:	80 91 23 01 	lds	r24, 0x0123
- 2ee:	90 91 24 01 	lds	r25, 0x0124
- 2f2:	fc 01       	movw	r30, r24
- 2f4:	ec 5f       	subi	r30, 0xFC	; 252
- 2f6:	fe 4f       	sbci	r31, 0xFE	; 254
- 2f8:	20 91 22 01 	lds	r18, 0x0122
- 2fc:	20 83       	st	Z, r18
+ 29e:	80 91 23 01 	lds	r24, 0x0123
+ 2a2:	90 91 24 01 	lds	r25, 0x0124
+ 2a6:	fc 01       	movw	r30, r24
+ 2a8:	ec 5f       	subi	r30, 0xFC	; 252
+ 2aa:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2ac:	20 91 22 01 	lds	r18, 0x0122
+ 2b0:	20 83       	st	Z, r18
 	ch++;									//go to next channel
- 2fe:	01 96       	adiw	r24, 0x01	; 1
- 300:	90 93 24 01 	sts	0x0124, r25
- 304:	80 93 23 01 	sts	0x0123, r24
+ 2b2:	01 96       	adiw	r24, 0x01	; 1
+ 2b4:	90 93 24 01 	sts	0x0124, r25
+ 2b8:	80 93 23 01 	sts	0x0123, r24
 	if (ch==7)
- 308:	87 30       	cpi	r24, 0x07	; 7
- 30a:	91 05       	cpc	r25, r1
- 30c:	31 f4       	brne	.+12     	; 0x31a <defaultMode+0x30>
+ 2bc:	07 97       	sbiw	r24, 0x07	; 7
+ 2be:	29 f4       	brne	.+10     	; 0x2ca <defaultMode+0x2c>
 	{
 		calcOneByteLineVector();
- 30e:	ce df       	rcall	.-100    	; 0x2ac <calcOneByteLineVector>
+ 2c0:	cf df       	rcall	.-98     	; 0x260 <calcOneByteLineVector>
 		ch = 0;
- 310:	10 92 24 01 	sts	0x0124, r1
- 314:	10 92 23 01 	sts	0x0123, r1
- 318:	02 c0       	rjmp	.+4      	; 0x31e <defaultMode+0x34>
+ 2c2:	10 92 24 01 	sts	0x0124, r1
+ 2c6:	10 92 23 01 	sts	0x0123, r1
 	}
 	
-	if (ch == 0)
- 31a:	00 97       	sbiw	r24, 0x00	; 0
- 31c:	11 f4       	brne	.+4      	; 0x322 <defaultMode+0x38>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 31e:	28 98       	cbi	0x05, 0	; 5
- 320:	28 c0       	rjmp	.+80     	; 0x372 <defaultMode+0x88>
-	}
-	else if(ch ==1)
- 322:	81 30       	cpi	r24, 0x01	; 1
- 324:	91 05       	cpc	r25, r1
- 326:	19 f4       	brne	.+6      	; 0x32e <defaultMode+0x44>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 328:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB0);
- 32a:	28 9a       	sbi	0x05, 0	; 5
- 32c:	22 c0       	rjmp	.+68     	; 0x372 <defaultMode+0x88>
-	}
-
-	else if (ch==2)
- 32e:	82 30       	cpi	r24, 0x02	; 2
- 330:	91 05       	cpc	r25, r1
- 332:	19 f4       	brne	.+6      	; 0x33a <defaultMode+0x50>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 334:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB1);
- 336:	29 9a       	sbi	0x05, 1	; 5
- 338:	1c c0       	rjmp	.+56     	; 0x372 <defaultMode+0x88>
-	}
-	else if (ch==3)
- 33a:	83 30       	cpi	r24, 0x03	; 3
- 33c:	91 05       	cpc	r25, r1
- 33e:	29 f4       	brne	.+10     	; 0x34a <defaultMode+0x60>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 340:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB1)|(1<<PORTB0);
- 342:	85 b1       	in	r24, 0x05	; 5
- 344:	83 60       	ori	r24, 0x03	; 3
- 346:	85 b9       	out	0x05, r24	; 5
- 348:	14 c0       	rjmp	.+40     	; 0x372 <defaultMode+0x88>
-	}
-	else if (ch==4)
- 34a:	84 30       	cpi	r24, 0x04	; 4
- 34c:	91 05       	cpc	r25, r1
- 34e:	19 f4       	brne	.+6      	; 0x356 <defaultMode+0x6c>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 350:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2);
- 352:	2a 9a       	sbi	0x05, 2	; 5
- 354:	0e c0       	rjmp	.+28     	; 0x372 <defaultMode+0x88>
-	}
-	else if (ch==5)
- 356:	85 30       	cpi	r24, 0x05	; 5
- 358:	91 05       	cpc	r25, r1
- 35a:	29 f4       	brne	.+10     	; 0x366 <defaultMode+0x7c>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 35c:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2)|(1<<PORTB0);
- 35e:	85 b1       	in	r24, 0x05	; 5
- 360:	85 60       	ori	r24, 0x05	; 5
- 362:	85 b9       	out	0x05, r24	; 5
- 364:	06 c0       	rjmp	.+12     	; 0x372 <defaultMode+0x88>
-	}	
-	else if (ch==6)
- 366:	06 97       	sbiw	r24, 0x06	; 6
- 368:	21 f4       	brne	.+8      	; 0x372 <defaultMode+0x88>
-	{
-		PORTB &= ~(1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2);
- 36a:	28 98       	cbi	0x05, 0	; 5
-		PORTB |= (1<<PORTB2)|(1<<PORTB1);
- 36c:	85 b1       	in	r24, 0x05	; 5
- 36e:	86 60       	ori	r24, 0x06	; 6
- 370:	85 b9       	out	0x05, r24	; 5
-	}									
-	//PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+	PORTB &= 0xF8; 							
+ 2ca:	85 b1       	in	r24, 0x05	; 5
+ 2cc:	88 7f       	andi	r24, 0xF8	; 248
+ 2ce:	85 b9       	out	0x05, r24	; 5
+	PORTB |= ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+ 2d0:	95 b1       	in	r25, 0x05	; 5
+ 2d2:	80 91 23 01 	lds	r24, 0x0123
+ 2d6:	89 2b       	or	r24, r25
+ 2d8:	85 b9       	out	0x05, r24	; 5
 	analogRead(ch);						//Read analog value on new channel
- 372:	80 91 23 01 	lds	r24, 0x0123
- 376:	90 91 24 01 	lds	r25, 0x0124
- 37a:	c3 ce       	rjmp	.-634    	; 0x102 <analogRead>
+ 2da:	80 91 23 01 	lds	r24, 0x0123
+ 2de:	90 91 24 01 	lds	r25, 0x0124
+ 2e2:	0f cf       	rjmp	.-482    	; 0x102 <analogRead>
 
-0000037c <__vector_24>:
+000002e4 <__vector_24>:
 uint8_t sensor_data = 0;
 */
 
 ////////////Interupts///////////////
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 {
- 37c:	1f 92       	push	r1
- 37e:	0f 92       	push	r0
- 380:	0f b6       	in	r0, 0x3f	; 63
- 382:	0f 92       	push	r0
- 384:	11 24       	eor	r1, r1
- 386:	0b b6       	in	r0, 0x3b	; 59
- 388:	0f 92       	push	r0
- 38a:	2f 93       	push	r18
- 38c:	3f 93       	push	r19
- 38e:	4f 93       	push	r20
- 390:	5f 93       	push	r21
- 392:	6f 93       	push	r22
- 394:	7f 93       	push	r23
- 396:	8f 93       	push	r24
- 398:	9f 93       	push	r25
- 39a:	af 93       	push	r26
- 39c:	bf 93       	push	r27
- 39e:	ef 93       	push	r30
- 3a0:	ff 93       	push	r31
+ 2e4:	1f 92       	push	r1
+ 2e6:	0f 92       	push	r0
+ 2e8:	0f b6       	in	r0, 0x3f	; 63
+ 2ea:	0f 92       	push	r0
+ 2ec:	11 24       	eor	r1, r1
+ 2ee:	0b b6       	in	r0, 0x3b	; 59
+ 2f0:	0f 92       	push	r0
+ 2f2:	2f 93       	push	r18
+ 2f4:	3f 93       	push	r19
+ 2f6:	4f 93       	push	r20
+ 2f8:	5f 93       	push	r21
+ 2fa:	6f 93       	push	r22
+ 2fc:	7f 93       	push	r23
+ 2fe:	8f 93       	push	r24
+ 300:	9f 93       	push	r25
+ 302:	af 93       	push	r26
+ 304:	bf 93       	push	r27
+ 306:	ef 93       	push	r30
+ 308:	ff 93       	push	r31
 	adcValue = ADCL;					// Must read ADCL before ADCH
- 3a2:	80 91 78 00 	lds	r24, 0x0078
- 3a6:	80 93 22 01 	sts	0x0122, r24
+ 30a:	80 91 78 00 	lds	r24, 0x0078
+ 30e:	80 93 22 01 	sts	0x0122, r24
 	adcValue = ADCH;					// Output ADCH to managable byte adcValue
- 3aa:	80 91 79 00 	lds	r24, 0x0079
- 3ae:	80 93 22 01 	sts	0x0122, r24
+ 312:	80 91 79 00 	lds	r24, 0x0079
+ 316:	80 93 22 01 	sts	0x0122, r24
 	if (caliMode == 1)
- 3b2:	80 91 19 01 	lds	r24, 0x0119
- 3b6:	90 91 1a 01 	lds	r25, 0x011A
- 3ba:	01 97       	sbiw	r24, 0x01	; 1
- 3bc:	11 f4       	brne	.+4      	; 0x3c2 <__vector_24+0x46>
+ 31a:	80 91 19 01 	lds	r24, 0x0119
+ 31e:	90 91 1a 01 	lds	r25, 0x011A
+ 322:	01 97       	sbiw	r24, 0x01	; 1
+ 324:	11 f4       	brne	.+4      	; 0x32a <__vector_24+0x46>
 	{
 		calibrationMode();
- 3be:	10 df       	rcall	.-480    	; 0x1e0 <calibrationMode>
- 3c0:	01 c0       	rjmp	.+2      	; 0x3c4 <__vector_24+0x48>
+ 326:	5c df       	rcall	.-328    	; 0x1e0 <calibrationMode>
+ 328:	01 c0       	rjmp	.+2      	; 0x32c <__vector_24+0x48>
 	}
 	else
 	{
 		defaultMode();
- 3c2:	93 df       	rcall	.-218    	; 0x2ea <defaultMode>
+ 32a:	b9 df       	rcall	.-142    	; 0x29e <defaultMode>
 	}
 
 
 }
- 3c4:	ff 91       	pop	r31
- 3c6:	ef 91       	pop	r30
- 3c8:	bf 91       	pop	r27
- 3ca:	af 91       	pop	r26
- 3cc:	9f 91       	pop	r25
- 3ce:	8f 91       	pop	r24
- 3d0:	7f 91       	pop	r23
- 3d2:	6f 91       	pop	r22
- 3d4:	5f 91       	pop	r21
- 3d6:	4f 91       	pop	r20
- 3d8:	3f 91       	pop	r19
- 3da:	2f 91       	pop	r18
- 3dc:	0f 90       	pop	r0
- 3de:	0b be       	out	0x3b, r0	; 59
- 3e0:	0f 90       	pop	r0
- 3e2:	0f be       	out	0x3f, r0	; 63
- 3e4:	0f 90       	pop	r0
- 3e6:	1f 90       	pop	r1
- 3e8:	18 95       	reti
+ 32c:	ff 91       	pop	r31
+ 32e:	ef 91       	pop	r30
+ 330:	bf 91       	pop	r27
+ 332:	af 91       	pop	r26
+ 334:	9f 91       	pop	r25
+ 336:	8f 91       	pop	r24
+ 338:	7f 91       	pop	r23
+ 33a:	6f 91       	pop	r22
+ 33c:	5f 91       	pop	r21
+ 33e:	4f 91       	pop	r20
+ 340:	3f 91       	pop	r19
+ 342:	2f 91       	pop	r18
+ 344:	0f 90       	pop	r0
+ 346:	0b be       	out	0x3b, r0	; 59
+ 348:	0f 90       	pop	r0
+ 34a:	0f be       	out	0x3f, r0	; 63
+ 34c:	0f 90       	pop	r0
+ 34e:	1f 90       	pop	r1
+ 350:	18 95       	reti
 
-000003ea <main>:
+00000352 <main>:
 #include "SensorCalMajor.h"
 #include "Slave_sensor.h"
 
 int main(void)
 {
 	SPI_Init_Slave();
- 3ea:	05 d0       	rcall	.+10     	; 0x3f6 <SPI_Init_Slave>
+ 352:	05 d0       	rcall	.+10     	; 0x35e <SPI_Init_Slave>
 	initADC();
- 3ec:	60 de       	rcall	.-832    	; 0xae <initADC>
+ 354:	ac de       	rcall	.-680    	; 0xae <initADC>
 	analogRead(0);
- 3ee:	80 e0       	ldi	r24, 0x00	; 0
- 3f0:	90 e0       	ldi	r25, 0x00	; 0
- 3f2:	87 de       	rcall	.-754    	; 0x102 <analogRead>
- 3f4:	ff cf       	rjmp	.-2      	; 0x3f4 <main+0xa>
+ 356:	80 e0       	ldi	r24, 0x00	; 0
+ 358:	90 e0       	ldi	r25, 0x00	; 0
+ 35a:	d3 de       	rcall	.-602    	; 0x102 <analogRead>
+ 35c:	ff cf       	rjmp	.-2      	; 0x35c <main+0xa>
 
-000003f6 <SPI_Init_Slave>:
+0000035e <SPI_Init_Slave>:
 */
 
 void SPI_Init_Slave()
 	{
 
 			DDRB = 0x48;
- 3f6:	88 e4       	ldi	r24, 0x48	; 72
- 3f8:	84 b9       	out	0x04, r24	; 4
+ 35e:	88 e4       	ldi	r24, 0x48	; 72
+ 360:	84 b9       	out	0x04, r24	; 4
 			
 			SPCR = 0xC3;
- 3fa:	83 ec       	ldi	r24, 0xC3	; 195
- 3fc:	8c bd       	out	0x2c, r24	; 44
+ 362:	83 ec       	ldi	r24, 0xC3	; 195
+ 364:	8c bd       	out	0x2c, r24	; 44
 			
 			sei(); 
- 3fe:	78 94       	sei
- 400:	08 95       	ret
+ 366:	78 94       	sei
+ 368:	08 95       	ret
 
-00000402 <Slave_TX>:
+0000036a <Slave_TX>:
 	}
 	
 	
 void Slave_TX(uint8_t data)
 	{
 		SPDR = data;
- 402:	8e bd       	out	0x2e, r24	; 46
+ 36a:	8e bd       	out	0x2e, r24	; 46
 		PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
- 404:	2b 9a       	sbi	0x05, 3	; 5
+ 36c:	2b 9a       	sbi	0x05, 3	; 5
 		PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
- 406:	2b 98       	cbi	0x05, 3	; 5
- 408:	08 95       	ret
+ 36e:	2b 98       	cbi	0x05, 3	; 5
+ 370:	08 95       	ret
 
-0000040a <__vector_19>:
+00000372 <__vector_19>:
 void SPI_Init_Slave();
 void Slave_TX(uint8_t);
 */
 
 ISR(SPI_STC_vect)
 {
- 40a:	1f 92       	push	r1
- 40c:	0f 92       	push	r0
- 40e:	0f b6       	in	r0, 0x3f	; 63
- 410:	0f 92       	push	r0
- 412:	11 24       	eor	r1, r1
- 414:	0b b6       	in	r0, 0x3b	; 59
- 416:	0f 92       	push	r0
- 418:	2f 93       	push	r18
- 41a:	3f 93       	push	r19
- 41c:	4f 93       	push	r20
- 41e:	5f 93       	push	r21
- 420:	6f 93       	push	r22
- 422:	7f 93       	push	r23
- 424:	8f 93       	push	r24
- 426:	9f 93       	push	r25
- 428:	af 93       	push	r26
- 42a:	bf 93       	push	r27
- 42c:	ef 93       	push	r30
- 42e:	ff 93       	push	r31
+ 372:	1f 92       	push	r1
+ 374:	0f 92       	push	r0
+ 376:	0f b6       	in	r0, 0x3f	; 63
+ 378:	0f 92       	push	r0
+ 37a:	11 24       	eor	r1, r1
+ 37c:	0b b6       	in	r0, 0x3b	; 59
+ 37e:	0f 92       	push	r0
+ 380:	2f 93       	push	r18
+ 382:	3f 93       	push	r19
+ 384:	4f 93       	push	r20
+ 386:	5f 93       	push	r21
+ 388:	6f 93       	push	r22
+ 38a:	7f 93       	push	r23
+ 38c:	8f 93       	push	r24
+ 38e:	9f 93       	push	r25
+ 390:	af 93       	push	r26
+ 392:	bf 93       	push	r27
+ 394:	ef 93       	push	r30
+ 396:	ff 93       	push	r31
 	instruction_data = SPDR;
- 430:	8e b5       	in	r24, 0x2e	; 46
- 432:	80 93 01 01 	sts	0x0101, r24
+ 398:	8e b5       	in	r24, 0x2e	; 46
+ 39a:	80 93 01 01 	sts	0x0101, r24
 	if(instruction_data == 0b00000100)
- 436:	80 91 01 01 	lds	r24, 0x0101
- 43a:	84 30       	cpi	r24, 0x04	; 4
- 43c:	19 f4       	brne	.+6      	; 0x444 <__vector_19+0x3a>
+ 39e:	80 91 01 01 	lds	r24, 0x0101
+ 3a2:	84 30       	cpi	r24, 0x04	; 4
+ 3a4:	19 f4       	brne	.+6      	; 0x3ac <__vector_19+0x3a>
 	{
 		Slave_TX(sensor_data);
- 43e:	80 91 00 01 	lds	r24, 0x0100
- 442:	df df       	rcall	.-66     	; 0x402 <Slave_TX>
+ 3a6:	80 91 00 01 	lds	r24, 0x0100
+ 3aa:	df df       	rcall	.-66     	; 0x36a <Slave_TX>
 	}
 }
- 444:	ff 91       	pop	r31
- 446:	ef 91       	pop	r30
- 448:	bf 91       	pop	r27
- 44a:	af 91       	pop	r26
- 44c:	9f 91       	pop	r25
- 44e:	8f 91       	pop	r24
- 450:	7f 91       	pop	r23
- 452:	6f 91       	pop	r22
- 454:	5f 91       	pop	r21
- 456:	4f 91       	pop	r20
- 458:	3f 91       	pop	r19
- 45a:	2f 91       	pop	r18
- 45c:	0f 90       	pop	r0
- 45e:	0b be       	out	0x3b, r0	; 59
- 460:	0f 90       	pop	r0
- 462:	0f be       	out	0x3f, r0	; 63
- 464:	0f 90       	pop	r0
- 466:	1f 90       	pop	r1
- 468:	18 95       	reti
+ 3ac:	ff 91       	pop	r31
+ 3ae:	ef 91       	pop	r30
+ 3b0:	bf 91       	pop	r27
+ 3b2:	af 91       	pop	r26
+ 3b4:	9f 91       	pop	r25
+ 3b6:	8f 91       	pop	r24
+ 3b8:	7f 91       	pop	r23
+ 3ba:	6f 91       	pop	r22
+ 3bc:	5f 91       	pop	r21
+ 3be:	4f 91       	pop	r20
+ 3c0:	3f 91       	pop	r19
+ 3c2:	2f 91       	pop	r18
+ 3c4:	0f 90       	pop	r0
+ 3c6:	0b be       	out	0x3b, r0	; 59
+ 3c8:	0f 90       	pop	r0
+ 3ca:	0f be       	out	0x3f, r0	; 63
+ 3cc:	0f 90       	pop	r0
+ 3ce:	1f 90       	pop	r1
+ 3d0:	18 95       	reti
 
-0000046a <_exit>:
- 46a:	f8 94       	cli
+000003d2 <_exit>:
+ 3d2:	f8 94       	cli
 
-0000046c <__stop_program>:
- 46c:	ff cf       	rjmp	.-2      	; 0x46c <__stop_program>
+000003d4 <__stop_program>:
+ 3d4:	ff cf       	rjmp	.-2      	; 0x3d4 <__stop_program>

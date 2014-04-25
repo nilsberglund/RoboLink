@@ -76,9 +76,7 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(true);
 			window.btnJoint5RB.setEnabled(true);
 			window.btnJoint5RS.setEnabled(true);
-			window.btnJoint6LB.setEnabled(true);
 			window.btnJoint6LS.setEnabled(true);
-			window.btnJoint6RB.setEnabled(true);
 			window.btnJoint6RS.setEnabled(true);
 			window.btnDPP.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
@@ -89,6 +87,9 @@ public class KeybindingController2 {
 			window.btnDisconnect.setEnabled(true);
 			window.btnCalibration.setEnabled(true);
 			window.btnConnect.setEnabled(false);
+			window.btnStartPickup.setEnabled(true);
+			window.btnEndPickup.setEnabled(true);
+			window.btnAbortPickup.setEnabled(true);
 			window.cboxPorts.setEnabled(false);
 		}
 		else {
@@ -112,9 +113,7 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(false);
 			window.btnJoint5RB.setEnabled(false);
 			window.btnJoint5RS.setEnabled(false);
-			window.btnJoint6LB.setEnabled(false);
 			window.btnJoint6LS.setEnabled(false);
-			window.btnJoint6RB.setEnabled(false);
 			window.btnJoint6RS.setEnabled(false);
 			window.btnDPP.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
@@ -125,6 +124,9 @@ public class KeybindingController2 {
 			window.btnDisconnect.setEnabled(false);
 			window.btnCalibration.setEnabled(false);
 			window.btnConnect.setEnabled(true);
+			window.btnStartPickup.setEnabled(false);
+			window.btnEndPickup.setEnabled(false);
+			window.btnAbortPickup.setEnabled(false);
 			window.cboxPorts.setEnabled(true);
 		}
 	}
