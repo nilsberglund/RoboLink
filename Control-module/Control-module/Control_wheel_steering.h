@@ -12,8 +12,10 @@
 
 volatile int8_t error;
 int8_t prevError;
-volatile int16_t rightWheelSpeed;
-volatile int16_t leftWheelSpeed;
+volatile uint8_t rightWheelSpeed;
+volatile uint8_t leftWheelSpeed;
+volatile uint8_t rightWheelDirection;
+volatile uint8_t leftWheelDirection;
 int16_t midspeed;
 
 /*-------Functions---------*/

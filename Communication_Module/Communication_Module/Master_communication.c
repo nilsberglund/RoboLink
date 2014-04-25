@@ -28,7 +28,7 @@ void SPI_Init_Master()
 	sei();
 	
 	TCCR0A = 0;
-	TCCR0B = 0x02;
+	TCCR0B = 0x05;
 	TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;

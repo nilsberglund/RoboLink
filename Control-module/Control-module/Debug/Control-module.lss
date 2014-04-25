@@ -3,33 +3,33 @@ Control-module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000002d6  0000036a  2**0
+  0 .data         00000000  00800100  00000338  000003cc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000002d6  00000000  00000000  00000094  2**1
+  1 .text         00000338  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000019  00800100  00800100  0000036a  2**0
+  2 .bss          00000019  00800100  00800100  000003cc  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  0000036c  2**2
+  3 .stab         000006cc  00000000  00000000  000003cc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000a38  2**0
+  4 .stabstr      00000097  00000000  00000000  00000a98  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000acf  2**0
+  5 .comment      0000002f  00000000  00000000  00000b2f  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000b8  00000000  00000000  00000afe  2**0
+  6 .debug_aranges 000000b8  00000000  00000000  00000b5e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   000008e6  00000000  00000000  00000bb6  2**0
+  7 .debug_info   0000090a  00000000  00000000  00000c16  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000353  00000000  00000000  0000149c  2**0
+  8 .debug_abbrev 0000032e  00000000  00000000  00001520  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000541  00000000  00000000  000017ef  2**0
+  9 .debug_line   00000595  00000000  00000000  0000184e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  0000018c  00000000  00000000  00001d30  2**2
+ 10 .debug_frame  00000184  00000000  00000000  00001de4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000299  00000000  00000000  00001ebc  2**0
+ 11 .debug_str    0000030e  00000000  00000000  00001f68  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000032e  00000000  00000000  00002155  2**0
+ 12 .debug_loc    00000319  00000000  00000000  00002276  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000088  00000000  00000000  00002483  2**0
+ 13 .debug_ranges 00000088  00000000  00000000  0000258f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -128,7 +128,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	38 d0       	rcall	.+112    	; 0x11a <main>
-  aa:	13 c1       	rjmp	.+550    	; 0x2d2 <_exit>
+  aa:	44 c1       	rjmp	.+648    	; 0x334 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -161,26 +161,26 @@ ISR(SPI_STC_vect)
   d2:	ff 93       	push	r31
 	data = SPDR;
   d4:	8e b5       	in	r24, 0x2e	; 46
-  d6:	80 93 16 01 	sts	0x0116, r24
+  d6:	80 93 15 01 	sts	0x0115, r24
 	
 	if(data == 0x84)
-  da:	80 91 16 01 	lds	r24, 0x0116
+  da:	80 91 15 01 	lds	r24, 0x0115
   de:	84 38       	cpi	r24, 0x84	; 132
   e0:	41 f0       	breq	.+16     	; 0xf2 <__vector_19+0x44>
 	{
 		
 	} else if(data != 0x84)
-  e2:	80 91 16 01 	lds	r24, 0x0116
+  e2:	80 91 15 01 	lds	r24, 0x0115
   e6:	84 38       	cpi	r24, 0x84	; 132
   e8:	21 f0       	breq	.+8      	; 0xf2 <__vector_19+0x44>
 	{
 		sensor_data = data;
-  ea:	80 91 16 01 	lds	r24, 0x0116
+  ea:	80 91 15 01 	lds	r24, 0x0115
   ee:	80 93 01 01 	sts	0x0101, r24
 	}
 	
 	 controlAlgorithm(); 
-  f2:	c1 d0       	rcall	.+386    	; 0x276 <controlAlgorithm>
+  f2:	cc d0       	rcall	.+408    	; 0x28c <controlAlgorithm>
 }
   f4:	ff 91       	pop	r31
   f6:	ef 91       	pop	r30
@@ -209,9 +209,9 @@ ISR(SPI_STC_vect)
 	if(done == 0)
 	{
 		SPI_Init_Slave();
- 11a:	d5 d0       	rcall	.+426    	; 0x2c6 <SPI_Init_Slave>
+ 11a:	06 d1       	rcall	.+524    	; 0x328 <SPI_Init_Slave>
 		driving_setup();	
- 11c:	7e d0       	rcall	.+252    	; 0x21a <driving_setup>
+ 11c:	89 d0       	rcall	.+274    	; 0x230 <driving_setup>
  11e:	ff cf       	rjmp	.-2      	; 0x11e <main+0x4>
 
 00000120 <getError>:
@@ -235,7 +235,7 @@ int8_t getError()
 	volatile uint8_t counter1 = 0;
  130:	1b 82       	std	Y+3, r1	; 0x03
 	error = 0;
- 132:	10 92 18 01 	sts	0x0118, r1
+ 132:	10 92 17 01 	sts	0x0117, r1
 	uint8_t line_data;
 	line_data = sensor_data;	
  136:	40 91 01 01 	lds	r20, 0x0101
@@ -284,7 +284,7 @@ int8_t getError()
  174:	8a 81       	ldd	r24, Y+2	; 0x02
  176:	89 0f       	add	r24, r25
  178:	81 50       	subi	r24, 0x01	; 1
- 17a:	80 93 18 01 	sts	0x0118, r24
+ 17a:	80 93 17 01 	sts	0x0117, r24
  17e:	22 c0       	rjmp	.+68     	; 0x1c4 <getError+0xa4>
 	} else if(counter1 == 2)
  180:	8b 81       	ldd	r24, Y+3	; 0x03
@@ -295,7 +295,7 @@ int8_t getError()
 		error = marker-1;
  186:	8a 81       	ldd	r24, Y+2	; 0x02
  188:	81 50       	subi	r24, 0x01	; 1
- 18a:	80 93 18 01 	sts	0x0118, r24
+ 18a:	80 93 17 01 	sts	0x0117, r24
  18e:	1a c0       	rjmp	.+52     	; 0x1c4 <getError+0xa4>
 	} else if(counter1 == 3)
  190:	8b 81       	ldd	r24, Y+3	; 0x03
@@ -306,35 +306,35 @@ int8_t getError()
 		error = marker*2;
  196:	8a 81       	ldd	r24, Y+2	; 0x02
  198:	88 0f       	add	r24, r24
- 19a:	80 93 18 01 	sts	0x0118, r24
+ 19a:	80 93 17 01 	sts	0x0117, r24
 		error = error/(0b00000011);
- 19e:	80 91 18 01 	lds	r24, 0x0118
+ 19e:	80 91 17 01 	lds	r24, 0x0117
  1a2:	96 e5       	ldi	r25, 0x56	; 86
  1a4:	89 02       	muls	r24, r25
  1a6:	91 2d       	mov	r25, r1
  1a8:	11 24       	eor	r1, r1
  1aa:	87 fd       	sbrc	r24, 7
  1ac:	93 95       	inc	r25
- 1ae:	90 93 18 01 	sts	0x0118, r25
+ 1ae:	90 93 17 01 	sts	0x0117, r25
 		error = error - 1;
- 1b2:	80 91 18 01 	lds	r24, 0x0118
+ 1b2:	80 91 17 01 	lds	r24, 0x0117
  1b6:	81 50       	subi	r24, 0x01	; 1
- 1b8:	80 93 18 01 	sts	0x0118, r24
+ 1b8:	80 93 17 01 	sts	0x0117, r24
  1bc:	03 c0       	rjmp	.+6      	; 0x1c4 <getError+0xa4>
 
 	} else
 	{
 		error = 7;
  1be:	87 e0       	ldi	r24, 0x07	; 7
- 1c0:	80 93 18 01 	sts	0x0118, r24
+ 1c0:	80 93 17 01 	sts	0x0117, r24
 	}
 	error = 7 - error;
- 1c4:	90 91 18 01 	lds	r25, 0x0118
+ 1c4:	90 91 17 01 	lds	r25, 0x0117
  1c8:	87 e0       	ldi	r24, 0x07	; 7
  1ca:	89 1b       	sub	r24, r25
- 1cc:	80 93 18 01 	sts	0x0118, r24
+ 1cc:	80 93 17 01 	sts	0x0117, r24
 	return error;
- 1d0:	80 91 18 01 	lds	r24, 0x0118
+ 1d0:	80 91 17 01 	lds	r24, 0x0117
 }
  1d4:	0f 90       	pop	r0
  1d6:	0f 90       	pop	r0
@@ -352,183 +352,237 @@ int8_t calculateSpeed(int8_t error)
 {
  1e0:	cf 93       	push	r28
  1e2:	df 93       	push	r29
- 1e4:	1f 92       	push	r1
+ 1e4:	00 d0       	rcall	.+0      	; 0x1e6 <calculateSpeed+0x6>
  1e6:	cd b7       	in	r28, 0x3d	; 61
  1e8:	de b7       	in	r29, 0x3e	; 62
-	volatile int8_t speed = 0;
- 1ea:	19 82       	std	Y+1, r1	; 0x01
-	int8_t Kp = 3;
-	int8_t Kd = 20;
+	volatile int16_t speed = 0;
+ 1ea:	1a 82       	std	Y+2, r1	; 0x02
+ 1ec:	19 82       	std	Y+1, r1	; 0x01
+	int8_t Kp = 20;
+	int8_t Kd = 5;
 	
 	speed = Kp * error + Kd * (error - prevError);
- 1ec:	90 91 15 01 	lds	r25, 0x0115
- 1f0:	28 2f       	mov	r18, r24
- 1f2:	29 1b       	sub	r18, r25
- 1f4:	92 2f       	mov	r25, r18
- 1f6:	99 0f       	add	r25, r25
- 1f8:	99 0f       	add	r25, r25
- 1fa:	29 2f       	mov	r18, r25
- 1fc:	22 0f       	add	r18, r18
- 1fe:	22 0f       	add	r18, r18
- 200:	92 0f       	add	r25, r18
- 202:	28 2f       	mov	r18, r24
- 204:	22 0f       	add	r18, r18
- 206:	28 0f       	add	r18, r24
- 208:	92 0f       	add	r25, r18
- 20a:	99 83       	std	Y+1, r25	; 0x01
+ 1ee:	28 2f       	mov	r18, r24
+ 1f0:	33 27       	eor	r19, r19
+ 1f2:	27 fd       	sbrc	r18, 7
+ 1f4:	30 95       	com	r19
+ 1f6:	90 91 13 01 	lds	r25, 0x0113
+ 1fa:	29 1b       	sub	r18, r25
+ 1fc:	31 09       	sbc	r19, r1
+ 1fe:	97 fd       	sbrc	r25, 7
+ 200:	33 95       	inc	r19
+ 202:	a9 01       	movw	r20, r18
+ 204:	44 0f       	add	r20, r20
+ 206:	55 1f       	adc	r21, r21
+ 208:	44 0f       	add	r20, r20
+ 20a:	55 1f       	adc	r21, r21
+ 20c:	24 0f       	add	r18, r20
+ 20e:	35 1f       	adc	r19, r21
+ 210:	94 e1       	ldi	r25, 0x14	; 20
+ 212:	89 02       	muls	r24, r25
+ 214:	20 0d       	add	r18, r0
+ 216:	31 1d       	adc	r19, r1
+ 218:	11 24       	eor	r1, r1
+ 21a:	3a 83       	std	Y+2, r19	; 0x02
+ 21c:	29 83       	std	Y+1, r18	; 0x01
 
 	prevError = error;
- 20c:	80 93 15 01 	sts	0x0115, r24
+ 21e:	80 93 13 01 	sts	0x0113, r24
 	return speed;
- 210:	89 81       	ldd	r24, Y+1	; 0x01
+ 222:	89 81       	ldd	r24, Y+1	; 0x01
+ 224:	9a 81       	ldd	r25, Y+2	; 0x02
 }
- 212:	0f 90       	pop	r0
- 214:	df 91       	pop	r29
- 216:	cf 91       	pop	r28
- 218:	08 95       	ret
+ 226:	0f 90       	pop	r0
+ 228:	0f 90       	pop	r0
+ 22a:	df 91       	pop	r29
+ 22c:	cf 91       	pop	r28
+ 22e:	08 95       	ret
 
-0000021a <driving_setup>:
+00000230 <driving_setup>:
 
 void driving_setup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
- 21a:	81 ef       	ldi	r24, 0xF1	; 241
- 21c:	80 93 80 00 	sts	0x0080, r24
-	TCCR1B = 2; //Sets the prescaling to 8
- 220:	82 e0       	ldi	r24, 0x02	; 2
- 222:	80 93 81 00 	sts	0x0081, r24
+ 230:	81 ef       	ldi	r24, 0xF1	; 241
+ 232:	80 93 80 00 	sts	0x0080, r24
+	TCCR1B = 3; //Sets the prescaling to 8
+ 236:	83 e0       	ldi	r24, 0x03	; 3
+ 238:	80 93 81 00 	sts	0x0081, r24
 	TCNT1 = 0;
- 226:	10 92 85 00 	sts	0x0085, r1
- 22a:	10 92 84 00 	sts	0x0084, r1
+ 23c:	10 92 85 00 	sts	0x0085, r1
+ 240:	10 92 84 00 	sts	0x0084, r1
 	OCR1A = 248;
- 22e:	88 ef       	ldi	r24, 0xF8	; 248
- 230:	90 e0       	ldi	r25, 0x00	; 0
- 232:	90 93 89 00 	sts	0x0089, r25
- 236:	80 93 88 00 	sts	0x0088, r24
+ 244:	88 ef       	ldi	r24, 0xF8	; 248
+ 246:	90 e0       	ldi	r25, 0x00	; 0
+ 248:	90 93 89 00 	sts	0x0089, r25
+ 24c:	80 93 88 00 	sts	0x0088, r24
 	OCR1B = 248;
- 23a:	90 93 8b 00 	sts	0x008B, r25
- 23e:	80 93 8a 00 	sts	0x008A, r24
+ 250:	90 93 8b 00 	sts	0x008B, r25
+ 254:	80 93 8a 00 	sts	0x008A, r24
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
- 242:	8a b1       	in	r24, 0x0a	; 10
- 244:	80 6f       	ori	r24, 0xF0	; 240
- 246:	8a b9       	out	0x0a, r24	; 10
- 248:	08 95       	ret
+ 258:	8a b1       	in	r24, 0x0a	; 10
+ 25a:	80 6f       	ori	r24, 0xF0	; 240
+ 25c:	8a b9       	out	0x0a, r24	; 10
+ 25e:	08 95       	ret
 
-0000024a <drive>:
+00000260 <drive>:
 	
 }
 
 void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)
 {
 	if(right_dir == 1)
- 24a:	01 97       	sbiw	r24, 0x01	; 1
- 24c:	19 f4       	brne	.+6      	; 0x254 <drive+0xa>
+ 260:	01 97       	sbiw	r24, 0x01	; 1
+ 262:	19 f4       	brne	.+6      	; 0x26a <drive+0xa>
 	{
 	PORTD |= (0 << PORTD7);
- 24e:	8b b1       	in	r24, 0x0b	; 11
- 250:	8b b9       	out	0x0b, r24	; 11
- 252:	01 c0       	rjmp	.+2      	; 0x256 <drive+0xc>
+ 264:	8b b1       	in	r24, 0x0b	; 11
+ 266:	8b b9       	out	0x0b, r24	; 11
+ 268:	01 c0       	rjmp	.+2      	; 0x26c <drive+0xc>
 	}
 	else
 	{
 	PORTD |= (1 << PORTD7);
- 254:	5f 9a       	sbi	0x0b, 7	; 11
+ 26a:	5f 9a       	sbi	0x0b, 7	; 11
 	}
 	if(left_dir == 1)
- 256:	61 30       	cpi	r22, 0x01	; 1
- 258:	71 05       	cpc	r23, r1
- 25a:	11 f4       	brne	.+4      	; 0x260 <drive+0x16>
+ 26c:	61 30       	cpi	r22, 0x01	; 1
+ 26e:	71 05       	cpc	r23, r1
+ 270:	11 f4       	brne	.+4      	; 0x276 <drive+0x16>
 	{
 		PORTD |= (1 << PORTD6);
- 25c:	5e 9a       	sbi	0x0b, 6	; 11
- 25e:	02 c0       	rjmp	.+4      	; 0x264 <drive+0x1a>
+ 272:	5e 9a       	sbi	0x0b, 6	; 11
+ 274:	02 c0       	rjmp	.+4      	; 0x27a <drive+0x1a>
 	}
 	else
 	{
 		PORTD |= (0 << PORTD6);
- 260:	8b b1       	in	r24, 0x0b	; 11
- 262:	8b b9       	out	0x0b, r24	; 11
+ 276:	8b b1       	in	r24, 0x0b	; 11
+ 278:	8b b9       	out	0x0b, r24	; 11
 	}
 	OCR1A = rightSpeed;
- 264:	30 93 89 00 	sts	0x0089, r19
- 268:	20 93 88 00 	sts	0x0088, r18
+ 27a:	30 93 89 00 	sts	0x0089, r19
+ 27e:	20 93 88 00 	sts	0x0088, r18
 	OCR1B = leftSpeed;
- 26c:	50 93 8b 00 	sts	0x008B, r21
- 270:	40 93 8a 00 	sts	0x008A, r20
- 274:	08 95       	ret
+ 282:	50 93 8b 00 	sts	0x008B, r21
+ 286:	40 93 8a 00 	sts	0x008A, r20
+ 28a:	08 95       	ret
 
-00000276 <controlAlgorithm>:
-	error = 7 - error;
-	return error;
+0000028c <controlAlgorithm>:
 }
 
 void controlAlgorithm()
-{
- 276:	cf 93       	push	r28
-	int8_t error;
-
+{	
 	
 	error = getError();
- 278:	53 df       	rcall	.-346    	; 0x120 <getError>
- 27a:	c8 2f       	mov	r28, r24
-	rightWheelSpeed = 200 - calculateSpeed(error);
- 27c:	b1 df       	rcall	.-158    	; 0x1e0 <calculateSpeed>
- 27e:	28 ec       	ldi	r18, 0xC8	; 200
- 280:	30 e0       	ldi	r19, 0x00	; 0
- 282:	28 1b       	sub	r18, r24
- 284:	31 09       	sbc	r19, r1
- 286:	87 fd       	sbrc	r24, 7
- 288:	33 95       	inc	r19
- 28a:	30 93 13 01 	sts	0x0113, r19
- 28e:	20 93 12 01 	sts	0x0112, r18
-	leftWheelSpeed = 200 + calculateSpeed(error);
- 292:	8c 2f       	mov	r24, r28
- 294:	a5 df       	rcall	.-182    	; 0x1e0 <calculateSpeed>
- 296:	99 27       	eor	r25, r25
- 298:	87 fd       	sbrc	r24, 7
- 29a:	90 95       	com	r25
- 29c:	88 53       	subi	r24, 0x38	; 56
- 29e:	9f 4f       	sbci	r25, 0xFF	; 255
- 2a0:	90 93 11 01 	sts	0x0111, r25
- 2a4:	80 93 10 01 	sts	0x0110, r24
+ 28c:	49 df       	rcall	.-366    	; 0x120 <getError>
+ 28e:	80 93 17 01 	sts	0x0117, r24
+	int16_t speed = calculateSpeed(error);
+ 292:	80 91 17 01 	lds	r24, 0x0117
+ 296:	a4 df       	rcall	.-184    	; 0x1e0 <calculateSpeed>
+ 298:	28 2f       	mov	r18, r24
+ 29a:	33 27       	eor	r19, r19
+ 29c:	27 fd       	sbrc	r18, 7
+ 29e:	30 95       	com	r19
+	if ((200-speed) < 10)
+ 2a0:	48 ec       	ldi	r20, 0xC8	; 200
+ 2a2:	50 e0       	ldi	r21, 0x00	; 0
+ 2a4:	42 1b       	sub	r20, r18
+ 2a6:	53 0b       	sbc	r21, r19
+ 2a8:	4a 30       	cpi	r20, 0x0A	; 10
+ 2aa:	51 05       	cpc	r21, r1
+ 2ac:	3c f4       	brge	.+14     	; 0x2bc <controlAlgorithm+0x30>
+	{
+		rightWheelSpeed = 30;
+ 2ae:	9e e1       	ldi	r25, 0x1E	; 30
+ 2b0:	90 93 11 01 	sts	0x0111, r25
+		rightWheelDirection = 1;
+ 2b4:	91 e0       	ldi	r25, 0x01	; 1
+ 2b6:	90 93 18 01 	sts	0x0118, r25
+ 2ba:	10 c0       	rjmp	.+32     	; 0x2dc <controlAlgorithm+0x50>
+	} 
+	else if ((200-speed) > 235)
+ 2bc:	4c 3e       	cpi	r20, 0xEC	; 236
+ 2be:	51 05       	cpc	r21, r1
+ 2c0:	34 f0       	brlt	.+12     	; 0x2ce <controlAlgorithm+0x42>
+	{
+		rightWheelSpeed = 235;
+ 2c2:	9b ee       	ldi	r25, 0xEB	; 235
+ 2c4:	90 93 11 01 	sts	0x0111, r25
+		rightWheelDirection = 0;
+ 2c8:	10 92 18 01 	sts	0x0118, r1
+ 2cc:	07 c0       	rjmp	.+14     	; 0x2dc <controlAlgorithm+0x50>
+	}
+	else
+	{
+		rightWheelSpeed = 200 - speed;
+ 2ce:	98 ec       	ldi	r25, 0xC8	; 200
+ 2d0:	98 1b       	sub	r25, r24
+ 2d2:	90 93 11 01 	sts	0x0111, r25
+		rightWheelDirection = 1;
+ 2d6:	91 e0       	ldi	r25, 0x01	; 1
+ 2d8:	90 93 18 01 	sts	0x0118, r25
+	}
+	
+	if ((200+speed) < 10)
+ 2dc:	28 53       	subi	r18, 0x38	; 56
+ 2de:	3f 4f       	sbci	r19, 0xFF	; 255
+ 2e0:	2a 30       	cpi	r18, 0x0A	; 10
+ 2e2:	31 05       	cpc	r19, r1
+ 2e4:	3c f4       	brge	.+14     	; 0x2f4 <controlAlgorithm+0x68>
+	{
+		leftWheelSpeed = 30;
+ 2e6:	8e e1       	ldi	r24, 0x1E	; 30
+ 2e8:	80 93 10 01 	sts	0x0110, r24
+		leftWheelDirection = 1;
+ 2ec:	81 e0       	ldi	r24, 0x01	; 1
+ 2ee:	80 93 14 01 	sts	0x0114, r24
+ 2f2:	0f c0       	rjmp	.+30     	; 0x312 <controlAlgorithm+0x86>
+	}
+	else if ((200+speed) > 235)
+ 2f4:	2c 3e       	cpi	r18, 0xEC	; 236
+ 2f6:	31 05       	cpc	r19, r1
+ 2f8:	34 f0       	brlt	.+12     	; 0x306 <controlAlgorithm+0x7a>
+	{
+		leftWheelSpeed = 235;
+ 2fa:	8b ee       	ldi	r24, 0xEB	; 235
+ 2fc:	80 93 10 01 	sts	0x0110, r24
+		leftWheelDirection = 0;
+ 300:	10 92 14 01 	sts	0x0114, r1
+ 304:	06 c0       	rjmp	.+12     	; 0x312 <controlAlgorithm+0x86>
+	}
+	else
+	{
+		leftWheelSpeed = 200 + speed;
+ 306:	88 53       	subi	r24, 0x38	; 56
+ 308:	80 93 10 01 	sts	0x0110, r24
+		leftWheelDirection = 1;
+ 30c:	81 e0       	ldi	r24, 0x01	; 1
+ 30e:	80 93 14 01 	sts	0x0114, r24
+	}
 	
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
- 2a8:	20 91 12 01 	lds	r18, 0x0112
- 2ac:	30 91 13 01 	lds	r19, 0x0113
- 2b0:	40 91 10 01 	lds	r20, 0x0110
- 2b4:	50 91 11 01 	lds	r21, 0x0111
- 2b8:	61 e0       	ldi	r22, 0x01	; 1
- 2ba:	70 e0       	ldi	r23, 0x00	; 0
- 2bc:	81 e0       	ldi	r24, 0x01	; 1
- 2be:	90 e0       	ldi	r25, 0x00	; 0
- 2c0:	c4 df       	rcall	.-120    	; 0x24a <drive>
-	
-	
-}
- 2c2:	cf 91       	pop	r28
- 2c4:	08 95       	ret
+ 312:	20 91 11 01 	lds	r18, 0x0111
+ 316:	40 91 10 01 	lds	r20, 0x0110
+ 31a:	30 e0       	ldi	r19, 0x00	; 0
+ 31c:	50 e0       	ldi	r21, 0x00	; 0
+ 31e:	61 e0       	ldi	r22, 0x01	; 1
+ 320:	70 e0       	ldi	r23, 0x00	; 0
+ 322:	81 e0       	ldi	r24, 0x01	; 1
+ 324:	90 e0       	ldi	r25, 0x00	; 0
+ 326:	9c cf       	rjmp	.-200    	; 0x260 <drive>
 
-000002c6 <SPI_Init_Slave>:
-#include "Slave_control.h"
+00000328 <SPI_Init_Slave>:
+ 328:	88 e4       	ldi	r24, 0x48	; 72
+ 32a:	84 b9       	out	0x04, r24	; 4
+ 32c:	83 ec       	ldi	r24, 0xC3	; 195
+ 32e:	8c bd       	out	0x2c, r24	; 44
+ 330:	78 94       	sei
+ 332:	08 95       	ret
 
-void SPI_Init_Slave()
-{
+00000334 <_exit>:
+ 334:	f8 94       	cli
 
-	DDRB = 0x48;
- 2c6:	88 e4       	ldi	r24, 0x48	; 72
- 2c8:	84 b9       	out	0x04, r24	; 4
-			
-	SPCR = 0xC3;
- 2ca:	83 ec       	ldi	r24, 0xC3	; 195
- 2cc:	8c bd       	out	0x2c, r24	; 44
-			
-	sei(); 
- 2ce:	78 94       	sei
- 2d0:	08 95       	ret
-
-000002d2 <_exit>:
- 2d2:	f8 94       	cli
-
-000002d4 <__stop_program>:
- 2d4:	ff cf       	rjmp	.-2      	; 0x2d4 <__stop_program>
+00000336 <__stop_program>:
+ 336:	ff cf       	rjmp	.-2      	; 0x336 <__stop_program>

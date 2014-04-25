@@ -53,13 +53,41 @@ int8_t getError()
 }
 
 void controlAlgorithm()
-{
-	int8_t error;
-
+{	
 	
 	error = getError();
-	rightWheelSpeed = 200 - calculateSpeed(error);
-	leftWheelSpeed = 200 + calculateSpeed(error);
+	int16_t speed = calculateSpeed(error);
+	if ((200-speed) < 10)
+	{
+		rightWheelSpeed = 30;
+		rightWheelDirection = 1;
+	} 
+	else if ((200-speed) > 235)
+	{
+		rightWheelSpeed = 235;
+		rightWheelDirection = 0;
+	}
+	else
+	{
+		rightWheelSpeed = 200 - speed;
+		rightWheelDirection = 1;
+	}
+	
+	if ((200+speed) < 10)
+	{
+		leftWheelSpeed = 30;
+		leftWheelDirection = 1;
+	}
+	else if ((200+speed) > 235)
+	{
+		leftWheelSpeed = 235;
+		leftWheelDirection = 0;
+	}
+	else
+	{
+		leftWheelSpeed = 200 + speed;
+		leftWheelDirection = 1;
+	}
 	
 	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
@@ -69,9 +97,9 @@ void controlAlgorithm()
 
 int8_t calculateSpeed(int8_t error)
 {
-	volatile int8_t speed = 0;
-	int8_t Kp = 3;
-	int8_t Kd = 20;
+	volatile int16_t speed = 0;
+	int8_t Kp = 20;
+	int8_t Kd = 5;
 	
 	speed = Kp * error + Kd * (error - prevError);
 
@@ -82,7 +110,7 @@ int8_t calculateSpeed(int8_t error)
 void driving_setup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
-	TCCR1B = 2; //Sets the prescaling to 8
+	TCCR1B = 3; //Sets the prescaling to 8
 	TCNT1 = 0;
 	OCR1A = 248;
 	OCR1B = 248;

@@ -473,12 +473,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x00000000      0x184 Communication_Module.o
  .debug_frame   0x00000184      0x118 Master_communication.o
 
-.debug_str      0x00000000      0x21a
+.debug_str      0x00000000      0x274
  *(.debug_str)
  .debug_str     0x00000000      0x197 Communication_Module.o
                                 0x1d7 (size before relaxing)
- .debug_str     0x00000197       0x83 Master_communication.o
-                                0x210 (size before relaxing)
+ .debug_str     0x00000197       0xdd Master_communication.o
+                                0x21d (size before relaxing)
 
 .debug_loc      0x00000000      0x575
  *(.debug_loc)
