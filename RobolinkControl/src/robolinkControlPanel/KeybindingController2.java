@@ -87,6 +87,9 @@ public class KeybindingController2 {
 			window.btnDisconnect.setEnabled(true);
 			window.btnCalibration.setEnabled(true);
 			window.btnConnect.setEnabled(false);
+			window.btnStartPickup.setEnabled(true);
+			window.btnEndPickup.setEnabled(true);
+			window.btnAbortPickup.setEnabled(true);
 			window.cboxPorts.setEnabled(false);
 		}
 		else {
@@ -121,6 +124,9 @@ public class KeybindingController2 {
 			window.btnDisconnect.setEnabled(false);
 			window.btnCalibration.setEnabled(false);
 			window.btnConnect.setEnabled(true);
+			window.btnStartPickup.setEnabled(false);
+			window.btnEndPickup.setEnabled(false);
+			window.btnAbortPickup.setEnabled(false);
 			window.cboxPorts.setEnabled(true);
 		}
 	}
