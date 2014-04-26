@@ -38,6 +38,7 @@ SUBDIRS :=
 C_SRCS +=  \
 ../Control_module.c \
 ../Control_wheel_steering.c \
+../Servo.c \
 ../Slave_control.c
 
 
@@ -50,21 +51,25 @@ ASM_SRCS +=
 OBJS +=  \
 Control_module.o \
 Control_wheel_steering.o \
+Servo.o \
 Slave_control.o
 
 OBJS_AS_ARGS +=  \
 Control_module.o \
 Control_wheel_steering.o \
+Servo.o \
 Slave_control.o
 
 C_DEPS +=  \
 Control_module.d \
 Control_wheel_steering.d \
+Servo.d \
 Slave_control.d
 
 C_DEPS_AS_ARGS +=  \
 Control_module.d \
 Control_wheel_steering.d \
+Servo.d \
 Slave_control.d
 
 OUTPUT_FILE_PATH +=Control-module.elf
@@ -78,6 +83,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
