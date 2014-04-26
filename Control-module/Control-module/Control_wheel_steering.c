@@ -65,56 +65,35 @@ void controlAlgorithm()
 		leftWheelSpeed = leftWheelSpeed;
 	}	
 	else
-	{
-		midspeed = calculateMidSpeed(error);
-		
-		if ((midspeed-speed) < 10)
+	{	
+		if ((150-speed) < 10)
 		{
 			rightWheelSpeed = 3;
 		}
-		else if ((midspeed-speed) > 235)
+		else if ((150-speed) > 235)
 		{
-			rightWheelSpeed = 247;
+			rightWheelSpeed = 248;
 		}
 		else
 		{
-			rightWheelSpeed = midspeed - speed;
+			rightWheelSpeed = 150 - speed;
+			
 		}
 		
-		if ((midspeed+speed) < 10
-		
-		)
+		if ((150+speed) < 10)
 		{
 			leftWheelSpeed = 3;
 		}
-		else if ((midspeed+speed) > 235)
+		else if ((150+speed) > 235)
 		{
-			leftWheelSpeed = 247;
+			leftWheelSpeed = 248;
 		}
 		else
 		{
-			leftWheelSpeed = midspeed + speed;
+			leftWheelSpeed = 150 + speed;
 		}
-	
-		
-		
 	}
-		
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
-	
-	
-}
-
-uint8_t calculateMidSpeed(int8_t miderror)
-{
-	volatile uint8_t speed = 100;
-	uint8_t Kp = 20;
-	uint8_t Kd = 5;
-	
-	miderror = abs(miderror);
-	speed = speed + miderror*Kp;
-	prevmiderror = miderror;
-	return speed;
 }
 
 int8_t calculateSpeed(int8_t error)
