@@ -61,7 +61,7 @@ int main(void)
 	
 	SPI_Init_Slave();
 	driving_setup();
-	Arm_Init();
+	//Arm_Init();
 	
 	//init_LCD()
 	

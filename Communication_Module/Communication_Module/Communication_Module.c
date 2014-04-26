@@ -43,50 +43,50 @@ ISR(TIMER0_COMPB_vect)
 	TX_sensor_data();
 }
 
-ISR(USART0_RX_vect)
-{
-	data = UDR0;
-	if (waiting_for_instruction == 1)
-	{
-		waiting_for_instruction = 0;
-		if (data == 1)
-		{
-			component = WHEEL;
-		}else if(data == 2)
-		{
-			component = ARM;
-		}else if(data == 3)
-		{
-			component = CALINSTR;
-		}else if(data == 4)
-		{
-			component = PCONINSTR;
-		}
-	}else
-	{
-		waiting_for_instruction = 1;
-		if (component == WHEEL)
-		{
-			
-		}else if (component == ARM)
-		{
-			robot_arm_data = data;
-			TX_arm_data();
-		}else if (component == CALINSTR)
-		{
-			
-		}else if (component == PCONINSTR)
-		{
-			
-		}
-	}
-	
-}
+// ISR(USART0_RX_vect)
+// {
+// 	data = UDR0;
+// 	if (waiting_for_instruction == 1)
+// 	{
+// 		waiting_for_instruction = 0;
+// 		if (data == 1)
+// 		{
+// 			component = WHEEL;
+// 		}else if(data == 2)
+// 		{
+// 			component = ARM;
+// 		}else if(data == 3)
+// 		{
+// 			component = CALINSTR;
+// 		}else if(data == 4)
+// 		{
+// 			component = PCONINSTR;
+// 		}
+// 	}else
+// 	{
+// 		waiting_for_instruction = 1;
+// 		if (component == WHEEL)
+// 		{
+// 			
+// 		}else if (component == ARM)
+// 		{
+// 			robot_arm_data = data;
+// 			TX_arm_data();
+// 		}else if (component == CALINSTR)
+// 		{
+// 			
+// 		}else if (component == PCONINSTR)
+// 		{
+// 			
+// 		}
+// 	}
+// 	
+// }
 
 int main(void)
 {
 	SPI_Init_Master();
-	setupBluetoothRXTX();
+	//setupBluetoothRXTX();
 	
 	while(1)
 	{

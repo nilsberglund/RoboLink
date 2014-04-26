@@ -10,6 +10,7 @@
 #include <math.h>
 #include "Control_wheel_steering.h"
 #include "Slave_control.h"
+#include <stdlib.h>
 
 int8_t getError()
 {
@@ -46,7 +47,7 @@ int8_t getError()
 
 	} else
 	{
-		return 15;
+		error = -8;
 	}
 	error = 7 - error;
 	return error;
@@ -57,44 +58,63 @@ void controlAlgorithm()
 	
 	error = getError();
 	int16_t speed = calculateSpeed(error);
+	
 	if(error == 15)
 	{
-		leftWheelSpeed = leftWheelSpeed;
 		rightWheelSpeed = rightWheelSpeed;
-	}
-	
+		leftWheelSpeed = leftWheelSpeed;
+	}	
 	else
 	{
-		if ((200-speed) < 10)
+		midspeed = calculateMidSpeed(error);
+		
+		if ((midspeed-speed) < 10)
 		{
-			rightWheelSpeed = 30;
+			rightWheelSpeed = 3;
 		}
-		else if ((200-speed) > 235)
+		else if ((midspeed-speed) > 235)
 		{
 			rightWheelSpeed = 247;
 		}
 		else
 		{
-			rightWheelSpeed = 200 - speed;
+			rightWheelSpeed = midspeed - speed;
 		}
 		
-		if ((200+speed) < 10)
+		if ((midspeed+speed) < 10
+		
+		)
 		{
-			leftWheelSpeed = 30;
+			leftWheelSpeed = 3;
 		}
-		else if ((200+speed) > 235)
+		else if ((midspeed+speed) > 235)
 		{
 			leftWheelSpeed = 247;
 		}
 		else
 		{
-			leftWheelSpeed = 200 + speed;
+			leftWheelSpeed = midspeed + speed;
 		}
+	
+		
 		
 	}
+		
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
 	
 	
+}
+
+uint8_t calculateMidSpeed(int8_t miderror)
+{
+	volatile uint8_t speed = 100;
+	uint8_t Kp = 20;
+	uint8_t Kd = 5;
+	
+	miderror = abs(miderror);
+	speed = speed + miderror*Kp;
+	prevmiderror = miderror;
+	return speed;
 }
 
 int8_t calculateSpeed(int8_t error)

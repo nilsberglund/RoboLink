@@ -13,48 +13,6 @@
 #include "Communication_Module.h"
 #include "Master_communication.h"
 
-
-
-
-
-// void handleData(char temp) 
-// {
-// 	switch(temp) {
-// 		case 0x01: //START PICKUP button pressed
-// 			pickUpItem = 1;
-// 			waitingForStartAbort = 1;
-// 		case 0x02: //END PICKUP button pressed
-// 			waitingForEndPickup = 1;
-// 		case 0x03: //ABORT PICKUP button pressed
-// 			pickUpItem = 0;
-// 			waitingForStartAbort = 1;
-// 	}
-// }
-
-// void handleInstruction(char instrByte)
-// {
-// 	uint8_t temp;
-// 	cli();	//Disable global interrupts
-// 	while ( !(UCSR0A & (1<<RXC0)) ) //wait for byte to be received
-// 	temp = UDR0;
-// // 	switch (instrByte) {
-// // 		case 0x01: //DRIVE instruction value
-// // 			// TODO: send DRIVE data byte over SPI to control AVR
-// // 			break;
-// // 		case 0x02: //ARM instruction value
-// // 			robot_arm_data = temp;
-// // 			TX_arm_data();
-// // 			break;
-// // 		case 0x03: //CAL instruction value
-// // 			// TODO: send CAL data byte over SPI to sensor AVR
-// // 			break;
-// // 		case 0x04:
-// // 			//	handleData(temp);
-// // 			break;
-// 	}
-// 	sei(); //Enable global interrupts again
-// }
-
 void setupBluetoothRXTX()
 {
 	waiting_for_instruction = 1;
