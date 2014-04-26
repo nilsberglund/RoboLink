@@ -35,12 +35,12 @@ ISR(INT2_vect)
 
 ISR(TIMER0_COMPA_vect)
 {
-	//RX_sensor_data();
+	RX_sensor_data();
 }
 
 ISR(TIMER0_COMPB_vect)
 {
-	//TX_sensor_data();
+	TX_sensor_data();
 }
 
 ISR(USART0_RX_vect)

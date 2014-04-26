@@ -3,33 +3,33 @@ Communication_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  000003b0  00000444  2**0
+  0 .data         00000000  00800100  00000462  000004f6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000003b0  00000000  00000000  00000094  2**1
+  1 .text         00000462  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000001d  00800100  00800100  00000444  2**0
+  2 .bss          0000001d  00800100  00800100  000004f6  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00000444  2**2
+  3 .stab         000006cc  00000000  00000000  000004f8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000b10  2**0
+  4 .stabstr      00000097  00000000  00000000  00000bc4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000ba7  2**0
+  5 .comment      0000002f  00000000  00000000  00000c5b  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000000e0  00000000  00000000  00000bd6  2**0
+  6 .debug_aranges 000000e0  00000000  00000000  00000c8a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000a06  00000000  00000000  00000cb6  2**0
+  7 .debug_info   00000a40  00000000  00000000  00000d6a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000331  00000000  00000000  000016bc  2**0
+  8 .debug_abbrev 00000319  00000000  00000000  000017aa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000710  00000000  00000000  000019ed  2**0
+  9 .debug_line   00000722  00000000  00000000  00001ac3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000002a0  00000000  00000000  00002100  2**2
+ 10 .debug_frame  00000318  00000000  00000000  000021e8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000026b  00000000  00000000  000023a0  2**0
+ 11 .debug_str    0000026b  00000000  00000000  00002500  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000508  00000000  00000000  0000260b  2**0
+ 12 .debug_loc    00000640  00000000  00000000  0000276b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000000b0  00000000  00000000  00002b13  2**0
+ 13 .debug_ranges 000000b0  00000000  00000000  00002dab  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -69,13 +69,13 @@ Disassembly of section .text:
   3e:	00 00       	nop
   40:	af c0       	rjmp	.+350    	; 0x1a0 <__vector_16>
   42:	00 00       	nop
-  44:	b7 c0       	rjmp	.+366    	; 0x1b4 <__vector_17>
+  44:	d4 c0       	rjmp	.+424    	; 0x1ee <__vector_17>
   46:	00 00       	nop
   48:	31 c0       	rjmp	.+98     	; 0xac <__bad_interrupt>
   4a:	00 00       	nop
   4c:	2f c0       	rjmp	.+94     	; 0xac <__bad_interrupt>
   4e:	00 00       	nop
-  50:	bb c0       	rjmp	.+374    	; 0x1c8 <__vector_20>
+  50:	f5 c0       	rjmp	.+490    	; 0x23c <__vector_20>
   52:	00 00       	nop
   54:	2b c0       	rjmp	.+86     	; 0xac <__bad_interrupt>
   56:	00 00       	nop
@@ -127,8 +127,8 @@ Disassembly of section .text:
   a2:	ad 31       	cpi	r26, 0x1D	; 29
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
-  a8:	dc d0       	rcall	.+440    	; 0x262 <main>
-  aa:	80 c1       	rjmp	.+768    	; 0x3ac <_exit>
+  a8:	19 d1       	rcall	.+562    	; 0x2dc <main>
+  aa:	d9 c1       	rjmp	.+946    	; 0x45e <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -183,14 +183,14 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
   f0:	ff 93       	push	r31
 	Slave_Select(Sensor_Slave);	//slave select
   f2:	80 91 17 01 	lds	r24, 0x0117
-  f6:	0a d1       	rcall	.+532    	; 0x30c <Slave_Select>
+  f6:	47 d1       	rcall	.+654    	; 0x386 <Slave_Select>
 	sensor_data = Master_RX(0x01);	//sending dummy
   f8:	81 e0       	ldi	r24, 0x01	; 1
-  fa:	f8 d0       	rcall	.+496    	; 0x2ec <Master_RX>
+  fa:	35 d1       	rcall	.+618    	; 0x366 <Master_RX>
   fc:	80 93 01 01 	sts	0x0101, r24
 	Slave_Select(Control_Slave);
  100:	80 91 1c 01 	lds	r24, 0x011C
- 104:	03 d1       	rcall	.+518    	; 0x30c <Slave_Select>
+ 104:	40 d1       	rcall	.+640    	; 0x386 <Slave_Select>
 	//received = 1;
 }
  106:	ff 91       	pop	r31
@@ -247,7 +247,7 @@ ISR(INT2_vect)
 	{
 		wheel_steering_data = Master_RX(0x01);
  160:	81 e0       	ldi	r24, 0x01	; 1
- 162:	c4 d0       	rcall	.+392    	; 0x2ec <Master_RX>
+ 162:	01 d1       	rcall	.+514    	; 0x366 <Master_RX>
  164:	80 93 0f 01 	sts	0x010F, r24
  168:	08 c0       	rjmp	.+16     	; 0x17a <__vector_3+0x4e>
 	}
@@ -258,7 +258,7 @@ ISR(INT2_vect)
 	{
 		robot_arm_data = Master_RX(0x01);
  172:	81 e0       	ldi	r24, 0x01	; 1
- 174:	bb d0       	rcall	.+374    	; 0x2ec <Master_RX>
+ 174:	f8 d0       	rcall	.+496    	; 0x366 <Master_RX>
  176:	80 93 00 01 	sts	0x0100, r24
 	}
 }
@@ -291,310 +291,393 @@ ISR(TIMER0_COMPA_vect)
  1a4:	0f b6       	in	r0, 0x3f	; 63
  1a6:	0f 92       	push	r0
  1a8:	11 24       	eor	r1, r1
-	//RX_sensor_data();
+ 1aa:	0b b6       	in	r0, 0x3b	; 59
+ 1ac:	0f 92       	push	r0
+ 1ae:	2f 93       	push	r18
+ 1b0:	3f 93       	push	r19
+ 1b2:	4f 93       	push	r20
+ 1b4:	5f 93       	push	r21
+ 1b6:	6f 93       	push	r22
+ 1b8:	7f 93       	push	r23
+ 1ba:	8f 93       	push	r24
+ 1bc:	9f 93       	push	r25
+ 1be:	af 93       	push	r26
+ 1c0:	bf 93       	push	r27
+ 1c2:	ef 93       	push	r30
+ 1c4:	ff 93       	push	r31
+	RX_sensor_data();
+ 1c6:	35 d1       	rcall	.+618    	; 0x432 <RX_sensor_data>
 }
- 1aa:	0f 90       	pop	r0
- 1ac:	0f be       	out	0x3f, r0	; 63
- 1ae:	0f 90       	pop	r0
- 1b0:	1f 90       	pop	r1
- 1b2:	18 95       	reti
+ 1c8:	ff 91       	pop	r31
+ 1ca:	ef 91       	pop	r30
+ 1cc:	bf 91       	pop	r27
+ 1ce:	af 91       	pop	r26
+ 1d0:	9f 91       	pop	r25
+ 1d2:	8f 91       	pop	r24
+ 1d4:	7f 91       	pop	r23
+ 1d6:	6f 91       	pop	r22
+ 1d8:	5f 91       	pop	r21
+ 1da:	4f 91       	pop	r20
+ 1dc:	3f 91       	pop	r19
+ 1de:	2f 91       	pop	r18
+ 1e0:	0f 90       	pop	r0
+ 1e2:	0b be       	out	0x3b, r0	; 59
+ 1e4:	0f 90       	pop	r0
+ 1e6:	0f be       	out	0x3f, r0	; 63
+ 1e8:	0f 90       	pop	r0
+ 1ea:	1f 90       	pop	r1
+ 1ec:	18 95       	reti
 
-000001b4 <__vector_17>:
+000001ee <__vector_17>:
 
 ISR(TIMER0_COMPB_vect)
 {
- 1b4:	1f 92       	push	r1
- 1b6:	0f 92       	push	r0
- 1b8:	0f b6       	in	r0, 0x3f	; 63
- 1ba:	0f 92       	push	r0
- 1bc:	11 24       	eor	r1, r1
-	//TX_sensor_data();
+ 1ee:	1f 92       	push	r1
+ 1f0:	0f 92       	push	r0
+ 1f2:	0f b6       	in	r0, 0x3f	; 63
+ 1f4:	0f 92       	push	r0
+ 1f6:	11 24       	eor	r1, r1
+ 1f8:	0b b6       	in	r0, 0x3b	; 59
+ 1fa:	0f 92       	push	r0
+ 1fc:	2f 93       	push	r18
+ 1fe:	3f 93       	push	r19
+ 200:	4f 93       	push	r20
+ 202:	5f 93       	push	r21
+ 204:	6f 93       	push	r22
+ 206:	7f 93       	push	r23
+ 208:	8f 93       	push	r24
+ 20a:	9f 93       	push	r25
+ 20c:	af 93       	push	r26
+ 20e:	bf 93       	push	r27
+ 210:	ef 93       	push	r30
+ 212:	ff 93       	push	r31
+	TX_sensor_data();
+ 214:	ff d0       	rcall	.+510    	; 0x414 <TX_sensor_data>
 }
- 1be:	0f 90       	pop	r0
- 1c0:	0f be       	out	0x3f, r0	; 63
- 1c2:	0f 90       	pop	r0
- 1c4:	1f 90       	pop	r1
- 1c6:	18 95       	reti
+ 216:	ff 91       	pop	r31
+ 218:	ef 91       	pop	r30
+ 21a:	bf 91       	pop	r27
+ 21c:	af 91       	pop	r26
+ 21e:	9f 91       	pop	r25
+ 220:	8f 91       	pop	r24
+ 222:	7f 91       	pop	r23
+ 224:	6f 91       	pop	r22
+ 226:	5f 91       	pop	r21
+ 228:	4f 91       	pop	r20
+ 22a:	3f 91       	pop	r19
+ 22c:	2f 91       	pop	r18
+ 22e:	0f 90       	pop	r0
+ 230:	0b be       	out	0x3b, r0	; 59
+ 232:	0f 90       	pop	r0
+ 234:	0f be       	out	0x3f, r0	; 63
+ 236:	0f 90       	pop	r0
+ 238:	1f 90       	pop	r1
+ 23a:	18 95       	reti
 
-000001c8 <__vector_20>:
+0000023c <__vector_20>:
 
 ISR(USART0_RX_vect)
 {
- 1c8:	1f 92       	push	r1
- 1ca:	0f 92       	push	r0
- 1cc:	0f b6       	in	r0, 0x3f	; 63
- 1ce:	0f 92       	push	r0
- 1d0:	11 24       	eor	r1, r1
- 1d2:	0b b6       	in	r0, 0x3b	; 59
- 1d4:	0f 92       	push	r0
- 1d6:	2f 93       	push	r18
- 1d8:	3f 93       	push	r19
- 1da:	4f 93       	push	r20
- 1dc:	5f 93       	push	r21
- 1de:	6f 93       	push	r22
- 1e0:	7f 93       	push	r23
- 1e2:	8f 93       	push	r24
- 1e4:	9f 93       	push	r25
- 1e6:	af 93       	push	r26
- 1e8:	bf 93       	push	r27
- 1ea:	ef 93       	push	r30
- 1ec:	ff 93       	push	r31
+ 23c:	1f 92       	push	r1
+ 23e:	0f 92       	push	r0
+ 240:	0f b6       	in	r0, 0x3f	; 63
+ 242:	0f 92       	push	r0
+ 244:	11 24       	eor	r1, r1
+ 246:	0b b6       	in	r0, 0x3b	; 59
+ 248:	0f 92       	push	r0
+ 24a:	2f 93       	push	r18
+ 24c:	3f 93       	push	r19
+ 24e:	4f 93       	push	r20
+ 250:	5f 93       	push	r21
+ 252:	6f 93       	push	r22
+ 254:	7f 93       	push	r23
+ 256:	8f 93       	push	r24
+ 258:	9f 93       	push	r25
+ 25a:	af 93       	push	r26
+ 25c:	bf 93       	push	r27
+ 25e:	ef 93       	push	r30
+ 260:	ff 93       	push	r31
 	data = UDR0;
- 1ee:	80 91 c6 00 	lds	r24, 0x00C6
- 1f2:	80 93 15 01 	sts	0x0115, r24
+ 262:	80 91 c6 00 	lds	r24, 0x00C6
+ 266:	80 93 15 01 	sts	0x0115, r24
 	if (waiting_for_instruction == 1)
- 1f6:	90 91 16 01 	lds	r25, 0x0116
- 1fa:	91 30       	cpi	r25, 0x01	; 1
- 1fc:	b1 f4       	brne	.+44     	; 0x22a <__vector_20+0x62>
+ 26a:	90 91 16 01 	lds	r25, 0x0116
+ 26e:	91 30       	cpi	r25, 0x01	; 1
+ 270:	b1 f4       	brne	.+44     	; 0x29e <__vector_20+0x62>
 	{
 		waiting_for_instruction = 0;
- 1fe:	10 92 16 01 	sts	0x0116, r1
+ 272:	10 92 16 01 	sts	0x0116, r1
 		if (data == 1)
- 202:	81 30       	cpi	r24, 0x01	; 1
- 204:	19 f4       	brne	.+6      	; 0x20c <__vector_20+0x44>
+ 276:	81 30       	cpi	r24, 0x01	; 1
+ 278:	19 f4       	brne	.+6      	; 0x280 <__vector_20+0x44>
 		{
 			component = WHEEL;
- 206:	80 93 11 01 	sts	0x0111, r24
- 20a:	18 c0       	rjmp	.+48     	; 0x23c <__vector_20+0x74>
+ 27a:	80 93 11 01 	sts	0x0111, r24
+ 27e:	1b c0       	rjmp	.+54     	; 0x2b6 <__vector_20+0x7a>
 		}else if(data == 2)
- 20c:	82 30       	cpi	r24, 0x02	; 2
- 20e:	19 f4       	brne	.+6      	; 0x216 <__vector_20+0x4e>
+ 280:	82 30       	cpi	r24, 0x02	; 2
+ 282:	19 f4       	brne	.+6      	; 0x28a <__vector_20+0x4e>
 		{
 			component = ARM;
- 210:	80 93 11 01 	sts	0x0111, r24
- 214:	13 c0       	rjmp	.+38     	; 0x23c <__vector_20+0x74>
+ 284:	80 93 11 01 	sts	0x0111, r24
+ 288:	16 c0       	rjmp	.+44     	; 0x2b6 <__vector_20+0x7a>
 		}else if(data == 3)
- 216:	83 30       	cpi	r24, 0x03	; 3
- 218:	19 f4       	brne	.+6      	; 0x220 <__vector_20+0x58>
+ 28a:	83 30       	cpi	r24, 0x03	; 3
+ 28c:	19 f4       	brne	.+6      	; 0x294 <__vector_20+0x58>
 		{
 			component = CALINSTR;
- 21a:	80 93 11 01 	sts	0x0111, r24
- 21e:	0e c0       	rjmp	.+28     	; 0x23c <__vector_20+0x74>
+ 28e:	80 93 11 01 	sts	0x0111, r24
+ 292:	11 c0       	rjmp	.+34     	; 0x2b6 <__vector_20+0x7a>
 		}else if(data == 4)
- 220:	84 30       	cpi	r24, 0x04	; 4
- 222:	61 f4       	brne	.+24     	; 0x23c <__vector_20+0x74>
+ 294:	84 30       	cpi	r24, 0x04	; 4
+ 296:	79 f4       	brne	.+30     	; 0x2b6 <__vector_20+0x7a>
 		{
 			component = PCONINSTR;
- 224:	80 93 11 01 	sts	0x0111, r24
- 228:	09 c0       	rjmp	.+18     	; 0x23c <__vector_20+0x74>
+ 298:	80 93 11 01 	sts	0x0111, r24
+ 29c:	0c c0       	rjmp	.+24     	; 0x2b6 <__vector_20+0x7a>
 		}
 	}else
 	{
+		waiting_for_instruction = 1;
+ 29e:	91 e0       	ldi	r25, 0x01	; 1
+ 2a0:	90 93 16 01 	sts	0x0116, r25
 		if (component == WHEEL)
- 22a:	90 91 11 01 	lds	r25, 0x0111
- 22e:	91 30       	cpi	r25, 0x01	; 1
- 230:	29 f0       	breq	.+10     	; 0x23c <__vector_20+0x74>
+ 2a4:	90 91 11 01 	lds	r25, 0x0111
+ 2a8:	91 30       	cpi	r25, 0x01	; 1
+ 2aa:	29 f0       	breq	.+10     	; 0x2b6 <__vector_20+0x7a>
 		{
 			
 		}else if (component == ARM)
- 232:	92 30       	cpi	r25, 0x02	; 2
- 234:	19 f4       	brne	.+6      	; 0x23c <__vector_20+0x74>
+ 2ac:	92 30       	cpi	r25, 0x02	; 2
+ 2ae:	19 f4       	brne	.+6      	; 0x2b6 <__vector_20+0x7a>
 		{
 			robot_arm_data = data;
- 236:	80 93 00 01 	sts	0x0100, r24
+ 2b0:	80 93 00 01 	sts	0x0100, r24
 			TX_arm_data();
- 23a:	af d0       	rcall	.+350    	; 0x39a <TX_arm_data>
+ 2b4:	cb d0       	rcall	.+406    	; 0x44c <TX_arm_data>
 		{
 			
 		}
 	}
 	
 }
- 23c:	ff 91       	pop	r31
- 23e:	ef 91       	pop	r30
- 240:	bf 91       	pop	r27
- 242:	af 91       	pop	r26
- 244:	9f 91       	pop	r25
- 246:	8f 91       	pop	r24
- 248:	7f 91       	pop	r23
- 24a:	6f 91       	pop	r22
- 24c:	5f 91       	pop	r21
- 24e:	4f 91       	pop	r20
- 250:	3f 91       	pop	r19
- 252:	2f 91       	pop	r18
- 254:	0f 90       	pop	r0
- 256:	0b be       	out	0x3b, r0	; 59
- 258:	0f 90       	pop	r0
- 25a:	0f be       	out	0x3f, r0	; 63
- 25c:	0f 90       	pop	r0
- 25e:	1f 90       	pop	r1
- 260:	18 95       	reti
+ 2b6:	ff 91       	pop	r31
+ 2b8:	ef 91       	pop	r30
+ 2ba:	bf 91       	pop	r27
+ 2bc:	af 91       	pop	r26
+ 2be:	9f 91       	pop	r25
+ 2c0:	8f 91       	pop	r24
+ 2c2:	7f 91       	pop	r23
+ 2c4:	6f 91       	pop	r22
+ 2c6:	5f 91       	pop	r21
+ 2c8:	4f 91       	pop	r20
+ 2ca:	3f 91       	pop	r19
+ 2cc:	2f 91       	pop	r18
+ 2ce:	0f 90       	pop	r0
+ 2d0:	0b be       	out	0x3b, r0	; 59
+ 2d2:	0f 90       	pop	r0
+ 2d4:	0f be       	out	0x3f, r0	; 63
+ 2d6:	0f 90       	pop	r0
+ 2d8:	1f 90       	pop	r1
+ 2da:	18 95       	reti
 
-00000262 <main>:
+000002dc <main>:
 
 int main(void)
 {
 	SPI_Init_Master();
- 262:	02 d0       	rcall	.+4      	; 0x268 <SPI_Init_Master>
+ 2dc:	02 d0       	rcall	.+4      	; 0x2e2 <SPI_Init_Master>
 	setupBluetoothRXTX();
- 264:	24 df       	rcall	.-440    	; 0xae <setupBluetoothRXTX>
- 266:	ff cf       	rjmp	.-2      	; 0x266 <main+0x4>
+ 2de:	e7 de       	rcall	.-562    	; 0xae <setupBluetoothRXTX>
+ 2e0:	ff cf       	rjmp	.-2      	; 0x2e0 <main+0x4>
 
-00000268 <SPI_Init_Master>:
+000002e2 <SPI_Init_Master>:
  void RX_wheel_data()
  {
 	 wanted_data = wr;
 	 Slave_Select(Control_Slave);
 	 TX_Protocol(wr);
 	 Slave_Select(No_Slave);
- 268:	88 eb       	ldi	r24, 0xB8	; 184
- 26a:	84 b9       	out	0x04, r24	; 4
- 26c:	53 98       	cbi	0x0a, 3	; 10
- 26e:	85 b1       	in	r24, 0x05	; 5
- 270:	88 61       	ori	r24, 0x18	; 24
- 272:	85 b9       	out	0x05, r24	; 5
- 274:	8c b5       	in	r24, 0x2c	; 44
- 276:	83 65       	ori	r24, 0x53	; 83
- 278:	8c bd       	out	0x2c, r24	; 44
- 27a:	8c e3       	ldi	r24, 0x3C	; 60
- 27c:	80 93 69 00 	sts	0x0069, r24
- 280:	86 e0       	ldi	r24, 0x06	; 6
- 282:	8d bb       	out	0x1d, r24	; 29
- 284:	78 94       	sei
- 286:	14 bc       	out	0x24, r1	; 36
- 288:	95 e0       	ldi	r25, 0x05	; 5
- 28a:	95 bd       	out	0x25, r25	; 37
- 28c:	80 93 6e 00 	sts	0x006E, r24
- 290:	31 e0       	ldi	r19, 0x01	; 1
- 292:	30 93 17 01 	sts	0x0117, r19
- 296:	22 e0       	ldi	r18, 0x02	; 2
- 298:	20 93 1c 01 	sts	0x011C, r18
- 29c:	10 92 1a 01 	sts	0x011A, r1
- 2a0:	30 93 0e 01 	sts	0x010E, r19
- 2a4:	20 93 1b 01 	sts	0x011B, r18
- 2a8:	23 e0       	ldi	r18, 0x03	; 3
- 2aa:	20 93 0d 01 	sts	0x010D, r18
- 2ae:	24 e0       	ldi	r18, 0x04	; 4
- 2b0:	20 93 18 01 	sts	0x0118, r18
- 2b4:	90 93 14 01 	sts	0x0114, r25
- 2b8:	80 93 19 01 	sts	0x0119, r24
- 2bc:	87 e0       	ldi	r24, 0x07	; 7
- 2be:	80 93 10 01 	sts	0x0110, r24
- 2c2:	8a e7       	ldi	r24, 0x7A	; 122
- 2c4:	87 bd       	out	0x27, r24	; 39
- 2c6:	8d e7       	ldi	r24, 0x7D	; 125
- 2c8:	88 bd       	out	0x28, r24	; 40
- 2ca:	16 bc       	out	0x26, r1	; 38
- 2cc:	08 95       	ret
+ 2e2:	88 eb       	ldi	r24, 0xB8	; 184
+ 2e4:	84 b9       	out	0x04, r24	; 4
+ 2e6:	53 98       	cbi	0x0a, 3	; 10
+ 2e8:	85 b1       	in	r24, 0x05	; 5
+ 2ea:	88 61       	ori	r24, 0x18	; 24
+ 2ec:	85 b9       	out	0x05, r24	; 5
+ 2ee:	8c b5       	in	r24, 0x2c	; 44
+ 2f0:	83 65       	ori	r24, 0x53	; 83
+ 2f2:	8c bd       	out	0x2c, r24	; 44
+ 2f4:	8c e3       	ldi	r24, 0x3C	; 60
+ 2f6:	80 93 69 00 	sts	0x0069, r24
+ 2fa:	86 e0       	ldi	r24, 0x06	; 6
+ 2fc:	8d bb       	out	0x1d, r24	; 29
+ 2fe:	78 94       	sei
+ 300:	14 bc       	out	0x24, r1	; 36
+ 302:	95 e0       	ldi	r25, 0x05	; 5
+ 304:	95 bd       	out	0x25, r25	; 37
+ 306:	80 93 6e 00 	sts	0x006E, r24
+ 30a:	31 e0       	ldi	r19, 0x01	; 1
+ 30c:	30 93 17 01 	sts	0x0117, r19
+ 310:	22 e0       	ldi	r18, 0x02	; 2
+ 312:	20 93 1c 01 	sts	0x011C, r18
+ 316:	10 92 1a 01 	sts	0x011A, r1
+ 31a:	30 93 0e 01 	sts	0x010E, r19
+ 31e:	20 93 1b 01 	sts	0x011B, r18
+ 322:	23 e0       	ldi	r18, 0x03	; 3
+ 324:	20 93 0d 01 	sts	0x010D, r18
+ 328:	24 e0       	ldi	r18, 0x04	; 4
+ 32a:	20 93 18 01 	sts	0x0118, r18
+ 32e:	90 93 14 01 	sts	0x0114, r25
+ 332:	80 93 19 01 	sts	0x0119, r24
+ 336:	87 e0       	ldi	r24, 0x07	; 7
+ 338:	80 93 10 01 	sts	0x0110, r24
+ 33c:	8a e7       	ldi	r24, 0x7A	; 122
+ 33e:	87 bd       	out	0x27, r24	; 39
+ 340:	8d e7       	ldi	r24, 0x7D	; 125
+ 342:	88 bd       	out	0x28, r24	; 40
+ 344:	16 bc       	out	0x26, r1	; 38
+ 346:	08 95       	ret
 
-000002ce <Master_TX>:
- 2ce:	cf 93       	push	r28
- 2d0:	df 93       	push	r29
- 2d2:	1f 92       	push	r1
- 2d4:	cd b7       	in	r28, 0x3d	; 61
- 2d6:	de b7       	in	r29, 0x3e	; 62
- 2d8:	89 83       	std	Y+1, r24	; 0x01
- 2da:	89 81       	ldd	r24, Y+1	; 0x01
- 2dc:	8e bd       	out	0x2e, r24	; 46
- 2de:	0d b4       	in	r0, 0x2d	; 45
- 2e0:	07 fe       	sbrs	r0, 7
- 2e2:	fd cf       	rjmp	.-6      	; 0x2de <Master_TX+0x10>
- 2e4:	0f 90       	pop	r0
- 2e6:	df 91       	pop	r29
- 2e8:	cf 91       	pop	r28
- 2ea:	08 95       	ret
+00000348 <Master_TX>:
+ 348:	cf 93       	push	r28
+ 34a:	df 93       	push	r29
+ 34c:	1f 92       	push	r1
+ 34e:	cd b7       	in	r28, 0x3d	; 61
+ 350:	de b7       	in	r29, 0x3e	; 62
+ 352:	89 83       	std	Y+1, r24	; 0x01
+ 354:	89 81       	ldd	r24, Y+1	; 0x01
+ 356:	8e bd       	out	0x2e, r24	; 46
+ 358:	0d b4       	in	r0, 0x2d	; 45
+ 35a:	07 fe       	sbrs	r0, 7
+ 35c:	fd cf       	rjmp	.-6      	; 0x358 <Master_TX+0x10>
+ 35e:	0f 90       	pop	r0
+ 360:	df 91       	pop	r29
+ 362:	cf 91       	pop	r28
+ 364:	08 95       	ret
 
-000002ec <Master_RX>:
- 2ec:	cf 93       	push	r28
- 2ee:	df 93       	push	r29
- 2f0:	1f 92       	push	r1
- 2f2:	cd b7       	in	r28, 0x3d	; 61
- 2f4:	de b7       	in	r29, 0x3e	; 62
- 2f6:	89 83       	std	Y+1, r24	; 0x01
- 2f8:	89 81       	ldd	r24, Y+1	; 0x01
- 2fa:	8e bd       	out	0x2e, r24	; 46
- 2fc:	0d b4       	in	r0, 0x2d	; 45
- 2fe:	07 fe       	sbrs	r0, 7
- 300:	fd cf       	rjmp	.-6      	; 0x2fc <Master_RX+0x10>
- 302:	8e b5       	in	r24, 0x2e	; 46
- 304:	0f 90       	pop	r0
- 306:	df 91       	pop	r29
- 308:	cf 91       	pop	r28
- 30a:	08 95       	ret
+00000366 <Master_RX>:
+ 366:	cf 93       	push	r28
+ 368:	df 93       	push	r29
+ 36a:	1f 92       	push	r1
+ 36c:	cd b7       	in	r28, 0x3d	; 61
+ 36e:	de b7       	in	r29, 0x3e	; 62
+ 370:	89 83       	std	Y+1, r24	; 0x01
+ 372:	89 81       	ldd	r24, Y+1	; 0x01
+ 374:	8e bd       	out	0x2e, r24	; 46
+ 376:	0d b4       	in	r0, 0x2d	; 45
+ 378:	07 fe       	sbrs	r0, 7
+ 37a:	fd cf       	rjmp	.-6      	; 0x376 <Master_RX+0x10>
+ 37c:	8e b5       	in	r24, 0x2e	; 46
+ 37e:	0f 90       	pop	r0
+ 380:	df 91       	pop	r29
+ 382:	cf 91       	pop	r28
+ 384:	08 95       	ret
 
-0000030c <Slave_Select>:
- 30c:	cf 93       	push	r28
- 30e:	df 93       	push	r29
- 310:	1f 92       	push	r1
- 312:	cd b7       	in	r28, 0x3d	; 61
- 314:	de b7       	in	r29, 0x3e	; 62
- 316:	89 83       	std	Y+1, r24	; 0x01
- 318:	99 81       	ldd	r25, Y+1	; 0x01
- 31a:	80 91 1c 01 	lds	r24, 0x011C
- 31e:	98 13       	cpse	r25, r24
- 320:	03 c0       	rjmp	.+6      	; 0x328 <Slave_Select+0x1c>
- 322:	2b 9a       	sbi	0x05, 3	; 5
- 324:	2c 98       	cbi	0x05, 4	; 5
- 326:	0a c0       	rjmp	.+20     	; 0x33c <Slave_Select+0x30>
- 328:	99 81       	ldd	r25, Y+1	; 0x01
- 32a:	80 91 17 01 	lds	r24, 0x0117
- 32e:	98 13       	cpse	r25, r24
- 330:	03 c0       	rjmp	.+6      	; 0x338 <Slave_Select+0x2c>
- 332:	2c 9a       	sbi	0x05, 4	; 5
- 334:	2b 98       	cbi	0x05, 3	; 5
- 336:	02 c0       	rjmp	.+4      	; 0x33c <Slave_Select+0x30>
- 338:	2c 9a       	sbi	0x05, 4	; 5
- 33a:	2b 9a       	sbi	0x05, 3	; 5
- 33c:	0f 90       	pop	r0
- 33e:	df 91       	pop	r29
- 340:	cf 91       	pop	r28
- 342:	08 95       	ret
+00000386 <Slave_Select>:
+ 386:	cf 93       	push	r28
+ 388:	df 93       	push	r29
+ 38a:	1f 92       	push	r1
+ 38c:	cd b7       	in	r28, 0x3d	; 61
+ 38e:	de b7       	in	r29, 0x3e	; 62
+ 390:	89 83       	std	Y+1, r24	; 0x01
+ 392:	99 81       	ldd	r25, Y+1	; 0x01
+ 394:	80 91 1c 01 	lds	r24, 0x011C
+ 398:	98 13       	cpse	r25, r24
+ 39a:	03 c0       	rjmp	.+6      	; 0x3a2 <Slave_Select+0x1c>
+ 39c:	2b 9a       	sbi	0x05, 3	; 5
+ 39e:	2c 98       	cbi	0x05, 4	; 5
+ 3a0:	0a c0       	rjmp	.+20     	; 0x3b6 <Slave_Select+0x30>
+ 3a2:	99 81       	ldd	r25, Y+1	; 0x01
+ 3a4:	80 91 17 01 	lds	r24, 0x0117
+ 3a8:	98 13       	cpse	r25, r24
+ 3aa:	03 c0       	rjmp	.+6      	; 0x3b2 <Slave_Select+0x2c>
+ 3ac:	2c 9a       	sbi	0x05, 4	; 5
+ 3ae:	2b 98       	cbi	0x05, 3	; 5
+ 3b0:	02 c0       	rjmp	.+4      	; 0x3b6 <Slave_Select+0x30>
+ 3b2:	2c 9a       	sbi	0x05, 4	; 5
+ 3b4:	2b 9a       	sbi	0x05, 3	; 5
+ 3b6:	0f 90       	pop	r0
+ 3b8:	df 91       	pop	r29
+ 3ba:	cf 91       	pop	r28
+ 3bc:	08 95       	ret
 
-00000344 <TX_Protocol>:
- 344:	90 91 0e 01 	lds	r25, 0x010E
- 348:	89 13       	cpse	r24, r25
- 34a:	02 c0       	rjmp	.+4      	; 0x350 <TX_Protocol+0xc>
- 34c:	84 e8       	ldi	r24, 0x84	; 132
- 34e:	bf cf       	rjmp	.-130    	; 0x2ce <Master_TX>
- 350:	90 91 0d 01 	lds	r25, 0x010D
- 354:	89 13       	cpse	r24, r25
- 356:	02 c0       	rjmp	.+4      	; 0x35c <TX_Protocol+0x18>
- 358:	85 e8       	ldi	r24, 0x85	; 133
- 35a:	b9 cf       	rjmp	.-142    	; 0x2ce <Master_TX>
- 35c:	90 91 14 01 	lds	r25, 0x0114
- 360:	89 13       	cpse	r24, r25
- 362:	02 c0       	rjmp	.+4      	; 0x368 <TX_Protocol+0x24>
- 364:	86 e8       	ldi	r24, 0x86	; 134
- 366:	b3 cf       	rjmp	.-154    	; 0x2ce <Master_TX>
- 368:	90 91 1b 01 	lds	r25, 0x011B
- 36c:	89 13       	cpse	r24, r25
- 36e:	02 c0       	rjmp	.+4      	; 0x374 <TX_Protocol+0x30>
- 370:	84 e0       	ldi	r24, 0x04	; 4
- 372:	ad cf       	rjmp	.-166    	; 0x2ce <Master_TX>
- 374:	90 91 18 01 	lds	r25, 0x0118
- 378:	89 13       	cpse	r24, r25
- 37a:	02 c0       	rjmp	.+4      	; 0x380 <TX_Protocol+0x3c>
- 37c:	85 e0       	ldi	r24, 0x05	; 5
- 37e:	a7 cf       	rjmp	.-178    	; 0x2ce <Master_TX>
- 380:	90 91 19 01 	lds	r25, 0x0119
- 384:	89 13       	cpse	r24, r25
- 386:	02 c0       	rjmp	.+4      	; 0x38c <TX_Protocol+0x48>
- 388:	86 e0       	ldi	r24, 0x06	; 6
- 38a:	a1 cf       	rjmp	.-190    	; 0x2ce <Master_TX>
- 38c:	90 91 10 01 	lds	r25, 0x0110
- 390:	89 13       	cpse	r24, r25
- 392:	02 c0       	rjmp	.+4      	; 0x398 <TX_Protocol+0x54>
- 394:	8b ea       	ldi	r24, 0xAB	; 171
- 396:	9b cf       	rjmp	.-202    	; 0x2ce <Master_TX>
- 398:	08 95       	ret
+000003be <TX_Protocol>:
+ 3be:	90 91 0e 01 	lds	r25, 0x010E
+ 3c2:	89 13       	cpse	r24, r25
+ 3c4:	02 c0       	rjmp	.+4      	; 0x3ca <TX_Protocol+0xc>
+ 3c6:	84 e8       	ldi	r24, 0x84	; 132
+ 3c8:	bf cf       	rjmp	.-130    	; 0x348 <Master_TX>
+ 3ca:	90 91 0d 01 	lds	r25, 0x010D
+ 3ce:	89 13       	cpse	r24, r25
+ 3d0:	02 c0       	rjmp	.+4      	; 0x3d6 <TX_Protocol+0x18>
+ 3d2:	85 e8       	ldi	r24, 0x85	; 133
+ 3d4:	b9 cf       	rjmp	.-142    	; 0x348 <Master_TX>
+ 3d6:	90 91 14 01 	lds	r25, 0x0114
+ 3da:	89 13       	cpse	r24, r25
+ 3dc:	02 c0       	rjmp	.+4      	; 0x3e2 <TX_Protocol+0x24>
+ 3de:	86 e8       	ldi	r24, 0x86	; 134
+ 3e0:	b3 cf       	rjmp	.-154    	; 0x348 <Master_TX>
+ 3e2:	90 91 1b 01 	lds	r25, 0x011B
+ 3e6:	89 13       	cpse	r24, r25
+ 3e8:	02 c0       	rjmp	.+4      	; 0x3ee <TX_Protocol+0x30>
+ 3ea:	84 e0       	ldi	r24, 0x04	; 4
+ 3ec:	ad cf       	rjmp	.-166    	; 0x348 <Master_TX>
+ 3ee:	90 91 18 01 	lds	r25, 0x0118
+ 3f2:	89 13       	cpse	r24, r25
+ 3f4:	02 c0       	rjmp	.+4      	; 0x3fa <TX_Protocol+0x3c>
+ 3f6:	85 e0       	ldi	r24, 0x05	; 5
+ 3f8:	a7 cf       	rjmp	.-178    	; 0x348 <Master_TX>
+ 3fa:	90 91 19 01 	lds	r25, 0x0119
+ 3fe:	89 13       	cpse	r24, r25
+ 400:	02 c0       	rjmp	.+4      	; 0x406 <TX_Protocol+0x48>
+ 402:	86 e0       	ldi	r24, 0x06	; 6
+ 404:	a1 cf       	rjmp	.-190    	; 0x348 <Master_TX>
+ 406:	90 91 10 01 	lds	r25, 0x0110
+ 40a:	89 13       	cpse	r24, r25
+ 40c:	02 c0       	rjmp	.+4      	; 0x412 <TX_Protocol+0x54>
+ 40e:	8b ea       	ldi	r24, 0xAB	; 171
+ 410:	9b cf       	rjmp	.-202    	; 0x348 <Master_TX>
+ 412:	08 95       	ret
 
-0000039a <TX_arm_data>:
+00000414 <TX_sensor_data>:
+ 414:	80 91 1c 01 	lds	r24, 0x011C
+ 418:	b6 df       	rcall	.-148    	; 0x386 <Slave_Select>
+ 41a:	80 91 0e 01 	lds	r24, 0x010E
+ 41e:	cf df       	rcall	.-98     	; 0x3be <TX_Protocol>
+ 420:	80 91 1a 01 	lds	r24, 0x011A
+ 424:	b0 df       	rcall	.-160    	; 0x386 <Slave_Select>
+ 426:	80 91 1c 01 	lds	r24, 0x011C
+ 42a:	ad df       	rcall	.-166    	; 0x386 <Slave_Select>
+ 42c:	80 91 01 01 	lds	r24, 0x0101
+ 430:	8b cf       	rjmp	.-234    	; 0x348 <Master_TX>
+
+00000432 <RX_sensor_data>:
+ 432:	80 91 1b 01 	lds	r24, 0x011B
+ 436:	80 93 0c 01 	sts	0x010C, r24
+ 43a:	80 91 17 01 	lds	r24, 0x0117
+ 43e:	a3 df       	rcall	.-186    	; 0x386 <Slave_Select>
+ 440:	80 91 1b 01 	lds	r24, 0x011B
+ 444:	bc df       	rcall	.-136    	; 0x3be <TX_Protocol>
+ 446:	80 91 1a 01 	lds	r24, 0x011A
+ 44a:	9d cf       	rjmp	.-198    	; 0x386 <Slave_Select>
+
+0000044c <TX_arm_data>:
  }
  
  void TX_arm_data()
 {
 	Slave_Select(Control_Slave);
- 39a:	80 91 1c 01 	lds	r24, 0x011C
- 39e:	b6 df       	rcall	.-148    	; 0x30c <Slave_Select>
+ 44c:	80 91 1c 01 	lds	r24, 0x011C
+ 450:	9a df       	rcall	.-204    	; 0x386 <Slave_Select>
 	TX_Protocol(as);
- 3a0:	80 91 14 01 	lds	r24, 0x0114
- 3a4:	cf df       	rcall	.-98     	; 0x344 <TX_Protocol>
+ 452:	80 91 14 01 	lds	r24, 0x0114
+ 456:	b3 df       	rcall	.-154    	; 0x3be <TX_Protocol>
 	Master_TX(robot_arm_data);
- 3a6:	80 91 00 01 	lds	r24, 0x0100
- 3aa:	91 cf       	rjmp	.-222    	; 0x2ce <Master_TX>
+ 458:	80 91 00 01 	lds	r24, 0x0100
+ 45c:	75 cf       	rjmp	.-278    	; 0x348 <Master_TX>
 
-000003ac <_exit>:
- 3ac:	f8 94       	cli
+0000045e <_exit>:
+ 45e:	f8 94       	cli
 
-000003ae <__stop_program>:
- 3ae:	ff cf       	rjmp	.-2      	; 0x3ae <__stop_program>
+00000460 <__stop_program>:
+ 460:	ff cf       	rjmp	.-2      	; 0x460 <__stop_program>

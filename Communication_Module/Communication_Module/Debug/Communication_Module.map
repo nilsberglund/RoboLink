@@ -40,10 +40,6 @@ Discarded input sections
  .bss           0x00000000        0x0 Communication_Module.o
  .text          0x00000000        0x0 Master_communication.o
  .bss           0x00000000        0x0 Master_communication.o
- .text.TX_sensor_data
-                0x00000000       0x2a Master_communication.o
- .text.RX_sensor_data
-                0x00000000       0x22 Master_communication.o
  .text.TX_wheel_data
                 0x00000000       0x1a Master_communication.o
  .text.RX_wheel_data
@@ -195,7 +191,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3b0
+.text           0x00000000      0x462
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -291,39 +287,45 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0000012c       0x74 Communication_Module.o
                 0x0000012c                __vector_3
  .text.__vector_16
-                0x000001a0       0x14 Communication_Module.o
+                0x000001a0       0x4e Communication_Module.o
                 0x000001a0                __vector_16
  .text.__vector_17
-                0x000001b4       0x14 Communication_Module.o
-                0x000001b4                __vector_17
+                0x000001ee       0x4e Communication_Module.o
+                0x000001ee                __vector_17
  .text.__vector_20
-                0x000001c8       0x9a Communication_Module.o
-                0x000001c8                __vector_20
- .text.main     0x00000262        0x6 Communication_Module.o
-                0x00000262                main
+                0x0000023c       0xa0 Communication_Module.o
+                0x0000023c                __vector_20
+ .text.main     0x000002dc        0x6 Communication_Module.o
+                0x000002dc                main
  .text.SPI_Init_Master
-                0x00000268       0x66 Master_communication.o
-                0x00000268                SPI_Init_Master
+                0x000002e2       0x66 Master_communication.o
+                0x000002e2                SPI_Init_Master
  .text.Master_TX
-                0x000002ce       0x1e Master_communication.o
-                0x000002ce                Master_TX
+                0x00000348       0x1e Master_communication.o
+                0x00000348                Master_TX
  .text.Master_RX
-                0x000002ec       0x20 Master_communication.o
-                0x000002ec                Master_RX
+                0x00000366       0x20 Master_communication.o
+                0x00000366                Master_RX
  .text.Slave_Select
-                0x0000030c       0x38 Master_communication.o
-                0x0000030c                Slave_Select
+                0x00000386       0x38 Master_communication.o
+                0x00000386                Slave_Select
  .text.TX_Protocol
-                0x00000344       0x56 Master_communication.o
-                0x00000344                TX_Protocol
+                0x000003be       0x56 Master_communication.o
+                0x000003be                TX_Protocol
+ .text.TX_sensor_data
+                0x00000414       0x1e Master_communication.o
+                0x00000414                TX_sensor_data
+ .text.RX_sensor_data
+                0x00000432       0x1a Master_communication.o
+                0x00000432                RX_sensor_data
  .text.TX_arm_data
-                0x0000039a       0x12 Master_communication.o
-                0x0000039a                TX_arm_data
-                0x000003ac                . = ALIGN (0x2)
+                0x0000044c       0x12 Master_communication.o
+                0x0000044c                TX_arm_data
+                0x0000045e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003ac        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x000003ac                _exit
-                0x000003ac                exit
+ .fini9         0x0000045e        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x0000045e                _exit
+                0x0000045e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -342,11 +344,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003ac        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x0000045e        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003b0                _etext = .
+                0x00000462                _etext = .
 
-.data           0x00800100        0x0 load address 0x000003b0
+.data           0x00800100        0x0 load address 0x00000462
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -390,8 +392,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0080011b                sr
                 0x0080011c                Control_Slave
                 0x0080011d                PROVIDE (__bss_end, .)
-                0x000003b0                __data_load_start = LOADADDR (.data)
-                0x000003b0                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000462                __data_load_start = LOADADDR (.data)
+                0x00000462                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080011d        0x0
                 0x0080011d                PROVIDE (__noinit_start, .)
@@ -470,44 +472,44 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xa06
+.debug_info     0x00000000      0xa40
  *(.debug_info)
  .debug_info    0x00000000      0x1fd Bluetooth_Receiver.o
- .debug_info    0x000001fd      0x33b Communication_Module.o
- .debug_info    0x00000538      0x4ce Master_communication.o
+ .debug_info    0x000001fd      0x375 Communication_Module.o
+ .debug_info    0x00000572      0x4ce Master_communication.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x331
+.debug_abbrev   0x00000000      0x319
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x8a Bluetooth_Receiver.o
- .debug_abbrev  0x0000008a      0x145 Communication_Module.o
- .debug_abbrev  0x000001cf      0x162 Master_communication.o
+ .debug_abbrev  0x0000008a      0x12d Communication_Module.o
+ .debug_abbrev  0x000001b7      0x162 Master_communication.o
 
-.debug_line     0x00000000      0x710
+.debug_line     0x00000000      0x722
  *(.debug_line)
  .debug_line    0x00000000      0x12f Bluetooth_Receiver.o
- .debug_line    0x0000012f      0x218 Communication_Module.o
- .debug_line    0x00000347      0x3c9 Master_communication.o
+ .debug_line    0x0000012f      0x22a Communication_Module.o
+ .debug_line    0x00000359      0x3c9 Master_communication.o
 
-.debug_frame    0x00000000      0x2a0
+.debug_frame    0x00000000      0x318
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 Bluetooth_Receiver.o
- .debug_frame   0x00000024      0x164 Communication_Module.o
- .debug_frame   0x00000188      0x118 Master_communication.o
+ .debug_frame   0x00000024      0x1dc Communication_Module.o
+ .debug_frame   0x00000200      0x118 Master_communication.o
 
 .debug_str      0x00000000      0x26b
  *(.debug_str)
  .debug_str     0x00000000      0x152 Bluetooth_Receiver.o
                                 0x197 (size before relaxing)
- .debug_str     0x00000152       0x8e Communication_Module.o
-                                0x20b (size before relaxing)
- .debug_str     0x000001e0       0x8b Master_communication.o
+ .debug_str     0x00000152       0xac Communication_Module.o
+                                0x229 (size before relaxing)
+ .debug_str     0x000001fe       0x6d Master_communication.o
                                 0x228 (size before relaxing)
 
-.debug_loc      0x00000000      0x508
+.debug_loc      0x00000000      0x640
  *(.debug_loc)
- .debug_loc     0x00000000      0x2bf Communication_Module.o
- .debug_loc     0x000002bf      0x249 Master_communication.o
+ .debug_loc     0x00000000      0x3f7 Communication_Module.o
+ .debug_loc     0x000003f7      0x249 Master_communication.o
 
 .debug_macinfo
  *(.debug_macinfo)
