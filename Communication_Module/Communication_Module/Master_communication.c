@@ -10,6 +10,7 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include "Master_communication.h"
+#include "Bluetooth_Receiver.h"
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()

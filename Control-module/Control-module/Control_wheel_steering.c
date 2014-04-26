@@ -19,7 +19,7 @@ int8_t getError()
 	volatile uint8_t counter1 = 0;
 	error = 0;
 	uint8_t line_data;
-	line_data = sensor_data;	
+	line_data = sensor_data;
 	
 	for (int8_t noShift = 6; noShift >= 0; noShift--)
 	{
@@ -46,50 +46,52 @@ int8_t getError()
 
 	} else
 	{
-		error = 7;
+		return 15;
 	}
 	error = 7 - error;
 	return error;
 }
 
 void controlAlgorithm()
-{	
+{
 	
 	error = getError();
 	int16_t speed = calculateSpeed(error);
-	if ((200-speed) < 10)
+	if(error == 15)
 	{
-		rightWheelSpeed = 30;
-		rightWheelDirection = 1;
-	} 
-	else if ((200-speed) > 235)
-	{
-		rightWheelSpeed = 235;
-		rightWheelDirection = 0;
+		leftWheelSpeed = leftWheelSpeed;
+		rightWheelSpeed = rightWheelSpeed;
 	}
+	
 	else
 	{
-		rightWheelSpeed = 200 - speed;
-		rightWheelDirection = 1;
+		if ((200-speed) < 10)
+		{
+			rightWheelSpeed = 30;
+		}
+		else if ((200-speed) > 235)
+		{
+			rightWheelSpeed = 247;
+		}
+		else
+		{
+			rightWheelSpeed = 200 - speed;
+		}
+		
+		if ((200+speed) < 10)
+		{
+			leftWheelSpeed = 30;
+		}
+		else if ((200+speed) > 235)
+		{
+			leftWheelSpeed = 247;
+		}
+		else
+		{
+			leftWheelSpeed = 200 + speed;
+		}
+		
 	}
-	
-	if ((200+speed) < 10)
-	{
-		leftWheelSpeed = 30;
-		leftWheelDirection = 1;
-	}
-	else if ((200+speed) > 235)
-	{
-		leftWheelSpeed = 235;
-		leftWheelDirection = 0;
-	}
-	else
-	{
-		leftWheelSpeed = 200 + speed;
-		leftWheelDirection = 1;
-	}
-	
-	
 	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
 	
 	
@@ -122,11 +124,11 @@ void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)
 {
 	if(right_dir == 1)
 	{
-	PORTD |= (0 << PORTD7);
+		PORTD |= (0 << PORTD7);
 	}
 	else
 	{
-	PORTD |= (1 << PORTD7);
+		PORTD |= (1 << PORTD7);
 	}
 	if(left_dir == 1)
 	{
