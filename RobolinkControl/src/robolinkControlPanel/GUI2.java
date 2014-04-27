@@ -209,8 +209,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB = new JButton("J5 >>");
 		btnJoint5RS = new JButton("J5 >");
 		
-		btnJoint6LS = new JButton("CLOSE CLAW");
-		btnJoint6RS = new JButton("OPEN CLAW");
+		btnJoint6LS = new JButton("OPEN CLAW");
+		btnJoint6RS = new JButton("CLOSE CLAW");
 		
 		btnDPP = new JButton("DPP");
 		
@@ -420,7 +420,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		ledPanel.add(lblLED5);
 		ledPanel.add(lblLED6);
 		ledPanel.add(lblLED7);
-		ledPanel.setBackground(Color.RED);
+		ledPanel.setBackground(Color.BLUE);
 		telPanel.setLayout(new BorderLayout());
 		telPanel.add(lblTel, BorderLayout.PAGE_START);
 		telPanel.add(txtTel, BorderLayout.CENTER);
