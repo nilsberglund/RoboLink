@@ -52,7 +52,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200012651</ToolNumber>
+      <ToolNumber>J30200006284</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
     <avrtoolinterface>JTAG</avrtoolinterface>
@@ -126,10 +126,22 @@
     <Compile Include="Communication_Module.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hd44780_low.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LCD_new.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Master_communication.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Master_communication.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="warehouseMode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="warehouseMode.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
