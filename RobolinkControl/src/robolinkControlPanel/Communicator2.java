@@ -217,7 +217,6 @@ public class Communicator2 implements SerialPortEventListener
 				if (singleData != NEW_LINE_ASCII)
 				{
 					telText = new String(new byte[] {singleData});
-					//window.txtLog.append(logText);
 					window.txtTel.append(telText);
 				}
 				else

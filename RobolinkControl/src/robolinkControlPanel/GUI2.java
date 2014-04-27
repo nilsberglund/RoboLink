@@ -1,6 +1,7 @@
 package robolinkControlPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -34,6 +35,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte ARMINSTR = 2; //instruction byte for arm data
 	final public byte CALINSTR = 3; //instruction byte for calibration data
 	final public byte PCONINSTR = 4; //instruction byte for pickup control data
+	
+	final public byte STOP = 0;
+	final public byte BW1 = 1;
+	final public byte BW2 = 9;
+	final public byte FR1 = 2;
+	final public byte FR2 = 10;
+	final public byte FL1 = 3;
+	final public byte FL2 = 11;
+	final public byte FW1 = 4;
+	final public byte FW2 = 12;
 	
 	final public byte SPICKUP = 1;
 	final public byte EPICKUP = 2;
@@ -120,6 +131,14 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JLabel lblCalibration;
 	public JLabel lblArm;
 	public JLabel lblPickupControl;
+	public JLabel lblTel;
+	public JLabel lblLED1;
+	public JLabel lblLED2;
+	public JLabel lblLED3;
+	public JLabel lblLED4;
+	public JLabel lblLED5;
+	public JLabel lblLED6;
+	public JLabel lblLED7;
 	public JSlider speedSlider;
 
 	//layout for whole window and panel variables
@@ -127,6 +146,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JPanel conPanel;
 	public JPanel navPanel;
 	public JPanel telPanel;
+	public JPanel ledPanel;
 
 
 	/** Creates new form GUI */
@@ -189,8 +209,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB = new JButton("J5 >>");
 		btnJoint5RS = new JButton("J5 >");
 		
-		btnJoint6LS = new JButton("OPEN CLAW");
-		btnJoint6RS = new JButton("CLOSE CLAW");
+		btnJoint6LS = new JButton("CLOSE CLAW");
+		btnJoint6RS = new JButton("OPEN CLAW");
 		
 		btnDPP = new JButton("DPP");
 		
@@ -238,21 +258,30 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		btnDPP.setActionCommand("DPP");
 		
-		//Instantiating the sliders, text areas etc
-		speedSlider = new JSlider(JSlider.VERTICAL, 1, 5, 1); //vertical layout, minlvl 1, maxlvl 5, start 1
+		//Instantiating the sliders, text areas, labels etc
+		speedSlider = new JSlider(JSlider.VERTICAL, 1, 2, 1); //vertical layout, minlvl 1, maxlvl 2, start 1
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
 		txtTel = new JTextArea();
+		lblTel = new JLabel();
 		lblDrive = new JLabel();
 		lblArm = new JLabel();
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
+		lblLED1 = new JLabel("•");
+		lblLED2 = new JLabel("•");
+		lblLED3 = new JLabel("•");
+		lblLED4 = new JLabel("•");
+		lblLED5 = new JLabel("•");
+		lblLED6 = new JLabel("•");
+		lblLED7 = new JLabel("•");
 
 		grid = new GridLayout(0, 3);
 		conPanel = new JPanel();
 		navPanel = new JPanel();
 		telPanel = new JPanel();
+		ledPanel = new JPanel();
 		
 		//Adding action listeners
 		btnConnect.addActionListener(this);
@@ -370,12 +399,33 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//TELPANEL
+		
 		txtTel.setEditable(false);
 		txtTel.setLineWrap(true);
 		txtTel.setFocusable(false);
 		txtTel.setColumns(15);
 		txtTel.setRows(20);
-		telPanel.add(txtTel);
+		lblTel.setText("TELEMETRY");
+		lblLED1.setForeground(Color.WHITE);
+		lblLED2.setForeground(Color.WHITE);
+		lblLED3.setForeground(Color.WHITE);
+		lblLED4.setForeground(Color.WHITE);
+		lblLED5.setForeground(Color.WHITE);
+		lblLED6.setForeground(Color.WHITE);
+		lblLED7.setForeground(Color.WHITE);
+		ledPanel.add(lblLED1);
+		ledPanel.add(lblLED2);
+		ledPanel.add(lblLED3);
+		ledPanel.add(lblLED4);
+		ledPanel.add(lblLED5);
+		ledPanel.add(lblLED6);
+		ledPanel.add(lblLED7);
+		ledPanel.setBackground(Color.RED);
+		telPanel.setLayout(new BorderLayout());
+		telPanel.add(lblTel, BorderLayout.PAGE_START);
+		telPanel.add(txtTel, BorderLayout.CENTER);
+		telPanel.add(ledPanel, BorderLayout.PAGE_END);
+		
 
 
 		//setting up the whole window
@@ -417,19 +467,60 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.disconnect();
 		}
 		else if ("stop".equals(e.getActionCommand())) {
-			// TODO Stop the robot
+			communicator.writeData(DRIVEINSTR);
+			communicator.writeData(STOP);
 		}
 		else if ("FW".equals(e.getActionCommand())) {
-			// TODO Robot forward
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FW1);
+				break;
+			case 2:
+				communicator.writeData(FW2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("BW".equals(e.getActionCommand())) {
-			// TODO Robot backwards
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(BW1);
+				break;
+			case 2:
+				communicator.writeData(BW2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("FL".equals(e.getActionCommand())) {
-			// TODO Robot forward left
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FL1);
+				break;
+			case 2:
+				communicator.writeData(FL2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("FR".equals(e.getActionCommand())) {
-			// TODO Robot forward right
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FR1);
+				break;
+			case 2:
+				communicator.writeData(FR2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("calibration".equals(e.getActionCommand())) {
 			// TODO Calibrate line sensors
@@ -538,6 +629,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(DPP);
 		}
+	}
+	
+	public void paintLED(byte ledByte){
+		//byte led1 = (ledByte & 0x01);
 	}
 
 
