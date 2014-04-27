@@ -60,37 +60,35 @@ ISR(TIMER0_COMPB_vect)
 ISR(USART0_RX_vect)
 {
 	btdata = UDR0;
-	if (waiting_for_instruction == 1)
-	{
+	if (waiting_for_instruction == 1) {
 		waiting_for_instruction = 0;
-		if (btdata == 1)
-		{
+		if (btdata == 1) {
 			component = WHEEL;
-		}else if(btdata == 2)
-		{
+		}
+		else if(btdata == 2) {
 			component = ARM;
-		}else if(btdata == 3)
-		{
+		}
+		else if(btdata == 3) {
 			component = CALINSTR;
-		}else if(btdata == 4)
-		{
+		}
+		else if(btdata == 4) {
 			component = PCONINSTR;
 		}
-	}else
-	{
+	}
+	else {
 		waiting_for_instruction = 1;
-		if (component == WHEEL)
-		{
-			
-		}else if (component == ARM)
-		{
+		if (component == WHEEL) {
+			wheel_steering_data = btdata;
+			TX_wheel_data();
+		}
+		else if (component == ARM) {
 			robot_arm_data = btdata;
 			TX_arm_data();
-		}else if (component == CALINSTR)
-		{
+		}
+		else if (component == CALINSTR) {
 			
-		}else if (component == PCONINSTR)
-		{
+		}
+		else if (component == PCONINSTR) {
 			handleData(btdata);
 		}
 	}
