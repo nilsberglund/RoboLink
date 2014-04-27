@@ -50,6 +50,7 @@ ISR(SPI_STC_vect)
 		} else if (component == WHEEL)
 		{
 			wheel_steering_data = data;
+			moveRobot();
 			waiting_for_instruction = 1;
 		}
 	}

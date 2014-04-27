@@ -143,7 +143,7 @@ void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)
 {
 	if(right_dir == 1)
 	{
-		PORTD |= (0 << PORTD7);
+		PORTD &= ~(1 << PORTD7);
 	}
 	else
 	{
@@ -155,7 +155,7 @@ void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)
 	}
 	else
 	{
-		PORTD |= (0 << PORTD6);
+		PORTD &= ~(1 << PORTD6);
 	}
 	OCR1A = rightSpeed;
 	OCR1B = leftSpeed;
@@ -178,12 +178,53 @@ void stop()
 
 void drive_right_forward(uint8_t speed)
 {
-	drive(1, 1, speed + 15, speed);
+	drive(1, 1, speed - 40, speed + 40);
 }
 
 void drive_left_forward(uint8_t speed)
 {
-	drive(1, 1, speed, speed + 15);
+	drive(1, 1, speed + 40, speed - 40);
 }
 
-
+void moveRobot()
+{
+	uint8_t FASTSPEED = 80;
+	uint8_t SLOWSPEED = 200;
+	if(((wheel_steering_data & 0x08) >> 3) == 1)
+	{
+		if(wheel_steering_data == 0b00001100)
+		{
+			drive_forward(FASTSPEED);
+		} else if(wheel_steering_data == 0b00001011)
+		{
+			drive_left_forward(FASTSPEED);
+		} else if(wheel_steering_data == 0b00001010)
+		{
+			drive_right_forward(FASTSPEED);
+		} else if(wheel_steering_data == 0b00001001)
+		{
+			drive_backwards(FASTSPEED);
+		} else if(wheel_steering_data == 0b00001000)
+		{
+			stop();
+		}
+	}	else
+	{
+		if(wheel_steering_data == 0b00000100)
+		{
+			drive_forward(SLOWSPEED);
+		} else if(wheel_steering_data == 0b00000011)
+		{
+			drive_left_forward(SLOWSPEED);
+		} else if(wheel_steering_data == 0b00000010)
+		{
+			drive_right_forward(SLOWSPEED);
+		} else if(wheel_steering_data == 0b00000001)
+		{
+			drive_backwards(SLOWSPEED);
+		} else if(wheel_steering_data == 0b00000000)
+		{
+			stop();
+		}
+	}
+}

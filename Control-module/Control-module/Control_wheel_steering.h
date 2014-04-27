@@ -8,8 +8,10 @@
 #ifndef CONTROL_WHEEL_STEERING_H_
 #define CONTROL_WHEEL_STEERING_H_
 
-/*-------Variables---------*/
+/*-------Constants---------*/
 
+
+/*-------Variables---------*/
 volatile int8_t error;
 int8_t prevError;
 volatile uint8_t rightWheelSpeed;
@@ -26,5 +28,6 @@ int8_t getError();
 int8_t calculateSpeed(int8_t);
 uint8_t calculateMidSpeed(int8_t);
 void stop();
+void moveRobot();
 
 #endif /* CONTROL_WHEEL_STEERING_H_ */
