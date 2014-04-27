@@ -28,7 +28,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	KeybindingController2 keybindingController = null;
 
 	//all the variables (buttons, labels etc.)
-	public int speed;
+	public int speed = 1;
 	
 	//setting up instruction bytes and data bytes
 	final public byte DRIVEINSTR = 1; //instruction byte for drive data
@@ -447,7 +447,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider)e.getSource();
 		if (!source.getValueIsAdjusting()) {
-			int speed = (int)source.getValue();
+			speed = (int)source.getValue();
 			System.out.println(speed);
 		}
 	}
