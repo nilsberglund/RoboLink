@@ -9,9 +9,24 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "Bluetooth_Receiver.h"
-//#include "warehouseMode.h"
+#include "warehouseMode.h"
 #include "Communication_Module.h"
 #include "Master_communication.h"
+
+
+void handleData(uint8_t temp)
+{
+	switch(temp) {
+		case 0x01: //START PICKUP button pressed
+		pickUpItem = 1;
+		waitingForStartAbort = 1;
+		case 0x02: //END PICKUP button pressed
+		waitingForEndPickup = 1;
+		case 0x03: //ABORT PICKUP button pressed
+		pickUpItem = 0;
+		waitingForStartAbort = 1;
+	}
+}
 
 void setupBluetoothRXTX()
 {

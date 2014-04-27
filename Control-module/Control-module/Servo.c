@@ -13,14 +13,14 @@
 
 void Arm_Init(void) {
 	
-	uint16_t joint1_Pos = 0x1FF; //servo 1
-	uint16_t joint2_Pos = 0x1FF; //servo 2 & 3
-	uint16_t joint3_Pos = 0x1FF; //servo 4 & 5
-	uint16_t joint4_Pos = 0x1FF; //servo 6
-	uint16_t joint5_Pos = 0x1FF; //servo 7
-	uint16_t joint6_Pos = 0x1FF; //servo 8
+	joint1_Pos = 0x1FF; //servo 1
+	joint2_Pos = 0xCC; //servo 2 & 3
+	joint3_Pos = 0xCC; //servo 4 & 5
+	joint4_Pos = 0x3EE; //servo 6
+	joint5_Pos = 0x1FF; //servo 7
+	joint6_Pos = 0x1FF; //servo 8
 	
-	DDRD = (1<<DDD3); //Setting D2 to output to control the tri-state
+	DDRD |= (1<<DDD3); //Setting D2 to output to control the tri-state
 	/*Set baud rate.*/
 	UBRR0H = (unsigned char)(0);  //baudvalue = (f_cpu/baudrate*16) -1
 	UBRR0L = (unsigned char)(0);

@@ -14,7 +14,6 @@
 
 int8_t getError()
 {
-	
 	volatile int8_t res = 0;
 	volatile int8_t marker = 0;
 	volatile uint8_t counter1 = 0;
@@ -44,8 +43,25 @@ int8_t getError()
 		error = marker*2;
 		error = error/(0b00000011);
 		error = error - 1;
-
-	} else
+		
+	} else if(counter1 == 4 || counter1 == 5)
+	{
+		if(marker == 10)
+		{
+			error = 50;
+		} else if(marker == 22)
+		{
+			error = 50;
+		} else if(marker == 15)
+		{
+			error = 50;
+		} else if(marker == 25)
+		{
+			error = 50;
+		}
+	} 	
+	
+	 else
 	{
 		error = -8;
 	}
@@ -55,45 +71,50 @@ int8_t getError()
 
 void controlAlgorithm()
 {
-	
 	error = getError();
-	int16_t speed = calculateSpeed(error);
+	
 	
 	if(error == 15)
 	{
 		rightWheelSpeed = rightWheelSpeed;
 		leftWheelSpeed = leftWheelSpeed;
+		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+	} else if(error == -43)
+	{
+		stop();
 	}	
 	else
 	{	
-		if ((150-speed) < 10)
+		midspeed = 180;
+		int16_t speed = calculateSpeed(error);
+		if ((midspeed-speed) < 10)
 		{
 			rightWheelSpeed = 3;
 		}
-		else if ((150-speed) > 235)
+		else if ((midspeed-speed) > 235)
 		{
 			rightWheelSpeed = 248;
 		}
 		else
 		{
-			rightWheelSpeed = 150 - speed;
-			
+			rightWheelSpeed = midspeed - speed;
 		}
 		
-		if ((150+speed) < 10)
+		if ((midspeed+speed) < 10)
 		{
 			leftWheelSpeed = 3;
 		}
-		else if ((150+speed) > 235)
+		else if ((midspeed+speed) > 235)
 		{
 			leftWheelSpeed = 248;
 		}
 		else
 		{
-			leftWheelSpeed = 150 + speed;
+			leftWheelSpeed = midspeed + speed;
 		}
+		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
 	}
-	drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+
 }
 
 int8_t calculateSpeed(int8_t error)
@@ -113,10 +134,9 @@ void driving_setup()
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
 	TCCR1B = 3; //Sets the prescaling to 8
 	TCNT1 = 0;
-	OCR1A = 248;
-	OCR1B = 248;
+	OCR1A = 255;
+	OCR1B = 255;
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
-	
 }
 
 void drive(int right_dir, int left_dir, uint16_t leftSpeed, uint16_t rightSpeed)

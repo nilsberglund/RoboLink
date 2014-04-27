@@ -10,13 +10,27 @@
 #include "Master_communication.h"
 #include <avr/interrupt.h>
 #include "Bluetooth_Receiver.h"
+#include "warehouseMode.h"
 
 ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 {
 	Slave_Select(Sensor_Slave);	//slave select
-	sensor_data = Master_RX(0x01);	//sending dummy
+	sensor_data = Master_RX(0x01); //sending dummy
+	if(sensor_data == 0b00001111 || sensor_data == 0b00011111)
+	{
+		TX_sensor_data();
+		stationRightSide = 0; 
+		stationModeEnable = 1;
+ 	
+	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)	 
+	{
+		TX_sensor_data();
+		stationRightSide = 1;
+		stationModeEnable = 1;
+		
+	}	
 	Slave_Select(Control_Slave);
-	//received = 1;
+	
 }
 
 ISR(INT2_vect)
@@ -35,62 +49,78 @@ ISR(INT2_vect)
 
 ISR(TIMER0_COMPA_vect)
 {
-	RX_sensor_data();
+	//RX_sensor_data();
 }
 
 ISR(TIMER0_COMPB_vect)
 {
-	TX_sensor_data();
+	//TX_sensor_data();
 }
 
-// ISR(USART0_RX_vect)
-// {
-// 	data = UDR0;
-// 	if (waiting_for_instruction == 1)
-// 	{
-// 		waiting_for_instruction = 0;
-// 		if (data == 1)
-// 		{
-// 			component = WHEEL;
-// 		}else if(data == 2)
-// 		{
-// 			component = ARM;
-// 		}else if(data == 3)
-// 		{
-// 			component = CALINSTR;
-// 		}else if(data == 4)
-// 		{
-// 			component = PCONINSTR;
-// 		}
-// 	}else
-// 	{
-// 		waiting_for_instruction = 1;
-// 		if (component == WHEEL)
-// 		{
-// 			
-// 		}else if (component == ARM)
-// 		{
-// 			robot_arm_data = data;
-// 			TX_arm_data();
-// 		}else if (component == CALINSTR)
-// 		{
-// 			
-// 		}else if (component == PCONINSTR)
-// 		{
-// 			
-// 		}
-// 	}
-// 	
-// }
+ISR(USART0_RX_vect)
+{
+	btdata = UDR0;
+	if (waiting_for_instruction == 1)
+	{
+		waiting_for_instruction = 0;
+		if (btdata == 1)
+		{
+			component = WHEEL;
+		}else if(btdata == 2)
+		{
+			component = ARM;
+		}else if(btdata == 3)
+		{
+			component = CALINSTR;
+		}else if(btdata == 4)
+		{
+			component = PCONINSTR;
+		}
+	}else
+	{
+		waiting_for_instruction = 1;
+		if (component == WHEEL)
+		{
+			
+		}else if (component == ARM)
+		{
+			robot_arm_data = btdata;
+			TX_arm_data();
+		}else if (component == CALINSTR)
+		{
+			
+		}else if (component == PCONINSTR)
+		{
+			handleData(btdata);
+		}
+	}
+	
+}
+
+/*
+When the receive of one byte is complete, this interrupt will run.
+*/
+ISR(USART1_RX_vect){
+	newStream[digit] = UDR1;
+	digit++;
+	if (digit == 12) {
+		digit = 0;
+		streamFilled = 1;
+		powerRFID(0);
+	}
+}
 
 int main(void)
 {
 	SPI_Init_Master();
-	//setupBluetoothRXTX();
+	setupBluetoothRXTX();
 	
 	while(1)
 	{
-		
+		if(stationModeEnable == 1)
+		{
+			stationMode();
+		}
 	}
 }
 

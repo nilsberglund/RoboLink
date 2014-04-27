@@ -14,13 +14,12 @@
 #define CALINSTR 3
 #define PCONINSTR 4
 
-void handleData(char temp);
-void handleInstruction(char instrByte);
+void handleData(uint8_t temp);
 void setupBluetoothRXTX();
 
 
 
-uint8_t data; //the byte received by the AVR, transmitted from computer
+uint8_t btdata; //the byte received by the AVR, transmitted from computer
 uint8_t waiting_for_instruction;
 uint8_t component;
 

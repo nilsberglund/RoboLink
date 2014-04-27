@@ -12,17 +12,10 @@
 
 void SPI_Init_Slave()
 {
-
 	waiting_for_instruction = 1;
-	
-	DDRB = 0x48;
-			
-	SPCR = 0xC3;
-			
+	DDRB = 0x48;	
+	SPCR = 0xC3;		
 	sei(); 
-			
-	
-	
 }
 	
 void Slave_TX(uint8_t data)
