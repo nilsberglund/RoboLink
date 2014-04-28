@@ -21,7 +21,7 @@ int caliMode = 0;
 int buttonPushed = 0;
 
 ///////Values/////////////////////
-uint8_t channelThresholds[7] = {100,100,100,100,100,100,100}; //Tillfälligt tillagda innan kalibreringsfunktion tillkommit vars enda syfte i lever är att uppdatera denna vid knaptryck
+uint8_t channelThresholds[7] = {100,100,100,100,100,100,100}; //Tillfälligt tillagda innan kalibreringsfunktion tillkommit vars enda syfte i lever är att uppdatera denna vid knapptryck
 uint8_t newSensorValues[7];
 uint8_t lightVector[7]; 
 uint8_t darkVector[7]; 

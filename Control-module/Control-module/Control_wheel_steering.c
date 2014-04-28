@@ -11,7 +11,7 @@
 #include "Control_wheel_steering.h"
 #include "Slave_control.h"
 
-int8_t    getError()
+int8_t getError()
 {
 	
 	volatile int8_t res = 0;
