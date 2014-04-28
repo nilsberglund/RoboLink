@@ -6,5 +6,5 @@ SensorCalMajor.c
 
 Sensor_Module.c
 
-Slave_sensor.c
+SlaveSensor.c
 

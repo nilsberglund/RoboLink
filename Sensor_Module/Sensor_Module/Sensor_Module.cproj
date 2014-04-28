@@ -121,10 +121,10 @@
     <Compile Include="Sensor_Module.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_sensor.c">
+    <Compile Include="SlaveSensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_sensor.h">
+    <Compile Include="SlaveSensor.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

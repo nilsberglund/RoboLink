@@ -1,32 +1,10 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "Slave_sensor.h"
+#include "SlaveSensor.h"
 #include "SensorCalMajor.h"
 
 
-/*
-void initADC();
-void analogRead (int ch);
-void calcOneByteLineVector();
-void defaultMode(); //denna plus "main"koncept måste styras upp av suspis
-void calibrationMode();
-void calcThresholds();
-*/
-/*
-//////Variables//////////////
-uint8_t adcValue = 0;
-int ch = 0;
-int caliMode = 0;
-int buttonPushed = 0;
-
-///////Values/////////////////////
-uint8_t channelThresholds[7] = {100,100,100,100,100,100,100}; //Tillfälligt tillagda innan kalibreringsfunktion tillkommit vars enda syfte i lever är att uppdatera denna vid knapptryck
-uint8_t newSensorValues[7];
-uint8_t lightVector[7]; 
-uint8_t darkVector[7]; 
-uint8_t sensor_data = 0;
-*/
 
 ////////////Interupts///////////////
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
@@ -44,7 +22,7 @@ ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 
 
 }
-
+/*Interrupt when button pushed for calibration.*/
 ISR(INT0_vect) {						// First ADC conversion after button press
 	ch = 0;
 	caliMode = 1;
@@ -56,19 +34,7 @@ ISR(INT0_vect) {						// First ADC conversion after button press
 	analogRead(ch);
 }
 
-
-/*
-///////////////??????????????///////////////////////////////
-int main(void)									// borde heta initADC() sen kanske?
-{
-	while(1);
-	{
-		
-	}
-}
-*/
-
-
+/*Initializes the AD converter.*/
 void initADC() {
 	ch = 0;										// Make sure that we start on first channel
 	DDRA = 0x00;								// Configure PortA as input for analog readings
@@ -80,23 +46,24 @@ void initADC() {
 	EICRA |=(1<<ISC00);							// Sets the ISC00 to 1 rising edge triggering
 	EICRA |=(1<<ISC01);							// Sets ISC01 to 1
 	EIMSK =0x01;
-	for(int i=0; i<7; i++)
+	for(int cnt_ch=0; cnt_ch<7; cnt_ch++)
 	{
-			channelThresholds[i] = 180;
+			channelThresholds[cnt_ch] = 180;
 	}
 	sei(); 
 }
 
+/*Starts an AD conversion on the channel ch. (0<=ch<=6).*/
 void analogRead (int ch){
 	ADMUX &= 0xF8;									// Set 3 lsb:s to 0
 	ADMUX |= ch;									// Select pin ADC0..ADC6 using MUX.
 	ADCSRA |=(1<<ADSC);								// Start conversion
-	//while(!(ADCSRA & (1<<ADIF)));
 }
 
 
 ////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
 
+/*Function that handles the AD conversion values at default mode. Counts up to the next channel and starts a new conversion. */ 
 void defaultMode() {
 	newSensorValues[ch] = adcValue;
 	ch++;									//go to next channel
@@ -107,12 +74,14 @@ void defaultMode() {
 	}
 	
 	PORTB &= 0xF8; 							
-	PORTB |= ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+	PORTB |= ch;							//Light up new channel
 	analogRead(ch);						//Read analog value on new channel
 	
 
 }
 
+/*Function that handles the AD conversion values at calibration mode. Counts up to the next channel and starts a new conversion in 
+calibration mode.*/
 void calibrationMode() {
 	if (buttonPushed == 1){ //calibrate light 
 		lightVector[ch] = adcValue;	//Add values in lightVector for first calibration
@@ -143,25 +112,26 @@ void calibrationMode() {
 
 ////////////////////////////Mathematical functions//////////////////////////////////////////
 
+/*Calculates the individual thresholds for the seven sensors. Called in calibrationMode when two calibrations are done.*/ 
 void calcThresholds(){
-	for (int i=0; i<7; i++)
+	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
 	{
-		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
+		channelThresholds[cnt_ch] = lightVector[cnt_ch] + ((darkVector[cnt_ch] - lightVector[cnt_ch]) / 2);
 	}
 }
 
+/*Calculates the sensorData which is received later by the control module. The value 0 stands for floor and 1 stands for tape. */
 void calcOneByteLineVector(){
 	
 	//Add millis or counter
 	
 	sensor_data = 0;
 	
-	for (int i=0; i<7; i++)
+	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
 	{
-		if (newSensorValues[i] > channelThresholds[i])
+		if (newSensorValues[cnt_ch] > channelThresholds[cnt_ch])
 		{
-			sensor_data |= (1<<i);
+			sensor_data |= (1<<cnt_ch);
 		}
 	}
-	//Send to other avr
 }

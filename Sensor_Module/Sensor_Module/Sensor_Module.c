@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include "Sensor_Module.h"
 #include "SensorCalMajor.h"
-#include "Slave_sensor.h"
+#include "SlaveSensor.h"
 
 int main(void)
 {
