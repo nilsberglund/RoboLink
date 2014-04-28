@@ -5,30 +5,9 @@
 #include "SensorCalMajor.h"
 
 
-/*
-void initADC();
-void analogRead (int ch);
-void calcOneByteLineVector();
-void defaultMode(); //denna plus "main"koncept måste styras upp av suspis
-void calibrationMode();
-void calcThresholds();
-*/
-/*
-//////Variables//////////////
-uint8_t adcValue = 0;
-int ch = 0;
-int caliMode = 0;
-int buttonPushed = 0;
-
-///////Values/////////////////////
-uint8_t channelThresholds[7] = {100,100,100,100,100,100,100}; //Tillfälligt tillagda innan kalibreringsfunktion tillkommit vars enda syfte i lever är att uppdatera denna vid knapptryck
-uint8_t newSensorValues[7];
-uint8_t lightVector[7]; 
-uint8_t darkVector[7]; 
-uint8_t sensor_data = 0;
-*/
-
 ////////////Interupts///////////////
+
+/*Interrupt that is thrown when an AD conversion is complete */ 
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 {
 	adcValue = ADCL;					// Must read ADCL before ADCH
@@ -45,6 +24,7 @@ ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 
 }
 
+/*Interrupt that is thrown when button for calibration has been pushed.*/
 ISR(INT0_vect) {						// First ADC conversion after button press
 	ch = 0;
 	caliMode = 1;
@@ -57,18 +37,7 @@ ISR(INT0_vect) {						// First ADC conversion after button press
 }
 
 
-/*
-///////////////??????????????///////////////////////////////
-int main(void)									// borde heta initADC() sen kanske?
-{
-	while(1);
-	{
-		
-	}
-}
-*/
-
-
+/*Function that initializes the everything involving the AD conversion.*/ 
 void initADC() {
 	ch = 0;										// Make sure that we start on first channel
 	DDRA = 0x00;								// Configure PortA as input for analog readings
@@ -87,6 +56,7 @@ void initADC() {
 	sei(); 
 }
 
+/*Starts an AD conversion on channel ch. 0<= ch <= 6). */
 void analogRead (int ch){
 	ADMUX &= 0xF8;									// Set 3 lsb:s to 0
 	ADMUX |= ch;									// Select pin ADC0..ADC6 using MUX.
@@ -97,6 +67,8 @@ void analogRead (int ch){
 
 ////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
 
+
+/*Function that handles the values from the last AD conversion. Starts a new conversion on the next channel.*/
 void defaultMode() {
 	newSensorValues[ch] = adcValue;
 	ch++;									//go to next channel
@@ -109,9 +81,9 @@ void defaultMode() {
 	PORTB &= 0xF8; 							
 	PORTB |= ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
 	analogRead(ch);						//Read analog value on new channel
-	
 
 }
+
 
 void calibrationMode() {
 	if (buttonPushed == 1){ //calibrate light 
@@ -152,7 +124,6 @@ void calcThresholds(){
 
 void calcOneByteLineVector(){
 	
-	//Add millis or counter
 	
 	sensor_data = 0;
 	
@@ -163,5 +134,4 @@ void calcOneByteLineVector(){
 			sensor_data |= (1<<i);
 		}
 	}
-	//Send to other avr
 }

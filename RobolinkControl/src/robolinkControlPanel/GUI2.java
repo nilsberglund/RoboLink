@@ -269,13 +269,13 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblArm = new JLabel();
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
-		lblLED1 = new JLabel("•");
-		lblLED2 = new JLabel("•");
-		lblLED3 = new JLabel("•");
-		lblLED4 = new JLabel("•");
-		lblLED5 = new JLabel("•");
-		lblLED6 = new JLabel("•");
-		lblLED7 = new JLabel("•");
+		lblLED1 = new JLabel("O");
+		lblLED2 = new JLabel("O");
+		lblLED3 = new JLabel("O");
+		lblLED4 = new JLabel("O");
+		lblLED5 = new JLabel("O");
+		lblLED6 = new JLabel("O");
+		lblLED7 = new JLabel("O");
 
 		grid = new GridLayout(0, 3);
 		conPanel = new JPanel();
@@ -420,7 +420,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		ledPanel.add(lblLED5);
 		ledPanel.add(lblLED6);
 		ledPanel.add(lblLED7);
-		ledPanel.setBackground(Color.BLUE);
+		ledPanel.setBackground(Color.BLACK);
 		telPanel.setLayout(new BorderLayout());
 		telPanel.add(lblTel, BorderLayout.PAGE_START);
 		telPanel.add(txtTel, BorderLayout.CENTER);
