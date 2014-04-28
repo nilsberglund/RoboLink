@@ -7,7 +7,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "SlaveSensor.h"
+#include "Slave_sensor.h"
 
 /*
 uint8_t instruction_data;

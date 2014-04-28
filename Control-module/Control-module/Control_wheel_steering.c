@@ -18,12 +18,12 @@ int8_t getError()
 	volatile int8_t marker = 0;
 	volatile uint8_t counter1 = 0;
 	error = 0;
-	uint8_t lineData;
-	lineData = sensor_data;
+	uint8_t line_data;
+	line_data = sensor_data;
 	
 	for (int8_t noShift = 6; noShift >= 0; noShift--)
 	{
-		res = ((lineData >> noShift) & 0x01);
+		res = ((line_data >> noShift) & 0x01);
 		if(res == 1)
 		{
 			marker = marker + (7 - noShift);

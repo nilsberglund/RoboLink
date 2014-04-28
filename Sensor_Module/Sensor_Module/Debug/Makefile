@@ -38,7 +38,7 @@ SUBDIRS :=
 C_SRCS +=  \
 ../SensorCalMajor.c \
 ../Sensor_Module.c \
-../SlaveSensor.c
+../Slave_sensor.c
 
 
 PREPROCESSING_SRCS += 
@@ -50,22 +50,22 @@ ASM_SRCS +=
 OBJS +=  \
 SensorCalMajor.o \
 Sensor_Module.o \
-SlaveSensor.o
+Slave_sensor.o
 
 OBJS_AS_ARGS +=  \
 SensorCalMajor.o \
 Sensor_Module.o \
-SlaveSensor.o
+Slave_sensor.o
 
 C_DEPS +=  \
 SensorCalMajor.d \
 Sensor_Module.d \
-SlaveSensor.d
+Slave_sensor.d
 
 C_DEPS_AS_ARGS +=  \
 SensorCalMajor.d \
 Sensor_Module.d \
-SlaveSensor.d
+Slave_sensor.d
 
 OUTPUT_FILE_PATH +=Sensor_Module.elf
 

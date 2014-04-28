@@ -26,8 +26,8 @@ Discarded input sections
  .bss           0x00000000        0x0 SensorCalMajor.o
  .text          0x00000000        0x0 Sensor_Module.o
  .bss           0x00000000        0x0 Sensor_Module.o
- .text          0x00000000        0x0 SlaveSensor.o
- .bss           0x00000000        0x0 SlaveSensor.o
+ .text          0x00000000        0x0 Slave_sensor.o
+ .bss           0x00000000        0x0 Slave_sensor.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -73,7 +73,7 @@ Address of section .data set to 0x800100
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
 LOAD SensorCalMajor.o
 LOAD Sensor_Module.o
-LOAD SlaveSensor.o
+LOAD Slave_sensor.o
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51\libm.a
 END GROUP
@@ -285,13 +285,13 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .text.main     0x00000352        0xc Sensor_Module.o
                 0x00000352                main
  .text.SPI_Init_Slave
-                0x0000035e        0xc SlaveSensor.o
+                0x0000035e        0xc Slave_sensor.o
                 0x0000035e                SPI_Init_Slave
  .text.Slave_TX
-                0x0000036a        0x8 SlaveSensor.o
+                0x0000036a        0x8 Slave_sensor.o
                 0x0000036a                Slave_TX
  .text.__vector_19
-                0x00000372       0x60 SlaveSensor.o
+                0x00000372       0x60 Slave_sensor.o
                 0x00000372                __vector_19
                 0x000003d2                . = ALIGN (0x2)
  *(.fini9)
@@ -326,7 +326,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
  .data          0x00800100        0x0 SensorCalMajor.o
  .data          0x00800100        0x0 Sensor_Module.o
- .data          0x00800100        0x0 SlaveSensor.o
+ .data          0x00800100        0x0 Slave_sensor.o
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_clear_bss.o)
  *(.data*)
@@ -408,7 +408,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .comment       0x00000000       0x2f SensorCalMajor.o
                                  0x30 (size before relaxing)
  .comment       0x00000000       0x30 Sensor_Module.o
- .comment       0x00000000       0x30 SlaveSensor.o
+ .comment       0x00000000       0x30 Slave_sensor.o
 
 .debug
  *(.debug)
@@ -429,49 +429,49 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_aranges
                 0x00000058       0x20 Sensor_Module.o
  .debug_aranges
-                0x00000078       0x30 SlaveSensor.o
+                0x00000078       0x30 Slave_sensor.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x558
+.debug_info     0x00000000      0x552
  *(.debug_info)
- .debug_info    0x00000000      0x2b2 SensorCalMajor.o
- .debug_info    0x000002b2      0x1af Sensor_Module.o
- .debug_info    0x00000461       0xf7 SlaveSensor.o
+ .debug_info    0x00000000      0x2ac SensorCalMajor.o
+ .debug_info    0x000002ac      0x1af Sensor_Module.o
+ .debug_info    0x0000045b       0xf7 Slave_sensor.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x2b6
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x121 SensorCalMajor.o
  .debug_abbrev  0x00000121       0xe0 Sensor_Module.o
- .debug_abbrev  0x00000201       0xb5 SlaveSensor.o
+ .debug_abbrev  0x00000201       0xb5 Slave_sensor.o
 
-.debug_line     0x00000000      0x53a
+.debug_line     0x00000000      0x540
  *(.debug_line)
- .debug_line    0x00000000      0x2e4 SensorCalMajor.o
- .debug_line    0x000002e4      0x111 Sensor_Module.o
- .debug_line    0x000003f5      0x145 SlaveSensor.o
+ .debug_line    0x00000000      0x2e7 SensorCalMajor.o
+ .debug_line    0x000002e7      0x112 Sensor_Module.o
+ .debug_line    0x000003f9      0x147 Slave_sensor.o
 
 .debug_frame    0x00000000      0x1e0
  *(.debug_frame)
  .debug_frame   0x00000000      0x130 SensorCalMajor.o
  .debug_frame   0x00000130       0x24 Sensor_Module.o
- .debug_frame   0x00000154       0x8c SlaveSensor.o
+ .debug_frame   0x00000154       0x8c Slave_sensor.o
 
-.debug_str      0x00000000      0x1dd
+.debug_str      0x00000000      0x1d7
  *(.debug_str)
- .debug_str     0x00000000      0x18c SensorCalMajor.o
-                                0x1c0 (size before relaxing)
- .debug_str     0x0000018c       0x29 Sensor_Module.o
+ .debug_str     0x00000000      0x185 SensorCalMajor.o
+                                0x1b9 (size before relaxing)
+ .debug_str     0x00000185       0x29 Sensor_Module.o
                                 0x174 (size before relaxing)
- .debug_str     0x000001b5       0x28 SlaveSensor.o
-                                0x113 (size before relaxing)
+ .debug_str     0x000001ae       0x29 Slave_sensor.o
+                                0x114 (size before relaxing)
 
 .debug_loc      0x00000000      0x356
  *(.debug_loc)
  .debug_loc     0x00000000      0x28b SensorCalMajor.o
- .debug_loc     0x0000028b       0xcb SlaveSensor.o
+ .debug_loc     0x0000028b       0xcb Slave_sensor.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -483,7 +483,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x48 SensorCalMajor.o
  .debug_ranges  0x00000048       0x10 Sensor_Module.o
- .debug_ranges  0x00000058       0x20 SlaveSensor.o
+ .debug_ranges  0x00000058       0x20 Slave_sensor.o
 
 .debug_macro
  *(.debug_macro)

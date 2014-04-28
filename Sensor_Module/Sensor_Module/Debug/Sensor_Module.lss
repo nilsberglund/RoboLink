@@ -17,19 +17,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .debug_aranges 000000a8  00000000  00000000  00000bfe  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00000558  00000000  00000000  00000ca6  2**0
+  7 .debug_info   00000552  00000000  00000000  00000ca6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000002b6  00000000  00000000  000011fe  2**0
+  8 .debug_abbrev 000002b6  00000000  00000000  000011f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   0000053a  00000000  00000000  000014b4  2**0
+  9 .debug_line   00000540  00000000  00000000  000014ae  2**0
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_frame  000001e0  00000000  00000000  000019f0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001dd  00000000  00000000  00001bd0  2**0
+ 11 .debug_str    000001d7  00000000  00000000  00001bd0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000356  00000000  00000000  00001dad  2**0
+ 12 .debug_loc    00000356  00000000  00000000  00001da7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000078  00000000  00000000  00002103  2**0
+ 13 .debug_ranges 00000078  00000000  00000000  000020fd  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -134,10 +134,10 @@ Disassembly of section .text:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
 
 000000ae <initADC>:
-	analogRead(ch);
 }
+*/
 
-/*Initializes the AD converter.*/
+
 void initADC() {
 	ch = 0;										// Make sure that we start on first channel
   ae:	10 92 24 01 	sts	0x0124, r1
@@ -170,9 +170,9 @@ void initADC() {
 	EIMSK =0x01;
   dc:	81 e0       	ldi	r24, 0x01	; 1
   de:	8d bb       	out	0x1d, r24	; 29
-	for(int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for(int i=0; i<7; i++)
 	{
-			channelThresholds[cnt_ch] = 180;
+			channelThresholds[i] = 180;
   e0:	84 eb       	ldi	r24, 0xB4	; 180
   e2:	80 93 1b 01 	sts	0x011B, r24
   e6:	80 93 1c 01 	sts	0x011C, r24
@@ -189,7 +189,6 @@ void initADC() {
 00000102 <analogRead>:
 }
 
-/*Starts an AD conversion on the channel ch. (0<=ch<=6).*/
 void analogRead (int ch){
 	ADMUX &= 0xF8;									// Set 3 lsb:s to 0
  102:	ec e7       	ldi	r30, 0x7C	; 124
@@ -214,7 +213,7 @@ void analogRead (int ch){
 
 
 }
-/*Interrupt when button pushed for calibration.*/
+
 ISR(INT0_vect) {						// First ADC conversion after button press
  11e:	1f 92       	push	r1
  120:	0f 92       	push	r0
@@ -252,7 +251,7 @@ ISR(INT0_vect) {						// First ADC conversion after button press
  164:	91 05       	cpc	r25, r1
  166:	29 f0       	breq	.+10     	; 0x172 <__vector_1+0x54>
 }
-/*Interrupt when button pushed for calibration.*/
+
 ISR(INT0_vect) {						// First ADC conversion after button press
 	ch = 0;
 	caliMode = 1;
@@ -296,9 +295,9 @@ ISR(INT0_vect) {						// First ADC conversion after button press
 000001aa <calcThresholds>:
 
 
+
 ////////////////////////////Mathematical functions//////////////////////////////////////////
 
-/*Calculates the individual thresholds for the seven sensors. Called in calibrationMode when two calibrations are done.*/ 
 void calcThresholds(){
  1aa:	cf 93       	push	r28
  1ac:	df 93       	push	r29
@@ -310,9 +309,9 @@ void calcThresholds(){
  1b8:	b1 e0       	ldi	r27, 0x01	; 1
  1ba:	29 e1       	ldi	r18, 0x19	; 25
  1bc:	31 e0       	ldi	r19, 0x01	; 1
-	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for (int i=0; i<7; i++)
 	{
-		channelThresholds[cnt_ch] = lightVector[cnt_ch] + ((darkVector[cnt_ch] - lightVector[cnt_ch]) / 2);
+		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
  1be:	81 91       	ld	r24, Z+
  1c0:	49 91       	ld	r20, Y+
  1c2:	90 e0       	ldi	r25, 0x00	; 0
@@ -325,16 +324,16 @@ void calcThresholds(){
  1d0:	84 0f       	add	r24, r20
  1d2:	8d 93       	st	X+, r24
 
+
 ////////////////////////////Mathematical functions//////////////////////////////////////////
 
-/*Calculates the individual thresholds for the seven sensors. Called in calibrationMode when two calibrations are done.*/ 
 void calcThresholds(){
-	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for (int i=0; i<7; i++)
  1d4:	e2 17       	cp	r30, r18
  1d6:	f3 07       	cpc	r31, r19
  1d8:	91 f7       	brne	.-28     	; 0x1be <calcThresholds+0x14>
 	{
-		channelThresholds[cnt_ch] = lightVector[cnt_ch] + ((darkVector[cnt_ch] - lightVector[cnt_ch]) / 2);
+		channelThresholds[i] = lightVector[i] + ((darkVector[i] - lightVector[i]) / 2);
 	}
 }
  1da:	df 91       	pop	r29
@@ -342,10 +341,10 @@ void calcThresholds(){
  1de:	08 95       	ret
 
 000001e0 <calibrationMode>:
+	
+
 }
 
-/*Function that handles the AD conversion values at calibration mode. Counts up to the next channel and starts a new conversion in 
-calibration mode.*/
 void calibrationMode() {
 	if (buttonPushed == 1){ //calibrate light 
  1e0:	80 91 02 01 	lds	r24, 0x0102
@@ -415,7 +414,7 @@ void calibrationMode() {
  25e:	51 cf       	rjmp	.-350    	; 0x102 <analogRead>
 
 00000260 <calcOneByteLineVector>:
-/*Calculates the sensorData which is received later by the control module. The value 0 stands for floor and 1 stands for tape. */
+
 void calcOneByteLineVector(){
 	
 	//Add millis or counter
@@ -427,27 +426,27 @@ void calcOneByteLineVector(){
  268:	eb e1       	ldi	r30, 0x1B	; 27
  26a:	f1 e0       	ldi	r31, 0x01	; 1
 	
-	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for (int i=0; i<7; i++)
  26c:	80 e0       	ldi	r24, 0x00	; 0
  26e:	90 e0       	ldi	r25, 0x00	; 0
 	{
-		if (newSensorValues[cnt_ch] > channelThresholds[cnt_ch])
+		if (newSensorValues[i] > channelThresholds[i])
 		{
-			sensor_data |= (1<<cnt_ch);
+			sensor_data |= (1<<i);
  270:	41 e0       	ldi	r20, 0x01	; 1
  272:	50 e0       	ldi	r21, 0x00	; 0
 	
 	sensor_data = 0;
 	
-	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for (int i=0; i<7; i++)
 	{
-		if (newSensorValues[cnt_ch] > channelThresholds[cnt_ch])
+		if (newSensorValues[i] > channelThresholds[i])
  274:	3d 91       	ld	r19, X+
  276:	21 91       	ld	r18, Z+
  278:	23 17       	cp	r18, r19
  27a:	60 f4       	brcc	.+24     	; 0x294 <calcOneByteLineVector+0x34>
 		{
-			sensor_data |= (1<<cnt_ch);
+			sensor_data |= (1<<i);
  27c:	60 91 00 01 	lds	r22, 0x0100
  280:	9a 01       	movw	r18, r20
  282:	08 2e       	mov	r0, r24
@@ -463,24 +462,24 @@ void calcOneByteLineVector(){
 	
 	sensor_data = 0;
 	
-	for (int cnt_ch=0; cnt_ch<7; cnt_ch++)
+	for (int i=0; i<7; i++)
  294:	01 96       	adiw	r24, 0x01	; 1
  296:	87 30       	cpi	r24, 0x07	; 7
  298:	91 05       	cpc	r25, r1
  29a:	61 f7       	brne	.-40     	; 0x274 <calcOneByteLineVector+0x14>
-		if (newSensorValues[cnt_ch] > channelThresholds[cnt_ch])
 		{
-			sensor_data |= (1<<cnt_ch);
+			sensor_data |= (1<<i);
 		}
 	}
+	//Send to other avr
 }
  29c:	08 95       	ret
 
 0000029e <defaultMode>:
 
+
 ////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
 
-/*Function that handles the AD conversion values at default mode. Counts up to the next channel and starts a new conversion. */ 
 void defaultMode() {
 	newSensorValues[ch] = adcValue;
  29e:	80 91 23 01 	lds	r24, 0x0123
@@ -509,7 +508,7 @@ void defaultMode() {
  2ca:	85 b1       	in	r24, 0x05	; 5
  2cc:	88 7f       	andi	r24, 0xF8	; 248
  2ce:	85 b9       	out	0x05, r24	; 5
-	PORTB |= ch;							//Light up new channel
+	PORTB |= ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
  2d0:	95 b1       	in	r25, 0x05	; 5
  2d2:	80 91 23 01 	lds	r24, 0x0123
  2d6:	89 2b       	or	r24, r25
@@ -520,8 +519,8 @@ void defaultMode() {
  2e2:	0f cf       	rjmp	.-482    	; 0x102 <analogRead>
 
 000002e4 <__vector_24>:
-
-
+uint8_t sensor_data = 0;
+*/
 
 ////////////Interupts///////////////
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
@@ -591,7 +590,7 @@ ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 
 00000352 <main>:
 #include "SensorCalMajor.h"
-#include "SlaveSensor.h"
+#include "Slave_sensor.h"
 
 int main(void)
 {
