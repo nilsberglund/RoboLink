@@ -10,6 +10,7 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include "Master_communication.h"
+#include "Bluetooth_Receiver.h"
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()
@@ -25,7 +26,11 @@ void SPI_Init_Master()
 	EICRA = 0b00111100;
 	EIMSK = 0b00000110;
 	//Enable global interrupt
+	sei();
 	
+	TCCR0A = 0;
+	TCCR0B = 0x05;
+	TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;
 	Control_Slave = 2;
@@ -37,7 +42,12 @@ void SPI_Init_Master()
 	as = 5;
 	ar = 6;
 	rs = 7;
-	received = 0;
+	//received = 0;
+	
+	OCR0A = 122;
+	OCR0B = 125;
+	TCNT0 = 0;
+	
 			
 }
 
@@ -131,6 +141,7 @@ void TX_sensor_data()
 	Slave_Select(Control_Slave);
 	Master_TX(sensor_data);
 }
+
 
 
 /* Function that tells the sensor slave to transmit sensor data. */

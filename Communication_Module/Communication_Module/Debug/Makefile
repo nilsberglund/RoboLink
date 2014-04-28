@@ -36,8 +36,11 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Bluetooth_Receiver.c \
 ../Communication_Module.c \
-../Master_communication.c
+../LCD_new.c \
+../Master_communication.c \
+../warehouseMode.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,20 +50,32 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Bluetooth_Receiver.o \
 Communication_Module.o \
-Master_communication.o
+LCD_new.o \
+Master_communication.o \
+warehouseMode.o
 
 OBJS_AS_ARGS +=  \
+Bluetooth_Receiver.o \
 Communication_Module.o \
-Master_communication.o
+LCD_new.o \
+Master_communication.o \
+warehouseMode.o
 
 C_DEPS +=  \
+Bluetooth_Receiver.d \
 Communication_Module.d \
-Master_communication.d
+LCD_new.d \
+Master_communication.d \
+warehouseMode.d
 
 C_DEPS_AS_ARGS +=  \
+Bluetooth_Receiver.d \
 Communication_Module.d \
-Master_communication.d
+LCD_new.d \
+Master_communication.d \
+warehouseMode.d
 
 OUTPUT_FILE_PATH +=Communication_Module.elf
 
@@ -73,6 +88,12 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 

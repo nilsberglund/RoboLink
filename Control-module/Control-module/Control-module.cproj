@@ -123,6 +123,12 @@
     <Compile Include="Control_wheel_steering.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Servo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Slave_control.c">
       <SubType>compile</SubType>
     </Compile>

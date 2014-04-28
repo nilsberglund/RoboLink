@@ -1,5 +1,7 @@
 package robolinkControlPanel;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -25,12 +28,27 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	KeybindingController2 keybindingController = null;
 
 	//all the variables (buttons, labels etc.)
-	public int speed;
+	public int speed = 1;
 	
 	//setting up instruction bytes and data bytes
-	final public byte DRIVEINSTR = 1;
-	final public byte ARMINSTR = 2;
-	final public byte CALINSTR = 3;
+	final public byte DRIVEINSTR = 1; //instruction byte for drive data
+	final public byte ARMINSTR = 2; //instruction byte for arm data
+	final public byte CALINSTR = 3; //instruction byte for calibration data
+	final public byte PCONINSTR = 4; //instruction byte for pickup control data
+	
+	final public byte STOP = 0;
+	final public byte BW1 = 1;
+	final public byte BW2 = 9;
+	final public byte FR1 = 2;
+	final public byte FR2 = 10;
+	final public byte FL1 = 3;
+	final public byte FL2 = 11;
+	final public byte FW1 = 4;
+	final public byte FW2 = 12;
+	
+	final public byte SPICKUP = 1;
+	final public byte EPICKUP = 2;
+	final public byte APICKUP = 3;
 	
 	final public byte J1LB = 25;
 	final public byte J1LS = 17;
@@ -72,6 +90,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnBodyForwardRight;
 	
 	public JButton btnCalibration;
+	public JButton btnEndPickup;
+	public JButton btnStartPickup;
+	public JButton btnAbortPickup;
 	
 	public JButton btnJoint1LB;
 	public JButton btnJoint1LS;
@@ -109,6 +130,15 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JLabel lblDrive;
 	public JLabel lblCalibration;
 	public JLabel lblArm;
+	public JLabel lblPickupControl;
+	public JLabel lblTel;
+	public JLabel lblLED1;
+	public JLabel lblLED2;
+	public JLabel lblLED3;
+	public JLabel lblLED4;
+	public JLabel lblLED5;
+	public JLabel lblLED6;
+	public JLabel lblLED7;
 	public JSlider speedSlider;
 
 	//layout for whole window and panel variables
@@ -116,6 +146,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JPanel conPanel;
 	public JPanel navPanel;
 	public JPanel telPanel;
+	public JPanel ledPanel;
 
 
 	/** Creates new form GUI */
@@ -149,6 +180,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyForwardRight = new JButton("FR");
 		btnBodyStop = new JButton("STOP");
 		btnCalibration = new JButton("CAL");
+		btnEndPickup = new JButton("END PICKUP");
+		btnStartPickup = new JButton("START PICKUP");
+		btnAbortPickup = new JButton("ABORT PICKUP");
 		
 		btnJoint1LB = new JButton("J1 <<");
 		btnJoint1LS = new JButton("J1 <");
@@ -190,6 +224,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyForwardRight.setActionCommand("FR");
 		btnBodyStop.setActionCommand("stop");
 		btnCalibration.setActionCommand("calibration");
+		btnEndPickup.setActionCommand("endpickup");
+		btnStartPickup.setActionCommand("startpickup");
+		btnAbortPickup.setActionCommand("abortpickup");
 		
 		btnJoint1LB.setActionCommand("J1LB");
 		btnJoint1LS.setActionCommand("J1LS");
@@ -221,20 +258,30 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		btnDPP.setActionCommand("DPP");
 		
-		//Instantiating the sliders, text areas etc
-		speedSlider = new JSlider(JSlider.VERTICAL, 1, 5, 1); //vertical layout, minlvl 1, maxlvl 5, start 1
+		//Instantiating the sliders, text areas, labels etc
+		speedSlider = new JSlider(JSlider.VERTICAL, 1, 2, 1); //vertical layout, minlvl 1, maxlvl 2, start 1
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
 		txtTel = new JTextArea();
+		lblTel = new JLabel();
 		lblDrive = new JLabel();
 		lblArm = new JLabel();
 		lblCalibration = new JLabel();
+		lblPickupControl = new JLabel();
+		lblLED1 = new JLabel("•");
+		lblLED2 = new JLabel("•");
+		lblLED3 = new JLabel("•");
+		lblLED4 = new JLabel("•");
+		lblLED5 = new JLabel("•");
+		lblLED6 = new JLabel("•");
+		lblLED7 = new JLabel("•");
 
 		grid = new GridLayout(0, 3);
 		conPanel = new JPanel();
 		navPanel = new JPanel();
 		telPanel = new JPanel();
+		ledPanel = new JPanel();
 		
 		//Adding action listeners
 		btnConnect.addActionListener(this);
@@ -245,6 +292,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyForwardLeft.addActionListener(this);
 		btnBodyForwardRight.addActionListener(this);
 		btnCalibration.addActionListener(this);
+		btnEndPickup.addActionListener(this);
+		btnStartPickup.addActionListener(this);
+		btnAbortPickup.addActionListener(this);
 		btnJoint1LB.addActionListener(this);
 		btnJoint1LS.addActionListener(this);
 		btnJoint1RB.addActionListener(this);
@@ -271,6 +321,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//CONPANEL
+		//conPanel.setLayout(new BorderLayout());
 		txtLog.setEditable(false);
 		txtLog.setLineWrap(true);
 		txtLog.setFocusable(false);
@@ -286,6 +337,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblArm.setText("ARM");
 		lblCalibration.setText("CALIBRATION");
 		lblDrive.setText("DRIVE");
+		lblPickupControl.setText("PICKUP CONTROL");
 
 		//Setting up the slider
 		speedSlider.addChangeListener(this);
@@ -337,15 +389,43 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		navPanel.add(btnJoint6LS);
 		navPanel.add(btnJoint6RS);
 		navPanel.add(btnDPP);
+		
+		//pickup control buttons and label
+		navPanel.add(lblPickupControl);
+		navPanel.add(btnStartPickup);
+		navPanel.add(btnEndPickup);
+		navPanel.add(btnAbortPickup);
+		
 
 
 		//TELPANEL
+		
 		txtTel.setEditable(false);
 		txtTel.setLineWrap(true);
 		txtTel.setFocusable(false);
 		txtTel.setColumns(15);
 		txtTel.setRows(20);
-		telPanel.add(txtTel);
+		lblTel.setText("TELEMETRY");
+		lblLED1.setForeground(Color.WHITE);
+		lblLED2.setForeground(Color.WHITE);
+		lblLED3.setForeground(Color.WHITE);
+		lblLED4.setForeground(Color.WHITE);
+		lblLED5.setForeground(Color.WHITE);
+		lblLED6.setForeground(Color.WHITE);
+		lblLED7.setForeground(Color.WHITE);
+		ledPanel.add(lblLED1);
+		ledPanel.add(lblLED2);
+		ledPanel.add(lblLED3);
+		ledPanel.add(lblLED4);
+		ledPanel.add(lblLED5);
+		ledPanel.add(lblLED6);
+		ledPanel.add(lblLED7);
+		ledPanel.setBackground(Color.BLUE);
+		telPanel.setLayout(new BorderLayout());
+		telPanel.add(lblTel, BorderLayout.PAGE_START);
+		telPanel.add(txtTel, BorderLayout.CENTER);
+		telPanel.add(ledPanel, BorderLayout.PAGE_END);
+		
 
 
 		//setting up the whole window
@@ -356,7 +436,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		this.setTitle("Robolink Master Control Panel");
 
 
-		this.setSize(800, 600);
+		this.setSize(1000, 600);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -367,7 +447,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider)e.getSource();
 		if (!source.getValueIsAdjusting()) {
-			int speed = (int)source.getValue();
+			speed = (int)source.getValue();
 			System.out.println(speed);
 		}
 	}
@@ -387,22 +467,75 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.disconnect();
 		}
 		else if ("stop".equals(e.getActionCommand())) {
-			// TODO Stop the robot
+			communicator.writeData(DRIVEINSTR);
+			communicator.writeData(STOP);
 		}
 		else if ("FW".equals(e.getActionCommand())) {
-			// TODO Robot forward
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FW1);
+				break;
+			case 2:
+				communicator.writeData(FW2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("BW".equals(e.getActionCommand())) {
-			// TODO Robot backwards
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(BW1);
+				break;
+			case 2:
+				communicator.writeData(BW2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("FL".equals(e.getActionCommand())) {
-			// TODO Robot forward left
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FL1);
+				break;
+			case 2:
+				communicator.writeData(FL2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("FR".equals(e.getActionCommand())) {
-			// TODO Robot forward right
+			communicator.writeData(DRIVEINSTR);
+			switch (speed) {
+			case 1:
+				communicator.writeData(FR1);
+				break;
+			case 2:
+				communicator.writeData(FR2);
+				break;
+			default:
+				break;
+			}
 		}
 		else if ("calibration".equals(e.getActionCommand())) {
 			// TODO Calibrate line sensors
+		}
+		else if ("endpickup".equals(e.getActionCommand())) {
+			communicator.writeData(PCONINSTR);
+			communicator.writeData(EPICKUP);
+		}
+		else if ("startpickup".equals(e.getActionCommand())) {
+			communicator.writeData(PCONINSTR);
+			communicator.writeData(SPICKUP);
+		}
+		else if ("abortpickup".equals(e.getActionCommand())) {
+			communicator.writeData(PCONINSTR);
+			communicator.writeData(APICKUP);
 		}
 		else if ("J1LB".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
@@ -496,6 +629,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(DPP);
 		}
+	}
+	
+	public void paintLED(byte ledByte){
+		//byte led1 = (ledByte & 0x01);
 	}
 
 
