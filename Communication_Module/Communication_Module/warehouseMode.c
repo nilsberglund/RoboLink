@@ -27,7 +27,7 @@ uint8_t historySize = 0;
 
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
-	OCR0A = 0;
+	OCR0A = 0; //no compare => no sensor values. 
 	OCR0B = 0;
 	powerRFID(1);
 	
@@ -45,6 +45,12 @@ void stationMode(){
 		deliveryMode();
 	}
 	stationModeEnable = 0;
+	//leaveStationMode(); 
+}
+
+void leaveStationMode()
+{
+	//send false sensor data. 
 }
 
 
