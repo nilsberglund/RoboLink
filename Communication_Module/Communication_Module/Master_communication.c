@@ -11,6 +11,7 @@
 #include <string.h>
 #include "Master_communication.h"
 #include "Bluetooth_Receiver.h"
+#include "warehouseMode.h"
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
 void SPI_Init_Master()
@@ -136,10 +137,21 @@ void TX_Protocol(uint8_t component)
 void TX_sensor_data()
 {
 	Slave_Select(Control_Slave);
-	TX_Protocol(ss);
+	TX_Protocol(ss); 
 	Slave_Select(No_Slave);
 	Slave_Select(Control_Slave);
+	if (leaveStation == 1) 	//Right after station the robot needs to ignore the tape in order to move forward. 
+	{
+		for(int cnt=0; cnt<10000000000000000; cnt++) //Try another number if too short or long. 
+		{
+			Master_TX(0x08); //send false sensor data. 
+		}
+		leaveStation = 0; 
+	}
+	else
+	{
 	Master_TX(sensor_data);
+	}
 }
 
 

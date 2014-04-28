@@ -18,7 +18,7 @@ _Bool pickUpItem;
 _Bool waitingForStartAbort;
 _Bool waitingForEndPickup;
 _Bool stationRightSide;
-
+_Bool leaveStation; 
 
 //////////////////////////////////////////////////////////
 
@@ -38,6 +38,7 @@ uint8_t historySize;
 ///Programs/////////////////////////////////////////////////////
 void setupLCD();
 void stationMode();
+void leaveStationMode();
 void pickUpMode();
 void deliveryMode();
 _Bool itemInHistory();

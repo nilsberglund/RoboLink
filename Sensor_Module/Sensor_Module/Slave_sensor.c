@@ -26,15 +26,6 @@ ISR(SPI_STC_vect)
 	}
 }
 
-/*
-int main(void)
-{
-    while(1)
-    {
-		
-    }
-}
-*/
 
 void SPI_Init_Slave()
 	{

@@ -21,12 +21,18 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 		TX_sensor_data();
 		stationRightSide = 0; 
 		stationModeEnable = 1;
+		stationMode();
+		//OCR0A = 0; //no compare => no sensor values.
+		//OCR0B = 0;
  	
 	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)	 
 	{
 		TX_sensor_data();
 		stationRightSide = 1;
 		stationModeEnable = 1;
+		stationMode();
+		//OCR0A = 0; //no compare => no sensor values.
+		//OCR0B = 0;
 		
 	}	
 	Slave_Select(Control_Slave);
@@ -49,12 +55,12 @@ ISR(INT2_vect)
 
 ISR(TIMER0_COMPA_vect)
 {
-	//RX_sensor_data();
+	RX_sensor_data();
 }
 
 ISR(TIMER0_COMPB_vect)
 {
-	//TX_sensor_data();
+	TX_sensor_data();
 }
 
 ISR(USART0_RX_vect)
@@ -112,13 +118,15 @@ int main(void)
 {
 	SPI_Init_Master();
 	setupBluetoothRXTX();
+	setupRFID();
+	setupLCD();
 	
 	while(1)
 	{
-		if(stationModeEnable == 1)
-		{
-			stationMode();
-		}
+		//if(stationModeEnable == 1)
+		//{
+		//	stationMode();
+		//}
 	}
 }
 
