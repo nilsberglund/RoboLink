@@ -2,6 +2,7 @@ package robolinkControlPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -269,13 +269,17 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblArm = new JLabel();
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
-		lblLED1 = new JLabel("O");
-		lblLED2 = new JLabel("O");
-		lblLED3 = new JLabel("O");
-		lblLED4 = new JLabel("O");
-		lblLED5 = new JLabel("O");
-		lblLED6 = new JLabel("O");
-		lblLED7 = new JLabel("O");
+		
+		//Font myFont = new Font("Arial", Font.BOLD, 18);
+		//lblLED1.setFont(myFont);
+		 
+		lblLED1 = new JLabel("•");
+		lblLED2 = new JLabel("•");
+		lblLED3 = new JLabel("•");
+		lblLED4 = new JLabel("•");
+		lblLED5 = new JLabel("•");
+		lblLED6 = new JLabel("•");
+		lblLED7 = new JLabel("•");
 
 		grid = new GridLayout(0, 3);
 		conPanel = new JPanel();
@@ -456,6 +460,12 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("connect".equals(e.getActionCommand())){
+
+ 			
+	//		paintLED((byte)15); // Enter decimal number for paintLED (ex. 15 => 00001111)
+			
+		
+			
 			communicator.connect();
 			if (communicator.getConnected() == true) {
 				if (communicator.initIOStream() == true) {
@@ -632,7 +642,71 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 	
 	public void paintLED(byte ledByte){
-		//byte led1 = (ledByte & 0x01);
+		
+		int led1 = (ledByte & 0x01);
+		if (led1 == 1) {
+			lblLED1.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED1.setForeground(Color.WHITE);
+		}
+		
+		int led2 = ((ledByte >> 1) & 0x01);
+		if (led2 == 1) {
+			lblLED2.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED2.setForeground(Color.WHITE);
+		}
+		
+		int led3 = ((ledByte >> 2) & 0x01);
+		if (led3 == 1) {
+			lblLED3.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED3.setForeground(Color.WHITE);
+		}
+		
+		int led4 = ((ledByte >> 3) & 0x01);
+		if (led4 == 1) {
+			lblLED4.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED4.setForeground(Color.WHITE);
+		}
+		
+		int led5 = ((ledByte >> 4) & 0x01);
+		if (led5 == 1) {
+			lblLED5.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED5.setForeground(Color.WHITE);
+		}
+		
+		int led6 = ((ledByte >> 5) & 0x01);
+		if (led6 == 1) {
+			lblLED6.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED6.setForeground(Color.WHITE);
+		}
+		
+		int led7 = ((ledByte >> 6) & 0x01);
+		if (led7 == 1) {
+			lblLED7.setForeground(Color.RED);
+		}
+		else
+		{
+			lblLED7.setForeground(Color.WHITE);
+		}
+		
+		
 	}
 
 
