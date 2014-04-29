@@ -269,10 +269,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblArm = new JLabel();
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
-		
-		//Font myFont = new Font("Arial", Font.BOLD, 18);
-		//lblLED1.setFont(myFont);
-		 
+				 
 		lblLED1 = new JLabel("•");
 		lblLED2 = new JLabel("•");
 		lblLED3 = new JLabel("•");
@@ -280,7 +277,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblLED5 = new JLabel("•");
 		lblLED6 = new JLabel("•");
 		lblLED7 = new JLabel("•");
-
+		
+		Font dotFont = new Font("SansSerif", Font.BOLD, 28);
+		lblLED1.setFont(dotFont);
+		lblLED2.setFont(dotFont);
+		lblLED3.setFont(dotFont);
+		lblLED4.setFont(dotFont);
+		lblLED5.setFont(dotFont);
+		lblLED6.setFont(dotFont);
+		lblLED7.setFont(dotFont);
+		
 		grid = new GridLayout(0, 3);
 		conPanel = new JPanel();
 		navPanel = new JPanel();
@@ -460,12 +466,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if("connect".equals(e.getActionCommand())){
-
- 			
-	//		paintLED((byte)15); // Enter decimal number for paintLED (ex. 15 => 00001111)
-			
-		
-			
 			communicator.connect();
 			if (communicator.getConnected() == true) {
 				if (communicator.initIOStream() == true) {
@@ -706,6 +706,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			lblLED7.setForeground(Color.WHITE);
 		}
 		
+		this.repaint();
 		
 	}
 
