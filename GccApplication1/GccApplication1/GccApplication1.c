@@ -1,90 +1,111 @@
-		/*
-		 * ADconvertion_line_sensors.c
-		 *
-		 * Created: 3/27/2014 2:47:10 PM
-		 *  Author: susba199
-		 */ 
-
-
 		#include <avr/io.h>
 		#include <avr/interrupt.h>
 		
+		
 		void initADC();
-		void analogRead (int i);
+		void analogRead (int ch);
 		void calibrateSensors();
-		 static volatile uint8_t adc_res = 0; 
-		 int i = 0; 
-		 uint8_t res_tot[7];  
+		void calcThresholds();
+		void waitForButton();
+		
+		uint8_t adcValue = 0;
+		int ch = 0;
+		
+		uint8_t channelThresholds[7];
+		// uint8_t res_tot[7];
+		uint8_t darkComplete = 0;
+		uint8_t darkVector[7];			//Nulla på något sätt??
+		uint8_t lightVector[7];		//Nulla på något sätt??
 
 
-					ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
-					{
-						adc_res = ADCL;			// OBS! Must read ADCL before ADCH
-						adc_res = ADCH;  // Output ADCH to internal version 
-						res_tot[i] = adc_res; 
-						
-						i++; 
-						if (i==7) {
-							i = 0; 
-						}
+		ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
+		{
+			adcValue = ADCL;					// Must read ADCL before ADCH
+			adcValue = ADCH;					// Output ADCH to managable byte adcValue
+			
+			if (darkComplete == 0){
+				darkVector[ch] = adcValue;	//Add values in darkVector for first calibration
+			}
+			
+			if (darkComplete == 1){
+				lightVector[ch] = adcValue;		//Add values in lightVector for second calibration
+				if (ch == 6){
+					calcThresholds();
+				}
+			}
+			
+			ch++;								//go to next channel
+			
+			if (ch==7) {
+				darkComplete = 1;
+				ch = 0; 
+			}
+			else {
+			
+			PORTB = ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+			analogRead(ch);						//Read analog value on new channel
+			
+			}
+		}
 
-						PORTB = i; 
-						//tillkalla funktion som tar hand om adc_res. 
-						 //välj rätt diod och rätt mux-kanal genom att sätta portarna till rätt värde.
+		
 
-						analogRead(i);
-						
+		ISR(INT0_vect) {						// First ADC conversion after button press
+			//EICRA |= (1<<INTF0); 
+			EICRA |=(1<<ISC00);							// Sets the ISC00 to 1 rising edge triggering
+			EICRA |=(1<<ISC01);							// Sets ISC01 to 1
+			EIMSK =0x01;
+			analogRead(0);
+			
 
-					}
+		}
 
-					ISR(INT0_vect) { //vid kalibrering via knapp 
-				
-						ADCSRA |=(1<<ADSC);
-						//while(!(ADCSRA & (1<<ADIF)));
+		
+		int main(void)										// borde heta initADC() sen kanske?
+		{
 
-					}
+			initADC();
+			sei(); 								// Enable Global Interrupts
+			//calibrateSensors();
+			
+			waitForButton();
+			
+		}
+		
 
 		void initADC() {
-			
-			DDRA = 0x00;				// Configure PortA as input, all pins
-			DDRB |= (1<<DDB2) | (1<<DDB1) | (1<<DDB0); 				// Configure PortB as output, pin PB0, PB1, PB2.
-			PORTB = 0; //ändra sen till bara dom lägsta bitarna. 
-			ADMUX = 0x20;			// AREF, left justify
-			// data registers and select ADC0 as input channel. skapa loop som växlar mellan ADC0 och ADC6.
-			ADCSRA = 0x8B;			// Enable the ADC and its interrupt feature
+			ch = 0;										// Make sure that we start on first channel
+			DDRA = 0x00;								// Configure PortA as input for analog readings
+			DDRB |= (1<<DDB2) | (1<<DDB1) | (1<<DDB0); 	// Configure PortB as output, pin PB0, PB1, PB2.
+			PORTB = 0;									// MUX-address = 0,		ändra sen till bara dom lägsta bitarna.
+			ADMUX = 0x20;								// AREF, left justify (msb-lsb configuration), Data registers and select ADC0 as input channel. skapa loop som växlar mellan ADC0 och ADC6.
+			ADCSRA = 0x8B;								// Enable the ADC and its interrupt feature
 			// and set the ACD clock pre-scalar to clk/64
-			
-			EICRA |=(1<<ISC00);   //Sets the ISC00 to 1 rising edge triggering
-			EICRA |=(1<<ISC01);	  //Sets ISC01 to 1
+			EICRA |=(1<<ISC00);							// Sets the ISC00 to 1 rising edge triggering
+			EICRA |=(1<<ISC01);							// Sets ISC01 to 1
 			EIMSK =0x01;
+		}
+		
+		void waitForButton() {
 			
-			sei(); 				// Enable Global Interrupts
+			while(1);
+			{
+			}
 		}
 		
 		
-		void analogRead (int i){
-			ADMUX &= 0xF8; //nollställ de tre minst signifikanta bitarna.
-			ADMUX |= i; //Select pin ADC0..ADC6 using MUX.
+		void analogRead (int ch){
+			ADMUX &= 0xF8;									// Set 3 lsb:s to 0
+			ADMUX |= ch;									// Select pin ADC0..ADC6 using MUX.
+			ADCSRA |=(1<<ADSC);								// Start conversion
 			
-			ADCSRA |=(1<<ADSC);
-			
-		}	
-		
-		//void calibrateSensors() { 
-		//}		
-
-		int main(void) // borde heta initADC() sen kanske? 
-		{
-	
-						initADC(); 
-						//calibrateSensors(); 
-  
-	        
-					while(1);
-					{
-							// Wait forever
-					}
-								
-					return 0; 			
+			//while(!(ADCSRA & (1<<ADIF)));
 		}
-	
+		
+		
+		void calcThresholds(){
+			for (int channel=0; channel<7; channel++)
+			{
+				channelThresholds[ch] = ((lightVector[ch] - darkVector[ch]) / 2);
+			}
+		}

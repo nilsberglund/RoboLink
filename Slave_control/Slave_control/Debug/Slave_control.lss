@@ -1,0 +1,394 @@
+
+Slave_control.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000006  00800100  0000022c  000002c0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000022c  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000010  00800106  00800106  000002c6  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  000002c8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000097  00000000  00000000  00000994  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      0000002f  00000000  00000000  00000a2b  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 00000038  00000000  00000000  00000a5a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   000001f5  00000000  00000000  00000a92  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 000000ed  00000000  00000000  00000c87  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   00000215  00000000  00000000  00000d74  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  0000009c  00000000  00000000  00000f8c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    00000147  00000000  00000000  00001028  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    000000cb  00000000  00000000  0000116f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000028  00000000  00000000  0000123a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	60 c0       	rjmp	.+192    	; 0xc6 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	5e c0       	rjmp	.+188    	; 0xc6 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	5c c0       	rjmp	.+184    	; 0xc6 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	5a c0       	rjmp	.+180    	; 0xc6 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	58 c0       	rjmp	.+176    	; 0xc6 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	56 c0       	rjmp	.+172    	; 0xc6 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	54 c0       	rjmp	.+168    	; 0xc6 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	52 c0       	rjmp	.+164    	; 0xc6 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	50 c0       	rjmp	.+160    	; 0xc6 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	4e c0       	rjmp	.+156    	; 0xc6 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	4c c0       	rjmp	.+152    	; 0xc6 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	4a c0       	rjmp	.+148    	; 0xc6 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	48 c0       	rjmp	.+144    	; 0xc6 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	46 c0       	rjmp	.+140    	; 0xc6 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	44 c0       	rjmp	.+136    	; 0xc6 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	42 c0       	rjmp	.+132    	; 0xc6 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	40 c0       	rjmp	.+128    	; 0xc6 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	3e c0       	rjmp	.+124    	; 0xc6 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	4e c0       	rjmp	.+156    	; 0xea <__vector_19>
+  4e:	00 00       	nop
+  50:	3a c0       	rjmp	.+116    	; 0xc6 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	38 c0       	rjmp	.+112    	; 0xc6 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	36 c0       	rjmp	.+108    	; 0xc6 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	34 c0       	rjmp	.+104    	; 0xc6 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	32 c0       	rjmp	.+100    	; 0xc6 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	30 c0       	rjmp	.+96     	; 0xc6 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	2e c0       	rjmp	.+92     	; 0xc6 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	2c c0       	rjmp	.+88     	; 0xc6 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	2a c0       	rjmp	.+84     	; 0xc6 <__bad_interrupt>
+  72:	00 00       	nop
+  74:	28 c0       	rjmp	.+80     	; 0xc6 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	26 c0       	rjmp	.+76     	; 0xc6 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	24 c0       	rjmp	.+72     	; 0xc6 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	22 c0       	rjmp	.+68     	; 0xc6 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	20 c0       	rjmp	.+64     	; 0xc6 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	1e c0       	rjmp	.+60     	; 0xc6 <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	ec e2       	ldi	r30, 0x2C	; 44
+  a0:	f2 e0       	ldi	r31, 0x02	; 2
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	a6 30       	cpi	r26, 0x06	; 6
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+
+000000b2 <__do_clear_bss>:
+  b2:	21 e0       	ldi	r18, 0x01	; 1
+  b4:	a6 e0       	ldi	r26, 0x06	; 6
+  b6:	b1 e0       	ldi	r27, 0x01	; 1
+  b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
+
+000000ba <.do_clear_bss_loop>:
+  ba:	1d 92       	st	X+, r1
+
+000000bc <.do_clear_bss_start>:
+  bc:	a6 31       	cpi	r26, 0x16	; 22
+  be:	b2 07       	cpc	r27, r18
+  c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
+  c2:	0d d0       	rcall	.+26     	; 0xde <main>
+  c4:	b1 c0       	rjmp	.+354    	; 0x228 <_exit>
+
+000000c6 <__bad_interrupt>:
+  c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
+
+000000c8 <SPI_Init_Slave>:
+}
+
+void SPI_Init_Slave()
+	{
+
+			DDRD = 0xFF;
+  c8:	8f ef       	ldi	r24, 0xFF	; 255
+  ca:	8a b9       	out	0x0a, r24	; 10
+			DDRB = 0x48;
+  cc:	88 e4       	ldi	r24, 0x48	; 72
+  ce:	84 b9       	out	0x04, r24	; 4
+			
+			SPCR = 0xC3;
+  d0:	83 ec       	ldi	r24, 0xC3	; 195
+  d2:	8c bd       	out	0x2c, r24	; 44
+			
+			sei(); 
+  d4:	78 94       	sei
+			
+			wheel_steering_data = 0x22;
+  d6:	82 e2       	ldi	r24, 0x22	; 34
+  d8:	80 93 14 01 	sts	0x0114, r24
+  dc:	08 95       	ret
+
+000000de <main>:
+	
+}
+
+int main(void)
+{
+	SPI_Init_Slave();
+  de:	f4 df       	rcall	.-24     	; 0xc8 <SPI_Init_Slave>
+  e0:	ff cf       	rjmp	.-2      	; 0xe0 <main+0x2>
+
+000000e2 <Slave_TX>:
+			wheel_steering_data = 0x22;
+	}
+	
+void Slave_TX(uint8_t data)
+	{
+		SPDR = data;
+  e2:	8e bd       	out	0x2e, r24	; 46
+		PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
+  e4:	2b 9a       	sbi	0x05, 3	; 5
+		PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
+  e6:	2b 98       	cbi	0x05, 3	; 5
+  e8:	08 95       	ret
+
+000000ea <__vector_19>:
+
+void SPI_Init_Slave();
+void Slave_TX(uint8_t);
+
+ISR(SPI_STC_vect)
+{
+  ea:	1f 92       	push	r1
+  ec:	0f 92       	push	r0
+  ee:	0f b6       	in	r0, 0x3f	; 63
+  f0:	0f 92       	push	r0
+  f2:	11 24       	eor	r1, r1
+  f4:	0b b6       	in	r0, 0x3b	; 59
+  f6:	0f 92       	push	r0
+  f8:	2f 93       	push	r18
+  fa:	3f 93       	push	r19
+  fc:	4f 93       	push	r20
+  fe:	5f 93       	push	r21
+ 100:	6f 93       	push	r22
+ 102:	7f 93       	push	r23
+ 104:	8f 93       	push	r24
+ 106:	9f 93       	push	r25
+ 108:	af 93       	push	r26
+ 10a:	bf 93       	push	r27
+ 10c:	ef 93       	push	r30
+ 10e:	ff 93       	push	r31
+	data = SPDR;
+ 110:	8e b5       	in	r24, 0x2e	; 46
+ 112:	80 93 15 01 	sts	0x0115, r24
+	PORTD = data;
+ 116:	8b b9       	out	0x0b, r24	; 11
+	
+	if(waiting_for_instruction)
+ 118:	80 91 04 01 	lds	r24, 0x0104
+ 11c:	88 23       	and	r24, r24
+ 11e:	99 f1       	breq	.+102    	; 0x186 <__vector_19+0x9c>
+	{
+		if(data == 0b10000100)
+ 120:	80 91 15 01 	lds	r24, 0x0115
+ 124:	84 38       	cpi	r24, 0x84	; 132
+ 126:	39 f4       	brne	.+14     	; 0x136 <__vector_19+0x4c>
+		{
+			waiting_for_instruction = !waiting_for_instruction;
+ 128:	10 92 04 01 	sts	0x0104, r1
+			component = sensor;
+ 12c:	80 91 03 01 	lds	r24, 0x0103
+ 130:	80 93 07 01 	sts	0x0107, r24
+ 134:	66 c0       	rjmp	.+204    	; 0x202 <__vector_19+0x118>
+		} else if (data == 0b10000101)
+ 136:	85 38       	cpi	r24, 0x85	; 133
+ 138:	39 f4       	brne	.+14     	; 0x148 <__vector_19+0x5e>
+		{
+			waiting_for_instruction = !waiting_for_instruction;
+ 13a:	10 92 04 01 	sts	0x0104, r1
+			component = wheel;
+ 13e:	80 91 01 01 	lds	r24, 0x0101
+ 142:	80 93 07 01 	sts	0x0107, r24
+ 146:	5d c0       	rjmp	.+186    	; 0x202 <__vector_19+0x118>
+		} else if(data == 0b10000110)
+ 148:	86 38       	cpi	r24, 0x86	; 134
+ 14a:	39 f4       	brne	.+14     	; 0x15a <__vector_19+0x70>
+		{
+			waiting_for_instruction = !waiting_for_instruction;
+ 14c:	10 92 04 01 	sts	0x0104, r1
+			component = arm;
+ 150:	80 91 02 01 	lds	r24, 0x0102
+ 154:	80 93 07 01 	sts	0x0107, r24
+ 158:	54 c0       	rjmp	.+168    	; 0x202 <__vector_19+0x118>
+		}	else if(data == 0b10101011)
+ 15a:	8b 3a       	cpi	r24, 0xAB	; 171
+ 15c:	39 f4       	brne	.+14     	; 0x16c <__vector_19+0x82>
+		{
+			waiting_for_instruction = !waiting_for_instruction;
+ 15e:	10 92 04 01 	sts	0x0104, r1
+			component = RFIDcomp;
+ 162:	80 91 00 01 	lds	r24, 0x0100
+ 166:	80 93 07 01 	sts	0x0107, r24
+ 16a:	4b c0       	rjmp	.+150    	; 0x202 <__vector_19+0x118>
+		}	else if(data == 0b00000101)
+ 16c:	85 30       	cpi	r24, 0x05	; 5
+ 16e:	21 f4       	brne	.+8      	; 0x178 <__vector_19+0x8e>
+		{
+			Slave_TX(wheel_steering_data);
+ 170:	80 91 14 01 	lds	r24, 0x0114
+ 174:	b6 df       	rcall	.-148    	; 0xe2 <Slave_TX>
+ 176:	45 c0       	rjmp	.+138    	; 0x202 <__vector_19+0x118>
+		}	else if(data == 0b00000110)
+ 178:	86 30       	cpi	r24, 0x06	; 6
+ 17a:	09 f0       	breq	.+2      	; 0x17e <__vector_19+0x94>
+ 17c:	42 c0       	rjmp	.+132    	; 0x202 <__vector_19+0x118>
+		{
+			Slave_TX(robot_arm_data);
+ 17e:	80 91 08 01 	lds	r24, 0x0108
+ 182:	af df       	rcall	.-162    	; 0xe2 <Slave_TX>
+ 184:	3e c0       	rjmp	.+124    	; 0x202 <__vector_19+0x118>
+		}
+	} else
+	{
+		if(component == sensor)
+ 186:	80 91 07 01 	lds	r24, 0x0107
+ 18a:	90 91 03 01 	lds	r25, 0x0103
+ 18e:	89 13       	cpse	r24, r25
+ 190:	08 c0       	rjmp	.+16     	; 0x1a2 <__vector_19+0xb8>
+		{
+			sensor_data = data;
+ 192:	80 91 15 01 	lds	r24, 0x0115
+ 196:	80 93 09 01 	sts	0x0109, r24
+			waiting_for_instruction = !waiting_for_instruction;
+ 19a:	81 e0       	ldi	r24, 0x01	; 1
+ 19c:	80 93 04 01 	sts	0x0104, r24
+ 1a0:	30 c0       	rjmp	.+96     	; 0x202 <__vector_19+0x118>
+		}else if (component == arm)
+ 1a2:	90 91 02 01 	lds	r25, 0x0102
+ 1a6:	89 13       	cpse	r24, r25
+ 1a8:	08 c0       	rjmp	.+16     	; 0x1ba <__vector_19+0xd0>
+		{
+			robot_arm_data = data;
+ 1aa:	80 91 15 01 	lds	r24, 0x0115
+ 1ae:	80 93 08 01 	sts	0x0108, r24
+			waiting_for_instruction = !waiting_for_instruction;
+ 1b2:	81 e0       	ldi	r24, 0x01	; 1
+ 1b4:	80 93 04 01 	sts	0x0104, r24
+ 1b8:	24 c0       	rjmp	.+72     	; 0x202 <__vector_19+0x118>
+		} else if (component == wheel)
+ 1ba:	90 91 01 01 	lds	r25, 0x0101
+ 1be:	89 13       	cpse	r24, r25
+ 1c0:	08 c0       	rjmp	.+16     	; 0x1d2 <__vector_19+0xe8>
+		{
+			wheel_steering_data = data;
+ 1c2:	80 91 15 01 	lds	r24, 0x0115
+ 1c6:	80 93 14 01 	sts	0x0114, r24
+			waiting_for_instruction = !waiting_for_instruction;
+ 1ca:	81 e0       	ldi	r24, 0x01	; 1
+ 1cc:	80 93 04 01 	sts	0x0104, r24
+ 1d0:	18 c0       	rjmp	.+48     	; 0x202 <__vector_19+0x118>
+		} else if (component == RFIDcomp)
+ 1d2:	90 91 00 01 	lds	r25, 0x0100
+ 1d6:	89 13       	cpse	r24, r25
+ 1d8:	14 c0       	rjmp	.+40     	; 0x202 <__vector_19+0x118>
+		{
+			
+			RFID[counter] = data;
+ 1da:	80 91 06 01 	lds	r24, 0x0106
+ 1de:	e8 2f       	mov	r30, r24
+ 1e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e2:	e6 5f       	subi	r30, 0xF6	; 246
+ 1e4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 1e6:	90 91 15 01 	lds	r25, 0x0115
+ 1ea:	90 83       	st	Z, r25
+			if(counter == 9)
+ 1ec:	89 30       	cpi	r24, 0x09	; 9
+ 1ee:	31 f4       	brne	.+12     	; 0x1fc <__vector_19+0x112>
+			{
+				waiting_for_instruction = !waiting_for_instruction;
+ 1f0:	81 e0       	ldi	r24, 0x01	; 1
+ 1f2:	80 93 04 01 	sts	0x0104, r24
+				counter = 0;
+ 1f6:	10 92 06 01 	sts	0x0106, r1
+ 1fa:	03 c0       	rjmp	.+6      	; 0x202 <__vector_19+0x118>
+			} else
+			{
+				counter++;
+ 1fc:	8f 5f       	subi	r24, 0xFF	; 255
+ 1fe:	80 93 06 01 	sts	0x0106, r24
+		}
+		}
+	
+	
+	
+}
+ 202:	ff 91       	pop	r31
+ 204:	ef 91       	pop	r30
+ 206:	bf 91       	pop	r27
+ 208:	af 91       	pop	r26
+ 20a:	9f 91       	pop	r25
+ 20c:	8f 91       	pop	r24
+ 20e:	7f 91       	pop	r23
+ 210:	6f 91       	pop	r22
+ 212:	5f 91       	pop	r21
+ 214:	4f 91       	pop	r20
+ 216:	3f 91       	pop	r19
+ 218:	2f 91       	pop	r18
+ 21a:	0f 90       	pop	r0
+ 21c:	0b be       	out	0x3b, r0	; 59
+ 21e:	0f 90       	pop	r0
+ 220:	0f be       	out	0x3f, r0	; 63
+ 222:	0f 90       	pop	r0
+ 224:	1f 90       	pop	r1
+ 226:	18 95       	reti
+
+00000228 <_exit>:
+ 228:	f8 94       	cli
+
+0000022a <__stop_program>:
+ 22a:	ff cf       	rjmp	.-2      	; 0x22a <__stop_program>

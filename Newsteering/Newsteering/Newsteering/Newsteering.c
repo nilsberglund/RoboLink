@@ -30,17 +30,18 @@ int main(void)
 	speed = 25;
 	driving_setup();
 	sei();
+	
+			for(int test =0; test<50000; test++){
+				drive_forward();
+			}
+	
 	while(1)
     {
-		
-		drive_forward();
-		//drive_backward();
-	
-      
-		//		PORTD |= (1 << PORTD6)|(0 << PORTD7);   //PORT 6 = LEFT (FORWARD 1 BACKWARD 0) PORT 7 RIGHT (FORWARD 0 BACKWARD 1) 
-														// Corrected in drive function. I.e. Write 1,1 to move forwards, 0,0 to move backwards
-		//		OCR1A = 65000;
-		//		OCR1B = 65000; 
+
+		//	_delay_ms(400);
+			
+			drive_backward();
+
     }
 }
 
@@ -49,14 +50,10 @@ void driving_setup()
 {
 	TCCR1A	= 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing. 
 	TCCR1B  = 2;  //Sets the prescaling to 8
-	
 	TIMSK1 |= (1 << OCIE1A)|(1 << OCIE0B);   //Enables the compare interrupts
-	
 	TCNT1 = 0;
-	
 	OCR1A = 0;   
 	OCR1B = 0;
-	
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7);
 }
 
@@ -88,15 +85,11 @@ void drive(int right_dir, int left_dir, int speed_left, int speed_right)
 		PORTD |= (0 << PORTD6);
 	}
 	
-	/*accelerate.. 
-	for (int i = 1; i <= 10; i++)
-	{
-		OCR1A = pulse_width_from_speed(speed*i/10);
-		OCR1B = pulse_width_from_speed(speed*i/10);
-		_delay_ms(10);
-	}
-	*/
+
 }
+
+
+//////////////////Drive functions////////////////////// 
 
 /* Function allowing the robot to move forwards */
 void drive_forward()
@@ -131,26 +124,14 @@ void drive_right_forward()
 	drive(1,1, speed, tmp_speed);	
 }
 
-/*
-void PD_control() 
-{
-	get_sensor_data();   //Ask for sensor data from the sensor module
-	
-	calculate_error()?
-	
-	set_control_constants();
-	
-	P =
-	D =
-	
-	
-}
 
-*/
-/*
-void set_control_constants(int p, int d)
-{
-	P = p;
-	D = d;
-}
-*/
+
+
+	/*accelerate.. 
+	for (int i = 1; i <= 10; i++)
+	{
+		OCR1A = pulse_width_from_speed(speed*i/10);
+		OCR1B = pulse_width_from_speed(speed*i/10);
+		_delay_ms(10);
+	}
+	*/
