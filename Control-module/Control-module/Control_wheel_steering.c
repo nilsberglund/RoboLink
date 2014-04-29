@@ -186,6 +186,18 @@ void drive_left_forward(uint8_t speed)
 	drive(1, 1, speed + 40, speed - 40);
 }
 
+void rotateCCW()
+{
+	uint8_t speed = 160;
+	drive(1, 0, speed, speed);
+}
+
+void rotateCW()
+{
+	uint8_t speed = 160;
+	drive(0, 1, speed, speed);
+}
+
 void moveRobot()
 {
 	uint8_t FASTSPEED = 80;
@@ -225,6 +237,12 @@ void moveRobot()
 		} else if(wheel_steering_data == 0b00000000)
 		{
 			stop();
+		} else if(wheel_steering_data == 0b00000101)
+		{
+			rotateCW();
+		} else if(wheel_steering_data == 0b00000110)
+		{
+			rotateCCW();
 		}
 	}
 }
