@@ -18,16 +18,18 @@ volatile uint8_t rightWheelSpeed;
 volatile uint8_t leftWheelSpeed;
 volatile uint8_t rightWheelDirection;
 volatile uint8_t leftWheelDirection;
-uint8_t midspeed;
+uint8_t midSpeed;
 
 /*-------Functions---------*/
-void driving_setup();
+void drivingSetup();
 void drive(int, int, uint16_t, uint16_t);
 void controlAlgorithm();
 int8_t getError();
 int8_t calculateSpeed(int8_t);
-uint8_t calculateMidSpeed(int8_t);
+uint8_t calculatemidSpeed(int8_t);
 void stop();
 void moveRobot();
+void rotateCW();
+void rotateCCW();
 
 #endif /* CONTROL_WHEEL_STEERING_H_ */

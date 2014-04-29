@@ -13,7 +13,7 @@
 
 int main(void)
 {
-	SPI_Init_Slave();
+	SPIInitSlave();
 	initADC();
 	analogRead(0);
 	

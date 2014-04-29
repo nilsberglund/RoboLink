@@ -16,21 +16,21 @@ ISR(SPI_STC_vect)
 {
 	data = SPDR;
 
-	if(waiting_for_instruction == 1)
+	if(waitingForInstruction == 1)
 	{
 		if(data == 0b10000100)
 		{
-			waiting_for_instruction = 0;
+			waitingForInstruction = 0;
 			component = SENSOR;
 			
 		} else if (data == 0b10000101)
 		{
-			waiting_for_instruction = 0;
+			waitingForInstruction = 0;
 			component = WHEEL;
 			
 		} else if(data == 0b10000110)
 		{
-			waiting_for_instruction = 0;
+			waitingForInstruction = 0;
 			component = ARM;
 			
 		}
@@ -39,19 +39,19 @@ ISR(SPI_STC_vect)
 	{
 		if(component == SENSOR)
 		{
-			sensor_data = data;
+			sensorData = data;
 			controlAlgorithm();
-			waiting_for_instruction = 1;
+			waitingForInstruction = 1;
 		}else if (component == ARM)
 		{
-			robot_arm_data = data;
-			move_Arm(robot_arm_data);
-			waiting_for_instruction = 1;
+			armData = data;
+			moveArm(armData);
+			waitingForInstruction = 1;
 		} else if (component == WHEEL)
 		{
-			wheel_steering_data = data;
+			steeringData = data;
 			moveRobot();
-			waiting_for_instruction = 1;
+			waitingForInstruction = 1;
 		}
 	}
 }
@@ -59,9 +59,9 @@ ISR(SPI_STC_vect)
 
 int main(void)
 {
-	SPI_Init_Slave();
-	driving_setup();
-	Arm_Init();
+	SPIInitSlave();
+	drivingSetup();
+	armInit();
 	while(1)
 	{
 		

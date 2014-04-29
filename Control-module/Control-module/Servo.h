@@ -7,14 +7,14 @@ uint16_t joint5_Pos;
 uint16_t joint6_Pos;
 
 //functions
-void Arm_Init(void);
-void USART_Transmit( unsigned char data);
-void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID);
-void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2);
-void default_Position();
-void pickup_Default_Position();
-void drop_Item(_Bool side);
-void move_Arm(uint8_t armData);
+void armInit(void);
+void USARTTransmit( unsigned char data);
+void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID);
+void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2);
+void defaultPosition();
+void pickupDefaultPosition();
+void dropItem(_Bool side);
+void moveArm(uint8_t armData);
 
 #define ENABLE_BIT_DEFINITIONS
 

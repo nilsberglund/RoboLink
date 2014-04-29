@@ -25,11 +25,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_frame  000002bc  00000000  00000000  00003a00  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000047a  00000000  00000000  00003cbc  2**0
+ 11 .debug_str    00000479  00000000  00000000  00003cbc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000e7c  00000000  00000000  00004136  2**0
+ 12 .debug_loc    00000e7c  00000000  00000000  00004135  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000000e8  00000000  00000000  00004fb2  2**0
+ 13 .debug_ranges 000000e8  00000000  00000000  00004fb1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -287,10 +287,10 @@ int main(void)
  19a:	ff cf       	rjmp	.-2      	; 0x19a <main+0x6>
 
 0000019c <getError>:
-#include "Control_wheel_steering.h"
 #include "Slave_control.h"
 #include <stdlib.h>
 
+/*Function that calculates the line error*/
 int8_t getError()
 {
  19c:	cf 93       	push	r28
@@ -307,15 +307,15 @@ int8_t getError()
  1ac:	1b 82       	std	Y+3, r1	; 0x03
 	error = 0;
  1ae:	10 92 11 01 	sts	0x0111, r1
-	uint8_t line_data;
-	line_data = sensor_data;
+	uint8_t lineData;
+	lineData = sensor_data;
  1b2:	40 91 01 01 	lds	r20, 0x0101
  1b6:	86 e0       	ldi	r24, 0x06	; 6
  1b8:	90 e0       	ldi	r25, 0x00	; 0
 	
 	for (int8_t noShift = 6; noShift >= 0; noShift--)
 	{
-		res = ((line_data >> noShift) & 0x01);
+		res = ((lineData >> noShift) & 0x01);
  1ba:	50 e0       	ldi	r21, 0x00	; 0
  1bc:	9a 01       	movw	r18, r20
  1be:	08 2e       	mov	r0, r24
