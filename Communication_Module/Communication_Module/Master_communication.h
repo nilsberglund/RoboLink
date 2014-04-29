@@ -28,7 +28,6 @@ uint8_t rs;
 uint8_t wanted_data;
 unsigned char RFID[10];
 uint8_t i;
-//volatile uint8_t received;
 
 
 /* Functions */

@@ -13,7 +13,7 @@
 #include "warehouseMode.h"
 #include "hd44780_low.h"
 
-ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
+ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 {
 	Slave_Select(Sensor_Slave);	//slave select
 	sensor_data = Master_RX(0x01); //sending dummy
@@ -22,18 +22,14 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 		TX_sensor_data();
 		stationRightSide = 0;
 		stationModeEnable = 1;
-		//stationMode();
-		//OCR0A = 0; //no compare => no sensor values.
-		//OCR0B = 0;
+		bluetoothTX(sensor_data);
 		
 	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
 		TX_sensor_data();
 		stationRightSide = 1;
 		stationModeEnable = 1;
-		//stationMode();
-		//OCR0A = 0; //no compare => no sensor values.
-		//OCR0B = 0;
+		bluetoothTX(sensor_data);
 		
 	}
 	Slave_Select(Control_Slave);
@@ -56,13 +52,19 @@ ISR(INT2_vect)
 
 ISR(TIMER0_COMPA_vect)
 {
-	RX_sensor_data();
+	if(stationModeEnable == 0)
+	{
+		RX_sensor_data();
+	}
 }
 
 ISR(TIMER0_COMPB_vect)
 {
-	TX_sensor_data();
-	//bluetoothTX(sensor_data);
+	if(stationModeEnable == 0)
+	{
+		TX_sensor_data();
+		bluetoothTX(sensor_data);
+	}
 }
 
 ISR(USART0_RX_vect)

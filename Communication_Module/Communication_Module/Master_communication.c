@@ -142,17 +142,11 @@ void TX_sensor_data()
 	Slave_Select(Control_Slave);
 	if (leaveStation == 1) 	//Right after station the robot needs to ignore the tape in order to move forward. 
 	{
-		for(int cnt=0; cnt<35; cnt++) //Try another number if too short or long. 
-		{
-			Master_TX(0x08); //send false sensor data. 
-		}
-		leaveStation = 0;
-		OCR0A = 122;
-		OCR0B = 125;
+		Master_TX(0x08);	
 	}
 	else
 	{
-	Master_TX(sensor_data);
+		Master_TX(sensor_data);
 	}
 }
 

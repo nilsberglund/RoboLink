@@ -8,29 +8,22 @@
 #include "Master_communication.h"
 
 
-//Variables////////////////////////////////////////////////////////////////
 uint8_t newStream[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t cargo[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t history[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
 
-uint8_t digit = 0;
-uint8_t historySize = 0;
-/////////////////////////////////////////////////////////////////////////////
 
-
-// Borde fixa en warehouse init funktion
 
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
-	OCR0A = 0; //no compare => no sensor values. 
-	OCR0B = 0;
+	
 	powerRFID(1);
 	
 	while (streamFilled == 0)
 	{
 		//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
 	}
-	
+	streamFilled = 0;
 	if (carryItem == 0)
 	{
 		pickUpMode();
@@ -39,14 +32,19 @@ void stationMode(){
 	{
 		deliveryMode();
 	}
-	stationModeEnable = 0;
+	
 	leaveStationMode(); 
+	stationModeEnable = 0;
 }
 
 void leaveStationMode()
 {
 	leaveStation = 1; 
-	TX_sensor_data();
+	for (int falseDataCount = 1; falseDataCount < 500; falseDataCount++)
+	{
+		TX_sensor_data();
+	}
+		leaveStation = 0;
 }
 
 
@@ -228,7 +226,9 @@ void setupWarehouse(){
 	waitingForEndPickup = 0;
 	leaveStation = 0;
 	stationModeEnable = 0;
-}
+	digit = 0;
+	historySize = 0;
+	}
 
 void setupLCD(){
 	// setting I/O configuration for pins
@@ -240,14 +240,14 @@ void setupLCD(){
 	low_conf.rw_i = 0;
 	low_conf.en_i = 6;
 	
-	low_conf.db7_i = 0;
-	low_conf.db6_i = 1;
-	low_conf.db5_i = 2;
-	low_conf.db4_i = 3;
-	low_conf.db3_i = 4;
-	low_conf.db2_i = 5;
-	low_conf.db1_i = 6;
-	low_conf.db0_i = 7;
+	low_conf.db7_i = 7;
+	low_conf.db6_i = 6;
+	low_conf.db5_i = 5;
+	low_conf.db4_i = 4;
+	low_conf.db3_i = 3;
+	low_conf.db2_i = 2;
+	low_conf.db1_i = 1;
+	low_conf.db0_i = 0;
 	low_conf.rs_port = &PORTB;
 	low_conf.rw_port = &PORTB;
 	low_conf.en_port = &PORTC;
