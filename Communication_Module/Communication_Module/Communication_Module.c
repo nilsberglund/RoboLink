@@ -9,8 +9,9 @@
 #include "Communication_Module.h"
 #include "Master_communication.h"
 #include <avr/interrupt.h>
-#include "Bluetooth_Receiver.h"
+#include "Bluetooth.h"
 #include "warehouseMode.h"
+#include "hd44780_low.h"
 
 ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 {
@@ -19,22 +20,22 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
 	if(sensor_data == 0b00001111 || sensor_data == 0b00011111)
 	{
 		TX_sensor_data();
-		stationRightSide = 0; 
+		stationRightSide = 0;
 		stationModeEnable = 1;
-		stationMode();
+		//stationMode();
 		//OCR0A = 0; //no compare => no sensor values.
 		//OCR0B = 0;
- 	
-	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)	 
+		
+	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
 		TX_sensor_data();
 		stationRightSide = 1;
 		stationModeEnable = 1;
-		stationMode();
+		//stationMode();
 		//OCR0A = 0; //no compare => no sensor values.
 		//OCR0B = 0;
 		
-	}	
+	}
 	Slave_Select(Control_Slave);
 	
 }
@@ -61,6 +62,7 @@ ISR(TIMER0_COMPA_vect)
 ISR(TIMER0_COMPB_vect)
 {
 	TX_sensor_data();
+	//bluetoothTX(sensor_data);
 }
 
 ISR(USART0_RX_vect)
@@ -120,13 +122,14 @@ int main(void)
 	setupBluetoothRXTX();
 	setupRFID();
 	setupLCD();
+	setupWarehouse();
 	
 	while(1)
 	{
-		//if(stationModeEnable == 1)
-		//{
-		//	stationMode();
-		//}
+		if(stationModeEnable == 1)
+		{
+			stationMode();
+		}
 	}
 }
 
