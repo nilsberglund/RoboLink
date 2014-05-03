@@ -10,15 +10,15 @@
 #include <stdbool.h>
 #include "Slave_control.h"
 
-void SPI_Init_Slave()
+void SPIInitSlave()
 {
-	waiting_for_instruction = 1;
+	waitingForInstruction = 1;
 	DDRB = 0x48;	
 	SPCR = 0xC3;		
 	sei(); 
 }
 	
-void Slave_TX(uint8_t data)
+void slaveTX(uint8_t data)
 {
 	SPDR = data;
 	PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.

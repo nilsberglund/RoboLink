@@ -9,45 +9,30 @@
 #include <avr/interrupt.h>
 #include "Slave_sensor.h"
 
-/*
-uint8_t instruction_data;
-uint8_t sensor_data; //from line sensor-file
 
-void SPI_Init_Slave();
-void Slave_TX(uint8_t);
-*/
-
+/* Interrupt that gets triggered when slave has received instruction byte */
 ISR(SPI_STC_vect)
 {
-	instruction_data = SPDR;
-	if(instruction_data == 0b00000100)
+	instructionData = SPDR;
+	if(instructionData == 0b00000100)
 	{
-		Slave_TX(sensor_data);
+		slaveTX(sensorData); 
 	}
 }
 
-/*
-int main(void)
-{
-    while(1)
-    {
-		
-    }
-}
-*/
-
-void SPI_Init_Slave()
+/* Function that initiates the sensor-AVR as a SPI slave*/
+void SPIInitSlave()
 	{
 
-			DDRB = 0x48;
+			DDRB = 0x48; // Sets the data direction for the SPI ports. MISO output, Interrupt output. All others input.
 			
-			SPCR = 0xC3;
+			SPCR = 0xC3; // Sets the SPI Control register. C => 1 << SPIE, 1 << SPE, 
 			
 			sei(); 
 	}
 	
-	
-void Slave_TX(uint8_t data)
+/* Function for transmitting data via SPI */	
+void slaveTX(uint8_t data)
 	{
 		SPDR = data;
 		PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.

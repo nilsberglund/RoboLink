@@ -213,11 +213,15 @@ public class Communicator2 implements SerialPortEventListener
 			try
 			{
 				byte singleData = (byte)input.read();
+						
 
 				if (singleData != NEW_LINE_ASCII)
 				{
 					telText = new String(new byte[] {singleData});
-					window.txtTel.append(telText);
+				//	window.txtTel.append(telText);
+					
+					window.paintLED(singleData);
+					
 				}
 				else
 				{

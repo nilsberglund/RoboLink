@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="FileSystemImportWizard">
+<<<<<<< HEAD
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
@@ -11,6 +12,12 @@
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="1025" key="dialogWidth"/>
 		<item value="533" key="dialogHeight"/>
+=======
+	</section>
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item value="1440" key="dialogWidth"/>
+		<item value="850" key="dialogHeight"/>
+>>>>>>> b859537092fadd9d8b67038cc27f54399412c76a
 		<list key="orderedProviders">
 		</list>
 		<list key="textArray">
@@ -20,10 +27,16 @@
 		<list key="textEntries">
 		</list>
 	</section>
+<<<<<<< HEAD
 	<section name="ImportExportAction">
 		<item value="org.eclipse.ui.wizards.import.FileSystem" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
 			<item value="org.eclipse.ui.Basic"/>
 		</list>
+=======
+	<section name="ZipFileImportWizard">
+	</section>
+	<section name="ImportExportAction">
+>>>>>>> b859537092fadd9d8b67038cc27f54399412c76a
 	</section>
 </section>

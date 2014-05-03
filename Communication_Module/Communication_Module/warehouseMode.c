@@ -3,39 +3,27 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "hd44780_low.h"
-#include "Bluetooth_Receiver.h"
+#include "Bluetooth.h"
 #include "warehouseMode.h"
+#include "Master_communication.h"
 
-//Booleans////////////////////////////////////////////////
-_Bool streamFilled = 0;
-_Bool carryItem = 0;
-_Bool pickUpItem = 0;
-_Bool waitingForStartAbort = 0;
-_Bool waitingForEndPickup = 0;
 
-//////////////////////////////////////////////////////////
-
-//Variables////////////////////////////////////////////////////////////////
 uint8_t newStream[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t cargo[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t history[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
 
-uint8_t digit = 0;
-uint8_t historySize = 0;
-/////////////////////////////////////////////////////////////////////////////
 
 
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
-	OCR0A = 0;
-	OCR0B = 0;
+	
 	powerRFID(1);
 	
 	while (streamFilled == 0)
 	{
 		//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
 	}
-	
+	streamFilled = 0;
 	if (carryItem == 0)
 	{
 		pickUpMode();
@@ -44,7 +32,19 @@ void stationMode(){
 	{
 		deliveryMode();
 	}
+	
+	leaveStationMode(); 
 	stationModeEnable = 0;
+}
+
+void leaveStationMode()
+{
+	leaveStation = 1; 
+	for (int falseDataCount = 1; falseDataCount < 500; falseDataCount++)
+	{
+		TX_sensor_data();
+	}
+		leaveStation = 0;
 }
 
 
@@ -162,10 +162,12 @@ _Bool cargoEqualsNewStream(){
 void powerRFID(_Bool power){
 	if (power == 1)
 	{
+ 		PORTD &= ~(1<<PORTD5);
 		//((Port on AVR connected to RFIDs "Enable") = LOW) => Power up byte reader
 	}
 	else
 	{
+		PORTD |= (1<<PORTD5);
 		//((Port on AVR connected to RFIDs "Enable") = HIGH) => Shut down byte reader
 	}
 }
@@ -207,23 +209,36 @@ void printOnLCD(_Bool shipment){ //Eventuellt göra generisk om vi vill skicka in
 
 }
 
-void SetupRFID(){
-	UCSR1B = (1<<RXEN1 | 1<<TXEN1); //Enable RX0 and TX0
-	UCSR1C = (1 << UCSZ11 | 1 << UCSZ10); //set data length to 8-bit;
-	UBRR1H = 0b00000000;
-	UBRR1L = 0b00011001; //Sets baudvalue in AVR to 25(1mhz), which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
-	UCSR1B |= (1 << RXCIE1); //Enables the rc complete interrupt
+void setupRFID(){
+	UCSR1B |= (1<<RXEN1) | (1 << RXCIE1); //Enable RX1 and the RX complete interrupt
+	UCSR1C |= (1 << UCSZ11)|(1 << UCSZ10); //set data length to 8-bit;
+	UBRR1H = (383 >> 8);
+	UBRR1L = 0b01111111; //Sets baudvalue in AVR to 383, which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
+	DDRD |= (1<<DDD5);
+	PORTD |= (1<<PORTD5);
 }
 
+void setupWarehouse(){
+	streamFilled = 0;
+	carryItem = 0;
+	pickUpItem = 0;
+	waitingForStartAbort = 0;
+	waitingForEndPickup = 0;
+	leaveStation = 0;
+	stationModeEnable = 0;
+	digit = 0;
+	historySize = 0;
+	}
 
 void setupLCD(){
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
-	DDRB = (1 << DDB2)|(1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
+	DDRB |= (1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
+	DDRC |=	(1<< DDC6); 
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
-	low_conf.rs_i = 2;
-	low_conf.rw_i = 1;
-	low_conf.en_i = 0;
+	low_conf.rs_i = 1;
+	low_conf.rw_i = 0;
+	low_conf.en_i = 6;
 	
 	low_conf.db7_i = 7;
 	low_conf.db6_i = 6;
@@ -235,7 +250,7 @@ void setupLCD(){
 	low_conf.db0_i = 0;
 	low_conf.rs_port = &PORTB;
 	low_conf.rw_port = &PORTB;
-	low_conf.en_port = &PORTB;
+	low_conf.en_port = &PORTC;
 	low_conf.db7_port = &PORTA;
 	low_conf.db6_port = &PORTA;
 	low_conf.db5_port = &PORTA;
@@ -249,6 +264,5 @@ void setupLCD(){
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-	
 	
 }

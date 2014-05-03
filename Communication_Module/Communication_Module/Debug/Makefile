@@ -36,7 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../Bluetooth_Receiver.c \
+../Bluetooth.c \
 ../Communication_Module.c \
 ../LCD_new.c \
 ../Master_communication.c \
@@ -50,28 +50,28 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-Bluetooth_Receiver.o \
+Bluetooth.o \
 Communication_Module.o \
 LCD_new.o \
 Master_communication.o \
 warehouseMode.o
 
 OBJS_AS_ARGS +=  \
-Bluetooth_Receiver.o \
+Bluetooth.o \
 Communication_Module.o \
 LCD_new.o \
 Master_communication.o \
 warehouseMode.o
 
 C_DEPS +=  \
-Bluetooth_Receiver.d \
+Bluetooth.d \
 Communication_Module.d \
 LCD_new.d \
 Master_communication.d \
 warehouseMode.d
 
 C_DEPS_AS_ARGS +=  \
-Bluetooth_Receiver.d \
+Bluetooth.d \
 Communication_Module.d \
 LCD_new.d \
 Master_communication.d \

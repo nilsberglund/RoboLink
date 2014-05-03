@@ -12,13 +12,14 @@
 #include "hd44780_low.h"
 
 //Booleans////////////////////////////////////////////////
-_Bool streamFilled;
-_Bool carryItem;
-_Bool pickUpItem;
-_Bool waitingForStartAbort;
-_Bool waitingForEndPickup;
-_Bool stationRightSide;
-
+volatile _Bool streamFilled;
+volatile _Bool carryItem;
+volatile _Bool pickUpItem;
+volatile _Bool waitingForStartAbort;
+volatile _Bool waitingForEndPickup;
+volatile _Bool stationRightSide;
+volatile _Bool leaveStation;
+volatile _Bool stationModeEnable;
 
 //////////////////////////////////////////////////////////
 
@@ -26,7 +27,6 @@ _Bool stationRightSide;
 uint8_t newStream[12];
 uint8_t cargo[12];
 uint8_t history[3][12];
-uint8_t stationModeEnable;
 
 
 struct hd44780_l_conf low_conf;
@@ -38,6 +38,7 @@ uint8_t historySize;
 ///Programs/////////////////////////////////////////////////////
 void setupLCD();
 void stationMode();
+void leaveStationMode();
 void pickUpMode();
 void deliveryMode();
 _Bool itemInHistory();
@@ -47,6 +48,7 @@ void powerRFID(_Bool);
 void waitForUserInputStartAbort();
 void waitForUserInputEndPickup();
 void setupRFID();
+void setupWarehouse();
 ////////////////////////////////////////////////////////////////////
 
 
