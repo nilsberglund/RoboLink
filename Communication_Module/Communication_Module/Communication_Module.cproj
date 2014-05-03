@@ -114,10 +114,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bluetooth_Receiver.c">
+    <Compile Include="Bluetooth.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Bluetooth_Receiver.h">
+    <Compile Include="Bluetooth.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Communication_Module.c">

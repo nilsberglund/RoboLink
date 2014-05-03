@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Bluetooth_Receiver.c
+Bluetooth.c
 
 Communication_Module.c
 
