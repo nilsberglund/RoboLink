@@ -50,6 +50,7 @@ ISR(INT2_vect)
 	}
 }
 
+/* Timer interrupt routine handling sensor data receive */
 ISR(TIMER0_COMPA_vect)
 {
 	if(stationModeEnable == 0)
@@ -58,6 +59,7 @@ ISR(TIMER0_COMPA_vect)
 	}
 }
 
+/* Timer interrupt routine handling sensor data transmission*/
 ISR(TIMER0_COMPB_vect)
 {
 	if(stationModeEnable == 0)
@@ -67,6 +69,8 @@ ISR(TIMER0_COMPB_vect)
 	}
 }
 
+
+/* Interrupt routine for receiving bluetooth data */
 ISR(USART0_RX_vect)
 {
 	btdata = UDR0;
@@ -88,8 +92,10 @@ ISR(USART0_RX_vect)
 	else {
 		waiting_for_instruction = 1;
 		if (component == WHEEL) {
+			if(manualModeEnabled == 1) {
 			wheel_steering_data = btdata;
 			TX_wheel_data();
+			}
 		}
 		else if (component == ARM) {
 			robot_arm_data = btdata;
@@ -118,6 +124,20 @@ ISR(USART1_RX_vect){
 	}
 }
 
+ISR(PCINT3_vect)
+{
+	if(automaticModeEnabled == 1) {	//turns on Manual Mode
+		manualModeEnabled = 1;
+		automaticModeEnabled = 0;
+		TIMSK0 = 0;
+	} else if (manualModeEnabled == 1) { //Turns on Automatic Mode
+		manualModeEnabled = 0;
+		automaticModeEnabled = 1;
+		TIMSK0 = 0x06;
+	}
+		
+}
+
 int main(void)
 {
 	SPI_Init_Master();
@@ -125,6 +145,7 @@ int main(void)
 	setupRFID();
 	setupLCD();
 	setupWarehouse();
+	initAutomaticMode();
 	
 	while(1)
 	{
@@ -135,5 +156,16 @@ int main(void)
 	}
 }
 
+/*Function that initiates automatic mode*/
+void initAutomaticMode()
+{	
+	PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
+	PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20
+	automaticModeEnabled = 0;
+	manualModeEnabled = 1;
+}
 
-
+void changeMode()
+{
+	PCIFR |= (1 << PCIF3);
+}
