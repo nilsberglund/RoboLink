@@ -40,11 +40,13 @@ void stationMode(){
 void leaveStationMode()
 {
 	leaveStation = 1; 
-	for (int falseDataCount = 1; falseDataCount < 500; falseDataCount++)
+	TIMSK0 = 0x00;
+	for (int falseDataCount = 1; falseDataCount < 50; falseDataCount++)
 	{
 		TX_sensor_data();
 	}
-		leaveStation = 0;
+	TIMSK0 = 0x06;
+	leaveStation = 0;
 }
 
 
@@ -108,11 +110,12 @@ void deliveryMode(){
 		}
 		historySize++;
 		
+		waitForUserInputStartAbort();
+		
 		printOnLCD(0); //Prints "No Cargo" on LCD
 		carryItem = 0;
-		
-		
 		//stationDirection = global variabel som beskriver sida om tejp för station. tilldelas egentligen så fort man stött på en station
+		//waitForDropItemInput();
 		//Skicka kommando till styr-AVR och kalla på dropItem(stationDirection)
 		
 	}
@@ -124,7 +127,7 @@ void deliveryMode(){
 
 /*Called by pickupMode(). */
 _Bool itemInHistory(){
-	uint8_t cntEqualElements = 0;
+uint8_t cntEqualElements = 0;
 	
 	for (uint8_t cntHistory = 0; cntHistory < historySize; cntHistory++) //Stegar igenom historiken
 	{

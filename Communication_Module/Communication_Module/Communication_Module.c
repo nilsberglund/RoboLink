@@ -96,7 +96,7 @@ ISR(USART0_RX_vect)
 			TX_arm_data();
 		}
 		else if (component == CALINSTR) {
-			calibration();	
+			//calibration();	
 		}
 		else if (component == PCONINSTR) {
 			handleData(btdata);

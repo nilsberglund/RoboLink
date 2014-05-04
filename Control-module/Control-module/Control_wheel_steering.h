@@ -19,6 +19,7 @@ volatile uint8_t leftWheelSpeed;
 volatile uint8_t rightWheelDirection;
 volatile uint8_t leftWheelDirection;
 uint8_t midSpeed;
+uint8_t numberOfStopRequests;
 
 /*-------Functions---------*/
 void drivingSetup();
