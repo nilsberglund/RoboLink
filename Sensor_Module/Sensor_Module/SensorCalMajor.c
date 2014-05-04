@@ -5,7 +5,7 @@
 #include "SensorCalMajor.h"
 
 
-////////////Interupts///////////////
+/*-------------------------Interrupts------------------------*/
 
 /*Interrupt that is thrown when an AD conversion is complete */ 
 ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
@@ -51,7 +51,15 @@ void initADC() {
 	EIMSK =0x01;
 	for(int i=0; i<7; i++)
 	{
-			channelThresholds[i] = 180;
+		
+		if(i == 1 || i == 2)
+		{
+			channelThresholds[i] = 195;
+		}
+		else
+		{
+			channelThresholds[i] = 160;
+		}
 	}
 	sei(); 
 }
@@ -65,7 +73,7 @@ void analogRead (int ch){
 }
 
 
-////////////////////////////Modes for sensor value handlings//////////////////////////////////////////
+/*---------------------------------Modes for sensor value handlings-------------------------------------------*/
 
 
 /*Function that handles the values from the last AD conversion. Starts a new conversion on the next channel.*/
@@ -79,7 +87,7 @@ void defaultMode() {
 	}
 	
 	PORTB &= 0xF8; 							
-	PORTB |= ch;							//Light up new channel, GLÖM EJ måste maskas istället för att överskirvas!
+	PORTB |= ch;							//Light up new channel
 	analogRead(ch);						//Read analog value on new channel
 
 }
@@ -105,7 +113,7 @@ void calibrationMode() {
 	
 	PORTB &= 0xF8; 							
 	PORTB |= ch;								
-						//Light up new channel, GLÖM EJ måste maskas istället för att överskrivas!
+						//Light up new channel
 	analogRead(ch);						//Read analog value on new channel
 	
 
@@ -113,8 +121,9 @@ void calibrationMode() {
 
 
 
-////////////////////////////Mathematical functions//////////////////////////////////////////
+/*--------------------------Mathematical functions--------------------------------*/
 
+/* Function that calculates sensor thresholds */
 void calcThresholds(){
 	for (int i=0; i<7; i++)
 	{
@@ -122,16 +131,17 @@ void calcThresholds(){
 	}
 }
 
+/* Function that reads the sensor values */
 void calcOneByteLineVector(){
 	
 	
-	sensor_data = 0;
+	sensorData = 0;
 	
 	for (int i=0; i<7; i++)
 	{
 		if (newSensorValues[i] > channelThresholds[i])
 		{
-			sensor_data |= (1<<i);
+			sensorData |= (1<<i);
 		}
 	}
 }

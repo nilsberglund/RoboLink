@@ -10,12 +10,12 @@
 #define SLAVE_SENSOR_H_
 
 /*------Variables-------*/
-volatile uint8_t instruction_data;
-volatile uint8_t sensor_data; //from line sensor-file
+volatile uint8_t instructionData;
+volatile uint8_t sensorData; //from line sensor-file
 
 /*------Functions-------*/
-void SPI_Init_Slave();
-void Slave_TX(uint8_t);
+void SPIInitSlave();
+void slaveTX(uint8_t);
 
 
 #endif /* SLAVE_SENSOR_H_ */

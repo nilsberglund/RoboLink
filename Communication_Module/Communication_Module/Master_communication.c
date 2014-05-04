@@ -10,7 +10,7 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include "Master_communication.h"
-#include "Bluetooth_Receiver.h"
+#include "Bluetooth.h"
 #include "warehouseMode.h"
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
@@ -43,24 +43,19 @@ void SPI_Init_Master()
 	as = 5;
 	ar = 6;
 	rs = 7;
-	//received = 0;
 	
 	OCR0A = 122;
 	OCR0B = 125;
-	TCNT0 = 0;
-	
-			
+	TCNT0 = 0;	
 }
 
 //Master transmission to slave
 void Master_TX(volatile uint8_t data)
 {
 		/* Start transmission */
-
 		SPDR = data;
 		/* Wait for transmission complete */
 		while(!(SPSR & (1<<SPIF)));
-
 }
 
 uint8_t Master_RX(volatile uint8_t data){
@@ -73,9 +68,6 @@ uint8_t Master_RX(volatile uint8_t data){
 		return SPDR;
 }
 		
-
-
-
 //Selects slave. PORTB4 = Control_Slave, PORTB3 = Sensor_Slave
 void Slave_Select(volatile uint8_t slave)
 {
@@ -132,7 +124,6 @@ void TX_Protocol(uint8_t component)
 	}
 }
 
-
 /* Function that transmits sensor data to the control slave. */
 void TX_sensor_data()
 {
@@ -142,19 +133,13 @@ void TX_sensor_data()
 	Slave_Select(Control_Slave);
 	if (leaveStation == 1) 	//Right after station the robot needs to ignore the tape in order to move forward. 
 	{
-		for(int cnt=0; cnt<10000000000000000; cnt++) //Try another number if too short or long. 
-		{
-			Master_TX(0x08); //send false sensor data. 
-		}
-		leaveStation = 0; 
+		Master_TX(0x08);	
 	}
 	else
 	{
-	Master_TX(sensor_data);
+		Master_TX(sensor_data);
 	}
 }
-
-
 
 /* Function that tells the sensor slave to transmit sensor data. */
 void RX_sensor_data()
