@@ -28,6 +28,8 @@ void handleData(uint8_t temp)
 		pickUpItem = 0;
 		waitingForStartAbort = 1;
 		break;
+		case 0x04:
+		changeMode();
 	}
 }
 
