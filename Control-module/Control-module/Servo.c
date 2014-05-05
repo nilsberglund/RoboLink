@@ -13,15 +13,6 @@
 
 void armInit(void) {
 	
-	//joint1_Pos = 0x1FF;	//servo 1
-	//joint2_Pos = 0xCC;	//servo 2 & 3
-	//joint3_Pos = 0xCC;	//servo 4 & 5
-	//joint4_Pos = 0x3EE; //servo 6
-	//joint5_Pos = 0x1FF; //servo 7
-	//joint6_Pos = 0x1FF; //servo 8
-	
-	defaultPosition(); //Fungerar detta? Eller måste vi sätta jointsen som ovan?
-	
 	DDRD |= (1<<DDD3); //Setting D2 to output to control the tri-state
 	/*Set baud rate.*/
 	UBRR0H = (unsigned char)(0);  //baudvalue = (f_cpu/baudrate*16) -1
@@ -30,7 +21,8 @@ void armInit(void) {
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/*Set frame format. Asynchronous mode, no parity, 1 stop bit, char size 8.  */
 	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
-	
+		
+	defaultPosition(); 	
 }
 
 void USARTTransmit( unsigned char data) {
@@ -119,7 +111,7 @@ void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 void defaultPosition() {
 	
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 (joint 5) straight
-	moveSingleServo(0x3EE, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up, 0x332?
+	moveSingleServo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up
 	moveDoubleServo(0x1FF, 0x50, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
@@ -129,7 +121,7 @@ void defaultPosition() {
 	joint1_Pos = 0x1FF;
 	joint2_Pos = 0xCC;
 	joint3_Pos = 0xCC;
-	joint4_Pos = 0x3EE; //332?
+	joint4_Pos = 0x332;
 	joint5_Pos = 0x1FF;
 	
 }
@@ -247,7 +239,7 @@ void moveArm(uint8_t armData) {
 				joint4_Pos -= (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
 			}
-			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 1023) //kolla gränserna
+			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 819) //kolla gränserna
 			{
 				joint4_Pos += (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);

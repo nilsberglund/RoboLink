@@ -19,11 +19,13 @@ sensorData          0x1               Control_module.o
 steeringData        0x1               Control_module.o
 leftWheelDirection  0x1               Control_module.o
 data                0x1               Control_module.o
+Kd                  0x1               Control_module.o
 joint3_Pos          0x2               Control_module.o
 numberOfStopRequests
                     0x1               Control_module.o
 error               0x1               Control_module.o
 midSpeed            0x1               Control_module.o
+Kp                  0x1               Control_module.o
 rightWheelDirection
                     0x1               Control_module.o
 waitingForInstruction
@@ -190,7 +192,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xa22
+.text           0x00000000      0xaac
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -281,74 +283,80 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x000000ae                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_19
-                0x000000ae       0xe6 Control_module.o
+                0x000000ae      0x130 Control_module.o
                 0x000000ae                __vector_19
- .text.main     0x00000194        0x8 Control_module.o
-                0x00000194                main
+ .text.main     0x000001de        0x8 Control_module.o
+                0x000001de                main
  .text.getError
-                0x0000019c       0xec Control_wheel_steering.o
-                0x0000019c                getError
+                0x000001e6       0xec Control_wheel_steering.o
+                0x000001e6                getError
  .text.calculateSpeed
-                0x00000288       0x58 Control_wheel_steering.o
-                0x00000288                calculateSpeed
+                0x000002d2       0x5e Control_wheel_steering.o
+                0x000002d2                calculateSpeed
  .text.drivingSetup
-                0x000002e0       0x34 Control_wheel_steering.o
-                0x000002e0                drivingSetup
- .text.drive    0x00000314       0x28 Control_wheel_steering.o
-                0x00000314                drive
+                0x00000330       0x40 Control_wheel_steering.o
+                0x00000330                drivingSetup
+ .text.drive    0x00000370       0x28 Control_wheel_steering.o
+                0x00000370                drive
  .text.driveForward
-                0x0000033c       0x12 Control_wheel_steering.o
-                0x0000033c                driveForward
+                0x00000398       0x12 Control_wheel_steering.o
+                0x00000398                driveForward
  .text.driveBackward
-                0x0000034e       0x12 Control_wheel_steering.o
-                0x0000034e                driveBackward
- .text.stop     0x00000360       0x12 Control_wheel_steering.o
-                0x00000360                stop
+                0x000003aa       0x12 Control_wheel_steering.o
+                0x000003aa                driveBackward
+ .text.stop     0x000003bc       0x12 Control_wheel_steering.o
+                0x000003bc                stop
  .text.controlAlgorithm
-                0x00000372       0xc0 Control_wheel_steering.o
-                0x00000372                controlAlgorithm
+                0x000003ce       0xe4 Control_wheel_steering.o
+                0x000003ce                controlAlgorithm
  .text.driveForwardRight
-                0x00000432       0x18 Control_wheel_steering.o
-                0x00000432                driveForwardRight
+                0x000004b2       0x18 Control_wheel_steering.o
+                0x000004b2                driveForwardRight
  .text.driveForwardLeft
-                0x0000044a       0x18 Control_wheel_steering.o
-                0x0000044a                driveForwardLeft
+                0x000004ca       0x18 Control_wheel_steering.o
+                0x000004ca                driveForwardLeft
  .text.rotateCCW
-                0x00000462       0x12 Control_wheel_steering.o
-                0x00000462                rotateCCW
+                0x000004e2       0x12 Control_wheel_steering.o
+                0x000004e2                rotateCCW
  .text.rotateCW
-                0x00000474       0x12 Control_wheel_steering.o
-                0x00000474                rotateCW
+                0x000004f4       0x12 Control_wheel_steering.o
+                0x000004f4                rotateCW
  .text.moveRobot
-                0x00000486       0x92 Control_wheel_steering.o
-                0x00000486                moveRobot
+                0x00000506       0x92 Control_wheel_steering.o
+                0x00000506                moveRobot
+ .text.changeProportional
+                0x00000598        0x6 Control_wheel_steering.o
+                0x00000598                changeProportional
+ .text.changeDerivative
+                0x0000059e        0x6 Control_wheel_steering.o
+                0x0000059e                changeDerivative
  .text.USARTTransmit
-                0x00000518       0x12 Servo.o
-                0x00000518                USARTTransmit
+                0x000005a4       0x12 Servo.o
+                0x000005a4                USARTTransmit
  .text.moveSingleServo
-                0x0000052a       0x66 Servo.o
-                0x0000052a                moveSingleServo
+                0x000005b6       0x66 Servo.o
+                0x000005b6                moveSingleServo
  .text.moveDoubleServo
-                0x00000590       0xb8 Servo.o
-                0x00000590                moveDoubleServo
+                0x0000061c       0xb8 Servo.o
+                0x0000061c                moveDoubleServo
  .text.defaultPosition
-                0x00000648       0x92 Servo.o
-                0x00000648                defaultPosition
- .text.armInit  0x000006da       0x1a Servo.o
-                0x000006da                armInit
+                0x000006d4       0x92 Servo.o
+                0x000006d4                defaultPosition
+ .text.armInit  0x00000766       0x18 Servo.o
+                0x00000766                armInit
  .text.pickupDefaultPosition
-                0x000006f4       0x7e Servo.o
-                0x000006f4                pickupDefaultPosition
- .text.moveArm  0x00000772      0x29a Servo.o
-                0x00000772                moveArm
+                0x0000077e       0x7e Servo.o
+                0x0000077e                pickupDefaultPosition
+ .text.moveArm  0x000007fc      0x29a Servo.o
+                0x000007fc                moveArm
  .text.SPIInitSlave
-                0x00000a0c       0x12 Slave_control.o
-                0x00000a0c                SPIInitSlave
-                0x00000a1e                . = ALIGN (0x2)
+                0x00000a96       0x12 Slave_control.o
+                0x00000a96                SPIInitSlave
+                0x00000aa8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000a1e        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x00000a1e                _exit
-                0x00000a1e                exit
+ .fini9         0x00000aa8        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x00000aa8                _exit
+                0x00000aa8                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -367,11 +375,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000a1e        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000aa8        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000a22                _etext = .
+                0x00000aac                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000a22
+.data           0x00800100        0x0 load address 0x00000aac
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -389,12 +397,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800100                _edata = .
                 0x00800100                PROVIDE (__data_end, .)
 
-.bss            0x00800100       0x1a
+.bss            0x00800100       0x1c
                 0x00800100                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x00800100       0x1a Control_module.o
+ COMMON         0x00800100       0x1c Control_module.o
                 0x00800100                leftWheelSpeed
                 0x00800101                joint2_Pos
                 0x00800103                rightWheelSpeed
@@ -406,25 +414,27 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0080010a                steeringData
                 0x0080010b                leftWheelDirection
                 0x0080010c                data
-                0x0080010d                joint3_Pos
-                0x0080010f                numberOfStopRequests
-                0x00800110                error
-                0x00800111                midSpeed
-                0x00800112                rightWheelDirection
-                0x00800113                waitingForInstruction
-                0x00800114                joint5_Pos
-                0x00800116                joint4_Pos
-                0x00800118                joint6_Pos
-                0x0080011a                PROVIDE (__bss_end, .)
-                0x00000a22                __data_load_start = LOADADDR (.data)
-                0x00000a22                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0080010d                Kd
+                0x0080010e                joint3_Pos
+                0x00800110                numberOfStopRequests
+                0x00800111                error
+                0x00800112                midSpeed
+                0x00800113                Kp
+                0x00800114                rightWheelDirection
+                0x00800115                waitingForInstruction
+                0x00800116                joint5_Pos
+                0x00800118                joint4_Pos
+                0x0080011a                joint6_Pos
+                0x0080011c                PROVIDE (__bss_end, .)
+                0x00000aac                __data_load_start = LOADADDR (.data)
+                0x00000aac                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080011a        0x0
-                0x0080011a                PROVIDE (__noinit_start, .)
+.noinit         0x0080011c        0x0
+                0x0080011c                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x0080011a                PROVIDE (__noinit_end, .)
-                0x0080011a                _end = .
-                0x0080011a                PROVIDE (__heap_start, .)
+                0x0080011c                PROVIDE (__noinit_end, .)
+                0x0080011c                _end = .
+                0x0080011c                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -485,65 +495,65 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x128
+.debug_aranges  0x00000000      0x138
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 Control_module.o
  .debug_aranges
-                0x00000028       0x80 Control_wheel_steering.o
+                0x00000028       0x90 Control_wheel_steering.o
  .debug_aranges
-                0x000000a8       0x58 Servo.o
+                0x000000b8       0x58 Servo.o
  .debug_aranges
-                0x00000100       0x28 Slave_control.o
+                0x00000110       0x28 Slave_control.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1598
+.debug_info     0x00000000     0x163f
  *(.debug_info)
- .debug_info    0x00000000      0x2bf Control_module.o
- .debug_info    0x000002bf      0x680 Control_wheel_steering.o
- .debug_info    0x0000093f      0xb3e Servo.o
- .debug_info    0x0000147d      0x11b Slave_control.o
+ .debug_info    0x00000000      0x31b Control_module.o
+ .debug_info    0x0000031b      0x6cb Control_wheel_steering.o
+ .debug_info    0x000009e6      0xb3e Servo.o
+ .debug_info    0x00001524      0x11b Slave_control.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x492
+.debug_abbrev   0x00000000      0x4ce
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xd3 Control_module.o
- .debug_abbrev  0x000000d3      0x199 Control_wheel_steering.o
- .debug_abbrev  0x0000026c      0x196 Servo.o
- .debug_abbrev  0x00000402       0x90 Slave_control.o
+ .debug_abbrev  0x00000000       0xe4 Control_module.o
+ .debug_abbrev  0x000000e4      0x1c4 Control_wheel_steering.o
+ .debug_abbrev  0x000002a8      0x196 Servo.o
+ .debug_abbrev  0x0000043e       0x90 Slave_control.o
 
-.debug_line     0x00000000      0xca7
+.debug_line     0x00000000      0xd42
  *(.debug_line)
- .debug_line    0x00000000      0x1c7 Control_module.o
- .debug_line    0x000001c7      0x435 Control_wheel_steering.o
- .debug_line    0x000005fc      0x584 Servo.o
- .debug_line    0x00000b80      0x127 Slave_control.o
+ .debug_line    0x00000000      0x204 Control_module.o
+ .debug_line    0x00000204      0x493 Control_wheel_steering.o
+ .debug_line    0x00000697      0x584 Servo.o
+ .debug_line    0x00000c1b      0x127 Slave_control.o
 
-.debug_frame    0x00000000      0x2bc
+.debug_frame    0x00000000      0x2e4
  *(.debug_frame)
  .debug_frame   0x00000000       0x7c Control_module.o
- .debug_frame   0x0000007c      0x104 Control_wheel_steering.o
- .debug_frame   0x00000180      0x108 Servo.o
- .debug_frame   0x00000288       0x34 Slave_control.o
+ .debug_frame   0x0000007c      0x12c Control_wheel_steering.o
+ .debug_frame   0x000001a8      0x108 Servo.o
+ .debug_frame   0x000002b0       0x34 Slave_control.o
 
-.debug_str      0x00000000      0x461
+.debug_str      0x00000000      0x491
  *(.debug_str)
- .debug_str     0x00000000      0x1f8 Control_module.o
-                                0x233 (size before relaxing)
- .debug_str     0x000001f8       0xec Control_wheel_steering.o
-                                0x2a1 (size before relaxing)
- .debug_str     0x000002e4      0x160 Servo.o
+ .debug_str     0x00000000      0x21c Control_module.o
+                                0x257 (size before relaxing)
+ .debug_str     0x0000021c       0xf8 Control_wheel_steering.o
+                                0x2d1 (size before relaxing)
+ .debug_str     0x00000314      0x160 Servo.o
                                 0x289 (size before relaxing)
- .debug_str     0x00000444       0x1d Slave_control.o
+ .debug_str     0x00000474       0x1d Slave_control.o
                                 0x12b (size before relaxing)
 
-.debug_loc      0x00000000      0xe7c
+.debug_loc      0x00000000      0xebc
  *(.debug_loc)
  .debug_loc     0x00000000       0xcb Control_module.o
- .debug_loc     0x000000cb      0x1e6 Control_wheel_steering.o
- .debug_loc     0x000002b1      0xbcb Servo.o
+ .debug_loc     0x000000cb      0x226 Control_wheel_steering.o
+ .debug_loc     0x000002f1      0xbcb Servo.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -551,12 +561,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xe8
+.debug_ranges   0x00000000       0xf8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 Control_module.o
- .debug_ranges  0x00000018       0x70 Control_wheel_steering.o
- .debug_ranges  0x00000088       0x48 Servo.o
- .debug_ranges  0x000000d0       0x18 Slave_control.o
+ .debug_ranges  0x00000018       0x80 Control_wheel_steering.o
+ .debug_ranges  0x00000098       0x48 Servo.o
+ .debug_ranges  0x000000e0       0x18 Slave_control.o
 
 .debug_macro
  *(.debug_macro)

@@ -157,7 +157,7 @@ int main(void)
 }
 
 /*Function that initiates automatic mode*/
-void initAutomaticMode()
+void initManualMode()
 {	
 	PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
 	PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20

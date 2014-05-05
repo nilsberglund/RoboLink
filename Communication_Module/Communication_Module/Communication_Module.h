@@ -11,7 +11,7 @@
 
 
 /*--------Functions-----------*/
-void initAutomaticMode();
+void initManualMode();
 void changeMode();
 
 

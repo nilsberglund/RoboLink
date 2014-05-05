@@ -81,29 +81,35 @@ void controlAlgorithm()
 		if ((midSpeed-speed) < 10)
 		{
 			rightWheelSpeed = 3;
+			rightWheelDirection = 1;
 		}
 		else if ((midSpeed-speed) > 235)
 		{
-			rightWheelSpeed = 248;
+			rightWheelSpeed = 180;
+			rightWheelDirection = 0;
 		}
 		else
 		{
 			rightWheelSpeed = midSpeed - speed;
+			rightWheelDirection = 1;
 		}
 		
 		if ((midSpeed+speed) < 10)
 		{
 			leftWheelSpeed = 3;
+			leftWheelDirection = 1;
 		}
 		else if ((midSpeed+speed) > 235)
 		{
-			leftWheelSpeed = 248;
+			leftWheelSpeed = 180;
+			leftWheelDirection = 0;
 		}
 		else
 		{
 			leftWheelSpeed = midSpeed + speed;
+			leftWheelDirection = 1;
 		}
-		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+		drive(rightWheelDirection, leftWheelDirection, leftWheelSpeed, rightWheelSpeed);
 	}
 }
 
@@ -111,8 +117,6 @@ void controlAlgorithm()
 int8_t calculateSpeed(int8_t error)
 {
 	volatile int16_t speed = 0;
-	int8_t Kp = 20;
-	int8_t Kd = 10;
 	
 	speed = Kp * error + Kd * (error - prevError);
 
@@ -130,6 +134,8 @@ void drivingSetup()
 	OCR1B = 255; // Sets compare register => Robot does not move
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7); //Sets the data direction for the PWM and direction ports. 
 	numberOfStopRequests = 0;
+	Kp = 20;
+	Kd = 10;
 }
 
 /* Function that controls both direction and speed of the motors. 
@@ -245,4 +251,14 @@ void moveRobot()
 			rotateCCW();
 		}
 	}
+}
+
+void changeProportional(uint8_t newKp)
+{
+	Kp = newKp;
+}
+
+void changeDerivative(uint8_t newKd)
+{
+	Kd = newKd;
 }
