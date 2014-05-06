@@ -270,13 +270,13 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
 				 
-		lblLED1 = new JLabel("•");
-		lblLED2 = new JLabel("•");
-		lblLED3 = new JLabel("•");
-		lblLED4 = new JLabel("•");
-		lblLED5 = new JLabel("•");
-		lblLED6 = new JLabel("•");
-		lblLED7 = new JLabel("•");
+		lblLED1 = new JLabel("O");
+		lblLED2 = new JLabel("O");
+		lblLED3 = new JLabel("O");
+		lblLED4 = new JLabel("O");
+		lblLED5 = new JLabel("O");
+		lblLED6 = new JLabel("O");
+		lblLED7 = new JLabel("O");
 		
 		Font dotFont = new Font("SansSerif", Font.BOLD, 28);
 		lblLED1.setFont(dotFont);
