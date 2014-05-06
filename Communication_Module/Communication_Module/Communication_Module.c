@@ -9,32 +9,29 @@
 #include "Communication_Module.h"
 #include "Master_communication.h"
 #include <avr/interrupt.h>
-#include "Bluetooth_Receiver.h"
+#include "Bluetooth.h"
 #include "warehouseMode.h"
+#include "hd44780_low.h"
 
-ISR(INT1_vect)			//Receive function. Data is transmitted from the control slave
+ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 {
 	Slave_Select(Sensor_Slave);	//slave select
 	sensor_data = Master_RX(0x01); //sending dummy
 	if(sensor_data == 0b00001111 || sensor_data == 0b00011111)
 	{
 		TX_sensor_data();
-		stationRightSide = 0; 
+		stationRightSide = 0;
 		stationModeEnable = 1;
-		stationMode();
-		//OCR0A = 0; //no compare => no sensor values.
-		//OCR0B = 0;
- 	
-	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)	 
+		bluetoothTX(sensor_data);
+		
+	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
 		TX_sensor_data();
 		stationRightSide = 1;
 		stationModeEnable = 1;
-		stationMode();
-		//OCR0A = 0; //no compare => no sensor values.
-		//OCR0B = 0;
+		bluetoothTX(sensor_data);
 		
-	}	
+	}
 	Slave_Select(Control_Slave);
 	
 }
@@ -53,16 +50,27 @@ ISR(INT2_vect)
 	}
 }
 
+/* Timer interrupt routine handling sensor data receive */
 ISR(TIMER0_COMPA_vect)
 {
-	RX_sensor_data();
+	if(stationModeEnable == 0)
+	{
+		RX_sensor_data();
+	}
 }
 
+/* Timer interrupt routine handling sensor data transmission*/
 ISR(TIMER0_COMPB_vect)
 {
-	TX_sensor_data();
+	if(stationModeEnable == 0)
+	{
+		TX_sensor_data();
+		bluetoothTX(sensor_data);
+	}
 }
 
+
+/* Interrupt routine for receiving bluetooth data */
 ISR(USART0_RX_vect)
 {
 	btdata = UDR0;
@@ -84,15 +92,17 @@ ISR(USART0_RX_vect)
 	else {
 		waiting_for_instruction = 1;
 		if (component == WHEEL) {
+			if(manualModeEnabled == 1) {
 			wheel_steering_data = btdata;
 			TX_wheel_data();
+			}
 		}
 		else if (component == ARM) {
 			robot_arm_data = btdata;
 			TX_arm_data();
 		}
 		else if (component == CALINSTR) {
-			
+			//calibration();	
 		}
 		else if (component == PCONINSTR) {
 			handleData(btdata);
@@ -114,21 +124,48 @@ ISR(USART1_RX_vect){
 	}
 }
 
+ISR(PCINT3_vect)
+{
+	if(automaticModeEnabled == 1) {	//turns on Manual Mode
+		manualModeEnabled = 1;
+		automaticModeEnabled = 0;
+		TIMSK0 = 0;
+	} else if (manualModeEnabled == 1) { //Turns on Automatic Mode
+		manualModeEnabled = 0;
+		automaticModeEnabled = 1;
+		TIMSK0 = 0x06;
+	}
+		
+}
+
 int main(void)
 {
 	SPI_Init_Master();
 	setupBluetoothRXTX();
 	setupRFID();
 	setupLCD();
+	setupWarehouse();
+	initAutomaticMode();
 	
 	while(1)
 	{
-		//if(stationModeEnable == 1)
-		//{
-		//	stationMode();
-		//}
+		if(stationModeEnable == 1)
+		{
+			stationMode();
+		}
 	}
 }
 
+/*Function that initiates automatic mode*/
+void initManualMode()
+{	
+	PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
+	PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20
+	automaticModeEnabled = 0;
+	manualModeEnabled = 1;
+}
 
-
+void changeMode()
+{
+	PCIFR |= (1 << PCIF3);
+}

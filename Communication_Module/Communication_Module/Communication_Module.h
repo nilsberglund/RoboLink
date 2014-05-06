@@ -10,7 +10,14 @@
 #define COMMUNICATION_MODULE_H_
 
 
+/*--------Functions-----------*/
+void initManualMode();
+void changeMode();
 
+
+/*--------Variables-----------*/
+uint8_t automaticModeEnabled;
+uint8_t manualModeEnabled;
 
 
 #endif /* COMMUNICATION_MODULE_H_ */

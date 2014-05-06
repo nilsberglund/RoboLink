@@ -32,7 +32,14 @@ ISR(SPI_STC_vect)
 		{
 			waitingForInstruction = 0;
 			component = ARM;
-			
+		} else if(data == 0b10000111)
+		{
+			waitingForInstruction = 0;
+			component = KPROPORTIONAL;
+		} else if(data == 0b10001011)
+		{
+			waitingForInstruction = 0;
+			component = KDERIVATIVE;
 		}
 	}
 	else
@@ -52,7 +59,13 @@ ISR(SPI_STC_vect)
 			steeringData = data;
 			moveRobot();
 			waitingForInstruction = 1;
-		}
+		}  else if (component == KPROPORTIONAL)
+		{
+			changeProportional(data);
+		}  else if (component == KDERIVATIVE)
+		{
+			changeDerivative(data);
+		} 
 	}
 }
 

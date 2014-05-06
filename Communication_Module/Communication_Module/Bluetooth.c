@@ -1,5 +1,5 @@
 /*
- * Bluetooth_Receiver.c
+ * Bluetooth.c
  *
  * Created: 15/04/2014 12:49:29
  *  Author: Tobias
@@ -8,7 +8,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "Bluetooth_Receiver.h"
+#include "Bluetooth.h"
 #include "warehouseMode.h"
 #include "Communication_Module.h"
 #include "Master_communication.h"
@@ -20,12 +20,26 @@ void handleData(uint8_t temp)
 		case 0x01: //START PICKUP button pressed
 		pickUpItem = 1;
 		waitingForStartAbort = 1;
+		break;
 		case 0x02: //END PICKUP button pressed
 		waitingForEndPickup = 1;
+		break;
 		case 0x03: //ABORT PICKUP button pressed
 		pickUpItem = 0;
 		waitingForStartAbort = 1;
+		break;
+		case 0x04:
+		changeMode();
 	}
+}
+
+void bluetoothTX(uint8_t txdata) {
+	
+	/* Wait for empty transmit buffer */
+	while ( !( UCSR0A & (1<<UDRE0)) );
+	
+	/* Put data into buffer, sends the data */
+	UDR0 = txdata;
 }
 
 void setupBluetoothRXTX()

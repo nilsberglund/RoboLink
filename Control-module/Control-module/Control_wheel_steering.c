@@ -39,7 +39,6 @@ int8_t getError()
 	{
 		error = sum-1;
 	} else if(counter1 == 3)
-
 	{
 		error = sum*2;
 		error = error/(0b00000011);
@@ -47,21 +46,11 @@ int8_t getError()
 		
 	} else if(counter1 == 4 || counter1 == 5)
 	{
-		if(sum == 10)
+		if(sum == 10 || sum == 22 || sum == 15 || sum == 25)
 		{
 			error = 50;
-		} else if(sum == 22)
-		{
-			error = 50;
-		} else if(sum == 15)
-		{
-			error = 50;
-		} else if(sum == 25)
-		{
-			error = 50;
-		}
+		} 
 	} 	
-	
 	 else
 	{
 		error = -8;
@@ -87,44 +76,47 @@ void controlAlgorithm()
 	}	
 	else
 	{	
-		midSpeed = 180;  //Standard speed
+		midSpeed = 140;  //Standard speed
 		int16_t speed = calculateSpeed(error);  //calculate new speed 
 		if ((midSpeed-speed) < 10)
 		{
 			rightWheelSpeed = 3;
+			rightWheelDirection = 1;
 		}
 		else if ((midSpeed-speed) > 235)
 		{
-			rightWheelSpeed = 248;
+			rightWheelSpeed = 180;
+			rightWheelDirection = 0;
 		}
 		else
 		{
 			rightWheelSpeed = midSpeed - speed;
+			rightWheelDirection = 1;
 		}
 		
 		if ((midSpeed+speed) < 10)
 		{
 			leftWheelSpeed = 3;
+			leftWheelDirection = 1;
 		}
 		else if ((midSpeed+speed) > 235)
 		{
-			leftWheelSpeed = 248;
+			leftWheelSpeed = 180;
+			leftWheelDirection = 0;
 		}
 		else
 		{
 			leftWheelSpeed = midSpeed + speed;
+			leftWheelDirection = 1;
 		}
-		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+		drive(rightWheelDirection, leftWheelDirection, leftWheelSpeed, rightWheelSpeed);
 	}
-
 }
 
 /* function that calculates the speed */
 int8_t calculateSpeed(int8_t error)
 {
 	volatile int16_t speed = 0;
-	int8_t Kp = 20;
-	int8_t Kd = 5;
 	
 	speed = Kp * error + Kd * (error - prevError);
 
@@ -141,6 +133,9 @@ void drivingSetup()
 	OCR1A = 255; //Sets compare register => Robot does not move
 	OCR1B = 255; // Sets compare register => Robot does not move
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7); //Sets the data direction for the PWM and direction ports. 
+	numberOfStopRequests = 0;
+	Kp = 20;
+	Kd = 10;
 }
 
 /* Function that controls both direction and speed of the motors. 
@@ -256,4 +251,14 @@ void moveRobot()
 			rotateCCW();
 		}
 	}
+}
+
+void changeProportional(uint8_t newKp)
+{
+	Kp = newKp;
+}
+
+void changeDerivative(uint8_t newKd)
+{
+	Kd = newKd;
 }

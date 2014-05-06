@@ -144,6 +144,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnJoint7RS;
 	
 	public JButton btnDPP;
+	public JButton btnDTP;
 	
 	public JComboBox cboxPorts;
 	public JTextArea txtLog;
@@ -241,6 +242,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint7RS = new JButton("Release >>");
 		
 		btnDPP = new JButton("DPP");
+		btnDTP = new JButton("DTP");
 		
 		
 		//setting action commands
@@ -285,6 +287,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6RS.setActionCommand("J6RS");
 		
 		btnDPP.setActionCommand("DPP");
+		btnDTP.setActionCommand("DTP");
 		
 		//Instantiating the sliders, text areas, labels etc
 		speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 3, 2); //vertical layout, minlvl 1, maxlvl 2, start 1
@@ -414,6 +417,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//arm buttons and label
 	
 		armPanel.add(btnDPP);
+		armPanel.add(btnDTP);
 		armPanel.add(btnJoint1LB);
 		armPanel.add(btnJoint1LS);
 		armPanel.add(btnJoint1RS);
