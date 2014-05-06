@@ -1,3 +1,19 @@
+/*
+ * TODO: Telemetri: Stationmode/Transport mode shower: 
+ * RFID shower
+ * 2 st textFields för kp kd
+ * 
+ * ta bort alla labels (om ej förklarande
+ * 
+ * lägg till DTP
+ * lääg till 2 buttons Auto och Manual
+ * 
+ * särskilj AUTO/Manual från drive funktioner
+ * 
+ * Lägg till Rotate left och right knappar
+ */
+
+
 package robolinkControlPanel;
 
 import java.awt.BorderLayout;
@@ -90,6 +106,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnBodyForwardRight;
 	
 	public JButton btnCalibration;
+	public JButton btnAutomaticMode;
+	public JButton btnManualMode;
 	public JButton btnEndPickup;
 	public JButton btnStartPickup;
 	public JButton btnAbortPickup;
@@ -122,14 +140,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnJoint6LS;
 	public JButton btnJoint6RS;
 	
+	public JButton btnJoint7LS;
+	public JButton btnJoint7RS;
+	
 	public JButton btnDPP;
 	
 	public JComboBox cboxPorts;
 	public JTextArea txtLog;
 	public JTextArea txtTel;
-	public JLabel lblDrive;
 	public JLabel lblCalibration;
-	public JLabel lblArm;
+	
 	public JLabel lblPickupControl;
 	public JLabel lblTel;
 	public JLabel lblLED1;
@@ -147,6 +167,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JPanel navPanel;
 	public JPanel telPanel;
 	public JPanel ledPanel;
+	public JPanel armPanel;
+	public JPanel calPanel;
+	public JPanel stationPanel;
 
 
 	/** Creates new form GUI */
@@ -174,43 +197,48 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//Instantiating buttons and adding text
 		btnConnect = new JButton("CONNECT");
 		btnDisconnect = new JButton("DISCONNECT");
-		btnBodyBackward = new JButton("BW");
-		btnBodyForward = new JButton("FW");
-		btnBodyForwardLeft = new JButton("FL");
-		btnBodyForwardRight = new JButton("FR");
+		btnBodyBackward = new JButton("FORWARD");
+		btnBodyForward = new JButton("BACKWARD");
+		btnBodyForwardLeft = new JButton("Forward Left");
+		btnBodyForwardRight = new JButton("Forward Right");
 		btnBodyStop = new JButton("STOP");
-		btnCalibration = new JButton("CAL");
+		btnCalibration = new JButton("CALIBRATE");
+		btnAutomaticMode = new JButton("Automatic Mode");
+		btnManualMode = new JButton("Manual Mode");
 		btnEndPickup = new JButton("END PICKUP");
 		btnStartPickup = new JButton("START PICKUP");
 		btnAbortPickup = new JButton("ABORT PICKUP");
 		
-		btnJoint1LB = new JButton("J1 <<");
-		btnJoint1LS = new JButton("J1 <");
-		btnJoint1RB = new JButton("J1 >>");
-		btnJoint1RS = new JButton("J1 >");
+		btnJoint1LB = new JButton("Base <<");
+		btnJoint1LS = new JButton("Base <");
+		btnJoint1RB = new JButton("Base >>");
+		btnJoint1RS = new JButton("Base >");
 		
-		btnJoint2LB = new JButton("J2 <<");
-		btnJoint2LS = new JButton("J2 <");
-		btnJoint2RB = new JButton("J2 >>");
-		btnJoint2RS = new JButton("J2 >");
+		btnJoint2LB = new JButton("Shoulder <<");
+		btnJoint2LS = new JButton("Shoulder <");
+		btnJoint2RB = new JButton("Shoulder >>");
+		btnJoint2RS = new JButton("Shoulder >");
 		
-		btnJoint3LB = new JButton("J3 <<");
-		btnJoint3LS = new JButton("J3 <");
-		btnJoint3RB = new JButton("J3 >>");
-		btnJoint3RS = new JButton("J3 >");
+		btnJoint3LB = new JButton("Elbow <<");
+		btnJoint3LS = new JButton("Elbow <");
+		btnJoint3RB = new JButton("Elbow >>");
+		btnJoint3RS = new JButton("Elbow >");
 		
-		btnJoint4LB = new JButton("J4 <<");
-		btnJoint4LS = new JButton("J4 <");
-		btnJoint4RB = new JButton("J4 >>");
-		btnJoint4RS = new JButton("J4 >");
+		btnJoint4LB = new JButton("Wrist Tilt <<");
+		btnJoint4LS = new JButton("Wrist Tilt <");
+		btnJoint4RB = new JButton("Wrist Tilt >>");
+		btnJoint4RS = new JButton("Wrist Tilt >");
 		
-		btnJoint5LB = new JButton("J5 <<");
-		btnJoint5LS = new JButton("J5 <");
-		btnJoint5RB = new JButton("J5 >>");
-		btnJoint5RS = new JButton("J5 >");
+		btnJoint5LB = new JButton("Wrist Rotate <<");
+		btnJoint5LS = new JButton("Wrist Rotate <");
+		btnJoint5RB = new JButton("Wrist Rotate >>");
+		btnJoint5RS = new JButton("Wrist Rotate >");
 		
-		btnJoint6LS = new JButton("OPEN CLAW");
-		btnJoint6RS = new JButton("CLOSE CLAW");
+		btnJoint6LS = new JButton("Grip <");
+		btnJoint6RS = new JButton("Release >");
+		
+		btnJoint7LS = new JButton("Grip <<");
+		btnJoint7RS = new JButton("Release >>");
 		
 		btnDPP = new JButton("DPP");
 		
@@ -259,24 +287,22 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnDPP.setActionCommand("DPP");
 		
 		//Instantiating the sliders, text areas, labels etc
-		speedSlider = new JSlider(JSlider.VERTICAL, 1, 2, 1); //vertical layout, minlvl 1, maxlvl 2, start 1
+		speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 3, 2); //vertical layout, minlvl 1, maxlvl 2, start 1
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
 		txtTel = new JTextArea();
 		lblTel = new JLabel();
-		lblDrive = new JLabel();
-		lblArm = new JLabel();
 		lblCalibration = new JLabel();
 		lblPickupControl = new JLabel();
 				 
-		lblLED1 = new JLabel("•");
-		lblLED2 = new JLabel("•");
-		lblLED3 = new JLabel("•");
-		lblLED4 = new JLabel("•");
-		lblLED5 = new JLabel("•");
-		lblLED6 = new JLabel("•");
-		lblLED7 = new JLabel("•");
+		lblLED1 = new JLabel("O");
+		lblLED2 = new JLabel("O");
+		lblLED3 = new JLabel("O");
+		lblLED4 = new JLabel("O");
+		lblLED5 = new JLabel("O");
+		lblLED6 = new JLabel("O");
+		lblLED7 = new JLabel("O");
 		
 		Font dotFont = new Font("SansSerif", Font.BOLD, 28);
 		lblLED1.setFont(dotFont);
@@ -287,11 +313,14 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblLED6.setFont(dotFont);
 		lblLED7.setFont(dotFont);
 		
-		grid = new GridLayout(0, 3);
+		grid = new GridLayout(2, 3);
 		conPanel = new JPanel();
 		navPanel = new JPanel();
 		telPanel = new JPanel();
 		ledPanel = new JPanel();
+		armPanel = new JPanel();
+		calPanel = new JPanel();
+		stationPanel = new JPanel();
 		
 		//Adding action listeners
 		btnConnect.addActionListener(this);
@@ -335,19 +364,14 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		txtLog.setEditable(false);
 		txtLog.setLineWrap(true);
 		txtLog.setFocusable(false);
-		txtLog.setRows(20);
+		txtLog.setRows(10);
+		txtLog.setColumns(20);
 		conPanel.add(btnConnect);
 		conPanel.add(btnDisconnect);
 		conPanel.add(cboxPorts);
 		conPanel.add(txtLog);
 
 		//NAVPANEL
-
-		//all the label texts
-		lblArm.setText("ARM");
-		lblCalibration.setText("CALIBRATION");
-		lblDrive.setText("DRIVE");
-		lblPickupControl.setText("PICKUP CONTROL");
 
 		//Setting up the slider
 		speedSlider.addChangeListener(this);
@@ -356,58 +380,74 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPaintTicks(true);
 
-		//calibration button and label
-		navPanel.add(lblCalibration);
-		navPanel.add(btnCalibration);
 
-		//drive buttons and label
-		navPanel.add(lblDrive);
-		navPanel.add(btnBodyStop);
+		//drive buttons and labelD
+	
+		navPanel.add(btnAutomaticMode);
+		navPanel.add(btnManualMode);
+		
 		navPanel.add(btnBodyForward);
 		navPanel.add(btnBodyBackward);
+		navPanel.add(btnBodyStop);
 		navPanel.add(btnBodyForwardLeft);
 		navPanel.add(btnBodyForwardRight);
 		navPanel.add(speedSlider);
 
-		//arm buttons and label
-		navPanel.add(lblArm);
-		navPanel.add(btnJoint1LB);
-		navPanel.add(btnJoint1LS);
-		navPanel.add(btnJoint1RS);
-		navPanel.add(btnJoint1RB);
-		
-		navPanel.add(btnJoint2LB);
-		navPanel.add(btnJoint2LS);
-		navPanel.add(btnJoint2RS);
-		navPanel.add(btnJoint2RB);
-		
-		navPanel.add(btnJoint3LB);
-		navPanel.add(btnJoint3LS);
-		navPanel.add(btnJoint3RS);
-		navPanel.add(btnJoint3RB);
-		
-		navPanel.add(btnJoint4LB);
-		navPanel.add(btnJoint4LS);
-		navPanel.add(btnJoint4RS);
-		navPanel.add(btnJoint4RB);
-		
-		navPanel.add(btnJoint5LB);
-		navPanel.add(btnJoint5LS);
-		navPanel.add(btnJoint5RS);
-		navPanel.add(btnJoint5RB);
-		
-		navPanel.add(btnJoint6LS);
-		navPanel.add(btnJoint6RS);
-		navPanel.add(btnDPP);
-		
+		//STATIONPANEL
 		//pickup control buttons and label
-		navPanel.add(lblPickupControl);
-		navPanel.add(btnStartPickup);
-		navPanel.add(btnEndPickup);
-		navPanel.add(btnAbortPickup);
+		lblPickupControl.setText("PICKUP CONTROL");
+		stationPanel.add(lblPickupControl);
+		stationPanel.add(btnStartPickup);
+		stationPanel.add(btnEndPickup);
+		stationPanel.add(btnAbortPickup);
+
+		//CALPANEL
+		lblCalibration.setText("CALIBRATION + Change Kp & Kd");	
+		//calibration button and label
+		calPanel.add(lblCalibration);
+		calPanel.add(btnCalibration);
 		
-
-
+		
+		//ARMPANEL
+	
+		
+		//arm buttons and label
+	
+		armPanel.add(btnDPP);
+		armPanel.add(btnJoint1LB);
+		armPanel.add(btnJoint1LS);
+		armPanel.add(btnJoint1RS);
+		armPanel.add(btnJoint1RB);
+		
+		armPanel.add(btnJoint2LB);
+		armPanel.add(btnJoint2LS);
+		armPanel.add(btnJoint2RS);
+		armPanel.add(btnJoint2RB);
+		
+		armPanel.add(btnJoint3LB);
+		armPanel.add(btnJoint3LS);
+		armPanel.add(btnJoint3RS);
+		armPanel.add(btnJoint3RB);
+		
+		armPanel.add(btnJoint4LB);
+		armPanel.add(btnJoint4LS);
+		armPanel.add(btnJoint4RS);
+		armPanel.add(btnJoint4RB);
+		
+		armPanel.add(btnJoint5LB);
+		armPanel.add(btnJoint5LS);
+		armPanel.add(btnJoint5RS);
+		armPanel.add(btnJoint5RB);
+		
+		armPanel.add(btnJoint6LS);
+		armPanel.add(btnJoint6RS);
+		
+		armPanel.add(btnJoint7LS);
+		armPanel.add(btnJoint7RS);
+		
+		
+		
+		
 		//TELPANEL
 		
 		txtTel.setEditable(false);
@@ -435,18 +475,21 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		telPanel.add(lblTel, BorderLayout.PAGE_START);
 		telPanel.add(txtTel, BorderLayout.CENTER);
 		telPanel.add(ledPanel, BorderLayout.PAGE_END);
-		
 
 
 		//setting up the whole window
 		this.setLayout(grid);
 		this.add(conPanel);
 		this.add(navPanel);
+		this.add(armPanel);
 		this.add(telPanel);
+		this.add(calPanel);
+		this.add(stationPanel);
+	
 		this.setTitle("Robolink Master Control Panel");
 
 
-		this.setSize(1000, 600);
+		this.setSize(1200,700);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -656,6 +699,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		if (led2 == 1) {
 			lblLED2.setForeground(Color.RED);
 		}
+		
 		else
 		{
 			lblLED2.setForeground(Color.WHITE);
