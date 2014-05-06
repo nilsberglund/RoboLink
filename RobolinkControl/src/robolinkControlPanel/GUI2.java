@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -42,6 +43,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte ARMINSTR = 2; //instruction byte for arm data
 	final public byte CALINSTR = 3; //instruction byte for calibration data
 	final public byte PCONINSTR = 4; //instruction byte for pickup control data
+	final public byte KPINSTR = 5; //instruction byte for changing KP
+	final public byte KDINSTR = 6; //instruction byte for changing KD
 	
 	final public byte STOP = 0;
 	final public byte BW1 = 1;
@@ -52,6 +55,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte FL2 = 11;
 	final public byte FW1 = 4;
 	final public byte FW2 = 12;
+	final public byte RL = 6;
+	final public byte RR = 5;
 	
 	final public byte SPICKUP = 1;
 	final public byte EPICKUP = 2;
@@ -86,6 +91,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte J6RS = 6;
 	
 	final public byte DPP = 32;
+	final public byte DTP = 64;
 	
 	public JButton btnConnect;
 	public JButton btnDisconnect;
@@ -139,16 +145,17 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnDPP;
 	public JButton btnDTP;
 	
-	public JButton btnSetTuning;
-	
 	public JComboBox cboxPorts;
 	public JTextArea txtLog;
-	public JTextArea txtKp;
-	public JTextArea txtKd;
+	public JTextField txtKp;
+	public JTextField txtKd;
 	public JTextArea txtTel;
-	public JLabel lblCalibration;
 	
+	public JLabel lblCalibration;
 	public JLabel lblTel;
+	public JLabel lblKp;
+	public JLabel lblKd;
+	
 	public JLabel lblLED1;
 	public JLabel lblLED2;
 	public JLabel lblLED3;
@@ -156,6 +163,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JLabel lblLED5;
 	public JLabel lblLED6;
 	public JLabel lblLED7;
+	
 	public JSlider speedSlider;
 
 	//layout for whole window and panel variables
@@ -200,7 +208,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyForwardRight = new JButton("Forward Right");
 		btnBodyRotateLeft = new JButton("Rotate Left");
 		btnBodyRotateRight = new JButton("Rotate Right");
-		btnBodyStop = new JButton("Staaahhp");
+		btnBodyStop = new JButton("Stop");
 		btnCalibration = new JButton("Calibrate");
 		btnAutomaticMode = new JButton("Automatic Mode");
 		btnManualMode = new JButton("Manual Mode");
@@ -238,10 +246,12 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		btnJoint7LS = new JButton("Grip <<");
 		btnJoint7RS = new JButton("Release >>");
-		btnSetTuning = new JButton("Set Tuning");
 		
 		btnDPP = new JButton("DPP");
 		btnDTP = new JButton("DTP");
+		
+		txtKp = new JTextField();
+		txtKd = new JTextField();
 		
 		
 		//setting action commands
@@ -251,6 +261,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyForward.setActionCommand("FW");
 		btnBodyForwardLeft.setActionCommand("FL");
 		btnBodyForwardRight.setActionCommand("FR");
+		btnBodyRotateLeft.setActionCommand("RL");
+		btnBodyRotateRight.setActionCommand("RR");
 		btnBodyStop.setActionCommand("stop");
 		btnCalibration.setActionCommand("calibration");
 		btnEndPickup.setActionCommand("endpickup");
@@ -288,15 +300,19 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnDPP.setActionCommand("DPP");
 		btnDTP.setActionCommand("DTP");
 		
+		txtKp.setActionCommand("KP");
+		txtKd.setActionCommand("KD");
+		
+		
 		//Instantiating the sliders, text areas, labels etc
 		speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 2, 1); //vertical layout, minlvl 1, maxlvl 2, start 1
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
-		txtKp = new JTextArea();
-		txtKd = new JTextArea();
 		txtTel = new JTextArea();
 		lblTel = new JLabel();
+		lblKp = new JLabel("Kp:");
+		lblKd = new JLabel("Kd:");
 		lblCalibration = new JLabel();
 	
 				 
@@ -334,6 +350,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyBackward.addActionListener(this);
 		btnBodyForwardLeft.addActionListener(this);
 		btnBodyForwardRight.addActionListener(this);
+		btnBodyRotateLeft.addActionListener(this);
+		btnBodyRotateRight.addActionListener(this);
 		btnCalibration.addActionListener(this);
 		btnEndPickup.addActionListener(this);
 		btnStartPickup.addActionListener(this);
@@ -361,6 +379,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6LS.addActionListener(this);
 		btnJoint6RS.addActionListener(this);
 		btnDPP.addActionListener(this);
+		btnDTP.addActionListener(this);
+		txtKp.addActionListener(this);
+		txtKd.addActionListener(this);
 
 
 		//CONPANEL
@@ -379,17 +400,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 		//Setting up the slider
 		speedSlider.addChangeListener(this);
-		speedSlider.setMajorTickSpacing(5);
+		speedSlider.setMajorTickSpacing(1);
 		speedSlider.setMinorTickSpacing(1);
 		speedSlider.setPaintLabels(true);
 		speedSlider.setPaintTicks(true);
 
 
-		//drive buttons and labelD
+		//drive buttons and labels
 	
 		navPanel.add(btnAutomaticMode);
 		navPanel.add(btnManualMode);
-		
 		navPanel.add(btnBodyForward);
 		navPanel.add(btnBodyBackward);
 		navPanel.add(btnBodyStop);
@@ -407,29 +427,21 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		stationPanel.add(btnAbortPickup);
 
 		//CALPANEL
-		lblCalibration.setText("First floor, then line:");	
-		//calibration button and label
+		
+		
+		lblCalibration.setText("First floor, then line:");
 		calPanel.add(lblCalibration);
 		calPanel.add(btnCalibration);
 		
-		txtKp.setEditable(true);
-		txtKp.setLineWrap(true);
-		txtKp.setFocusable(false);
-		txtKp.setRows(3);
-		txtKp.setColumns(3);
-		
-		txtKd.setEditable(true);
-		txtKd.setLineWrap(true);
-		txtKd.setFocusable(false);
-		txtKd.setRows(3);
-		txtKd.setColumns(3);
-
-		calPanel.add(txtKd);
+		txtKp.setColumns(5);
+		txtKd.setColumns(5);
+		calPanel.add(lblKp);
 		calPanel.add(txtKp);
+		calPanel.add(lblKd);
+		calPanel.add(txtKd);
 		
-		calPanel.add(btnSetTuning);
+		
 		//ARMPANEL
-	
 		
 		//arm buttons and label
 	
@@ -526,7 +538,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		JSlider source = (JSlider)e.getSource();
 		if (!source.getValueIsAdjusting()) {
 			speed = (int)source.getValue();
-			System.out.println(speed);
 		}
 	}
 	
@@ -600,8 +611,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 				break;
 			}
 		}
+		else if ("RL".equals(e.getActionCommand())) {
+			communicator.writeData(DRIVEINSTR);
+			communicator.writeData(RL);
+		}
+		else if ("RR".equals(e.getActionCommand())) {
+			communicator.writeData(DRIVEINSTR);
+			communicator.writeData(RR);
+		}
 		else if ("calibration".equals(e.getActionCommand())) {
-			// TODO Calibrate line sensors
+			communicator.writeData(CALINSTR);
 		}
 		else if ("endpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
@@ -706,6 +725,20 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("DPP".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(DPP);
+		}
+		else if ("DTP".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DTP);
+		}
+		else if ("KP".equals(e.getActionCommand())) {
+			byte tmpKp = Byte.valueOf(txtKp.getText());
+			communicator.writeData(KPINSTR);
+			communicator.writeData(tmpKp);
+		}
+		else if ("KD".equals(e.getActionCommand())) {
+			byte tmpKd = Byte.valueOf(txtKd.getText());
+			communicator.writeData(KDINSTR);
+			communicator.writeData(tmpKd);
 		}
 	}
 	

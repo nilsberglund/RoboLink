@@ -176,7 +176,7 @@ void dropItem(_Bool side) { //Side = 1 right side, side = 0 left side
 *
 * @param joint	joint to be moved
 * @param direction	direction of movement
-* @param amp	if movement is amplified or not
+* @param amp if movement is amplified or not
 */
 void moveArm(uint8_t armData) {
 	
@@ -184,10 +184,15 @@ void moveArm(uint8_t armData) {
 	_Bool direction = (armData >> 4) & 0x01;
 	_Bool amp = (armData >> 3) & 0x01;
 	_Bool DPP = (armData >> 5) & 0x01;
+	_Bool DTP = (armData >> 6) & 0x01;
 	
 	if (DPP)
 	{
 		pickupDefaultPosition();
+	}
+	else if (DTP)
+	{
+		defaultPosition();
 	}
 	else
 	{
@@ -239,7 +244,7 @@ void moveArm(uint8_t armData) {
 				joint4_Pos -= (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
 			}
-			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 819) //kolla gränserna
+			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 818) //kolla gränserna
 			{
 				joint4_Pos += (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
