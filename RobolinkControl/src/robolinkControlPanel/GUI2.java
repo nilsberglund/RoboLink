@@ -1,16 +1,7 @@
 /*
  * TODO: Telemetri: Stationmode/Transport mode shower: 
  * RFID shower
- * 2 st textFields för kp kd
- * 
- * ta bort alla labels (om ej förklarande
- * 
- * lägg till DTP
- * lääg till 2 buttons Auto och Manual
- * 
- * särskilj AUTO/Manual från drive funktioner
- * 
- * Lägg till Rotate left och right knappar
+
  */
 
 
@@ -104,6 +95,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnBodyBackward;
 	public JButton btnBodyForwardLeft;
 	public JButton btnBodyForwardRight;
+	public JButton btnBodyRotateLeft;
+	public JButton btnBodyRotateRight;
 	
 	public JButton btnCalibration;
 	public JButton btnAutomaticMode;
@@ -146,12 +139,15 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnDPP;
 	public JButton btnDTP;
 	
+	public JButton btnSetTuning;
+	
 	public JComboBox cboxPorts;
 	public JTextArea txtLog;
+	public JTextArea txtKp;
+	public JTextArea txtKd;
 	public JTextArea txtTel;
 	public JLabel lblCalibration;
 	
-	public JLabel lblPickupControl;
 	public JLabel lblTel;
 	public JLabel lblLED1;
 	public JLabel lblLED2;
@@ -196,19 +192,21 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	private void initComponents() {
 		
 		//Instantiating buttons and adding text
-		btnConnect = new JButton("CONNECT");
-		btnDisconnect = new JButton("DISCONNECT");
-		btnBodyBackward = new JButton("FORWARD");
-		btnBodyForward = new JButton("BACKWARD");
+		btnConnect = new JButton("Connect");
+		btnDisconnect = new JButton("Disconnect");
+		btnBodyBackward = new JButton("Forward");
+		btnBodyForward = new JButton("Backward");
 		btnBodyForwardLeft = new JButton("Forward Left");
 		btnBodyForwardRight = new JButton("Forward Right");
-		btnBodyStop = new JButton("STOP");
-		btnCalibration = new JButton("CALIBRATE");
+		btnBodyRotateLeft = new JButton("Rotate Left");
+		btnBodyRotateRight = new JButton("Rotate Right");
+		btnBodyStop = new JButton("Staaahhp");
+		btnCalibration = new JButton("Calibrate");
 		btnAutomaticMode = new JButton("Automatic Mode");
 		btnManualMode = new JButton("Manual Mode");
-		btnEndPickup = new JButton("END PICKUP");
-		btnStartPickup = new JButton("START PICKUP");
-		btnAbortPickup = new JButton("ABORT PICKUP");
+		btnEndPickup = new JButton("End Pickup");
+		btnStartPickup = new JButton("Start Pickup");
+		btnAbortPickup = new JButton("Leave without initiation");
 		
 		btnJoint1LB = new JButton("Base <<");
 		btnJoint1LS = new JButton("Base <");
@@ -240,6 +238,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		btnJoint7LS = new JButton("Grip <<");
 		btnJoint7RS = new JButton("Release >>");
+		btnSetTuning = new JButton("Set Tuning");
 		
 		btnDPP = new JButton("DPP");
 		btnDTP = new JButton("DTP");
@@ -290,14 +289,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnDTP.setActionCommand("DTP");
 		
 		//Instantiating the sliders, text areas, labels etc
-		speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 3, 2); //vertical layout, minlvl 1, maxlvl 2, start 1
+		speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 2, 1); //vertical layout, minlvl 1, maxlvl 2, start 1
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
+		txtKp = new JTextArea();
+		txtKd = new JTextArea();
 		txtTel = new JTextArea();
 		lblTel = new JLabel();
 		lblCalibration = new JLabel();
-		lblPickupControl = new JLabel();
+	
 				 
 		lblLED1 = new JLabel("O");
 		lblLED2 = new JLabel("O");
@@ -394,23 +395,39 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		navPanel.add(btnBodyStop);
 		navPanel.add(btnBodyForwardLeft);
 		navPanel.add(btnBodyForwardRight);
+		navPanel.add(btnBodyRotateLeft);
+		navPanel.add(btnBodyRotateRight);
 		navPanel.add(speedSlider);
 
 		//STATIONPANEL
 		//pickup control buttons and label
-		lblPickupControl.setText("PICKUP CONTROL");
-		stationPanel.add(lblPickupControl);
+
 		stationPanel.add(btnStartPickup);
 		stationPanel.add(btnEndPickup);
 		stationPanel.add(btnAbortPickup);
 
 		//CALPANEL
-		lblCalibration.setText("CALIBRATION + Change Kp & Kd");	
+		lblCalibration.setText("First floor, then line:");	
 		//calibration button and label
 		calPanel.add(lblCalibration);
 		calPanel.add(btnCalibration);
 		
+		txtKp.setEditable(true);
+		txtKp.setLineWrap(true);
+		txtKp.setFocusable(false);
+		txtKp.setRows(3);
+		txtKp.setColumns(3);
 		
+		txtKd.setEditable(true);
+		txtKd.setLineWrap(true);
+		txtKd.setFocusable(false);
+		txtKd.setRows(3);
+		txtKd.setColumns(3);
+
+		calPanel.add(txtKd);
+		calPanel.add(txtKp);
+		
+		calPanel.add(btnSetTuning);
 		//ARMPANEL
 	
 		
@@ -454,11 +471,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		//TELPANEL
 		
-		txtTel.setEditable(false);
-		txtTel.setLineWrap(true);
-		txtTel.setFocusable(false);
-		txtTel.setColumns(15);
-		txtTel.setRows(20);
+	
 		lblTel.setText("TELEMETRY");
 		lblLED1.setForeground(Color.WHITE);
 		lblLED2.setForeground(Color.WHITE);
@@ -474,11 +487,19 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		ledPanel.add(lblLED5);
 		ledPanel.add(lblLED6);
 		ledPanel.add(lblLED7);
+		
+		txtTel.setEditable(false);
+		txtTel.setLineWrap(true);
+		txtTel.setFocusable(false);
+		txtTel.setRows(10);
+		txtTel.setColumns(20);
+	
+		
 		ledPanel.setBackground(Color.BLACK);
 		telPanel.setLayout(new BorderLayout());
 		telPanel.add(lblTel, BorderLayout.PAGE_START);
-		telPanel.add(txtTel, BorderLayout.CENTER);
 		telPanel.add(ledPanel, BorderLayout.PAGE_END);
+		telPanel.add(txtTel, BorderLayout.CENTER);		
 
 
 		//setting up the whole window
