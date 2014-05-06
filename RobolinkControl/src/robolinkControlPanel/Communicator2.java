@@ -98,7 +98,6 @@ public class Communicator2 implements SerialPortEventListener
 			window.txtLog.append(logText + "\n");
 			
 			serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			System.out.println(serialPort.getBaudRate());
 			//CODE ON SETTING BAUD RATE ETC OMITTED
 			//XBEE PAIR ASSUMED TO HAVE SAME SETTINGS ALREADY
 
