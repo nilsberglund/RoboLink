@@ -13,12 +13,13 @@
 
 //Booleans////////////////////////////////////////////////
 volatile _Bool streamFilled;
-_Bool carryItem;
+volatile _Bool carryItem;
 volatile _Bool pickUpItem;
 volatile _Bool waitingForStartAbort;
 volatile _Bool waitingForEndPickup;
-_Bool stationRightSide;
-volatile _Bool leaveStation; 
+volatile _Bool stationRightSide;
+volatile _Bool leaveStation;
+volatile _Bool stationModeEnable;
 
 //////////////////////////////////////////////////////////
 
@@ -26,7 +27,6 @@ volatile _Bool leaveStation;
 uint8_t newStream[12];
 uint8_t cargo[12];
 uint8_t history[3][12];
-volatile uint8_t stationModeEnable;
 
 
 struct hd44780_l_conf low_conf;

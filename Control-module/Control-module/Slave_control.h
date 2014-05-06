@@ -14,6 +14,8 @@
 #define ARM 1
 #define SENSOR 2
 #define WHEEL 3
+#define KPROPORTIONAL 4
+#define KDERIVATIVE 5 
 /*--------variables---------*/
 
 volatile uint8_t data;
