@@ -27,6 +27,7 @@ volatile _Bool stationModeEnable;
 uint8_t newStream[12];
 uint8_t cargo[12];
 uint8_t history[3][12];
+volatile uint8_t finishedDrop;
 
 
 struct hd44780_l_conf low_conf;

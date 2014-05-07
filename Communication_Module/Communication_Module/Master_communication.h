@@ -14,6 +14,8 @@ volatile uint8_t received_data;
 volatile uint8_t sensor_data;
 volatile uint8_t wheel_steering_data;
 volatile uint8_t robot_arm_data;
+volatile uint8_t Kp;
+volatile uint8_t Kd;
 
 uint8_t Sensor_Slave;
 uint8_t Control_Slave;
@@ -25,6 +27,9 @@ uint8_t wr;
 uint8_t as;
 uint8_t ar;
 uint8_t rs;
+uint8_t Kds;
+uint8_t Kps;
+uint8_t dis;
 uint8_t wanted_data;
 unsigned char RFID[10];
 uint8_t i;
@@ -42,11 +47,9 @@ void RX_arm_data();
 void TX_wheel_data();
 void Master_TX(uint8_t);
 void receive_sensor_data();
-
 void RX_wheel_data();
-void TX_RFID_data();
-
-
-
+void TXKpData();
+void TXKdData();
+void TXDropItem();
 
 #endif /* MASTER_COMMUNICATION_H_ */

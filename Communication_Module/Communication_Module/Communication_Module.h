@@ -12,7 +12,7 @@
 
 /*--------Functions-----------*/
 void initManualMode();
-void changeMode();
+void toggleMode();
 
 
 /*--------Variables-----------*/

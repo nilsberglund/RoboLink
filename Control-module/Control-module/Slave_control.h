@@ -16,6 +16,7 @@
 #define WHEEL 3
 #define KPROPORTIONAL 4
 #define KDERIVATIVE 5 
+#define DROPITEM 6
 /*--------variables---------*/
 
 volatile uint8_t data;
@@ -29,5 +30,6 @@ volatile uint8_t component;
 
 void SPIInitSlave();
 void slaveTX(uint8_t);
+void TXFinishedDrop();
 
 #endif /* SLAVE_CONTROL_H_ */

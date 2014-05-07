@@ -24,3 +24,8 @@ void slaveTX(uint8_t data)
 	PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
 	PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
 }
+
+void TXFinishedDrop()
+{
+	slaveTX(1);
+}

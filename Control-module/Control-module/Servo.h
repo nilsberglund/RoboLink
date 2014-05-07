@@ -13,7 +13,7 @@ void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2);
 void defaultPosition();
 void pickupDefaultPosition();
-void dropItem(_Bool side);
+void dropItem(uint8_t side);
 void moveArm(uint8_t armData);
 
 #define ENABLE_BIT_DEFINITIONS

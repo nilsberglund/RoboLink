@@ -45,6 +45,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte PCONINSTR = 4; //instruction byte for pickup control data
 	final public byte KPINSTR = 5; //instruction byte for changing KP
 	final public byte KDINSTR = 6; //instruction byte for changing KD
+	final public byte MODEINSTR = 7; //instruction byte for changing auto/manual
 	
 	final public byte STOP = 0;
 	final public byte BW1 = 1;
@@ -265,6 +266,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyRotateRight.setActionCommand("RR");
 		btnBodyStop.setActionCommand("stop");
 		btnCalibration.setActionCommand("calibration");
+		btnAutomaticMode.setActionCommand("automaticmode");
+		btnManualMode.setActionCommand("manualmode");
 		btnEndPickup.setActionCommand("endpickup");
 		btnStartPickup.setActionCommand("startpickup");
 		btnAbortPickup.setActionCommand("abortpickup");
@@ -353,6 +356,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnBodyRotateLeft.addActionListener(this);
 		btnBodyRotateRight.addActionListener(this);
 		btnCalibration.addActionListener(this);
+		btnAutomaticMode.addActionListener(this);
+		btnManualMode.addActionListener(this);
 		btnEndPickup.addActionListener(this);
 		btnStartPickup.addActionListener(this);
 		btnAbortPickup.addActionListener(this);
@@ -385,7 +390,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//CONPANEL
-		//conPanel.setLayout(new BorderLayout());
+		
 		txtLog.setEditable(false);
 		txtLog.setLineWrap(true);
 		txtLog.setFocusable(false);
@@ -407,7 +412,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//drive buttons and labels
-	
 		navPanel.add(btnAutomaticMode);
 		navPanel.add(btnManualMode);
 		navPanel.add(btnBodyForward);
@@ -420,14 +424,13 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		navPanel.add(speedSlider);
 
 		//STATIONPANEL
+		
 		//pickup control buttons and label
-
 		stationPanel.add(btnStartPickup);
 		stationPanel.add(btnEndPickup);
 		stationPanel.add(btnAbortPickup);
 
 		//CALPANEL
-		
 		
 		lblCalibration.setText("First floor, then line:");
 		calPanel.add(lblCalibration);
@@ -444,7 +447,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//ARMPANEL
 		
 		//arm buttons and label
-	
 		armPanel.add(btnDPP);
 		armPanel.add(btnDTP);
 		armPanel.add(btnJoint1LB);
@@ -479,11 +481,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint7RS);
 		
 		
-		
-		
 		//TELPANEL
 		
-	
 		lblTel.setText("TELEMETRY");
 		lblLED1.setForeground(Color.WHITE);
 		lblLED2.setForeground(Color.WHITE);
@@ -618,6 +617,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("RR".equals(e.getActionCommand())) {
 			communicator.writeData(DRIVEINSTR);
 			communicator.writeData(RR);
+		}
+		else if ("automaticmode".equals(e.getActionCommand())) {
+			communicator.writeData(MODEINSTR);
+			btnAutomaticMode.setEnabled(false);
+			btnManualMode.setEnabled(true);
+		}
+		else if ("manualmode".equals(e.getActionCommand())) {
+			communicator.writeData(MODEINSTR);
+			btnAutomaticMode.setEnabled(true);
+			btnManualMode.setEnabled(false);
 		}
 		else if ("calibration".equals(e.getActionCommand())) {
 			communicator.writeData(CALINSTR);
