@@ -10,26 +10,25 @@ public class KeybindingController2 {
 	GUI2 window = null;
 
 
-	//    private static char leftAccel = 'q';
-	//    private static char leftDecel = 'a';
-	//    private static char rightAccel = 'e';
-	//    private static char rightDecel = 'd';
-	//    private static char bothAccel = 'w';
-	//    private static char bothDecel = 's';
+	//    private static char stop = 'q';
+	//    private static char rotateLeft = 'a';
+	//    private static char rotateRight = 'd';
+	    private static char forward = 'w';
+	//    private static char backward = 's';
 
 	public KeybindingController2(GUI2 window)
 	{
 		this.window = window;
 	}
 
-	//    public void bindKeys()
-	//    {
+	    public void bindKeys()
+	    {
 	//        //set input maps so that the program can read key bindings
 	//        //putting something in the input map means to assign a key to an action name
 	//        //action name is associated with a method in the action map
-	//        window.btnLeftAccel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(leftAccel), "accelerateLeft");
-	//        window.btnLeftAccel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toUpperCase(leftAccel)), "accelerateLeft");
-	//        window.btnLeftAccel.getActionMap().put("accelerateLeft", accelerateLeft);
+//		    	window.btnBodyForward.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(forward), "Forward");
+//		       window.btnBodyForward.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toUpperCase(forward)), "Forward");
+//	        window.btnBodyForward.getActionMap().put("forward", forward);
 	//
 	//        window.btnLeftDecel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(leftDecel), "decelerateLeft");
 	//        window.btnLeftDecel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toUpperCase(leftDecel)), "decelerateLeft");
@@ -52,7 +51,7 @@ public class KeybindingController2 {
 	//        window.btnLeftDecel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(bothDecel), "decelerateBoth");
 	//        window.btnLeftDecel.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(Character.toUpperCase(bothDecel)), "decelerateBoth");
 	//        window.btnLeftDecel.getActionMap().put("decelerateBoth", decelerateBoth);
-	//    }
+	    }
 
 	public void toggleControls() {
 		if (window.communicator.getConnected() == true) {
