@@ -44,13 +44,14 @@ int8_t getError()
 		error = error/(0b00000011);
 		error = error - 1;
 		
-	} else if(counter1 == 4 || counter1 == 5)
-	{
-		if(sum == 10 || sum == 22 || sum == 15 || sum == 25)
-		{
-			error = 50;
-		} 
-	} 	
+	} 
+// 	else if(counter1 == 4 || counter1 == 5)
+// 	{
+// 		if(sum == 10 || sum == 22 || sum == 15 || sum == 25)
+// 		{
+// 			error = 50;
+// 		} 
+// 	} 	
 	 else
 	{
 		error = -8;
@@ -63,20 +64,20 @@ int8_t getError()
 void controlAlgorithm()
 {
 	error = getError();
-	
-	
+		
 	if(error == 15)  // No sensors activated
 	{
 		rightWheelSpeed = rightWheelSpeed; 
 		leftWheelSpeed = leftWheelSpeed;
 		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
-	} else if(error == -43)
-	{
-		stop(); //4 or 5 sensors on either side activated, indicates station. Will make the robot stop.
-	}	
+	} 
+// 	else if(error == -43)
+// 	{
+// 		stop(); //4 or 5 sensors on either side activated, indicates station. Will make the robot stop.
+// 	}	
 	else
 	{	
-		midSpeed = 140;  //Standard speed
+		midSpeed = 80;  //Standard speed
 		int16_t speed = calculateSpeed(error);  //calculate new speed 
 		if ((midSpeed-speed) < 10)
 		{
@@ -85,7 +86,7 @@ void controlAlgorithm()
 		}
 		else if ((midSpeed-speed) > 235)
 		{
-			rightWheelSpeed = 180;
+			rightWheelSpeed = 100;
 			rightWheelDirection = 0;
 		}
 		else
@@ -96,12 +97,12 @@ void controlAlgorithm()
 		
 		if ((midSpeed+speed) < 10)
 		{
-			leftWheelSpeed = 3;
+			leftWheelSpeed = 40;
 			leftWheelDirection = 1;
 		}
 		else if ((midSpeed+speed) > 235)
 		{
-			leftWheelSpeed = 180;
+			leftWheelSpeed = 80;
 			leftWheelDirection = 0;
 		}
 		else
@@ -135,7 +136,7 @@ void drivingSetup()
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7); //Sets the data direction for the PWM and direction ports. 
 	numberOfStopRequests = 0;
 	Kp = 20;
-	Kd = 10;
+	Kd = 5;
 }
 
 /* Function that controls both direction and speed of the motors. 
