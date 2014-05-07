@@ -10,6 +10,7 @@
 #include <avr/io.h>
 #include "Servo.h"
 #include <util/delay.h>
+#include "Slave_control.h"
 
 void armInit(void) {
 	
@@ -144,11 +145,12 @@ void pickupDefaultPosition() {
 }
 
 /*Drop the item on either left or right side.*/
-void dropItem(_Bool side) { //Side = 1 right side, side = 0 left side
+void dropItem(uint8_t side) { //Side = 1 right side, side = 0 left side
 	
 	//Only servo 1 that is different
 	if(side == 0){ //Drop on left side
-		moveSingleServo(0x332, 0x50, 0x00, 0x01); //Servo 1 in position 240 degrees
+		moveSingleServo
+		(0x332, 0x50, 0x00, 0x01); //Servo 1 in position 240 degrees
 	}
 	else if(side == 1){ //Drop on right side
 		moveSingleServo(0xCC, 0x50, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
@@ -169,6 +171,8 @@ void dropItem(_Bool side) { //Side = 1 right side, side = 0 left side
 	_delay_ms(3000);
 	
 	defaultPosition();
+	
+	TXFinishedDrop();
 }
 
 /*

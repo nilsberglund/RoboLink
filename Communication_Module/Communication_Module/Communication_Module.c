@@ -38,16 +38,8 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 
 ISR(INT2_vect)
 {
-	PORTB &= ~(1 << PORTB4);
-	//case wanted data : 0x01 = wheel, 0x10 = arm, 0x11 = RFID, 0x02 = sensor_data
-	if(wanted_data == wr)
-	{
-		wheel_steering_data = Master_RX(0x01);
-	}
-	else if(wanted_data == ar)
-	{
-		robot_arm_data = Master_RX(0x01);
-	}
+	Slave_Select(Control_Slave);
+	finishedDrop = Master_RX(0x01);
 }
 
 /* Timer interrupt routine handling sensor data receive */
@@ -87,6 +79,15 @@ ISR(USART0_RX_vect)
 		}
 		else if(btdata == 4) {
 			component = PCONINSTR;
+		} 
+		else if(btdata == 5) {
+			component = KPINSTR;
+		}
+		else if(btdata == 6) {
+			component = KDINSTR;
+		} 
+		else if(btdata == 7) {
+			toggleMode();
 		}
 	}
 	else {
@@ -107,8 +108,15 @@ ISR(USART0_RX_vect)
 		else if (component == PCONINSTR) {
 			handleData(btdata);
 		}
+		else if (component == KPINSTR) {
+			Kp = btdata;
+			TXKpData();
+		}
+		else if (component == KDINSTR) {
+			Kd = btdata;
+			TXKpData();
+		}
 	}
-	
 }
 
 /*
@@ -126,26 +134,17 @@ ISR(USART1_RX_vect){
 
 ISR(PCINT3_vect)
 {
-	if(automaticModeEnabled == 1) {	//turns on Manual Mode
-		manualModeEnabled = 1;
-		automaticModeEnabled = 0;
-		TIMSK0 = 0;
-	} else if (manualModeEnabled == 1) { //Turns on Automatic Mode
-		manualModeEnabled = 0;
-		automaticModeEnabled = 1;
-		TIMSK0 = 0x06;
-	}
-		
+	toggleMode();
 }
 
 int main(void)
 {
+	initManualMode();
 	SPI_Init_Master();
 	setupBluetoothRXTX();
 	setupRFID();
 	setupLCD();
 	setupWarehouse();
-	initAutomaticMode();
 	
 	while(1)
 	{
@@ -165,7 +164,17 @@ void initManualMode()
 	manualModeEnabled = 1;
 }
 
-void changeMode()
+void toggleMode()
 {
-	PCIFR |= (1 << PCIF3);
+	if(automaticModeEnabled == 0)
+	{
+		automaticModeEnabled = 1;
+		manualModeEnabled = 0;
+		TIMSK0 = 0;
+	} else if ( manualModeEnabled == 0)
+	{
+		automaticModeEnabled = 0;
+		manualModeEnabled = 1;
+		TIMSK0 = 0x06;
+	}
 }

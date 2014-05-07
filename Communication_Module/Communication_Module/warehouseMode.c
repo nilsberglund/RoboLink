@@ -69,6 +69,13 @@ void waitForUserInputEndPickup()
 	waitingForEndPickup = 0;
 }
 
+void waitForFinishedDrop()
+{
+	while (finishedDrop == 0) {
+		
+	}
+	finishedDrop = 0;
+}
 
 /*Called by stationMode(). Enters if not carrying object.*/
 void pickUpMode(){
@@ -114,6 +121,9 @@ void deliveryMode(){
 		
 		printOnLCD(0); //Prints "No Cargo" on LCD
 		carryItem = 0;
+		TXDropItem(stationRightSide);
+		
+		waitForFinishedDrop();
 		//stationDirection = global variabel som beskriver sida om tejp för station. tilldelas egentligen så fort man stött på en station
 		//waitForDropItemInput();
 		//Skicka kommando till styr-AVR och kalla på dropItem(stationDirection)
@@ -124,6 +134,8 @@ void deliveryMode(){
 		// Do nothing -> exit code -> leave station mode
 	}
 }
+
+
 
 /*Called by pickupMode(). */
 _Bool itemInHistory(){

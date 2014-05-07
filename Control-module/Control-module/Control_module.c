@@ -36,6 +36,9 @@ ISR(SPI_STC_vect)
 		} else if(data == 0b10001011)
 		{
 			component = KDERIVATIVE;
+		} else if(data == 0b10001111)
+		{
+			component = DROPITEM;
 		}
 	}
 	else
@@ -59,7 +62,10 @@ ISR(SPI_STC_vect)
 		}  else if (component == KDERIVATIVE)
 		{
 			changeDerivative(data);
-		} 
+		}  else if (component == DROPITEM)
+		{
+			dropItem(data);
+		}
 	}
 }
 
