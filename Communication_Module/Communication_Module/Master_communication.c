@@ -30,7 +30,7 @@ void SPI_Init_Master()
 	sei();
 	
 	TCCR0A = 0;
-	TCCR0B = 0x05;
+	TCCR0B = 0x04;
 	//TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;
@@ -132,6 +132,10 @@ void TX_Protocol(uint8_t component)
 	else if(component == Kds)
 	{
 		Master_TX(0b10001011);
+	}
+	else if(component == dis)
+	{
+		Master_TX(0b10001111);
 	}
 }
 

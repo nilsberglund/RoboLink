@@ -34,6 +34,7 @@ void stationMode(){
 	}
 	 
 	stationModeEnable = 0;
+	TIMSK0 = 0x06;
 }
 
 /*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
@@ -260,5 +261,5 @@ void setupLCD(){
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-	
+	hd44780_l_clear_disp(&low_conf);
 }

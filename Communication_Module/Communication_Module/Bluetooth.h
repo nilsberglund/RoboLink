@@ -23,7 +23,7 @@ void setupBluetoothRXTX();
 
 
 uint8_t btdata; //the byte received by the AVR, transmitted from computer
-uint8_t waiting_for_instruction;
-uint8_t component;
+volatile uint8_t waiting_for_instruction;
+volatile uint8_t component;
 
 #endif /* BLUETOOTH_H_ */

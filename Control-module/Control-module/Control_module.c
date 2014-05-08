@@ -18,27 +18,31 @@ ISR(SPI_STC_vect)
 	
 	if(waitingForInstruction == 1)
 	{
-		waitingForInstruction = 0;
+		//waitingForInstruction = 0;
 		if(data == 0b10000100)
 		{
 			component = SENSOR;
-			
+			waitingForInstruction = 0;
 		} else if (data == 0b10000101)
 		{
 			component = WHEEL;
-			
+			waitingForInstruction = 0;
 		} else if(data == 0b10000110)
 		{
+			waitingForInstruction = 0;
 			component = ARM;
 		} else if(data == 0b10000111)
 		{
 			component = KPROPORTIONAL;
+			waitingForInstruction = 0;
 		} else if(data == 0b10001011)
 		{
 			component = KDERIVATIVE;
+			waitingForInstruction = 0;
 		} else if(data == 0b10001111)
 		{
 			component = DROPITEM;
+			waitingForInstruction = 0;
 		}
 	}
 	else
