@@ -66,7 +66,7 @@ void controlAlgorithm()
 	} 	
 	else
 	{	
-		midSpeed = 80;  //Standard speed
+		midSpeed = 140;  //Standard speed
 		int16_t speed = calculateSpeed(error);  //calculate new speed 
 		if ((midSpeed-speed) < 10)
 		{

@@ -15,42 +15,40 @@
 
 ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 {
+	Slave_Select(Sensor_Slave);	//slave select
+	sensor_data = Master_RX(0x01); //sending dummy
+	
 	if(sensor_data == 0b00001111 || sensor_data == 0b00011111)
 	{
 		stationLeftSensCounter++;
-		if (stationLeftSensCounter == 20)
+		if (stationLeftSensCounter == 10)
 		{
+			TIMSK0 = 0;
 			wheel_steering_data = 0;
 			TX_wheel_data();
-			//TX_sensor_data();
-			stationRightSide = 0;
+			stationRightSide = 1;
 			stationLeftSensCounter = 0;
 			stationModeEnable = 1;
-			bluetoothTX(sensor_data);
-			
 		}
 	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
 		stationRightSensCounter++;
-		if(stationRightSensCounter == 20)
+		if(stationRightSensCounter == 10)
 		{
+			TIMSK0 = 0;
 			wheel_steering_data = 0;
 			TX_wheel_data();
-			stationRightSide = 1;
+			stationRightSide = 0;
 			stationRightSensCounter = 0;
 			stationModeEnable = 1;
-			bluetoothTX(sensor_data);
-			
 		}
-	} else
+	} else 
 	{
-		Slave_Select(Sensor_Slave);	//slave select
-		sensor_data = Master_RX(0x01); //sending dummy
 		stationLeftSensCounter = 0;
 		stationRightSensCounter = 0;
 		bluetoothTX(sensor_data);
 	}
-	Slave_Select(Control_Slave);
+	//Slave_Select(Control_Slave);
 }
 
 ISR(INT2_vect)
@@ -150,19 +148,20 @@ ISR(USART1_RX_vect){
 	}
 }
 
-ISR(PCINT3_vect)
-{
-	toggleMode();
-}
+// ISR(PCINT3_vect)
+// {
+// 	toggleMode();
+// }
 
 int main(void)
 {
-	setupRFID();
-	setupLCD();
+	
 	setupWarehouse();
 	initManualMode();
 	SPI_Init_Master();
 	setupBluetoothRXTX();
+	setupRFID();
+	setupLCD();
 	
 	
 	while(1)
