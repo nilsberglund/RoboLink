@@ -203,8 +203,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//Instantiating buttons and adding text
 		btnConnect = new JButton("Connect");
 		btnDisconnect = new JButton("Disconnect");
-		btnBodyBackward = new JButton("Forward");
-		btnBodyForward = new JButton("Backward");
+		btnBodyBackward = new JButton("Backward");
+		btnBodyForward = new JButton("Forward");
 		btnBodyForwardLeft = new JButton("Forward Left");
 		btnBodyForwardRight = new JButton("Forward Right");
 		btnBodyRotateLeft = new JButton("Rotate Left");
