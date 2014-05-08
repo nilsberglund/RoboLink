@@ -15,43 +15,56 @@
 ISR(SPI_STC_vect)
 {
 	data = SPDR;
-
+	
 	if(waitingForInstruction == 1)
 	{
+		waitingForInstruction = 0;
 		if(data == 0b10000100)
 		{
-			waitingForInstruction = 0;
 			component = SENSOR;
 			
 		} else if (data == 0b10000101)
 		{
-			waitingForInstruction = 0;
 			component = WHEEL;
 			
 		} else if(data == 0b10000110)
 		{
-			waitingForInstruction = 0;
 			component = ARM;
-			
+		} else if(data == 0b10000111)
+		{
+			component = KPROPORTIONAL;
+		} else if(data == 0b10001011)
+		{
+			component = KDERIVATIVE;
+		} else if(data == 0b10001111)
+		{
+			component = DROPITEM;
 		}
 	}
 	else
 	{
+		waitingForInstruction = 1;
 		if(component == SENSOR)
 		{
 			sensorData = data;
 			controlAlgorithm();
-			waitingForInstruction = 1;
 		}else if (component == ARM)
 		{
 			armData = data;
 			moveArm(armData);
-			waitingForInstruction = 1;
 		} else if (component == WHEEL)
 		{
 			steeringData = data;
 			moveRobot();
-			waitingForInstruction = 1;
+		}  else if (component == KPROPORTIONAL)
+		{
+			changeProportional(data);
+		}  else if (component == KDERIVATIVE)
+		{
+			changeDerivative(data);
+		}  else if (component == DROPITEM)
+		{
+			dropItem(data);
 		}
 	}
 }

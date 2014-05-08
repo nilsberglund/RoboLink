@@ -51,13 +51,14 @@ void initADC() {
 	EIMSK =0x01;
 	for(int i=0; i<7; i++)
 	{
+		
 		if(i == 1 || i == 2)
 		{
-			channelThresholds[i] = 187;
+			channelThresholds[i] = 195;
 		}
 		else
 		{
-			channelThresholds[i] = 150;
+			channelThresholds[i] = 160;
 		}
 	}
 	sei(); 

@@ -31,7 +31,7 @@ void SPI_Init_Master()
 	
 	TCCR0A = 0;
 	TCCR0B = 0x05;
-	TIMSK0 = 0x06;
+	//TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;
 	Control_Slave = 2;
@@ -43,6 +43,9 @@ void SPI_Init_Master()
 	as = 5;
 	ar = 6;
 	rs = 7;
+	Kps = 8;
+	Kds = 9;
+	dis = 10;
 	
 	OCR0A = 122;
 	OCR0B = 125;
@@ -122,6 +125,14 @@ void TX_Protocol(uint8_t component)
 	{
 		Master_TX(0b10101011);
 	}
+	else if(component == Kps)
+	{
+		Master_TX(0b10000111);
+	}
+	else if(component == Kds)
+	{
+		Master_TX(0b10001011);
+	}
 }
 
 /* Function that transmits sensor data to the control slave. */
@@ -155,6 +166,7 @@ void RX_sensor_data()
 	 Slave_Select(Control_Slave);
 	 TX_Protocol(ws);
 	 Master_TX(wheel_steering_data);
+	 Slave_Select(No_Slave);
  }
  
  void RX_wheel_data()
@@ -179,14 +191,28 @@ void RX_arm_data()
 	Slave_Select(No_Slave);
 }
 
-void TX_RFID_data()
+void TXKpData()
 {
 	Slave_Select(Control_Slave);
-	TX_Protocol(rs);
-	for(int i = 0; i < 10; i++)
-	{
-		Master_TX(RFID[i]);
-	}
+	TX_Protocol(Kps);
+	Master_TX(Kp);
+	Slave_Select(No_Slave);
+}
+
+void TXKdData()
+{
+	Slave_Select(Control_Slave);
+	TX_Protocol(Kds);
+	Master_TX(Kd);
+	Slave_Select(No_Slave);
+}
+
+void TXDropItem()
+{
+	Slave_Select(Control_Slave);
+	TX_Protocol(dis);
+	Master_TX(stationRightSide);
+	Slave_Select(No_Slave);
 }
 
 

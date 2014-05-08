@@ -15,41 +15,50 @@
 
 ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 {
-	Slave_Select(Sensor_Slave);	//slave select
-	sensor_data = Master_RX(0x01); //sending dummy
 	if(sensor_data == 0b00001111 || sensor_data == 0b00011111)
 	{
-		TX_sensor_data();
-		stationRightSide = 0;
-		stationModeEnable = 1;
-		bluetoothTX(sensor_data);
-		
+		stationLeftSensCounter++;
+		if (stationLeftSensCounter == 40)
+		{
+			wheel_steering_data = 0;
+			TX_wheel_data();
+			//TX_sensor_data();
+			stationRightSide = 0;
+			stationModeEnable = 1;
+			bluetoothTX(sensor_data);
+			stationLeftSensCounter = 0;
+		}
 	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
-		TX_sensor_data();
-		stationRightSide = 1;
-		stationModeEnable = 1;
-		bluetoothTX(sensor_data);
+		stationRightSensCounter++;
+		if(stationRightSensCounter == 40)
+		{
+			wheel_steering_data = 0;
+			TX_wheel_data();
+			stationRightSide = 1;
+			stationModeEnable = 1;
+			bluetoothTX(sensor_data);
+			stationRightSensCounter = 0;
+		}
 		
+		
+	} else
+	{
+		Slave_Select(Sensor_Slave);	//slave select
+		sensor_data = Master_RX(0x01); //sending dummy
+		stationLeftSensCounter = 0;
+		stationRightSensCounter = 0;
 	}
 	Slave_Select(Control_Slave);
-	
 }
 
 ISR(INT2_vect)
 {
-	PORTB &= ~(1 << PORTB4);
-	//case wanted data : 0x01 = wheel, 0x10 = arm, 0x11 = RFID, 0x02 = sensor_data
-	if(wanted_data == wr)
-	{
-		wheel_steering_data = Master_RX(0x01);
-	}
-	else if(wanted_data == ar)
-	{
-		robot_arm_data = Master_RX(0x01);
-	}
+	Slave_Select(Control_Slave);
+	finishedDrop = Master_RX(0x01);
 }
 
+/* Timer interrupt routine handling sensor data receive */
 ISR(TIMER0_COMPA_vect)
 {
 	if(stationModeEnable == 0)
@@ -58,6 +67,7 @@ ISR(TIMER0_COMPA_vect)
 	}
 }
 
+/* Timer interrupt routine handling sensor data transmission*/
 ISR(TIMER0_COMPB_vect)
 {
 	if(stationModeEnable == 0)
@@ -67,6 +77,8 @@ ISR(TIMER0_COMPB_vect)
 	}
 }
 
+
+/* Interrupt routine for receiving bluetooth data */
 ISR(USART0_RX_vect)
 {
 	btdata = UDR0;
@@ -83,26 +95,45 @@ ISR(USART0_RX_vect)
 		}
 		else if(btdata == 4) {
 			component = PCONINSTR;
+		} 
+		else if(btdata == 5) {
+			component = KPINSTR;
+		}
+		else if(btdata == 6) {
+			component = KDINSTR;
+		} 
+		else if(btdata == 7) { //Toggle mode instruction
+			waiting_for_instruction = 1;
+			toggleMode();
 		}
 	}
 	else {
 		waiting_for_instruction = 1;
 		if (component == WHEEL) {
+			if(manualModeEnabled == 1) {
 			wheel_steering_data = btdata;
 			TX_wheel_data();
+			}
 		}
 		else if (component == ARM) {
 			robot_arm_data = btdata;
 			TX_arm_data();
 		}
 		else if (component == CALINSTR) {
-			calibration();	
+			//calibration();	
 		}
 		else if (component == PCONINSTR) {
 			handleData(btdata);
 		}
+		else if (component == KPINSTR) {
+			Kp = btdata;
+			TXKpData();
+		}
+		else if (component == KDINSTR) {
+			Kd = btdata;
+			TXKpData();
+		}
 	}
-	
 }
 
 /*
@@ -118,13 +149,20 @@ ISR(USART1_RX_vect){
 	}
 }
 
+ISR(PCINT3_vect)
+{
+	toggleMode();
+}
+
 int main(void)
 {
-	SPI_Init_Master();
-	setupBluetoothRXTX();
 	setupRFID();
 	setupLCD();
 	setupWarehouse();
+	initManualMode();
+	SPI_Init_Master();
+	setupBluetoothRXTX();
+	
 	
 	while(1)
 	{
@@ -135,5 +173,29 @@ int main(void)
 	}
 }
 
+/*Function that initiates manual mode*/
+void initManualMode()
+{	
+	//PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
+	//PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20
+	automaticModeEnabled = 0;
+	manualModeEnabled = 1;
+	stationLeftSensCounter = 0;
+	stationRightSensCounter = 0;
+}
 
-
+void toggleMode()
+{
+	if(automaticModeEnabled == 0)
+	{
+		automaticModeEnabled = 1;
+		manualModeEnabled = 0;
+		TIMSK0 = 0x06;
+		
+	} else if (manualModeEnabled == 0)
+	{
+		automaticModeEnabled = 0;
+		manualModeEnabled = 1;
+		TIMSK0 = 0;
+	}
+}

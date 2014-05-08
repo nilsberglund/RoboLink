@@ -13,6 +13,8 @@
 #define WHEEL 1
 #define CALINSTR 3
 #define PCONINSTR 4
+#define KPINSTR 5
+#define KDINSTR 6
 
 void handleData(uint8_t temp);
 void bluetoothTX(uint8_t txdata);

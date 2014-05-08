@@ -10,7 +10,16 @@
 #define COMMUNICATION_MODULE_H_
 
 
+/*--------Functions-----------*/
+void initManualMode();
+void toggleMode();
 
+
+/*--------Variables-----------*/
+uint8_t automaticModeEnabled;
+uint8_t manualModeEnabled;
+uint8_t stationRightSensCounter;
+uint8_t stationLeftSensCounter;
 
 
 #endif /* COMMUNICATION_MODULE_H_ */
