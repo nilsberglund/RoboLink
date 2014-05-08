@@ -44,13 +44,7 @@ int8_t getError()
 		error = error/(0b00000011);
 		error = error - 1;
 		
-	} else if(counter1 == 4 || counter1 == 5)
-	{
-		if(sum == 10 || sum == 22 || sum == 15 || sum == 25)
-		{
-			error = 50;
-		} 
-	} 	
+	} 
 	 else
 	{
 		error = -8;
@@ -63,17 +57,13 @@ int8_t getError()
 void controlAlgorithm()
 {
 	error = getError();
-	
-	
+		
 	if(error == 15)  // No sensors activated
 	{
 		rightWheelSpeed = rightWheelSpeed; 
 		leftWheelSpeed = leftWheelSpeed;
 		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
-	} else if(error == -43)
-	{
-		stop(); //4 or 5 sensors on either side activated, indicates station. Will make the robot stop.
-	}	
+	} 	
 	else
 	{	
 		midSpeed = 140;  //Standard speed
@@ -81,29 +71,35 @@ void controlAlgorithm()
 		if ((midSpeed-speed) < 10)
 		{
 			rightWheelSpeed = 3;
+			rightWheelDirection = 1;
 		}
 		else if ((midSpeed-speed) > 235)
 		{
-			rightWheelSpeed = 248;
+			rightWheelSpeed = 100;
+			rightWheelDirection = 0;
 		}
 		else
 		{
 			rightWheelSpeed = midSpeed - speed;
+			rightWheelDirection = 1;
 		}
 		
 		if ((midSpeed+speed) < 10)
 		{
-			leftWheelSpeed = 3;
+			leftWheelSpeed = 40;
+			leftWheelDirection = 1;
 		}
 		else if ((midSpeed+speed) > 235)
 		{
-			leftWheelSpeed = 248;
+			leftWheelSpeed = 80;
+			leftWheelDirection = 0;
 		}
 		else
 		{
 			leftWheelSpeed = midSpeed + speed;
+			leftWheelDirection = 1;
 		}
-		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
+		drive(rightWheelDirection, leftWheelDirection, leftWheelSpeed, rightWheelSpeed);
 	}
 }
 
@@ -111,8 +107,6 @@ void controlAlgorithm()
 int8_t calculateSpeed(int8_t error)
 {
 	volatile int16_t speed = 0;
-	int8_t Kp = 20;
-	int8_t Kd = 10;
 	
 	speed = Kp * error + Kd * (error - prevError);
 
@@ -129,7 +123,8 @@ void drivingSetup()
 	OCR1A = 255; //Sets compare register => Robot does not move
 	OCR1B = 255; // Sets compare register => Robot does not move
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7); //Sets the data direction for the PWM and direction ports. 
-	numberOfStopRequests = 0;
+	Kp = 20;
+	Kd = 5;
 }
 
 /* Function that controls both direction and speed of the motors. 
@@ -186,14 +181,14 @@ void driveForwardLeft(uint8_t speed)
 /* Function that rotates the robot counterclockwise */
 void rotateCCW()
 {
-	uint8_t speed = 160;
+	uint8_t speed = 100;
 	drive(1, 0, speed, speed);
 }
 
 /* Function that rotates the robot clockwise */
 void rotateCW()
 {
-	uint8_t speed = 160;
+	uint8_t speed = 100;
 	drive(0, 1, speed, speed);
 }
 
@@ -206,7 +201,7 @@ void moveRobot()
 	{
 		if(steeringData == 0b00001100)
 		{
-			driveForward(FASTSPEED);
+			driveBackward(FASTSPEED);
 		} else if(steeringData == 0b00001011)
 		{
 			driveForwardLeft(FASTSPEED);
@@ -215,7 +210,7 @@ void moveRobot()
 			driveForwardRight(FASTSPEED);
 		} else if(steeringData == 0b00001001)
 		{
-			driveBackward(FASTSPEED);
+			driveForward(FASTSPEED);
 		} else if(steeringData == 0b00001000)
 		{
 			stop();
@@ -224,7 +219,7 @@ void moveRobot()
 	{
 		if(steeringData == 0b00000100)
 		{
-			driveForward(SLOWSPEED);
+			driveBackward(SLOWSPEED);
 		} else if(steeringData == 0b00000011)
 		{
 			driveForwardLeft(SLOWSPEED);
@@ -233,7 +228,7 @@ void moveRobot()
 			driveForwardRight(SLOWSPEED);
 		} else if(steeringData == 0b00000001)
 		{
-			driveBackward(SLOWSPEED);
+			driveForward(SLOWSPEED);
 		} else if(steeringData == 0b00000000)
 		{
 			stop();
@@ -245,4 +240,14 @@ void moveRobot()
 			rotateCCW();
 		}
 	}
+}
+
+void changeProportional(uint8_t newKp)
+{
+	Kp = newKp;
+}
+
+void changeDerivative(uint8_t newKd)
+{
+	Kd = newKd;
 }

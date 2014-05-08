@@ -47,6 +47,7 @@ void USART_Transmit( unsigned char data) {
 // 	return data;
 // }
 
+/*Move servos placed one by one.*/
 void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID){ 
 	
 	byte checksum;
@@ -73,6 +74,7 @@ void move_Single_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 	
 }
 
+/*Move servos placed two by two.*/
 void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2){
 	
 	byte checksum;
@@ -85,23 +87,23 @@ void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 	volatile unsigned char s2_low_byte = tmp;			//lower byte of position for servo 2
 	volatile unsigned char s2_high_byte = (tmp >> 8);	//higher byte of position for servo 2
 	
-	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(0xFF);	//start byte
-	USART_Transmit(0xFE);	//broadcast ID
-	USART_Transmit(0x0E);	//length is 14
+	USART_Transmit(0xFF);				//start byte
+	USART_Transmit(0xFF);				//start byte
+	USART_Transmit(0xFE);				//broadcast ID
+	USART_Transmit(0x0E);				//length is 14
 	USART_Transmit(SYNC_WRITE);			//instruction = sync_data (2 servo)
 	USART_Transmit(GOAL_POSITION_L);	
-	USART_Transmit(0x04);	//data length is 4
-	USART_Transmit(servo_ID1);	//servo id1
-	USART_Transmit(s1_low_byte);	//send low byte of position
-	USART_Transmit(s1_high_byte);	//send high byte of position
-	USART_Transmit(speed_l);	//send low byte of speed
-	USART_Transmit(speed_h);	//send high byte of speed
-	USART_Transmit(servo_ID2);	//servo id2
-	USART_Transmit(s2_low_byte);	//send low byte of position
-	USART_Transmit(s2_high_byte);	//send high byte of position
-	USART_Transmit(speed_l); //send low byte of speed
-	USART_Transmit(speed_h); //send high byte of speed
+	USART_Transmit(0x04);				//data length is 4
+	USART_Transmit(servo_ID1);			//servo id1
+	USART_Transmit(s1_low_byte);		//send low byte of position
+	USART_Transmit(s1_high_byte);		//send high byte of position
+	USART_Transmit(speed_l);			//send low byte of speed
+	USART_Transmit(speed_h);			//send high byte of speed
+	USART_Transmit(servo_ID2);			//servo id2
+	USART_Transmit(s2_low_byte);		//send low byte of position
+	USART_Transmit(s2_high_byte);		//send high byte of position
+	USART_Transmit(speed_l);			//send low byte of speed
+	USART_Transmit(speed_h);			//send high byte of speed
 	
 	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + servo_ID1 + s1_low_byte + s1_high_byte + speed_l + speed_h + servo_ID2 + s2_low_byte + s2_high_byte + speed_l + speed_h;
 	
@@ -110,7 +112,8 @@ void move_Double_Servo(unsigned int position, uint8_t speed_l, uint8_t speed_h, 
 	USART_Transmit(checksum);
 }
 
-void default_Position(){ //Move the arm to default position
+/*Move the arm to default position*/
+void default_Position(){
 	
 	move_Single_Servo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 straight
 	move_Single_Servo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 to straight up
@@ -119,16 +122,15 @@ void default_Position(){ //Move the arm to default position
 	move_Double_Servo(0xCC, 0x50, 0x00, 0x02, 0x03);	//0xCC (60 deg) is 0 degree position for servo 2 and 3
 	move_Single_Servo(0x1FF, 0x20, 0x00, 0x01);			//setting servo one to point forward
 	
-	
 	//updating positions
 	joint1_Pos = 0x1FF;
 	joint2_Pos = 0xCC;
 	joint3_Pos = 0xCC;
 	joint4_Pos = 0x3EE;
 	joint5_Pos = 0x1FF;
-	
 }
 
+/*Sets the arm in pickup default position. */
 void pickup_Default_Position(){
 	
 	move_Double_Servo(0x288, 0xF0, 0x00, 0x02, 0x03);	//Servo 2 & 3 in position 190 degrees
@@ -145,6 +147,7 @@ void pickup_Default_Position(){
 	joint6_Pos = 0x1FF;
 }
 
+/*Drop the item on either right or left side.*/
 void drop_Item(_Bool side){ //Side = 1 right side, side = 0 left side
 	
 	//Only servo 1 that is different

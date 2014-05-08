@@ -19,7 +19,8 @@ volatile uint8_t leftWheelSpeed;
 volatile uint8_t rightWheelDirection;
 volatile uint8_t leftWheelDirection;
 uint8_t midSpeed;
-uint8_t numberOfStopRequests;
+int8_t Kp;
+int8_t Kd;
 
 /*-------Functions---------*/
 void drivingSetup();
@@ -32,5 +33,7 @@ void stop();
 void moveRobot();
 void rotateCW();
 void rotateCCW();
+void changeProportional(uint8_t);
+void changeDerivative(uint8_t);
 
 #endif /* CONTROL_WHEEL_STEERING_H_ */
