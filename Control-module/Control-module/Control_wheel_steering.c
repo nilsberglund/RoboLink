@@ -45,13 +45,6 @@ int8_t getError()
 		error = error - 1;
 		
 	} 
-// 	else if(counter1 == 4 || counter1 == 5)
-// 	{
-// 		if(sum == 10 || sum == 22 || sum == 15 || sum == 25)
-// 		{
-// 			error = 50;
-// 		} 
-// 	} 	
 	 else
 	{
 		error = -8;
@@ -70,11 +63,7 @@ void controlAlgorithm()
 		rightWheelSpeed = rightWheelSpeed; 
 		leftWheelSpeed = leftWheelSpeed;
 		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
-	} 
-// 	else if(error == -43)
-// 	{
-// 		stop(); //4 or 5 sensors on either side activated, indicates station. Will make the robot stop.
-// 	}	
+	} 	
 	else
 	{	
 		midSpeed = 80;  //Standard speed
@@ -134,7 +123,6 @@ void drivingSetup()
 	OCR1A = 255; //Sets compare register => Robot does not move
 	OCR1B = 255; // Sets compare register => Robot does not move
 	DDRD |= (1 << PORTD4)|(1 << PORTD5)|(1 << PORTD6)|(1 << PORTD7); //Sets the data direction for the PWM and direction ports. 
-	numberOfStopRequests = 0;
 	Kp = 20;
 	Kd = 5;
 }
@@ -193,14 +181,14 @@ void driveForwardLeft(uint8_t speed)
 /* Function that rotates the robot counterclockwise */
 void rotateCCW()
 {
-	uint8_t speed = 160;
+	uint8_t speed = 100;
 	drive(1, 0, speed, speed);
 }
 
 /* Function that rotates the robot clockwise */
 void rotateCW()
 {
-	uint8_t speed = 160;
+	uint8_t speed = 100;
 	drive(0, 1, speed, speed);
 }
 
@@ -213,7 +201,7 @@ void moveRobot()
 	{
 		if(steeringData == 0b00001100)
 		{
-			driveForward(FASTSPEED);
+			driveBackward(FASTSPEED);
 		} else if(steeringData == 0b00001011)
 		{
 			driveForwardLeft(FASTSPEED);
@@ -222,7 +210,7 @@ void moveRobot()
 			driveForwardRight(FASTSPEED);
 		} else if(steeringData == 0b00001001)
 		{
-			driveBackward(FASTSPEED);
+			driveForward(FASTSPEED);
 		} else if(steeringData == 0b00001000)
 		{
 			stop();
@@ -231,7 +219,7 @@ void moveRobot()
 	{
 		if(steeringData == 0b00000100)
 		{
-			driveForward(SLOWSPEED);
+			driveBackward(SLOWSPEED);
 		} else if(steeringData == 0b00000011)
 		{
 			driveForwardLeft(SLOWSPEED);
@@ -240,7 +228,7 @@ void moveRobot()
 			driveForwardRight(SLOWSPEED);
 		} else if(steeringData == 0b00000001)
 		{
-			driveBackward(SLOWSPEED);
+			driveForward(SLOWSPEED);
 		} else if(steeringData == 0b00000000)
 		{
 			stop();
