@@ -244,7 +244,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1204
+.text           0x00000000     0x120c
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -340,134 +340,134 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00000104       0x1e Bluetooth.o
                 0x00000104                setupBluetoothRXTX
  .text.__vector_2
-                0x00000122       0xdc Communication_Module.o
+                0x00000122       0xe4 Communication_Module.o
                 0x00000122                __vector_2
  .text.__vector_3
-                0x000001fe       0x5a Communication_Module.o
-                0x000001fe                __vector_3
+                0x00000206       0x5a Communication_Module.o
+                0x00000206                __vector_3
  .text.__vector_16
-                0x00000258       0x56 Communication_Module.o
-                0x00000258                __vector_16
+                0x00000260       0x56 Communication_Module.o
+                0x00000260                __vector_16
  .text.__vector_17
-                0x000002ae       0x5c Communication_Module.o
-                0x000002ae                __vector_17
+                0x000002b6       0x5c Communication_Module.o
+                0x000002b6                __vector_17
  .text.__vector_28
-                0x0000030a       0x78 Communication_Module.o
-                0x0000030a                __vector_28
+                0x00000312       0x78 Communication_Module.o
+                0x00000312                __vector_28
  .text.initManualMode
-                0x00000382       0x14 Communication_Module.o
-                0x00000382                initManualMode
- .text.main     0x00000396       0x18 Communication_Module.o
-                0x00000396                main
+                0x0000038a       0x14 Communication_Module.o
+                0x0000038a                initManualMode
+ .text.main     0x0000039e       0x18 Communication_Module.o
+                0x0000039e                main
  .text.toggleMode
-                0x000003ae       0x32 Communication_Module.o
-                0x000003ae                toggleMode
+                0x000003b6       0x32 Communication_Module.o
+                0x000003b6                toggleMode
  .text.__vector_7
-                0x000003e0       0x4e Communication_Module.o
-                0x000003e0                __vector_7
+                0x000003e8       0x4e Communication_Module.o
+                0x000003e8                __vector_7
  .text.__vector_20
-                0x0000042e       0xf6 Communication_Module.o
-                0x0000042e                __vector_20
+                0x00000436       0xf6 Communication_Module.o
+                0x00000436                __vector_20
  .text._hd44780_l_func
-                0x00000524      0x41c LCD_new.o
+                0x0000052c      0x41c LCD_new.o
  .text.hd44780_l_clear_disp
-                0x00000940       0x16 LCD_new.o
-                0x00000940                hd44780_l_clear_disp
+                0x00000948       0x16 LCD_new.o
+                0x00000948                hd44780_l_clear_disp
  .text.hd44780_l_ems
-                0x00000956       0x24 LCD_new.o
-                0x00000956                hd44780_l_ems
+                0x0000095e       0x24 LCD_new.o
+                0x0000095e                hd44780_l_ems
  .text.hd44780_l_disp
-                0x0000097a       0x2a LCD_new.o
-                0x0000097a                hd44780_l_disp
+                0x00000982       0x2a LCD_new.o
+                0x00000982                hd44780_l_disp
  .text.hd44780_l_fs
-                0x000009a4       0x2c LCD_new.o
-                0x000009a4                hd44780_l_fs
+                0x000009ac       0x2c LCD_new.o
+                0x000009ac                hd44780_l_fs
  .text.hd44780_l_write
-                0x000009d0       0x16 LCD_new.o
-                0x000009d0                hd44780_l_write
+                0x000009d8       0x16 LCD_new.o
+                0x000009d8                hd44780_l_write
  .text.hd44780_l_init
-                0x000009e6      0x2c0 LCD_new.o
-                0x000009e6                hd44780_l_init
+                0x000009ee      0x2c0 LCD_new.o
+                0x000009ee                hd44780_l_init
  .text.SPI_Init_Master
-                0x00000ca6       0x74 Master_communication.o
-                0x00000ca6                SPI_Init_Master
+                0x00000cae       0x74 Master_communication.o
+                0x00000cae                SPI_Init_Master
  .text.Master_TX
-                0x00000d1a       0x1e Master_communication.o
-                0x00000d1a                Master_TX
+                0x00000d22       0x1e Master_communication.o
+                0x00000d22                Master_TX
  .text.Master_RX
-                0x00000d38       0x20 Master_communication.o
-                0x00000d38                Master_RX
+                0x00000d40       0x20 Master_communication.o
+                0x00000d40                Master_RX
  .text.Slave_Select
-                0x00000d58       0x38 Master_communication.o
-                0x00000d58                Slave_Select
+                0x00000d60       0x38 Master_communication.o
+                0x00000d60                Slave_Select
  .text.TX_Protocol
-                0x00000d90       0x6e Master_communication.o
-                0x00000d90                TX_Protocol
+                0x00000d98       0x6e Master_communication.o
+                0x00000d98                TX_Protocol
  .text.TX_sensor_data
-                0x00000dfe       0x2a Master_communication.o
-                0x00000dfe                TX_sensor_data
+                0x00000e06       0x2a Master_communication.o
+                0x00000e06                TX_sensor_data
  .text.RX_sensor_data
-                0x00000e28       0x1a Master_communication.o
-                0x00000e28                RX_sensor_data
+                0x00000e30       0x1a Master_communication.o
+                0x00000e30                RX_sensor_data
  .text.TX_wheel_data
-                0x00000e42       0x18 Master_communication.o
-                0x00000e42                TX_wheel_data
+                0x00000e4a       0x18 Master_communication.o
+                0x00000e4a                TX_wheel_data
  .text.TX_arm_data
-                0x00000e5a       0x12 Master_communication.o
-                0x00000e5a                TX_arm_data
+                0x00000e62       0x12 Master_communication.o
+                0x00000e62                TX_arm_data
  .text.TXKpData
-                0x00000e6c       0x18 Master_communication.o
-                0x00000e6c                TXKpData
+                0x00000e74       0x18 Master_communication.o
+                0x00000e74                TXKpData
  .text.TXDropItem
-                0x00000e84       0x18 Master_communication.o
-                0x00000e84                TXDropItem
+                0x00000e8c       0x18 Master_communication.o
+                0x00000e8c                TXDropItem
  .text.leaveStationMode
-                0x00000e9c       0x28 warehouseMode.o
-                0x00000e9c                leaveStationMode
+                0x00000ea4       0x28 warehouseMode.o
+                0x00000ea4                leaveStationMode
  .text.waitForUserInputStartAbort
-                0x00000ec4        0xe warehouseMode.o
-                0x00000ec4                waitForUserInputStartAbort
+                0x00000ecc        0xe warehouseMode.o
+                0x00000ecc                waitForUserInputStartAbort
  .text.waitForUserInputEndPickup
-                0x00000ed2        0xe warehouseMode.o
-                0x00000ed2                waitForUserInputEndPickup
+                0x00000eda        0xe warehouseMode.o
+                0x00000eda                waitForUserInputEndPickup
  .text.waitForFinishedDrop
-                0x00000ee0        0xe warehouseMode.o
-                0x00000ee0                waitForFinishedDrop
+                0x00000ee8        0xe warehouseMode.o
+                0x00000ee8                waitForFinishedDrop
  .text.itemInHistory
-                0x00000eee       0x66 warehouseMode.o
-                0x00000eee                itemInHistory
+                0x00000ef6       0x66 warehouseMode.o
+                0x00000ef6                itemInHistory
  .text.cargoEqualsNewStream
-                0x00000f54       0x32 warehouseMode.o
-                0x00000f54                cargoEqualsNewStream
+                0x00000f5c       0x32 warehouseMode.o
+                0x00000f5c                cargoEqualsNewStream
  .text.powerRFID
-                0x00000f86        0xc warehouseMode.o
-                0x00000f86                powerRFID
+                0x00000f8e        0xc warehouseMode.o
+                0x00000f8e                powerRFID
  .text.printOnLCD
-                0x00000f92       0x9e warehouseMode.o
-                0x00000f92                printOnLCD
+                0x00000f9a       0x9e warehouseMode.o
+                0x00000f9a                printOnLCD
  .text.deliveryMode
-                0x00001030       0x56 warehouseMode.o
-                0x00001030                deliveryMode
+                0x00001038       0x56 warehouseMode.o
+                0x00001038                deliveryMode
  .text.pickUpMode
-                0x00001086       0x32 warehouseMode.o
-                0x00001086                pickUpMode
+                0x0000108e       0x32 warehouseMode.o
+                0x0000108e                pickUpMode
  .text.stationMode
-                0x000010b8       0x26 warehouseMode.o
-                0x000010b8                stationMode
+                0x000010c0       0x26 warehouseMode.o
+                0x000010c0                stationMode
  .text.setupRFID
-                0x000010de       0x26 warehouseMode.o
-                0x000010de                setupRFID
+                0x000010e6       0x26 warehouseMode.o
+                0x000010e6                setupRFID
  .text.setupWarehouse
-                0x00001104       0x26 warehouseMode.o
-                0x00001104                setupWarehouse
+                0x0000110c       0x26 warehouseMode.o
+                0x0000110c                setupWarehouse
  .text.setupLCD
-                0x0000112a       0xd6 warehouseMode.o
-                0x0000112a                setupLCD
-                0x00001200                . = ALIGN (0x2)
+                0x00001132       0xd6 warehouseMode.o
+                0x00001132                setupLCD
+                0x00001208                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001200        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x00001200                _exit
-                0x00001200                exit
+ .fini9         0x00001208        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x00001208                _exit
+                0x00001208                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -486,11 +486,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001200        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00001208        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001204                _etext = .
+                0x0000120c                _etext = .
 
-.data           0x00800100       0x3c load address 0x00001204
+.data           0x00800100       0x3c load address 0x0000120c
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -565,8 +565,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x0080018f                sr
                 0x00800190                Control_Slave
                 0x00800191                PROVIDE (__bss_end, .)
-                0x00001204                __data_load_start = LOADADDR (.data)
-                0x00001240                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000120c                __data_load_start = LOADADDR (.data)
+                0x00001248                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800191        0x0
                 0x00800191                PROVIDE (__noinit_start, .)
@@ -684,17 +684,17 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x00000448      0x124 Master_communication.o
  .debug_frame   0x0000056c      0x12c warehouseMode.o
 
-.debug_str      0x00000000      0x7b6
+.debug_str      0x00000000      0x75c
  *(.debug_str)
- .debug_str     0x00000000      0x360 Bluetooth.o
-                                0x3a5 (size before relaxing)
- .debug_str     0x00000360      0x12c Communication_Module.o
-                                0x4b4 (size before relaxing)
- .debug_str     0x0000048c      0x1c6 LCD_new.o
+ .debug_str     0x00000000      0x353 Bluetooth.o
+                                0x398 (size before relaxing)
+ .debug_str     0x00000353      0x12c Communication_Module.o
+                                0x4a7 (size before relaxing)
+ .debug_str     0x0000047f      0x179 LCD_new.o
                                 0x323 (size before relaxing)
- .debug_str     0x00000652       0x66 Master_communication.o
+ .debug_str     0x000005f8       0x66 Master_communication.o
                                 0x3ce (size before relaxing)
- .debug_str     0x000006b8       0xfe warehouseMode.o
+ .debug_str     0x0000065e       0xfe warehouseMode.o
                                 0x48e (size before relaxing)
 
 .debug_loc      0x00000000     0x1c30
