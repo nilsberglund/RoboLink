@@ -142,14 +142,7 @@ void TX_sensor_data()
 	TX_Protocol(ss); 
 	Slave_Select(No_Slave);
 	Slave_Select(Control_Slave);
-	if (leaveStation == 1) 	//Right after station the robot needs to ignore the tape in order to move forward. 
-	{
-		Master_TX(0x08);	
-	}
-	else
-	{
-		Master_TX(sensor_data);
-	}
+	Master_TX(sensor_data);
 }
 
 /* Function that tells the sensor slave to transmit sensor data. */

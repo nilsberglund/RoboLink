@@ -132,7 +132,7 @@ void pickupDefaultPosition() {
 	
 	moveDoubleServo(0x288, 0xF0, 0x00, 0x02, 0x03);		//Servo 2 & 3 in position 190 degrees
 	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);
-	moveSingleServo(0x1FF, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees
+	moveSingleServo(0xCD, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees (1FF), CD = 60 grader
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
 	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);
 	
@@ -141,7 +141,7 @@ void pickupDefaultPosition() {
 	joint3_Pos = 0x288;
 	joint4_Pos = 0x1FF;
 	joint5_Pos = 0x1FF;
-	joint6_Pos = 0x1FF;
+	joint6_Pos = 0xCD;
 }
 
 /*Drop the item on either left or right side.*/
