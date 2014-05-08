@@ -128,7 +128,7 @@ public class Communicator2 implements SerialPortEventListener
 		boolean successful = false;
 
 		try {
-			//
+			
 			input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
 
@@ -169,8 +169,8 @@ public class Communicator2 implements SerialPortEventListener
 		//close the serial port
 		try
 		{
-			byte temp = 0;
-			writeData(temp);
+			//byte temp = 0;
+			//writeData(temp);
 
 			serialPort.removeEventListener();
 			serialPort.close();

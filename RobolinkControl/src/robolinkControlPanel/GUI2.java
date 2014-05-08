@@ -754,32 +754,32 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	
 	public void paintLED(byte ledByte){
 		
-		int led1 = (ledByte & 0x01);
-		if (led1 == 1) {
-			lblLED1.setForeground(Color.RED);
+		int led7 = (ledByte & 0x01);
+		if (led7 == 1) {
+			lblLED7.setForeground(Color.RED);
 		}
 		else
 		{
-			lblLED1.setForeground(Color.WHITE);
+			lblLED7.setForeground(Color.WHITE);
 		}
 		
-		int led2 = ((ledByte >> 1) & 0x01);
-		if (led2 == 1) {
-			lblLED2.setForeground(Color.RED);
+		int led6 = ((ledByte >> 1) & 0x01);
+		if (led6 == 1) {
+			lblLED6.setForeground(Color.RED);
 		}
 		
 		else
 		{
-			lblLED2.setForeground(Color.WHITE);
+			lblLED6.setForeground(Color.WHITE);
 		}
 		
-		int led3 = ((ledByte >> 2) & 0x01);
-		if (led3 == 1) {
-			lblLED3.setForeground(Color.RED);
+		int led5 = ((ledByte >> 2) & 0x01);
+		if (led5 == 1) {
+			lblLED5.setForeground(Color.RED);
 		}
 		else
 		{
-			lblLED3.setForeground(Color.WHITE);
+			lblLED5.setForeground(Color.WHITE);
 		}
 		
 		int led4 = ((ledByte >> 3) & 0x01);
@@ -791,31 +791,31 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			lblLED4.setForeground(Color.WHITE);
 		}
 		
-		int led5 = ((ledByte >> 4) & 0x01);
-		if (led5 == 1) {
-			lblLED5.setForeground(Color.RED);
+		int led3 = ((ledByte >> 4) & 0x01);
+		if (led3 == 1) {
+			lblLED3.setForeground(Color.RED);
 		}
 		else
 		{
-			lblLED5.setForeground(Color.WHITE);
+			lblLED3.setForeground(Color.WHITE);
 		}
 		
-		int led6 = ((ledByte >> 5) & 0x01);
-		if (led6 == 1) {
-			lblLED6.setForeground(Color.RED);
+		int led2 = ((ledByte >> 5) & 0x01);
+		if (led2 == 1) {
+			lblLED2.setForeground(Color.RED);
 		}
 		else
 		{
-			lblLED6.setForeground(Color.WHITE);
+			lblLED2.setForeground(Color.WHITE);
 		}
 		
-		int led7 = ((ledByte >> 6) & 0x01);
-		if (led7 == 1) {
-			lblLED7.setForeground(Color.RED);
+		int led1 = ((ledByte >> 6) & 0x01);
+		if (led1 == 1) {
+			lblLED1.setForeground(Color.RED);
 		}
 		else
 		{
-			lblLED7.setForeground(Color.WHITE);
+			lblLED1.setForeground(Color.WHITE);
 		}
 		
 		this.repaint();
