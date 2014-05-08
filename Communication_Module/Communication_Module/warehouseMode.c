@@ -32,23 +32,10 @@ void stationMode(){
 	{
 		deliveryMode();
 	}
-	
-	leaveStationMode(); 
+	 
 	stationModeEnable = 0;
-}
-
-void leaveStationMode()
-{
-	leaveStation = 1; 
-	TIMSK0 = 0x00;
-	for (int falseDataCount = 1; falseDataCount < 50; falseDataCount++)
-	{
-		TX_sensor_data();
-	}
 	TIMSK0 = 0x06;
-	leaveStation = 0;
 }
-
 
 /*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
 void waitForUserInputStartAbort()
@@ -117,16 +104,11 @@ void deliveryMode(){
 		}
 		historySize++;
 		
-		waitForUserInputStartAbort();
-		
 		printOnLCD(0); //Prints "No Cargo" on LCD
 		carryItem = 0;
 		TXDropItem(stationRightSide);
 		
 		waitForFinishedDrop();
-		//stationDirection = global variabel som beskriver sida om tejp för station. tilldelas egentligen så fort man stött på en station
-		//waitForDropItemInput();
-		//Skicka kommando till styr-AVR och kalla på dropItem(stationDirection)
 		
 	}
 	else
@@ -239,10 +221,10 @@ void setupWarehouse(){
 	pickUpItem = 0;
 	waitingForStartAbort = 0;
 	waitingForEndPickup = 0;
-	leaveStation = 0;
 	stationModeEnable = 0;
 	digit = 0;
 	historySize = 0;
+	finishedDrop = 0;
 	}
 
 void setupLCD(){
@@ -279,5 +261,5 @@ void setupLCD(){
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-	
+	hd44780_l_clear_disp(&low_conf);
 }

@@ -30,7 +30,7 @@ void SPI_Init_Master()
 	sei();
 	
 	TCCR0A = 0;
-	TCCR0B = 0x05;
+	TCCR0B = 0x04;
 	//TIMSK0 = 0x06;
 	
 	Sensor_Slave = 1;
@@ -133,6 +133,10 @@ void TX_Protocol(uint8_t component)
 	{
 		Master_TX(0b10001011);
 	}
+	else if(component == dis)
+	{
+		Master_TX(0b10001111);
+	}
 }
 
 /* Function that transmits sensor data to the control slave. */
@@ -142,14 +146,7 @@ void TX_sensor_data()
 	TX_Protocol(ss); 
 	Slave_Select(No_Slave);
 	Slave_Select(Control_Slave);
-	if (leaveStation == 1) 	//Right after station the robot needs to ignore the tape in order to move forward. 
-	{
-		Master_TX(0x08);	
-	}
-	else
-	{
-		Master_TX(sensor_data);
-	}
+	Master_TX(sensor_data);
 }
 
 /* Function that tells the sensor slave to transmit sensor data. */

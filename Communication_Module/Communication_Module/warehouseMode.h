@@ -18,7 +18,6 @@ volatile _Bool pickUpItem;
 volatile _Bool waitingForStartAbort;
 volatile _Bool waitingForEndPickup;
 volatile _Bool stationRightSide;
-volatile _Bool leaveStation;
 volatile _Bool stationModeEnable;
 
 //////////////////////////////////////////////////////////
@@ -39,7 +38,6 @@ uint8_t historySize;
 ///Programs/////////////////////////////////////////////////////
 void setupLCD();
 void stationMode();
-void leaveStationMode();
 void pickUpMode();
 void deliveryMode();
 _Bool itemInHistory();
