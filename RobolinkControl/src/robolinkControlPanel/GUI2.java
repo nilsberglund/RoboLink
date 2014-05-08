@@ -318,16 +318,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblKd = new JLabel("Kd:");
 		lblCalibration = new JLabel();
 	
-				 
-<<<<<<< HEAD
-		lblLED1 = new JLabel("o");
-		lblLED2 = new JLabel("o");
-		lblLED3 = new JLabel("o");
-		lblLED4 = new JLabel("o");
-		lblLED5 = new JLabel("o");
-		lblLED6 = new JLabel("o");
-		lblLED7 = new JLabel("o");
-=======
+				
 		lblLED1 = new JLabel("O");
 		lblLED2 = new JLabel("O");
 		lblLED3 = new JLabel("O");
@@ -335,7 +326,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		lblLED5 = new JLabel("O");
 		lblLED6 = new JLabel("O");
 		lblLED7 = new JLabel("O");
->>>>>>> FETCH_HEAD
+
 		
 		Font dotFont = new Font("SansSerif", Font.BOLD, 28);
 		lblLED1.setFont(dotFont);

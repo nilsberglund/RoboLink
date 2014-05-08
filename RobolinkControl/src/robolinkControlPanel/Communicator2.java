@@ -131,8 +131,6 @@ public class Communicator2 implements SerialPortEventListener
 			//
 			input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
-			byte temp = 0;
-			writeData(temp);
 
 			successful = true;
 			return successful;

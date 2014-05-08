@@ -13,7 +13,7 @@ public class KeybindingController2 {
 	//    private static char stop = 'q';
 	//    private static char rotateLeft = 'a';
 	//    private static char rotateRight = 'd';
-	    private static char forward = 'w';
+	   // private static char forward = 'w';
 	//    private static char backward = 's';
 
 	public KeybindingController2(GUI2 window)
