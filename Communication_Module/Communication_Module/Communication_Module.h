@@ -20,6 +20,7 @@ volatile uint8_t automaticModeEnabled;
 volatile uint8_t manualModeEnabled;
 volatile uint8_t stationRightSensCounter;
 volatile uint8_t stationLeftSensCounter;
+volatile uint8_t lineReadingCounter;
 
 
 #endif /* COMMUNICATION_MODULE_H_ */
