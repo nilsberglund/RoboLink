@@ -23,30 +23,37 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 		stationLeftSensCounter++;
 		if (stationLeftSensCounter == 10)
 		{
-			TIMSK0 = 0;
-			wheel_steering_data = 0;
-			TX_wheel_data();
 			stationRightSide = 1;
-			stationLeftSensCounter = 0;
-			stationModeEnable = 1;
 		}
 	}	else if(sensor_data == 0b01111000 || sensor_data == 0b01111100)
 	{
 		stationRightSensCounter++;
 		if(stationRightSensCounter == 10)
 		{
-			TIMSK0 = 0;
-			wheel_steering_data = 0;
-			TX_wheel_data();
 			stationRightSide = 0;
-			stationRightSensCounter = 0;
-			stationModeEnable = 1;
 		}
-	} else 
+	} else
 	{
-		stationLeftSensCounter = 0;
-		stationRightSensCounter = 0;
-		bluetoothTX(sensor_data);
+		if(stationLeftSensCounter >= 10 || stationRightSensCounter >= 10)
+		{
+			lineReadingCounter++;
+			if(lineReadingCounter == 150)
+			{
+				TIMSK0 = 0;
+				wheel_steering_data = 0;
+				TX_wheel_data();
+				stationModeEnable = 1;
+				stationRightSensCounter = 0;
+				stationLeftSensCounter = 0;
+				lineReadingCounter = 0;
+			}
+		}
+		else
+		{
+			stationLeftSensCounter = 0;
+			stationRightSensCounter = 0;
+		}
+		
 	}
 	//Slave_Select(Control_Slave);
 }
@@ -94,13 +101,13 @@ ISR(USART0_RX_vect)
 		}
 		else if(btdata == 4) {
 			component = PCONINSTR;
-		} 
+		}
 		else if(btdata == 5) {
 			component = KPINSTR;
 		}
 		else if(btdata == 6) {
 			component = KDINSTR;
-		} 
+		}
 		else if(btdata == 7) { //Toggle mode instruction
 			waiting_for_instruction = 1;
 			toggleMode();
@@ -110,8 +117,8 @@ ISR(USART0_RX_vect)
 		waiting_for_instruction = 1;
 		if (component == WHEEL) {
 			if(manualModeEnabled == 1) {
-			wheel_steering_data = btdata;
-			TX_wheel_data();
+				wheel_steering_data = btdata;
+				TX_wheel_data();
 			}
 		}
 		else if (component == ARM) {
@@ -119,7 +126,7 @@ ISR(USART0_RX_vect)
 			TX_arm_data();
 		}
 		else if (component == CALINSTR) {
-			//calibration();	
+			//calibration();
 		}
 		else if (component == PCONINSTR) {
 			handleData(btdata);
@@ -175,13 +182,14 @@ int main(void)
 
 /*Function that initiates manual mode*/
 void initManualMode()
-{	
+{
 	//PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
 	//PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20
 	automaticModeEnabled = 0;
 	manualModeEnabled = 1;
 	stationLeftSensCounter = 0;
 	stationRightSensCounter = 0;
+	lineReadingCounter = 0;
 }
 
 void toggleMode()
