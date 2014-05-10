@@ -25,8 +25,10 @@ volatile _Bool stationModeEnable;
 //Variables////////////////////////////////////////////////////////////////
 uint8_t newStream[12];
 uint8_t cargo[12];
-uint8_t history[3][12];
+uint8_t history[18];
 volatile uint8_t finishedDrop;
+
+
 
 
 struct hd44780_l_conf low_conf;
@@ -42,12 +44,16 @@ void pickUpMode();
 void deliveryMode();
 _Bool itemInHistory();
 void printOnLCD(_Bool);
-_Bool cargoEqualsNewStream();
+_Bool newStreamPairsWithCargo();
 void powerRFID(_Bool);
 void waitForUserInputStartAbort();
 void waitForUserInputEndPickup();
 void setupRFID();
 void setupWarehouse();
+uint8_t identifyNewStreamCatalogNumber();
+uint8_t identifyCargoCatalogNumber();
+void addPairToHistory();
+void waitForFinishedDrop();
 ////////////////////////////////////////////////////////////////////
 
 
