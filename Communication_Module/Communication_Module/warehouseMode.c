@@ -6,11 +6,13 @@
 #include "Bluetooth.h"
 #include "warehouseMode.h"
 #include "Master_communication.h"
-
+#include <stdlib.h>
+#include <math.h>
 
 uint8_t newStream[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
 uint8_t cargo[12] = {0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D};
-uint8_t history[3][12] = {{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D},{0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D}};
+uint8_t history[18] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
+uint8_t catalog[18][10] = {{0x30, 0x31, 0x30, 0x30, 0x45, 0x32, 0x42, 0x33, 0x37, 0x42}, {0x30, 0x31, 0x30, 0x30, 0x45, 0x32, 0x44, 0x44, 0x44, 0x33}, {0x30, 0x31, 0x30, 0x30, 0x45, 0x31, 0x38, 0x36, 0x46, 0x35}, {0x30, 0x31, 0x30, 0x30, 0x45, 0x31, 0x33, 0x42, 0x39, 0x42}, {0x30, 0x31, 0x30, 0x30, 0x45, 0x37, 0x31, 0x31, 0x32, 0x41}, {0x30, 0x31, 0x30, 0x30, 0x45, 0x31, 0x32, 0x39, 0x43, 0x41}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x42, 0x39, 0x31, 0x36, 0x41}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x42, 0x32, 0x37, 0x43, 0x34}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x38, 0x41, 0x44, 0x30, 0x45}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x38, 0x41, 0x42, 0x38, 0x42}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x33, 0x44, 0x38, 0x32, 0x46}, {0x32, 0x36, 0x30, 0x30, 0x44, 0x33, 0x44, 0x42, 0x42, 0x38}, {0x30, 0x31, 0x30, 0x30, 0x41, 0x37, 0x39, 0x34, 0x39, 0x35}, {0x30, 0x31, 0x30, 0x30, 0x41, 0x37, 0x38, 0x42, 0x46, 0x43}, {0x30, 0x31, 0x30, 0x30, 0x41, 0x37, 0x41, 0x34, 0x39, 0x36}, {0x30, 0x31, 0x30, 0x30, 0x41, 0x37, 0x41, 0x44, 0x36, 0x44}, {0x32, 0x37, 0x30, 0x30, 0x42, 0x38, 0x45, 0x30, 0x39, 0x43}, {0x32, 0x37, 0x30, 0x30, 0x42, 0x39, 0x31, 0x34, 0x36, 0x39}};
 
 
 
@@ -32,7 +34,7 @@ void stationMode(){
 	{
 		deliveryMode();
 	}
-	 
+	
 	stationModeEnable = 0;
 	TIMSK0 = 0x06;
 }
@@ -76,7 +78,7 @@ void pickUpMode(){
 		
 		if (pickUpItem == 1)
 		{
-			for (uint8_t cntDigit = 0; cntDigit<12; cntDigit++) //Storing RFID tag in cargo
+			for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Storing RFID tag in cargo
 			{
 				cargo[cntDigit] = newStream[cntDigit];
 			}
@@ -96,20 +98,13 @@ void pickUpMode(){
 /*Called by stationMode(). Enters if carrying object. */
 void deliveryMode(){
 	
-	if (cargoEqualsNewStream() == 1) //Checks if the station is the correct station to leave cargo
+	if (newStreamPairsWithCargo() == 1) //Checks if the station is the correct station to leave cargo
 	{
-		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Adds the completed station to history
-		{
-			history[historySize][cntDigit] = cargo[cntDigit];
-		}
-		historySize++;
-		
+		addPairToHistory();
 		printOnLCD(0); //Prints "No Cargo" on LCD
+		TXDropItem(stationRightSide); //1 = right side, 0 = left side
+		waitForFinishedDrop();	
 		carryItem = 0;
-		TXDropItem(stationRightSide);
-		
-		waitForFinishedDrop();
-		
 	}
 	else
 	{
@@ -117,49 +112,135 @@ void deliveryMode(){
 	}
 }
 
-
+void addPairToHistory(){
+	uint8_t tmp2Cargo = identifyCargoCatalogNumber();
+	
+	if (tmp2Cargo % 2 == 0) // Even indexes (cards)
+	{
+		history[historySize] = tmp2Cargo;
+		historySize++;
+		history[historySize] = tmp2Cargo + 1;
+		historySize++;
+	}
+	
+	else if (tmp2Cargo % 2 == 1)
+	{
+		history[historySize] = tmp2Cargo;
+		historySize++;
+		history[historySize] = tmp2Cargo - 1;
+		historySize++;
+	}
+	
+}
 
 /*Called by pickupMode(). */
-_Bool itemInHistory(){
-uint8_t cntEqualElements = 0;
+_Bool itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
 	
-	for (uint8_t cntHistory = 0; cntHistory < historySize; cntHistory++) //Stegar igenom historiken
+	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
 	{
-		for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //kollar varje digit
+		if (history[cntCatalog] == identifyNewStreamCatalogNumber())
 		{
-			if (newStream[cntDigit] == history[cntHistory][cntDigit])
-			{
-				cntEqualElements++;
-			}
-			
-			if (cntEqualElements == 12)
-			{
-				return 1;
-			}
-			
+			return 1;
 		}
-		cntEqualElements = 0;
+		
 	}
 	
 	return 0; //If no
 }
 
-_Bool cargoEqualsNewStream(){
-	for (uint8_t cmpel = 0; cmpel<12; cmpel++)
+_Bool newStreamPairsWithCargo()
+{
+	volatile uint8_t tmpCargo;
+	volatile uint8_t tmpNewStream;
+	
+	 tmpCargo = identifyCargoCatalogNumber();
+	 tmpNewStream = identifyNewStreamCatalogNumber();
+	 
+	if ((tmpCargo % 2) == 0) // cargo catalog index is even (even catalog number implies start of new pair)
 	{
-		if (cargo[cmpel] != newStream[cmpel])
+		if (tmpNewStream == tmpCargo + 1)
+		{
+			return 1;
+		}
+		else
 		{
 			return 0;
 		}
 	}
+	
+	else if((tmpCargo % 2) == 1) //cargo catalog index is odd (odd catalog number implies end of new pair)
+	{
+		if (tmpNewStream == tmpCargo - 1)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	return 0;
+}
 
-	return 1;
+
+uint8_t identifyNewStreamCatalogNumber()
+{
+	volatile uint8_t newStreamCatalogNumber = 0;
+	volatile uint8_t cntMatch = 0;
+	
+	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
+	{
+		for (uint8_t cntDigit = 1; cntDigit<11; cntDigit++)
+		{
+			if (catalog[cntCatalog][cntDigit-1] == newStream[cntDigit])
+			{
+				cntMatch++;
+				
+				if (cntMatch == 10){
+					newStreamCatalogNumber = cntCatalog;
+					cntMatch = 0;
+				}
+			}
+			else
+			{
+				cntMatch = 0;
+			}
+		}
+	}
+	return newStreamCatalogNumber;
+}
+
+uint8_t identifyCargoCatalogNumber()
+{
+	volatile uint8_t cargoCatalogNumber = 0;
+	volatile uint8_t cntMatch = 0;
+	
+	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
+	{
+		for (uint8_t cntDigit = 1; cntDigit < 11; cntDigit++)
+		{
+			if (catalog[cntCatalog][cntDigit-1] == cargo[cntDigit])
+			{
+				cntMatch++;
+				
+				if (cntMatch == 10){ 
+					cargoCatalogNumber = cntCatalog;
+					cntMatch = 0;
+				}	
+			}
+			else
+			{
+				cntMatch = 0;
+			}
+		}	
+	}
+	return cargoCatalogNumber;
 }
 
 void powerRFID(_Bool power){
 	if (power == 1)
 	{
- 		PORTD &= ~(1<<PORTD5);
+		PORTD &= ~(1<<PORTD5);
 		//((Port on AVR connected to RFIDs "Enable") = LOW) => Power up byte reader
 	}
 	else
@@ -225,13 +306,13 @@ void setupWarehouse(){
 	digit = 0;
 	historySize = 0;
 	finishedDrop = 0;
-	}
+}
 
 void setupLCD(){
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
 	DDRB |= (1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
-	DDRC |=	(1<< DDC6); 
+	DDRC |=	(1<< DDC6);
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
 	low_conf.rs_i = 1;
 	low_conf.rw_i = 0;
@@ -263,3 +344,4 @@ void setupLCD(){
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
 	hd44780_l_clear_disp(&low_conf);
 }
+
