@@ -115,6 +115,7 @@ void defaultPosition() {
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 (joint 5) straight
 	moveSingleServo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up
 	moveDoubleServo(0x1FF, 0x50, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
+	_delay_ms(250);
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
 	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
@@ -131,18 +132,18 @@ void defaultPosition() {
 /*Move the arm to pickup default position.*/
 void pickupDefaultPosition() {
 	
-	moveDoubleServo(0x288, 0xF0, 0x00, 0x02, 0x03);		//Servo 2 & 3 in position 190 degrees
-	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);
-	moveSingleServo(0xCA, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees (1FF), CD = 60 grader
-	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
-	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);
+	moveDoubleServo(0x288, 0xF0, 0x00, 0x02, 0x03);		//Joint 2
+	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);		//Joint 3
+	moveSingleServo(0x144, 0xF0, 0x00, 0x06);			//Joint 4
+	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//Joint 5
+	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);			//Joint 6
 	
 	//Updating positions
 	joint2_Pos = 0x288;
 	joint3_Pos = 0x288;
-	joint4_Pos = 0x1FF;
+	joint4_Pos = 0x144;
 	joint5_Pos = 0x1FF;
-	joint6_Pos = 0xCD;
+	joint6_Pos = 0x1FF;
 }
 
 /*Drop the item on either left or right side.*/
@@ -270,13 +271,13 @@ void moveArm(uint8_t armData) {
 		}
 		else if (joint == 6)
 		{
-			if (direction == 0) //kolla gränserna
+			if (direction == 0)
 			{
-				moveSingleServo(0xBB, 0x50, 0x00, 0x08);
+				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip smal, ska ha en grip bred också
 			}
-			else if(direction == 1) //kolla gränserna
+			else if(direction == 1)
 			{
-				moveSingleServo(0x1FF, 0x50, 0x00, 0x08);
+				moveSingleServo(0x1FF, 0x50, 0x00, 0x08); //Release
 			}
 		}
 	}
