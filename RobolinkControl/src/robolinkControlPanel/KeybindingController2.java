@@ -75,7 +75,9 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(true);
 			window.btnJoint5RB.setEnabled(true);
 			window.btnJoint5RS.setEnabled(true);
+			window.btnJoint6LB.setEnabled(true);
 			window.btnJoint6LS.setEnabled(true);
+			window.btnJoint6RB.setEnabled(true);
 			window.btnJoint6RS.setEnabled(true);
 			window.btnDPP.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
@@ -93,8 +95,6 @@ public class KeybindingController2 {
 			window.btnBodyRotateRight.setEnabled(true);
 			window.btnAutomaticMode.setEnabled(true);
 			window.btnDTP.setEnabled(true);
-			window.btnJoint7LS.setEnabled(true);
-			window.btnJoint7RS.setEnabled(true);
 			window.txtKp.setEnabled(true);
 			window.txtKd.setEnabled(true);
 			window.cboxPorts.setEnabled(false);
@@ -120,7 +120,9 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(false);
 			window.btnJoint5RB.setEnabled(false);
 			window.btnJoint5RS.setEnabled(false);
+			window.btnJoint6LB.setEnabled(false);
 			window.btnJoint6LS.setEnabled(false);
+			window.btnJoint6RB.setEnabled(false);
 			window.btnJoint6RS.setEnabled(false);
 			window.btnDPP.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
@@ -139,8 +141,6 @@ public class KeybindingController2 {
 			window.btnAutomaticMode.setEnabled(false);
 			window.btnManualMode.setEnabled(false);
 			window.btnDTP.setEnabled(false);
-			window.btnJoint7LS.setEnabled(false);
-			window.btnJoint7RS.setEnabled(false);
 			window.txtKp.setEnabled(false);
 			window.txtKd.setEnabled(false);
 			window.cboxPorts.setEnabled(true);
