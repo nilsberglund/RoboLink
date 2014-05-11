@@ -137,9 +137,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnJoint5RB;
 	public JButton btnJoint5RS;
 	
-	public JButton btnJoint6LB;
 	public JButton btnJoint6LS;
-	public JButton btnJoint6RB;
 	public JButton btnJoint6RS;
 	
 	public JButton btnDPP;
@@ -241,10 +239,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB = new JButton("Wrist Rotate >>");
 		btnJoint5RS = new JButton("Wrist Rotate >");
 		
-		btnJoint6LB = new JButton("Grip <<");
-		btnJoint6LS = new JButton("Grip <");
-		btnJoint6RB = new JButton("Release >>");
-		btnJoint6RS = new JButton("Release >");
+		btnJoint6LS = new JButton("Release");
+		btnJoint6RS = new JButton("Grip");
 		
 		btnDPP = new JButton("DPP");
 		btnDTP = new JButton("DTP");
@@ -295,9 +291,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB.setActionCommand("J5RB");
 		btnJoint5RS.setActionCommand("J5RS");
 		
-		btnJoint6LB.setActionCommand("J6LB");
 		btnJoint6LS.setActionCommand("J6LS");
-		btnJoint6RB.setActionCommand("J6RB");
 		btnJoint6RS.setActionCommand("J6RS");
 		
 		btnDPP.setActionCommand("DPP");
@@ -382,9 +376,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5LS.addActionListener(this);
 		btnJoint5RB.addActionListener(this);
 		btnJoint5RS.addActionListener(this);
-		btnJoint6LB.addActionListener(this);
 		btnJoint6LS.addActionListener(this);
-		btnJoint6RB.addActionListener(this);
 		btnJoint6RS.addActionListener(this);
 		btnDPP.addActionListener(this);
 		btnDTP.addActionListener(this);
@@ -477,9 +469,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint5RS);
 		armPanel.add(btnJoint5RB);
 		
-		armPanel.add(btnJoint6LB);
 		armPanel.add(btnJoint6LS);
-		armPanel.add(btnJoint6RB);
 		armPanel.add(btnJoint6RS);
 		
 		
