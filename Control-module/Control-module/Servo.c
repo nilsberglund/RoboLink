@@ -24,6 +24,7 @@ void armInit(void) {
 	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
 		
 	defaultPosition(); 	
+	moveSingleServo(0x1FF, 0x50, 0x00, 0x08); //150 grader
 }
 
 void USARTTransmit( unsigned char data) {
@@ -132,7 +133,7 @@ void pickupDefaultPosition() {
 	
 	moveDoubleServo(0x288, 0xF0, 0x00, 0x02, 0x03);		//Servo 2 & 3 in position 190 degrees
 	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);
-	moveSingleServo(0xCD, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees (1FF), CD = 60 grader
+	moveSingleServo(0xCA, 0xF0, 0x00, 0x06);			//Servo 6 in position 150 degrees (1FF), CD = 60 grader
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
 	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);
 	
@@ -159,14 +160,14 @@ void dropItem(uint8_t side) { //Side = 1 right side, side = 0 left side
 	_delay_ms(3000);
 	
 	//Vad är lämpligt läge på följande servon?
-	moveDoubleServo(0x2CC, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 210 degrees
+	moveDoubleServo(0x2B4, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
 	moveDoubleServo(0x2CC, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
-	moveSingleServo(0x111, 0x60, 0x00, 0x06);			//Servo 6 in position 80 degrees (111)
+	moveSingleServo(0xD3, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
 	
 	_delay_ms(4000);
 	
-	moveSingleServo(0x1FF, 0x60, 0x00, 0x08); //Servo 8 in position 150 (1FF) degrees
+	moveSingleServo(0x1FF, 0x60, 0x00, 0x08); //Servo 8 in position 150 (1FF) degrees 
 	
 	_delay_ms(3000);
 	
@@ -269,15 +270,13 @@ void moveArm(uint8_t armData) {
 		}
 		else if (joint == 6)
 		{
-			if (direction == 0 && (joint6_Pos - (10+40*amp)) > 0) //kolla gränserna
+			if (direction == 0) //kolla gränserna
 			{
-				joint6_Pos -= (10+40*amp);
-				moveSingleServo(joint6_Pos, 0x50, 0x00, 0x08);
+				moveSingleServo(0xBB, 0x50, 0x00, 0x08);
 			}
-			else if(direction == 1 && (joint6_Pos + (10+40*amp)) < 1023) //kolla gränserna
+			else if(direction == 1) //kolla gränserna
 			{
-				joint6_Pos += (10+40*amp);
-				moveSingleServo(joint6_Pos, 0x50, 0x00, 0x08);
+				moveSingleServo(0x1FF, 0x50, 0x00, 0x08);
 			}
 		}
 	}
