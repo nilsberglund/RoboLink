@@ -88,8 +88,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	final public byte J5RB = 13;
 	final public byte J5RS = 5;
 	
-	final public byte J6LS = 22;
-	final public byte J6RS = 6;
+	final public byte J6R = 22;
+	final public byte J6GN = 6;
+	final public byte J6GB = 6;
 	
 	final public byte DPP = 32;
 	final public byte DTP = 64;
@@ -137,8 +138,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JButton btnJoint5RB;
 	public JButton btnJoint5RS;
 	
-	public JButton btnJoint6LS;
-	public JButton btnJoint6RS;
+	public JButton btnJoint6R;
+	public JButton btnJoint6GN;
+	public JButton btnJoint6GB;
 	
 	public JButton btnDPP;
 	public JButton btnDTP;
@@ -239,8 +241,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RB = new JButton("Wrist Rotate >>");
 		btnJoint5RS = new JButton("Wrist Rotate >");
 		
-		btnJoint6LS = new JButton("Release");
-		btnJoint6RS = new JButton("Grip");
+		btnJoint6R = new JButton("Release");
+		btnJoint6GN = new JButton("Grip Narrow");
+		btnJoint6GB = new JButton("Grip Wide");
 		
 		btnDPP = new JButton("DPP");
 		btnDTP = new JButton("DTP");
@@ -290,15 +293,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5LS.setActionCommand("J5LS");
 		btnJoint5RB.setActionCommand("J5RB");
 		btnJoint5RS.setActionCommand("J5RS");
-		
-<<<<<<< HEAD
-		//btnJoint6LB.setActionCommand("J6LB");
-		btnJoint6LS.setActionCommand("J6LS");
-		//btnJoint6RB.setActionCommand("J6RB");
-=======
-		btnJoint6LS.setActionCommand("J6LS");
->>>>>>> FETCH_HEAD
-		btnJoint6RS.setActionCommand("J6RS");
+
+		btnJoint6R.setActionCommand("J6R");
+		btnJoint6GN.setActionCommand("J6GN");
+		btnJoint6GN.setActionCommand("J6GB");
 		
 		btnDPP.setActionCommand("DPP");
 		btnDTP.setActionCommand("DTP");
@@ -382,14 +380,10 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5LS.addActionListener(this);
 		btnJoint5RB.addActionListener(this);
 		btnJoint5RS.addActionListener(this);
-<<<<<<< HEAD
-		//btnJoint6LB.addActionListener(this);
-		btnJoint6LS.addActionListener(this);
-		//btnJoint6RB.addActionListener(this);
-=======
-		btnJoint6LS.addActionListener(this);
->>>>>>> FETCH_HEAD
-		btnJoint6RS.addActionListener(this);
+
+		btnJoint6R.addActionListener(this);
+
+		btnJoint6GN.addActionListener(this);
 		btnDPP.addActionListener(this);
 		btnDTP.addActionListener(this);
 		txtKp.addActionListener(this);
@@ -481,9 +475,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint5RS);
 		armPanel.add(btnJoint5RB);
 		
-		armPanel.add(btnJoint6LS);
-		armPanel.add(btnJoint6RS);
-		
+		armPanel.add(btnJoint6R);
+		armPanel.add(btnJoint6GN);
+		armPanel.add(btnJoint6GB);
 		
 		//TELPANEL
 		
@@ -729,11 +723,11 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		}
 		else if ("J6LS".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
-			communicator.writeData(J6LS);
+			communicator.writeData(J6R);
 		}
 		else if ("J6RS".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
-			communicator.writeData(J6RS);
+			communicator.writeData(J6GN);
 		}
 		else if ("DPP".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);

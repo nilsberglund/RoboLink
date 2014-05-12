@@ -75,8 +75,9 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(true);
 			window.btnJoint5RB.setEnabled(true);
 			window.btnJoint5RS.setEnabled(true);
-			window.btnJoint6LS.setEnabled(true);
-			window.btnJoint6RS.setEnabled(true);
+			window.btnJoint6R.setEnabled(true);
+			window.btnJoint6GN.setEnabled(true);
+			window.btnJoint6GB.setEnabled(true);
 			window.btnDPP.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
 			window.btnBodyForward.setEnabled(true);
@@ -118,8 +119,9 @@ public class KeybindingController2 {
 			window.btnJoint5LS.setEnabled(false);
 			window.btnJoint5RB.setEnabled(false);
 			window.btnJoint5RS.setEnabled(false);
-			window.btnJoint6LS.setEnabled(false);
-			window.btnJoint6RS.setEnabled(false);
+			window.btnJoint6R.setEnabled(false);
+			window.btnJoint6GN.setEnabled(false);
+			window.btnJoint6GB.setEnabled(false);
 			window.btnDPP.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
 			window.btnBodyForward.setEnabled(false);
