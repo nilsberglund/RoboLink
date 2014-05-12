@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "Slave_sensor.h"
+#include "SensorCalMajor.h"
 
 
 /* Interrupt that gets triggered when slave has received instruction byte */
@@ -17,6 +18,9 @@ ISR(SPI_STC_vect)
 	if(instructionData == 0b00000100)
 	{
 		slaveTX(sensorData); 
+	} else if(instructionData == 0b10011111)
+	{
+		calibration();
 	}
 }
 

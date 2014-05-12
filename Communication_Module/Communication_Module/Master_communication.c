@@ -26,34 +26,19 @@ void SPI_Init_Master()
 	//Enables interrupt 2
 	EICRA = 0b00111100;
 	EIMSK = 0b00000110;
-	//Enable global interrupt
-	sei();
 	
-	TCCR0A = 0;
-	TCCR0B = 0x04;
-	//TIMSK0 = 0x06;
+	sei();//Enable global interrupt
 	
-	Sensor_Slave = 1;
-	Control_Slave = 2;
-	No_Slave = 0;
-	ss = 1;
-	sr = 2;
-	ws = 3;
-	wr = 4;
-	as = 5;
-	ar = 6;
-	rs = 7;
-	Kps = 8;
-	Kds = 9;
-	dis = 10;
+	TCCR0A = 0; //Sets Timer register
+	TCCR0B = 0x04; //Enable timer interrupts
 	
-	OCR0A = 122;
-	OCR0B = 125;
-	TCNT0 = 0;	
+	OCR0A = 122; //Sets compare register for sensor receive interrupt to 122
+	OCR0B = 125; //Sets compare register for sensor send interrupt to 125
+	TCNT0 = 0;	//Initiates timer
 }
 
 //Master transmission to slave
-void Master_TX(volatile uint8_t data)
+void masterTX(volatile uint8_t data)
 {
 		/* Start transmission */
 		SPDR = data;
@@ -61,7 +46,7 @@ void Master_TX(volatile uint8_t data)
 		while(!(SPSR & (1<<SPIF)));
 }
 
-uint8_t Master_RX(volatile uint8_t data){
+uint8_t masterRX(volatile uint8_t data){
 
 		/* Start transmission */
 		SPDR = data;
@@ -71,16 +56,16 @@ uint8_t Master_RX(volatile uint8_t data){
 		return SPDR;
 }
 		
-//Selects slave. PORTB4 = Control_Slave, PORTB3 = Sensor_Slave
-void Slave_Select(volatile uint8_t slave)
+//Selects slave. PORTB4 = CONTROLSLAVE, PORTB3 = SENSORSLAVE
+void slaveSelect(volatile uint8_t slave)
 {
-	if(slave == Control_Slave)
+	if(slave == CONTROLSLAVE)
 	{
 		PORTB |= (1 << PORTB3);
 		PORTB &= ~(1 << PORTB4);
 
 	}
-	else if (slave == Sensor_Slave)
+	else if (slave == SENSORSLAVE)
 	{
 		PORTB |= (1 << PORTB4);
 		PORTB &= ~(1 << PORTB3);
@@ -94,122 +79,105 @@ void Slave_Select(volatile uint8_t slave)
 }
 
 // a = arm, s = sensor data, w = wheel data, r = rfid data
-void TX_Protocol(uint8_t component)
+void TXprotocol(uint8_t component)
 {
 
-	if(component == ss)
+	if(component ==SENSORDATASEND)
 	{
-		Master_TX(0b10000100);
+		masterTX(0b10000100);
 	}
-	else if(component == ws)
+	else if(component == DRIVEINSTRSEND)
 	{
-		Master_TX(0b10000101);
+		masterTX(0b10000101);
 	}
-	else if(component == as)
+	else if(component == ARMINSTRSEND)
 	{
-		Master_TX(0b10000110);
+		masterTX(0b10000110);
 	}
-	else if(component == sr)
+	else if(component == SENSORDATARECEIVE)
 	{
-		Master_TX(0b00000100);
+		masterTX(0b00000100);
 	}
-	else if(component == wr)
+	else if(component == KPSEND)
 	{
-		Master_TX(0b00000101);
+		masterTX(0b10000111);
 	}
-	else if(component == ar)
+	else if(component == KDSEND)
 	{
-		Master_TX(0b00000110);
+		masterTX(0b10001011);
 	}
-	else if(component == rs)
+	else if(component == DROPITEMSEND)
 	{
-		Master_TX(0b10101011);
+		masterTX(0b10001111);
 	}
-	else if(component == Kps)
+	else if(component == CALIBRATION)
 	{
-		Master_TX(0b10000111);
-	}
-	else if(component == Kds)
-	{
-		Master_TX(0b10001011);
-	}
-	else if(component == dis)
-	{
-		Master_TX(0b10001111);
+		masterTX(0b10011111);
 	}
 }
 
 /* Function that transmits sensor data to the control slave. */
-void TX_sensor_data()
+void TXsensorData()
 {
-	Slave_Select(Control_Slave);
-	TX_Protocol(ss); 
-	Slave_Select(No_Slave);
-	Slave_Select(Control_Slave);
-	Master_TX(sensor_data);
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(SENSORDATASEND); 
+	slaveSelect(NOSLAVE);
+	slaveSelect(CONTROLSLAVE);
+	masterTX(sensorData);
 }
 
 /* Function that tells the sensor slave to transmit sensor data. */
-void RX_sensor_data()
+void RXsensorData()
 {
-	wanted_data = sr;
-	Slave_Select(Sensor_Slave);
-	TX_Protocol(sr);
-	Slave_Select(No_Slave);
+	wantedData = SENSORDATARECEIVE;
+	slaveSelect(SENSORSLAVE);
+	TXprotocol(SENSORDATARECEIVE);
+	slaveSelect(NOSLAVE);
 }
  
- void TX_wheel_data()
+ void TXwheelData()
  {
-	 Slave_Select(Control_Slave);
-	 TX_Protocol(ws);
-	 Master_TX(wheel_steering_data);
-	 Slave_Select(No_Slave);
+	 slaveSelect(CONTROLSLAVE);
+	 TXprotocol(DRIVEINSTRSEND);
+	 masterTX(wheelData);
+	 slaveSelect(NOSLAVE);
  }
  
- void RX_wheel_data()
- {
-	 wanted_data = wr;
-	 Slave_Select(Control_Slave);
-	 TX_Protocol(wr);
-	 Slave_Select(No_Slave);
- }
- 
- void TX_arm_data()
+ void TXarmData()
 {
-	Slave_Select(Control_Slave);
-	TX_Protocol(as);
-	Master_TX(robot_arm_data);
-}
-void RX_arm_data()
-{
-	wanted_data = ar;
-	Slave_Select(Control_Slave);
-	TX_Protocol(ar);
-	Slave_Select(No_Slave);
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(ARMINSTRSEND);
+	masterTX(armData);
 }
 
 void TXKpData()
 {
-	Slave_Select(Control_Slave);
-	TX_Protocol(Kps);
-	Master_TX(Kp);
-	Slave_Select(No_Slave);
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(KPSEND);
+	masterTX(Kp);
+	slaveSelect(NOSLAVE);
 }
 
 void TXKdData()
 {
-	Slave_Select(Control_Slave);
-	TX_Protocol(Kds);
-	Master_TX(Kd);
-	Slave_Select(No_Slave);
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(KDSEND);
+	masterTX(Kd);
+	slaveSelect(NOSLAVE);
 }
 
 void TXDropItem()
 {
-	Slave_Select(Control_Slave);
-	TX_Protocol(dis);
-	Master_TX(stationRightSide);
-	Slave_Select(No_Slave);
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(DROPITEMSEND);
+	masterTX(stationRightSide);
+	slaveSelect(NOSLAVE);
 }
 
+void TXCalibration()
+{
+	slaveSelect(SENSORSLAVE);
+	TXprotocol(CALIBRATION);
+	slaveSelect(NOSLAVE);
+}
 

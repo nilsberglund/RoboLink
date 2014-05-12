@@ -9,16 +9,22 @@
 #ifndef BLUETOOTH_H_
 #define BLUETOOTH_H_
 
-#define ARM 2
 #define WHEEL 1
+#define ARM 2
 #define CALINSTR 3
 #define PCONINSTR 4
 #define KPINSTR 5
 #define KDINSTR 6
+#define SENSINSTR 7
+#define MODEINSTR 8
+#define STATIONINSTR 9
+#define HISTORYINSTR 10
+#define CARGOINSTR 11
 
 void handleData(uint8_t temp);
 void bluetoothTX(uint8_t txdata);
 void setupBluetoothRXTX();
+void TXbluetoothInstr(uint8_t,uint8_t);
 
 
 

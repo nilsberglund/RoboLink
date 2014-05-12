@@ -26,6 +26,11 @@ ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
 
 /*Interrupt that is thrown when button for calibration has been pushed.*/
 ISR(INT0_vect) {						// First ADC conversion after button press
+	calibration();
+}
+
+void calibration()
+{
 	ch = 0;
 	caliMode = 1;
 	buttonPushed++;
@@ -35,7 +40,6 @@ ISR(INT0_vect) {						// First ADC conversion after button press
 	}
 	analogRead(ch);
 }
-
 
 /*Function that initializes the everything involving the AD conversion.*/ 
 void initADC() {

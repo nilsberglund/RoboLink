@@ -21,22 +21,29 @@ void stationMode(){
 	
 	powerRFID(1);
 	
-	while (streamFilled == 0)
+	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
 	{
-		//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
+		if(stationModeEnable == 0)//Check if we have entered manualmode
+		{
+			powerRFID(0);
+			break;
+		}
 	}
 	streamFilled = 0;
-	if (carryItem == 0)
+	if(stationModeEnable == 1)
 	{
-		pickUpMode();
+		if (carryItem == 0)
+		{
+			pickUpMode();
+		}
+		else
+		{
+			deliveryMode();
+		}
+		TIMSK0 = 0x06;
 	}
-	else
-	{
-		deliveryMode();
-	}
-	
 	stationModeEnable = 0;
-	TIMSK0 = 0x06;
+	
 }
 
 /*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
@@ -80,14 +87,18 @@ void pickUpMode(){
 		{
 			for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Storing RFID tag in cargo
 			{
+				
 				cargo[cntDigit] = newStream[cntDigit];
 			}
 			carryItem = 1; // Shows that the robot is carrying an object
 			printOnLCD(1); //Printing cargo RFID tag on display
+			TXbluetoothInstr(STATIONINSTR, identifyCargoCatalogNumber());
+			TXbluetoothInstr(CARGOINSTR, identifyCargoCatalogNumber());
 			waitForUserInputEndPickup(); // the item has been pickup up and leave stationMode()
 		}
 		else
 		{
+			TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
 			// Do nothing -> exit code -> leave station mode
 		}
 	}
@@ -105,6 +116,7 @@ void deliveryMode(){
 		TXDropItem(stationRightSide); //1 = right side, 0 = left side
 		waitForFinishedDrop();	
 		carryItem = 0;
+		TXbluetoothInstr(CARGOINSTR, 32);
 	}
 	else
 	{
@@ -121,6 +133,8 @@ void addPairToHistory(){
 		historySize++;
 		history[historySize] = tmp2Cargo + 1;
 		historySize++;
+		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo);
+		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo+1);
 	}
 	
 	else if (tmp2Cargo % 2 == 1)
@@ -129,6 +143,8 @@ void addPairToHistory(){
 		historySize++;
 		history[historySize] = tmp2Cargo - 1;
 		historySize++;
+		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo);
+		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo-1);
 	}
 	
 }

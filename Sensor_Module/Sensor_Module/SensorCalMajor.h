@@ -28,6 +28,7 @@ void calcOneByteLineVector();
 void defaultMode();
 void calibrationMode();
 void calcThresholds();
+void calibration();
 
 
 

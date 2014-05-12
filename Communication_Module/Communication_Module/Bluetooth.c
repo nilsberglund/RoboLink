@@ -48,3 +48,29 @@ void setupBluetoothRXTX()
 	UBRR0H = 0x00;
 	UBRR0L = 0x07; //Sets baudvalue in AVR to 7, which gives baude rate 115200. baudvalue = (Fcpu/baudrate*16)-1	
 }
+
+void TXbluetoothInstr(uint8_t instr, uint8_t data)
+{
+	switch(instr) {
+		case SENSINSTR:
+		bluetoothTX(0b00000001);
+		bluetoothTX(data);
+		break;
+		case MODEINSTR:
+		bluetoothTX(0b00000010);
+		bluetoothTX(data);
+		break;
+		case STATIONINSTR:
+		bluetoothTX(0b00000011);
+		bluetoothTX(data);
+		break;
+		case HISTORYINSTR:
+		bluetoothTX(0b00000100);
+		bluetoothTX(data);
+		break;
+		case CARGOINSTR:
+		bluetoothTX(0b00000101);
+		bluetoothTX(data);
+		break;
+	}
+}

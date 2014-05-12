@@ -9,47 +9,48 @@
 #ifndef MASTER_COMMUNICATION_H_
 #define MASTER_COMMUNICATION_H_
 
+/* Constants */
+#define SENSORDATASEND 1
+#define SENSORDATARECEIVE 2
+#define DRIVEINSTRSEND 3
+#define ARMINSTRSEND 4
+#define KPSEND 5
+#define KDSEND 6
+#define DROPITEMSEND 7
+#define CALIBRATION 8
+#define SENSORSLAVE 9
+#define CONTROLSLAVE 10
+#define NOSLAVE 11
+
 /* Variables */
 volatile uint8_t received_data;
-volatile uint8_t sensor_data;
-volatile uint8_t wheel_steering_data;
-volatile uint8_t robot_arm_data;
+volatile uint8_t sensorData;
+volatile uint8_t wheelData;
+volatile uint8_t armData;
 volatile uint8_t Kp;
 volatile uint8_t Kd;
 
-uint8_t Sensor_Slave;
-uint8_t Control_Slave;
-uint8_t No_Slave;
-uint8_t ss;
-uint8_t sr;
-uint8_t ws;
-uint8_t wr;
-uint8_t as;
-uint8_t ar;
-uint8_t rs;
-uint8_t Kds;
-uint8_t Kps;
-uint8_t dis;
-uint8_t wanted_data;
+uint8_t wantedData;
 unsigned char RFID[10];
 uint8_t i;
 
 
 /* Functions */
 void SPI_Init_Master();
-uint8_t Master_RX(uint8_t);
-void RX_sensor_data();
-void TX_sensor_data();
-void Slave_Select(uint8_t);
-void TX_Protocol(uint8_t);
-void TX_arm_data();
+uint8_t masterRX(uint8_t);
+void RXsensorData();
+void TXsensorData();
+void slaveSelect(uint8_t);
+void TXprotocol(uint8_t);
+void TXarmData();
 void RX_arm_data();
-void TX_wheel_data();
-void Master_TX(uint8_t);
-void receive_sensor_data();
+void TXwheelData();
+void masterTX(uint8_t);
+void receive_sensorData();
 void RX_wheel_data();
 void TXKpData();
 void TXKdData();
 void TXDropItem();
+void TXCalibration();
 
 #endif /* MASTER_COMMUNICATION_H_ */
