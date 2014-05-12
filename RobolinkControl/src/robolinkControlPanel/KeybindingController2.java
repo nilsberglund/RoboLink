@@ -9,6 +9,12 @@ import javax.swing.KeyStroke;
 public class KeybindingController2 {
 	GUI2 window = null;
 
+	
+	//Historik (skicka endast index, inte rfid)
+	//Nuvarande last (skicka endast index, inte rfid)
+	//Nuvarande station (skicka endast index, inte rfid)
+	//Sensordata 
+	//Manuel auto/fjärr status
 
 	//    private static char stop = 'q';
 	//    private static char rotateLeft = 'a';
@@ -77,7 +83,7 @@ public class KeybindingController2 {
 			window.btnJoint5RS.setEnabled(true);
 			window.btnJoint6R.setEnabled(true);
 			window.btnJoint6GN.setEnabled(true);
-			window.btnJoint6GB.setEnabled(true);
+			window.btnJoint6GW.setEnabled(true);
 			window.btnDPP.setEnabled(true);
 			window.btnBodyBackward.setEnabled(true);
 			window.btnBodyForward.setEnabled(true);
@@ -121,7 +127,7 @@ public class KeybindingController2 {
 			window.btnJoint5RS.setEnabled(false);
 			window.btnJoint6R.setEnabled(false);
 			window.btnJoint6GN.setEnabled(false);
-			window.btnJoint6GB.setEnabled(false);
+			window.btnJoint6GW.setEnabled(false);
 			window.btnDPP.setEnabled(false);
 			window.btnBodyBackward.setEnabled(false);
 			window.btnBodyForward.setEnabled(false);

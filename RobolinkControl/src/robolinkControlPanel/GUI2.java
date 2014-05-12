@@ -90,7 +90,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	
 	final public byte J6R = 22;
 	final public byte J6GN = 6;
-	final public byte J6GB = 6;
+	final public byte J6GW = 14;
 	
 	final public byte DPP = 32;
 	final public byte DTP = 64;
@@ -140,7 +140,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	
 	public JButton btnJoint6R;
 	public JButton btnJoint6GN;
-	public JButton btnJoint6GB;
+	public JButton btnJoint6GW;
 	
 	public JButton btnDPP;
 	public JButton btnDTP;
@@ -149,7 +149,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JTextArea txtLog;
 	public JTextField txtKp;
 	public JTextField txtKd;
-	public JTextArea txtTel;
+	public JTextArea txtLastStation;
+	public JTextArea txtCurrCargo;
+	public JTextArea txtHistory;
 	
 	public JLabel lblCalibration;
 	public JLabel lblTel;
@@ -171,6 +173,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	public JPanel conPanel;
 	public JPanel navPanel;
 	public JPanel telPanel;
+	public JPanel telTxtPanel;
 	public JPanel ledPanel;
 	public JPanel armPanel;
 	public JPanel calPanel;
@@ -243,7 +246,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		btnJoint6R = new JButton("Release");
 		btnJoint6GN = new JButton("Grip Narrow");
-		btnJoint6GB = new JButton("Grip Wide");
+		btnJoint6GW = new JButton("Grip Wide");
 		
 		btnDPP = new JButton("DPP");
 		btnDTP = new JButton("DTP");
@@ -296,7 +299,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 		btnJoint6R.setActionCommand("J6R");
 		btnJoint6GN.setActionCommand("J6GN");
-		btnJoint6GN.setActionCommand("J6GB");
+		btnJoint6GN.setActionCommand("J6GW");
 		
 		btnDPP.setActionCommand("DPP");
 		btnDTP.setActionCommand("DTP");
@@ -310,7 +313,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 		cboxPorts = new JComboBox();
 		txtLog = new JTextArea();
-		txtTel = new JTextArea();
+		txtLastStation = new JTextArea();
+		txtCurrCargo = new JTextArea();
+		txtHistory = new JTextArea();
 		lblTel = new JLabel();
 		lblKp = new JLabel("Kp:");
 		lblKd = new JLabel("Kd:");
@@ -339,6 +344,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		conPanel = new JPanel();
 		navPanel = new JPanel();
 		telPanel = new JPanel();
+		telTxtPanel = new JPanel();
 		ledPanel = new JPanel();
 		armPanel = new JPanel();
 		calPanel = new JPanel();
@@ -477,11 +483,11 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		
 		armPanel.add(btnJoint6R);
 		armPanel.add(btnJoint6GN);
-		armPanel.add(btnJoint6GB);
+		armPanel.add(btnJoint6GW);
 		
 		//TELPANEL
 		
-		lblTel.setText("TELEMETRY");
+		lblTel.setText("                  TELEMETRY");
 		lblLED1.setForeground(Color.WHITE);
 		lblLED2.setForeground(Color.WHITE);
 		lblLED3.setForeground(Color.WHITE);
@@ -497,18 +503,41 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		ledPanel.add(lblLED6);
 		ledPanel.add(lblLED7);
 		
-		txtTel.setEditable(false);
-		txtTel.setLineWrap(true);
-		txtTel.setFocusable(false);
-		txtTel.setRows(10);
-		txtTel.setColumns(20);
+		txtLastStation.setEditable(false);
+		txtLastStation.setLineWrap(true);
+		txtLastStation.setFocusable(false);
+		txtLastStation.setColumns(27);
+		txtLastStation.setRows(5);
+
+		
+		txtCurrCargo.setEditable(false);
+		txtCurrCargo.setLineWrap(true);
+		txtCurrCargo.setFocusable(false);
+		txtCurrCargo.setColumns(27);
+		txtCurrCargo.setRows(5);
+		
+		txtHistory.setEditable(false);
+		txtHistory.setLineWrap(true);
+		txtHistory.setFocusable(false);
+		txtHistory.setColumns(27);
+		txtHistory.setRows(5);
 	
 		
 		ledPanel.setBackground(Color.BLACK);
 		telPanel.setLayout(new BorderLayout());
 		telPanel.add(lblTel, BorderLayout.PAGE_START);
 		telPanel.add(ledPanel, BorderLayout.PAGE_END);
-		telPanel.add(txtTel, BorderLayout.CENTER);		
+		
+		telTxtPanel.add(txtLastStation);
+		telTxtPanel.add(txtCurrCargo);
+		telTxtPanel.add(txtHistory);
+		
+		txtLastStation.append("Last station: ");
+		txtCurrCargo.append("Current station: ");
+		txtHistory.append("History: ");
+		
+		telPanel.add(telTxtPanel, BorderLayout.CENTER);	
+		
 
 
 		//setting up the whole window
@@ -721,13 +750,18 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J5RS);
 		}
-		else if ("J6LS".equals(e.getActionCommand())) {
+		else if ("J6R".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J6R);
 		}
-		else if ("J6RS".equals(e.getActionCommand())) {
+		else if ("J6GN".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
 			communicator.writeData(J6GN);
+		}
+		
+		else if ("J6GW".equals(e.getActionCommand())) {
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(J6GW);
 		}
 		else if ("DPP".equals(e.getActionCommand())) {
 			communicator.writeData(ARMINSTR);
@@ -818,6 +852,32 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		this.repaint();
 		
 	}
+	
+	public void toggleMode(byte singleData) {
+		
+		
+	}
+	
+	public void showStation(byte singleData) {
+		txtLastStation.setText("Last station: " + singleData);		
+	}
+
+	public void showCargo(byte singleData) {
+		if (singleData == 32) {
+			txtCurrCargo.setText("No cargo");
+		}
+		
+		txtCurrCargo.setText("Current cargo: " + singleData);
+		
+	}	
+
+	public void showHistory(byte singleData) {
+		txtHistory.append("" + singleData);
+	
+	}
+
+
+	
 
 
 	public static void main(String[] args) {
@@ -830,6 +890,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 
 
-	
+
 
 }

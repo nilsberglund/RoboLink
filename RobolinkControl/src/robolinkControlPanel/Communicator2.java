@@ -31,7 +31,9 @@ public class Communicator2 implements SerialPortEventListener
 	//just a boolean flag that i use for enabling
 	//and disabling buttons depending on whether the program
 	//is connected to a serial port or not
+	private int component;
 	private boolean bConnected = false;
+	private boolean waitingForInstruction = true;
 
 	//the timeout value for connecting with the port
 	final static int TIMEOUT = 2000;
@@ -40,11 +42,22 @@ public class Communicator2 implements SerialPortEventListener
 	final static int SPACE_ASCII = 32;
 	final static int DASH_ASCII = 45;
 	final static int NEW_LINE_ASCII = 10;
+	
+	final public byte SENSINSTR = 1;
+	final public byte MODEINSTR = 2;
+	final public byte STATIONINSTR = 3;
+	final public byte HISTORYINSTR = 4;
+	final public byte CARGOINSTR = 5;
+	
+	final public int LEDS = 1;
+	final public int MODE = 2;
+	final public int STATION = 3;
+	final public int HISTORY = 4;
+	final public int CARGO = 5;
 
 	//a string for recording what goes on in the program
 	//this string is written to the GUI
 	String logText = "";
-	String telText = "";
 
 	public Communicator2(GUI2 window)
 	{
@@ -214,14 +227,59 @@ public class Communicator2 implements SerialPortEventListener
 
 				if (singleData != NEW_LINE_ASCII)
 				{
-					telText = new String(new byte[] {singleData});
 					
-					window.paintLED(singleData);
+					if (waitingForInstruction) {
+						waitingForInstruction = false;
+						if (singleData == SENSINSTR) {
+							component = LEDS;
+						}
+						else if (singleData == MODEINSTR) {
+							component = MODE;
+						}
+						else if (singleData == STATIONINSTR) {
+							component = STATION;
+						}
+						else if (singleData == HISTORYINSTR) {
+							component = HISTORY;
+						}
+						else if (singleData == CARGOINSTR) {
+							component = CARGO;
+						}
+						
+					}
+					else if (!waitingForInstruction) {
+						waitingForInstruction = true;
+						if (component == LEDS) {
+							window.paintLED(singleData);
+						}
+						else if (component == MODE) {
+							window.toggleMode(singleData);
+						}
+						else if (component == STATION) {
+							window.showStation(singleData);
+						}
+						else if (component == HISTORY) {
+							window.showHistory(singleData);
+						}
+						else if (component == CARGO) {
+							window.showCargo(singleData);
+						}
+					}
+					
+					//telText = new String(new byte[] {singleData});
+					
+					
+					
+					
+					 // txtLastStation = "Last station: "
+					// txtCurrCargo = "Current cargo: " 
+					// txtHistory = "History: " 
+				
 					
 				}
 				else
 				{
-					window.txtTel.append("\n");
+					window.txtLog.append("\n");
 				}
 			}
 			catch (Exception e)
