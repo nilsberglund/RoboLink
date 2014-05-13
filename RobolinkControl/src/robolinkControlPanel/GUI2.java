@@ -250,7 +250,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint6GN = new JButton("Narrow grip");
 		btnJoint6GW = new JButton("Wide grip");
 		
-		btnDPP = new JButton("Arm PickUp position");
+		btnDPP = new JButton("Arm Pickup position");
 		btnDTP = new JButton("Arm Transport position");
 		
 		txtKp = new JTextField();
@@ -319,8 +319,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		txtCurrCargo = new JTextArea();
 		txtHistory = new JTextArea();
 		lblTel = new JLabel();
-		lblKp = new JLabel("Kp:");
-		lblKd = new JLabel("Kd:");
+		lblKp = new JLabel("Enter new Kp:");
+		lblKd = new JLabel("Enter new Kd:");
 		lblCalibration = new JLabel();
 	
 				
@@ -430,8 +430,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		navPanel.add(btnBodyForwardRight);
 		navPanel.add(btnBodyRotateLeft);
 		navPanel.add(btnBodyRotateRight);
-		navPanel.add(speedSlider);
 		navPanel.add(btnBodyStop);
+		navPanel.add(speedSlider);
+		
 		
 
 		//STATIONPANEL
@@ -476,10 +477,11 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint2RS);
 		armPanel.add(btnJoint2RB);
 		
-		armPanel.add(btnJoint3LB);
-		armPanel.add(btnJoint3LS);
 		armPanel.add(btnJoint3RS);
 		armPanel.add(btnJoint3RB);
+		armPanel.add(btnJoint3LB);
+		armPanel.add(btnJoint3LS);
+
 		
 		armPanel.add(btnJoint4LB);
 		armPanel.add(btnJoint4LS);
@@ -876,20 +878,24 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	
 	public void showStation(byte singleData) {
 		txtLastStation.setText("Last station: " + singleData);		
+this.repaint();
 	}
+
 
 	public void showCargo(byte singleData) {
 		if (singleData == 32) {
 			txtCurrCargo.setText("No cargo");
 		}
 		
-		txtCurrCargo.setText("Current cargo: " + singleData);
-		
+		else {
+			txtCurrCargo.setText("Current cargo: " + singleData);	
+		}		
+		this.repaint();
 	}	
 
 	public void showHistory(byte singleData) {
-		txtHistory.append("" + singleData);
-	
+		txtHistory.append(" " + singleData);
+		this.repaint();
 	}
 
 

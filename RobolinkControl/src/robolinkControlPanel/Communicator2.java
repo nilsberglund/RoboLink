@@ -225,8 +225,8 @@ public class Communicator2 implements SerialPortEventListener
 				byte singleData = (byte)input.read();
 						
 
-				if (singleData != NEW_LINE_ASCII)
-				{
+//				if (singleData != NEW_LINE_ASCII)
+//				{
 					
 					if (waitingForInstruction) {
 						waitingForInstruction = false;
@@ -276,11 +276,11 @@ public class Communicator2 implements SerialPortEventListener
 					// txtHistory = "History: " 
 				
 					
-				}
-				else
-				{
-					window.txtLog.append("\n");
-				}
+			//	}
+//				else
+//				{
+//					window.txtLog.append("\n");
+//				}
 			}
 			catch (Exception e)
 			{
