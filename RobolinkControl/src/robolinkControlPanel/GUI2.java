@@ -205,8 +205,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//Instantiating buttons and adding text
 		btnConnect = new JButton("Connect");
 		btnDisconnect = new JButton("Disconnect");
-		btnBodyBackward = new JButton("Backward");
-		btnBodyForward = new JButton("Forward");
+		btnBodyBackward = new JButton("Forward");
+		btnBodyForward = new JButton("Backward");
 		btnBodyForwardLeft = new JButton("Forward Left");
 		btnBodyForwardRight = new JButton("Forward Right");
 		btnBodyRotateLeft = new JButton("Rotate Left");
@@ -219,37 +219,39 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnStartPickup = new JButton("Start Pickup");
 		btnAbortPickup = new JButton("Leave without initiation");
 		
-		btnJoint1LB = new JButton("Base <<");
-		btnJoint1LS = new JButton("Base <");
-		btnJoint1RB = new JButton("Base >>");
-		btnJoint1RS = new JButton("Base >");
+		btnJoint1LB = new JButton("Left+");
+		btnJoint1LS = new JButton("Left");
+		btnJoint1RB = new JButton("Right+");
+		btnJoint1RS = new JButton("Right");
 		
-		btnJoint2LB = new JButton("Shoulder <<");
-		btnJoint2LS = new JButton("Shoulder <");
-		btnJoint2RB = new JButton("Shoulder >>");
-		btnJoint2RS = new JButton("Shoulder >");
+
+		btnJoint2LB = new JButton("'Down+");
+		btnJoint2LS = new JButton("'Down");
+		btnJoint2RB = new JButton("'Up+");
+		btnJoint2RS = new JButton("'Up");
 		
-		btnJoint3LB = new JButton("Elbow <<");
-		btnJoint3LS = new JButton("Elbow <");
-		btnJoint3RB = new JButton("Elbow >>");
-		btnJoint3RS = new JButton("Elbow >");
+	
+		btnJoint3RB = new JButton("Down+");
+		btnJoint3RS = new JButton("Down");
+		btnJoint3LB = new JButton("Up+");
+		btnJoint3LS = new JButton("Up");
 		
-		btnJoint4LB = new JButton("Wrist Tilt <<");
-		btnJoint4LS = new JButton("Wrist Tilt <");
-		btnJoint4RB = new JButton("Wrist Tilt >>");
-		btnJoint4RS = new JButton("Wrist Tilt >");
+		btnJoint4LB = new JButton("Out+");
+		btnJoint4LS = new JButton("Out");
+		btnJoint4RB = new JButton("In+");
+		btnJoint4RS = new JButton("In");
 		
-		btnJoint5LB = new JButton("Wrist Rotate <<");
-		btnJoint5LS = new JButton("Wrist Rotate <");
-		btnJoint5RB = new JButton("Wrist Rotate >>");
-		btnJoint5RS = new JButton("Wrist Rotate >");
+		btnJoint5LB = new JButton("Clockwise+");
+		btnJoint5LS = new JButton("Clockwise");
+		btnJoint5RB = new JButton("Anti CW+");
+		btnJoint5RS = new JButton("Anti CW");
 		
 		btnJoint6R = new JButton("Release");
-		btnJoint6GN = new JButton("Grip Narrow");
-		btnJoint6GW = new JButton("Grip Wide");
+		btnJoint6GN = new JButton("Narrow grip");
+		btnJoint6GW = new JButton("Wide grip");
 		
-		btnDPP = new JButton("DPP");
-		btnDTP = new JButton("DTP");
+		btnDPP = new JButton("Arm Pickup position");
+		btnDTP = new JButton("Arm Transport position");
 		
 		txtKp = new JTextField();
 		txtKd = new JTextField();
@@ -317,8 +319,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		txtCurrCargo = new JTextArea();
 		txtHistory = new JTextArea();
 		lblTel = new JLabel();
-		lblKp = new JLabel("Kp:");
-		lblKd = new JLabel("Kd:");
+		lblKp = new JLabel("Enter new Kp:");
+		lblKd = new JLabel("Enter new Kd:");
 		lblCalibration = new JLabel();
 	
 				
@@ -419,25 +421,35 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//drive buttons and labels
+		navPanel.setLayout(new GridLayout(5,2));
 		navPanel.add(btnAutomaticMode);
 		navPanel.add(btnManualMode);
 		navPanel.add(btnBodyForward);
 		navPanel.add(btnBodyBackward);
-		navPanel.add(btnBodyStop);
 		navPanel.add(btnBodyForwardLeft);
 		navPanel.add(btnBodyForwardRight);
 		navPanel.add(btnBodyRotateLeft);
 		navPanel.add(btnBodyRotateRight);
+		navPanel.add(btnBodyStop);
 		navPanel.add(speedSlider);
+		
+		
 
 		//STATIONPANEL
 		
 		//pickup control buttons and label
+		
+		stationPanel.setLayout(new GridLayout(5,1));
+		stationPanel.add(btnDPP);
+		stationPanel.add(btnDTP);
+		
 		stationPanel.add(btnStartPickup);
 		stationPanel.add(btnEndPickup);
 		stationPanel.add(btnAbortPickup);
 
 		//CALPANEL
+		
+		calPanel.setLayout(new GridLayout(6,1));
 		
 		lblCalibration.setText("First floor, then line:");
 		calPanel.add(lblCalibration);
@@ -454,8 +466,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//ARMPANEL
 		
 		//arm buttons and label
-		armPanel.add(btnDPP);
-		armPanel.add(btnDTP);
+		armPanel.setLayout(new GridLayout(6,4));
 		armPanel.add(btnJoint1LB);
 		armPanel.add(btnJoint1LS);
 		armPanel.add(btnJoint1RS);
@@ -466,10 +477,11 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint2RS);
 		armPanel.add(btnJoint2RB);
 		
-		armPanel.add(btnJoint3LB);
-		armPanel.add(btnJoint3LS);
 		armPanel.add(btnJoint3RS);
 		armPanel.add(btnJoint3RB);
+		armPanel.add(btnJoint3LB);
+		armPanel.add(btnJoint3LS);
+
 		
 		armPanel.add(btnJoint4LB);
 		armPanel.add(btnJoint4LS);
@@ -661,10 +673,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("endpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
 			communicator.writeData(EPICKUP);
+			
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DTP);
 		}
 		else if ("startpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
 			communicator.writeData(SPICKUP);
+			
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DPP);
 		}
 		else if ("abortpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
@@ -854,26 +872,37 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 	
 	public void toggleMode(byte singleData) {
-		
+		if (singleData == 0) {
+			btnAutomaticMode.setEnabled(false);
+			btnManualMode.setEnabled(true);		
+		}
+		else {
+			btnAutomaticMode.setEnabled(true);
+			btnManualMode.setEnabled(false);
+		}
 		
 	}
 	
 	public void showStation(byte singleData) {
 		txtLastStation.setText("Last station: " + singleData);		
+this.repaint();
 	}
+
 
 	public void showCargo(byte singleData) {
 		if (singleData == 32) {
 			txtCurrCargo.setText("No cargo");
 		}
 		
-		txtCurrCargo.setText("Current cargo: " + singleData);
-		
+		else {
+			txtCurrCargo.setText("Current cargo: " + singleData);	
+		}		
+		this.repaint();
 	}	
 
 	public void showHistory(byte singleData) {
-		txtHistory.append("" + singleData);
-	
+		txtHistory.append(" " + singleData);
+		this.repaint();
 	}
 
 

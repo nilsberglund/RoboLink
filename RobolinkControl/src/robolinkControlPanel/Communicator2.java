@@ -225,11 +225,14 @@ public class Communicator2 implements SerialPortEventListener
 				byte singleData = (byte)input.read();
 						
 
-				if (singleData != NEW_LINE_ASCII)
-				{
-					
+//				if (singleData != NEW_LINE_ASCII)
+//				{
+				
 					if (waitingForInstruction) {
 						waitingForInstruction = false;
+						if(singleData != SENSINSTR){
+						System.out.println("Instr: " + singleData);	
+						}
 						if (singleData == SENSINSTR) {
 							component = LEDS;
 						}
@@ -245,10 +248,16 @@ public class Communicator2 implements SerialPortEventListener
 						else if (singleData == CARGOINSTR) {
 							component = CARGO;
 						}
+					
 						
 					}
 					else if (!waitingForInstruction) {
 						waitingForInstruction = true;
+						
+						if(component != LEDS){
+							System.out.println("DATA: " + singleData);	
+							}
+						
 						if (component == LEDS) {
 							window.paintLED(singleData);
 						}
@@ -276,11 +285,11 @@ public class Communicator2 implements SerialPortEventListener
 					// txtHistory = "History: " 
 				
 					
-				}
-				else
-				{
-					window.txtLog.append("\n");
-				}
+			//	}
+//				else
+//				{
+//					window.txtLog.append("\n");
+//				}
 			}
 			catch (Exception e)
 			{
