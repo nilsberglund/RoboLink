@@ -205,8 +205,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//Instantiating buttons and adding text
 		btnConnect = new JButton("Connect");
 		btnDisconnect = new JButton("Disconnect");
-		btnBodyBackward = new JButton("Backward");
-		btnBodyForward = new JButton("Forward");
+		btnBodyBackward = new JButton("Forward");
+		btnBodyForward = new JButton("Backward");
 		btnBodyForwardLeft = new JButton("Forward Left");
 		btnBodyForwardRight = new JButton("Forward Right");
 		btnBodyRotateLeft = new JButton("Rotate Left");
@@ -219,37 +219,38 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnStartPickup = new JButton("Start Pickup");
 		btnAbortPickup = new JButton("Leave without initiation");
 		
-		btnJoint1LB = new JButton("Base <<");
-		btnJoint1LS = new JButton("Base <");
-		btnJoint1RB = new JButton("Base >>");
-		btnJoint1RS = new JButton("Base >");
+		btnJoint1LB = new JButton("LEFT BASE");
+		btnJoint1LS = new JButton("left base");
+		btnJoint1RB = new JButton("RIGHT BASE");
+		btnJoint1RS = new JButton("right base");
 		
-		btnJoint2LB = new JButton("Shoulder <<");
-		btnJoint2LS = new JButton("Shoulder <");
-		btnJoint2RB = new JButton("Shoulder >>");
-		btnJoint2RS = new JButton("Shoulder >");
+		btnJoint2LB = new JButton("DOWN 1");
+		btnJoint2LS = new JButton("down 1");
+		btnJoint2RB = new JButton("UP 1");
+		btnJoint2RS = new JButton("up 1");
 		
-		btnJoint3LB = new JButton("Elbow <<");
-		btnJoint3LS = new JButton("Elbow <");
-		btnJoint3RB = new JButton("Elbow >>");
-		btnJoint3RS = new JButton("Elbow >");
+	
+		btnJoint3RB = new JButton("DOWN 2");
+		btnJoint3RS = new JButton("down 2");
+		btnJoint3LB = new JButton("UP 2");
+		btnJoint3LS = new JButton("up 2");
 		
-		btnJoint4LB = new JButton("Wrist Tilt <<");
-		btnJoint4LS = new JButton("Wrist Tilt <");
-		btnJoint4RB = new JButton("Wrist Tilt >>");
-		btnJoint4RS = new JButton("Wrist Tilt >");
+		btnJoint4LB = new JButton("OUT");
+		btnJoint4LS = new JButton("out");
+		btnJoint4RB = new JButton("IN");
+		btnJoint4RS = new JButton("in");
 		
-		btnJoint5LB = new JButton("Wrist Rotate <<");
-		btnJoint5LS = new JButton("Wrist Rotate <");
-		btnJoint5RB = new JButton("Wrist Rotate >>");
-		btnJoint5RS = new JButton("Wrist Rotate >");
+		btnJoint5LB = new JButton("CLOCKWISE");
+		btnJoint5LS = new JButton("clockwise");
+		btnJoint5RB = new JButton("ANTI CW");
+		btnJoint5RS = new JButton("anti cw");
 		
 		btnJoint6R = new JButton("Release");
-		btnJoint6GN = new JButton("Grip Narrow");
-		btnJoint6GW = new JButton("Grip Wide");
+		btnJoint6GN = new JButton("Narrow grip");
+		btnJoint6GW = new JButton("Wide grip");
 		
-		btnDPP = new JButton("DPP");
-		btnDTP = new JButton("DTP");
+		btnDPP = new JButton("Pick-Up position");
+		btnDTP = new JButton("Transport position");
 		
 		txtKp = new JTextField();
 		txtKd = new JTextField();
@@ -433,6 +434,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//STATIONPANEL
 		
 		//pickup control buttons and label
+		stationPanel.add(btnDPP);
+		stationPanel.add(btnDTP);
+		
 		stationPanel.add(btnStartPickup);
 		stationPanel.add(btnEndPickup);
 		stationPanel.add(btnAbortPickup);
@@ -454,8 +458,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		//ARMPANEL
 		
 		//arm buttons and label
-		armPanel.add(btnDPP);
-		armPanel.add(btnDTP);
+		armPanel.setLayout(new GridLayout(6,4));
 		armPanel.add(btnJoint1LB);
 		armPanel.add(btnJoint1LS);
 		armPanel.add(btnJoint1RS);
@@ -661,10 +664,16 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("endpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
 			communicator.writeData(EPICKUP);
+			
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DTP);
 		}
 		else if ("startpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
 			communicator.writeData(SPICKUP);
+			
+			communicator.writeData(ARMINSTR);
+			communicator.writeData(DPP);
 		}
 		else if ("abortpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
