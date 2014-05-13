@@ -872,7 +872,14 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 	
 	public void toggleMode(byte singleData) {
-		
+		if (singleData == 0) {
+			btnAutomaticMode.setEnabled(false);
+			btnManualMode.setEnabled(true);		
+		}
+		else {
+			btnAutomaticMode.setEnabled(true);
+			btnManualMode.setEnabled(false);
+		}
 		
 	}
 	
