@@ -219,38 +219,39 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnStartPickup = new JButton("Start Pickup");
 		btnAbortPickup = new JButton("Leave without initiation");
 		
-		btnJoint1LB = new JButton("LEFT BASE");
-		btnJoint1LS = new JButton("left base");
-		btnJoint1RB = new JButton("RIGHT BASE");
-		btnJoint1RS = new JButton("right base");
+		btnJoint1LB = new JButton("Left+");
+		btnJoint1LS = new JButton("Left");
+		btnJoint1RB = new JButton("Right+");
+		btnJoint1RS = new JButton("Right");
 		
-		btnJoint2LB = new JButton("DOWN 1");
-		btnJoint2LS = new JButton("down 1");
-		btnJoint2RB = new JButton("UP 1");
-		btnJoint2RS = new JButton("up 1");
+
+		btnJoint2LB = new JButton("'Down+");
+		btnJoint2LS = new JButton("'Down");
+		btnJoint2RB = new JButton("'Up+");
+		btnJoint2RS = new JButton("'Up");
 		
 	
-		btnJoint3RB = new JButton("DOWN 2");
-		btnJoint3RS = new JButton("down 2");
-		btnJoint3LB = new JButton("UP 2");
-		btnJoint3LS = new JButton("up 2");
+		btnJoint3RB = new JButton("Down+");
+		btnJoint3RS = new JButton("Down");
+		btnJoint3LB = new JButton("Up+");
+		btnJoint3LS = new JButton("Up");
 		
-		btnJoint4LB = new JButton("OUT");
-		btnJoint4LS = new JButton("out");
-		btnJoint4RB = new JButton("IN");
-		btnJoint4RS = new JButton("in");
+		btnJoint4LB = new JButton("Out+");
+		btnJoint4LS = new JButton("Out");
+		btnJoint4RB = new JButton("In+");
+		btnJoint4RS = new JButton("In");
 		
-		btnJoint5LB = new JButton("CLOCKWISE");
-		btnJoint5LS = new JButton("clockwise");
-		btnJoint5RB = new JButton("ANTI CW");
-		btnJoint5RS = new JButton("anti cw");
+		btnJoint5LB = new JButton("Clockwise+");
+		btnJoint5LS = new JButton("Clockwise");
+		btnJoint5RB = new JButton("Anti CW+");
+		btnJoint5RS = new JButton("Anti CW");
 		
 		btnJoint6R = new JButton("Release");
 		btnJoint6GN = new JButton("Narrow grip");
 		btnJoint6GW = new JButton("Wide grip");
 		
-		btnDPP = new JButton("Pick-Up position");
-		btnDTP = new JButton("Transport position");
+		btnDPP = new JButton("Arm PickUp position");
+		btnDTP = new JButton("Arm Transport position");
 		
 		txtKp = new JTextField();
 		txtKd = new JTextField();
@@ -420,20 +421,24 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 
 		//drive buttons and labels
+		navPanel.setLayout(new GridLayout(5,2));
 		navPanel.add(btnAutomaticMode);
 		navPanel.add(btnManualMode);
 		navPanel.add(btnBodyForward);
 		navPanel.add(btnBodyBackward);
-		navPanel.add(btnBodyStop);
 		navPanel.add(btnBodyForwardLeft);
 		navPanel.add(btnBodyForwardRight);
 		navPanel.add(btnBodyRotateLeft);
 		navPanel.add(btnBodyRotateRight);
 		navPanel.add(speedSlider);
+		navPanel.add(btnBodyStop);
+		
 
 		//STATIONPANEL
 		
 		//pickup control buttons and label
+		
+		stationPanel.setLayout(new GridLayout(5,1));
 		stationPanel.add(btnDPP);
 		stationPanel.add(btnDTP);
 		
@@ -442,6 +447,8 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		stationPanel.add(btnAbortPickup);
 
 		//CALPANEL
+		
+		calPanel.setLayout(new GridLayout(6,1));
 		
 		lblCalibration.setText("First floor, then line:");
 		calPanel.add(lblCalibration);
