@@ -18,7 +18,7 @@ volatile _Bool pickUpItem;
 volatile _Bool waitingForStartAbort;
 volatile _Bool waitingForEndPickup;
 volatile _Bool stationRightSide;
-volatile _Bool stationModeEnable;
+volatile uint8_t stationModeEnable;
 
 //////////////////////////////////////////////////////////
 

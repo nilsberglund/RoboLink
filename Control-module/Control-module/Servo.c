@@ -11,6 +11,7 @@
 #include "Servo.h"
 #include <util/delay.h>
 #include "Slave_control.h"
+#include <avr/interrupt.h>
 
 void armInit(void) {
 	
@@ -115,7 +116,6 @@ void defaultPosition() {
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 (joint 5) straight
 	moveSingleServo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up
 	moveDoubleServo(0x1FF, 0x50, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
-	_delay_ms(250);
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
 	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
 	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
@@ -126,53 +126,77 @@ void defaultPosition() {
 	joint3_Pos = 0xCC;
 	joint4_Pos = 0x332;
 	joint5_Pos = 0x1FF;
-	
 }
 
 /*Move the arm to pickup default position.*/
 void pickupDefaultPosition() {
 	
-	moveDoubleServo(0x288, 0xF0, 0x00, 0x02, 0x03);		//Joint 2
+	TIMSK0 &= ~(1<<OCIE0A);
+	
+	if(side == 0){ //Pickup on left side
+		moveSingleServo
+		(0x332, 0x80, 0x00, 0x01); //Servo 1 in position 240 degrees
+		joint1_Pos = 0x332;
+	}
+	else if(side == 1){ //Pickup on right side
+		moveSingleServo(0xCC, 0x80, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
+		joint1_Pos = 0xCC;
+	}
+	
+	moveDoubleServo(0x270, 0xF0, 0x00, 0x02, 0x03);		//Joint 2 //288 innan
 	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);		//Joint 3
 	moveSingleServo(0x144, 0xF0, 0x00, 0x06);			//Joint 4
 	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//Joint 5
 	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);			//Joint 6
 	
 	//Updating positions
-	joint2_Pos = 0x288;
+	
+	joint2_Pos = 0x270; //Var 288 innan
 	joint3_Pos = 0x288;
 	joint4_Pos = 0x144;
 	joint5_Pos = 0x1FF;
 	joint6_Pos = 0x1FF;
+	
+	_delay_ms(1000);
+	
+	TIMSK0 |= (1<<OCIE0A);
+	
 }
 
 /*Drop the item on either left or right side.*/
-void dropItem(uint8_t side) { //Side = 1 right side, side = 0 left side
+void dropItem() { //Side = 1 right side, side = 0 left side
 	
 	//Only servo 1 that is different
 	if(side == 0){ //Drop on left side
 		moveSingleServo
-		(0x332, 0x50, 0x00, 0x01); //Servo 1 in position 240 degrees
+		(0x332, 0x80, 0x00, 0x01); //Servo 1 in position 240 degrees
 	}
 	else if(side == 1){ //Drop on right side
-		moveSingleServo(0xCC, 0x50, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
+		moveSingleServo(0xCC, 0x80, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
 	}
 	
-	_delay_ms(3000);
+	_delay_ms(2000);
 	
 	//Vad är lämpligt läge på följande servon?
-	moveDoubleServo(0x2B4, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
-	moveDoubleServo(0x2CC, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
-	moveSingleServo(0xD3, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
-	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
+	//moveDoubleServo(0x2B4, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
+	//moveDoubleServo(0x2CC, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
+	//moveSingleServo(0xD3, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
+	//moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
 	
-	_delay_ms(4000);
+	moveDoubleServo(dropJoint2Pos, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
+	moveDoubleServo(dropJoint3Pos, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
+	moveSingleServo(dropJoint4Pos, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
+	moveSingleServo(dropJoint5Pos, 0x50, 0x01, 0x07);
+	
+	_delay_ms(3000);
 	
 	moveSingleServo(0x1FF, 0x60, 0x00, 0x08); //Servo 8 in position 150 (1FF) degrees 
 	
-	_delay_ms(3000);
+	_delay_ms(2000);
 	
 	defaultPosition();
+	
+	_delay_ms(1000);
 	
 	TXFinishedDrop();
 }
@@ -198,6 +222,9 @@ void moveArm(uint8_t armData) {
 	}
 	else if (DTP)
 	{
+		
+		TIMSK0 &= ~(1<<OCIE0A);
+		
 		defaultPosition();
 	}
 	else
@@ -274,6 +301,11 @@ void moveArm(uint8_t armData) {
 			if (direction == 0)
 			{
 				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip smal, ska ha en grip bred också
+				dropJoint2Pos = joint2_Pos;
+				dropJoint3Pos = joint3_Pos;
+				dropJoint4Pos = joint4_Pos;
+				dropJoint5Pos = joint5_Pos;
+				
 			}
 			else if(direction == 1)
 			{
@@ -281,4 +313,12 @@ void moveArm(uint8_t armData) {
 			}
 		}
 	}
+}
+
+void updateServos()
+{
+		moveSingleServo(joint1_Pos, 0x30, 0x00, 0x01);
+		moveDoubleServo(joint2_Pos, 0x30, 0x00, 0x02, 0x03);
+		moveDoubleServo(joint3_Pos, 0x30, 0x00, 0x04, 0x05);
+		moveSingleServo(joint4_Pos, 0x30, 0x00, 0x06);
 }

@@ -117,6 +117,9 @@
     <Compile Include="Control_module.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Control_module.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Control_wheel_steering.c">
       <SubType>compile</SubType>
     </Compile>
