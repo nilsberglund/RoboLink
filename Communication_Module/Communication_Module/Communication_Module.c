@@ -88,7 +88,12 @@ ISR(TIMER0_COMPB_vect)
 	if(stationModeEnable == 0)
 	{
 		TXsensorData();
-		//TXbluetoothInstr(SENSINSTR, sensorData);
+		btSensDataCnt++;
+		if (btSensDataCnt == 25)
+		{
+			TXbluetoothInstr(SENSINSTR, sensorData);
+			btSensDataCnt = 0;
+		}
 	}
 }
 
@@ -100,25 +105,25 @@ ISR(USART0_RX_vect)
 	if (waiting_for_instruction == 1) {
 		waiting_for_instruction = 0;
 		if (btdata == 1) {
-			component = WHEEL;
+			btcomponent = WHEEL;
 		}
 		else if(btdata == 2) {
-			component = ARM;
+			btcomponent = ARM;
 		}
 		else if(btdata == 3) {
 			waiting_for_instruction = 1;
-			component = CALINSTR;
+			btcomponent = CALINSTR;
 			TXCalibration();
 			
 		}
 		else if(btdata == 4) {
-			component = PCONINSTR;
+			btcomponent = PCONINSTR;
 		}
 		else if(btdata == 5) {
-			component = KPINSTR;
+			btcomponent = KPINSTR;
 		}
 		else if(btdata == 6) {
-			component = KDINSTR;
+			btcomponent = KDINSTR;
 		}
 		else if(btdata == 7) { //Toggle mode instruction
 			waiting_for_instruction = 1;
@@ -127,24 +132,24 @@ ISR(USART0_RX_vect)
 	}
 	else {
 		waiting_for_instruction = 1;
-		if (component == WHEEL) {
+		if (btcomponent == WHEEL) {
 			if(manualModeEnabled == 1) {
 				wheelData = btdata;
 				TXwheelData();
 			}
 		}
-		else if (component == ARM) {
+		else if (btcomponent == ARM) {
 			armData = btdata;
 			TXarmData();
 		}
-		else if (component == PCONINSTR) {
+		else if (btcomponent == PCONINSTR) {
 			handleData(btdata);
 		}
-		else if (component == KPINSTR) {
+		else if (btcomponent == KPINSTR) {
 			Kp = btdata;
 			TXKpData();
 		}
-		else if (component == KDINSTR) {
+		else if (btcomponent == KDINSTR) {
 			Kd = btdata;
 			TXKpData();
 		}
@@ -199,6 +204,7 @@ void initManualMode()
 	stationLeftSensCounter = 0;
 	stationRightSensCounter = 0;
 	lineReadingCounter = 0;
+	btSensDataCnt = 0;
 }
 
 void toggleMode()

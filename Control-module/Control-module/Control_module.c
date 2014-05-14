@@ -105,8 +105,6 @@ void initTimer()
 {
 	TCCR0A = 0;
 	TCCR0B = 0x05;
-	
-	
 	TCNT0 = 0;
 	OCR0A = 150;
 	

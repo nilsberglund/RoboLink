@@ -14,13 +14,13 @@ automaticModeEnabled
                     0x1               Bluetooth.o
 digit               0x1               Bluetooth.o
 RFID                0xa               Bluetooth.o
+btSensDataCnt       0x1               Bluetooth.o
 stationModeEnable   0x1               Bluetooth.o
 lineReadingCounter  0x1               Bluetooth.o
 stationLeftSensCounter
                     0x1               Bluetooth.o
 finishedDrop        0x1               Bluetooth.o
 carryItem           0x1               Bluetooth.o
-component           0x1               Bluetooth.o
 stationRightSensCounter
                     0x1               Bluetooth.o
 streamFilled        0x1               Bluetooth.o
@@ -37,6 +37,7 @@ low_conf            0x24              Bluetooth.o
 waiting_for_instruction
                     0x1               Bluetooth.o
 Kd                  0x1               Bluetooth.o
+btcomponent         0x1               Bluetooth.o
 Kp                  0x1               Bluetooth.o
 waitingForEndPickup
                     0x1               Bluetooth.o
@@ -226,7 +227,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x138a
+.text           0x00000000     0x13a8
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -334,134 +335,134 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x000002dc       0x56 Communication_Module.o
                 0x000002dc                __vector_16
  .text.__vector_17
-                0x00000332       0x56 Communication_Module.o
+                0x00000332       0x70 Communication_Module.o
                 0x00000332                __vector_17
  .text.__vector_28
-                0x00000388       0x7c Communication_Module.o
-                0x00000388                __vector_28
+                0x000003a2       0x7c Communication_Module.o
+                0x000003a2                __vector_28
  .text.initManualMode
-                0x00000404       0x26 Communication_Module.o
-                0x00000404                initManualMode
- .text.main     0x0000042a       0x18 Communication_Module.o
-                0x0000042a                main
+                0x0000041e       0x2a Communication_Module.o
+                0x0000041e                initManualMode
+ .text.main     0x00000448       0x18 Communication_Module.o
+                0x00000448                main
  .text.toggleMode
-                0x00000442       0x54 Communication_Module.o
-                0x00000442                toggleMode
+                0x00000460       0x54 Communication_Module.o
+                0x00000460                toggleMode
  .text.__vector_7
-                0x00000496       0x4e Communication_Module.o
-                0x00000496                __vector_7
+                0x000004b4       0x4e Communication_Module.o
+                0x000004b4                __vector_7
  .text.__vector_20
-                0x000004e4      0x10c Communication_Module.o
-                0x000004e4                __vector_20
+                0x00000502      0x10c Communication_Module.o
+                0x00000502                __vector_20
  .text._hd44780_l_func
-                0x000005f0      0x41c LCD_new.o
+                0x0000060e      0x41c LCD_new.o
  .text.hd44780_l_clear_disp
-                0x00000a0c       0x16 LCD_new.o
-                0x00000a0c                hd44780_l_clear_disp
+                0x00000a2a       0x16 LCD_new.o
+                0x00000a2a                hd44780_l_clear_disp
  .text.hd44780_l_ems
-                0x00000a22       0x24 LCD_new.o
-                0x00000a22                hd44780_l_ems
+                0x00000a40       0x24 LCD_new.o
+                0x00000a40                hd44780_l_ems
  .text.hd44780_l_disp
-                0x00000a46       0x2a LCD_new.o
-                0x00000a46                hd44780_l_disp
+                0x00000a64       0x2a LCD_new.o
+                0x00000a64                hd44780_l_disp
  .text.hd44780_l_fs
-                0x00000a70       0x2c LCD_new.o
-                0x00000a70                hd44780_l_fs
+                0x00000a8e       0x2c LCD_new.o
+                0x00000a8e                hd44780_l_fs
  .text.hd44780_l_write
-                0x00000a9c       0x16 LCD_new.o
-                0x00000a9c                hd44780_l_write
+                0x00000aba       0x16 LCD_new.o
+                0x00000aba                hd44780_l_write
  .text.hd44780_l_init
-                0x00000ab2      0x2c0 LCD_new.o
-                0x00000ab2                hd44780_l_init
+                0x00000ad0      0x2c0 LCD_new.o
+                0x00000ad0                hd44780_l_init
  .text.SPI_Init_Master
-                0x00000d72       0x30 Master_communication.o
-                0x00000d72                SPI_Init_Master
+                0x00000d90       0x30 Master_communication.o
+                0x00000d90                SPI_Init_Master
  .text.masterTX
-                0x00000da2       0x1e Master_communication.o
-                0x00000da2                masterTX
+                0x00000dc0       0x1e Master_communication.o
+                0x00000dc0                masterTX
  .text.masterRX
-                0x00000dc0       0x20 Master_communication.o
-                0x00000dc0                masterRX
+                0x00000dde       0x20 Master_communication.o
+                0x00000dde                masterRX
  .text.slaveSelect
-                0x00000de0       0x30 Master_communication.o
-                0x00000de0                slaveSelect
+                0x00000dfe       0x30 Master_communication.o
+                0x00000dfe                slaveSelect
  .text.TXprotocol
-                0x00000e10       0x42 Master_communication.o
-                0x00000e10                TXprotocol
+                0x00000e2e       0x42 Master_communication.o
+                0x00000e2e                TXprotocol
  .text.TXsensorData
-                0x00000e52       0x16 Master_communication.o
-                0x00000e52                TXsensorData
+                0x00000e70       0x16 Master_communication.o
+                0x00000e70                TXsensorData
  .text.RXsensorData
-                0x00000e68       0x12 Master_communication.o
-                0x00000e68                RXsensorData
+                0x00000e86       0x12 Master_communication.o
+                0x00000e86                RXsensorData
  .text.TXwheelData
-                0x00000e7a       0x12 Master_communication.o
-                0x00000e7a                TXwheelData
+                0x00000e98       0x12 Master_communication.o
+                0x00000e98                TXwheelData
  .text.TXarmData
-                0x00000e8c        0xe Master_communication.o
-                0x00000e8c                TXarmData
+                0x00000eaa        0xe Master_communication.o
+                0x00000eaa                TXarmData
  .text.TXKpData
-                0x00000e9a       0x12 Master_communication.o
-                0x00000e9a                TXKpData
+                0x00000eb8       0x12 Master_communication.o
+                0x00000eb8                TXKpData
  .text.TXDropItem
-                0x00000eac       0x12 Master_communication.o
-                0x00000eac                TXDropItem
+                0x00000eca       0x12 Master_communication.o
+                0x00000eca                TXDropItem
  .text.TXCalibration
-                0x00000ebe        0xc Master_communication.o
-                0x00000ebe                TXCalibration
+                0x00000edc        0xc Master_communication.o
+                0x00000edc                TXCalibration
  .text.waitForUserInputStartAbort
-                0x00000eca        0xe warehouseMode.o
-                0x00000eca                waitForUserInputStartAbort
+                0x00000ee8        0xe warehouseMode.o
+                0x00000ee8                waitForUserInputStartAbort
  .text.waitForUserInputEndPickup
-                0x00000ed8        0xe warehouseMode.o
-                0x00000ed8                waitForUserInputEndPickup
+                0x00000ef6        0xe warehouseMode.o
+                0x00000ef6                waitForUserInputEndPickup
  .text.waitForFinishedDrop
-                0x00000ee6        0xe warehouseMode.o
-                0x00000ee6                waitForFinishedDrop
+                0x00000f04        0xe warehouseMode.o
+                0x00000f04                waitForFinishedDrop
  .text.identifyNewStreamCatalogNumber
-                0x00000ef4       0x7a warehouseMode.o
-                0x00000ef4                identifyNewStreamCatalogNumber
+                0x00000f12       0x7a warehouseMode.o
+                0x00000f12                identifyNewStreamCatalogNumber
  .text.itemInHistory
-                0x00000f6e       0x32 warehouseMode.o
-                0x00000f6e                itemInHistory
+                0x00000f8c       0x32 warehouseMode.o
+                0x00000f8c                itemInHistory
  .text.identifyCargoCatalogNumber
-                0x00000fa0       0x7a warehouseMode.o
-                0x00000fa0                identifyCargoCatalogNumber
+                0x00000fbe       0x7a warehouseMode.o
+                0x00000fbe                identifyCargoCatalogNumber
  .text.newStreamPairsWithCargo
-                0x0000101a       0x5a warehouseMode.o
-                0x0000101a                newStreamPairsWithCargo
+                0x00001038       0x5a warehouseMode.o
+                0x00001038                newStreamPairsWithCargo
  .text.addPairToHistory
-                0x00001074       0x6e warehouseMode.o
-                0x00001074                addPairToHistory
+                0x00001092       0x6e warehouseMode.o
+                0x00001092                addPairToHistory
  .text.powerRFID
-                0x000010e2        0xc warehouseMode.o
-                0x000010e2                powerRFID
+                0x00001100        0xc warehouseMode.o
+                0x00001100                powerRFID
  .text.printOnLCD
-                0x000010ee       0x9e warehouseMode.o
-                0x000010ee                printOnLCD
+                0x0000110c       0x9e warehouseMode.o
+                0x0000110c                printOnLCD
  .text.deliveryMode
-                0x0000118c       0x36 warehouseMode.o
-                0x0000118c                deliveryMode
+                0x000011aa       0x36 warehouseMode.o
+                0x000011aa                deliveryMode
  .text.pickUpMode
-                0x000011c2       0x58 warehouseMode.o
-                0x000011c2                pickUpMode
+                0x000011e0       0x58 warehouseMode.o
+                0x000011e0                pickUpMode
  .text.stationMode
-                0x0000121a       0x44 warehouseMode.o
-                0x0000121a                stationMode
+                0x00001238       0x44 warehouseMode.o
+                0x00001238                stationMode
  .text.setupRFID
-                0x0000125e       0x26 warehouseMode.o
-                0x0000125e                setupRFID
+                0x0000127c       0x26 warehouseMode.o
+                0x0000127c                setupRFID
  .text.setupWarehouse
-                0x00001284       0x26 warehouseMode.o
-                0x00001284                setupWarehouse
+                0x000012a2       0x26 warehouseMode.o
+                0x000012a2                setupWarehouse
  .text.setupLCD
-                0x000012aa       0xdc warehouseMode.o
-                0x000012aa                setupLCD
-                0x00001386                . = ALIGN (0x2)
+                0x000012c8       0xdc warehouseMode.o
+                0x000012c8                setupLCD
+                0x000013a4                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001386        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x00001386                _exit
-                0x00001386                exit
+ .fini9         0x000013a4        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x000013a4                _exit
+                0x000013a4                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -480,11 +481,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001386        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x000013a4        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000138a                _etext = .
+                0x000013a8                _etext = .
 
-.data           0x00800100       0xde load address 0x0000138a
+.data           0x00800100       0xde load address 0x000013a8
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -513,21 +514,21 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x008001de                _edata = .
                 0x008001de                PROVIDE (__data_end, .)
 
-.bss            0x008001de       0x48
+.bss            0x008001de       0x49
                 0x008001de                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x008001de       0x48 Bluetooth.o
+ COMMON         0x008001de       0x49 Bluetooth.o
                 0x008001de                automaticModeEnabled
                 0x008001df                digit
                 0x008001e0                RFID
-                0x008001ea                stationModeEnable
-                0x008001eb                lineReadingCounter
-                0x008001ec                stationLeftSensCounter
-                0x008001ed                finishedDrop
-                0x008001ee                carryItem
-                0x008001ef                component
+                0x008001ea                btSensDataCnt
+                0x008001eb                stationModeEnable
+                0x008001ec                lineReadingCounter
+                0x008001ed                stationLeftSensCounter
+                0x008001ee                finishedDrop
+                0x008001ef                carryItem
                 0x008001f0                stationRightSensCounter
                 0x008001f1                streamFilled
                 0x008001f2                pickUpItem
@@ -541,22 +542,23 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x008001fa                low_conf
                 0x0080021e                waiting_for_instruction
                 0x0080021f                Kd
-                0x00800220                Kp
-                0x00800221                waitingForEndPickup
-                0x00800222                historySize
-                0x00800223                wheelData
-                0x00800224                manualModeEnabled
-                0x00800225                wantedData
-                0x00800226                PROVIDE (__bss_end, .)
-                0x0000138a                __data_load_start = LOADADDR (.data)
-                0x00001468                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00800220                btcomponent
+                0x00800221                Kp
+                0x00800222                waitingForEndPickup
+                0x00800223                historySize
+                0x00800224                wheelData
+                0x00800225                manualModeEnabled
+                0x00800226                wantedData
+                0x00800227                PROVIDE (__bss_end, .)
+                0x000013a8                __data_load_start = LOADADDR (.data)
+                0x00001486                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800226        0x0
-                0x00800226                PROVIDE (__noinit_start, .)
+.noinit         0x00800227        0x0
+                0x00800227                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800226                PROVIDE (__noinit_end, .)
-                0x00800226                _end = .
-                0x00800226                PROVIDE (__heap_start, .)
+                0x00800227                PROVIDE (__noinit_end, .)
+                0x00800227                _end = .
+                0x00800227                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -634,13 +636,13 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x31b1
+.debug_info     0x00000000     0x31e4
  *(.debug_info)
- .debug_info    0x00000000      0x5a2 Bluetooth.o
- .debug_info    0x000005a2      0x79e Communication_Module.o
- .debug_info    0x00000d40     0x10b8 LCD_new.o
- .debug_info    0x00001df8      0x7fb Master_communication.o
- .debug_info    0x000025f3      0xbbe warehouseMode.o
+ .debug_info    0x00000000      0x5b4 Bluetooth.o
+ .debug_info    0x000005b4      0x7bf Communication_Module.o
+ .debug_info    0x00000d73     0x10b8 LCD_new.o
+ .debug_info    0x00001e2b      0x7fb Master_communication.o
+ .debug_info    0x00002626      0xbbe warehouseMode.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x84f
@@ -651,13 +653,13 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_abbrev  0x0000049a      0x166 Master_communication.o
  .debug_abbrev  0x00000600      0x24f warehouseMode.o
 
-.debug_line     0x00000000     0x16cd
+.debug_line     0x00000000     0x16eb
  *(.debug_line)
  .debug_line    0x00000000      0x233 Bluetooth.o
- .debug_line    0x00000233      0x4b7 Communication_Module.o
- .debug_line    0x000006ea      0x5da LCD_new.o
- .debug_line    0x00000cc4      0x3c1 Master_communication.o
- .debug_line    0x00001085      0x648 warehouseMode.o
+ .debug_line    0x00000233      0x4d5 Communication_Module.o
+ .debug_line    0x00000708      0x5da LCD_new.o
+ .debug_line    0x00000ce2      0x3c1 Master_communication.o
+ .debug_line    0x000010a3      0x648 warehouseMode.o
 
 .debug_frame    0x00000000      0x708
  *(.debug_frame)
@@ -667,18 +669,18 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x00000460      0x114 Master_communication.o
  .debug_frame   0x00000574      0x194 warehouseMode.o
 
-.debug_str      0x00000000      0x7df
+.debug_str      0x00000000      0x7ef
  *(.debug_str)
- .debug_str     0x00000000      0x32f Bluetooth.o
-                                0x38a (size before relaxing)
- .debug_str     0x0000032f      0x130 Communication_Module.o
-                                0x486 (size before relaxing)
- .debug_str     0x0000045f      0x1c6 LCD_new.o
+ .debug_str     0x00000000      0x33f Bluetooth.o
+                                0x39a (size before relaxing)
+ .debug_str     0x0000033f      0x130 Communication_Module.o
+                                0x496 (size before relaxing)
+ .debug_str     0x0000046f      0x1c6 LCD_new.o
                                 0x323 (size before relaxing)
- .debug_str     0x00000625       0x4a Master_communication.o
-                                0x379 (size before relaxing)
- .debug_str     0x0000066f      0x170 warehouseMode.o
-                                0x4c5 (size before relaxing)
+ .debug_str     0x00000635       0x4a Master_communication.o
+                                0x385 (size before relaxing)
+ .debug_str     0x0000067f      0x170 warehouseMode.o
+                                0x4c7 (size before relaxing)
 
 .debug_loc      0x00000000     0x1ee9
  *(.debug_loc)

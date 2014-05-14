@@ -31,9 +31,9 @@ public class Communicator2 implements SerialPortEventListener
 	//just a boolean flag that i use for enabling
 	//and disabling buttons depending on whether the program
 	//is connected to a serial port or not
-	
+
 	private int sensCounter = 0;
-	
+
 	private int component;
 	private boolean bConnected = false;
 	private boolean waitingForInstruction = true;
@@ -45,13 +45,13 @@ public class Communicator2 implements SerialPortEventListener
 	final static int SPACE_ASCII = 32;
 	final static int DASH_ASCII = 45;
 	final static int NEW_LINE_ASCII = 10;
-	
+
 	final public byte SENSINSTR = 1;
 	final public byte MODEINSTR = 2;
 	final public byte STATIONINSTR = 3;
 	final public byte HISTORYINSTR = 4;
 	final public byte CARGOINSTR = 5;
-	
+
 	final public int LEDS = 1;
 	final public int MODE = 2;
 	final public int STATION = 3;
@@ -112,7 +112,7 @@ public class Communicator2 implements SerialPortEventListener
 			logText = selectedPort + " opened successfully.";
 			window.txtLog.setForeground(Color.black);
 			window.txtLog.append(logText + "\n");
-			
+
 			serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			//CODE ON SETTING BAUD RATE ETC OMITTED
 			//XBEE PAIR ASSUMED TO HAVE SAME SETTINGS ALREADY
@@ -144,7 +144,7 @@ public class Communicator2 implements SerialPortEventListener
 		boolean successful = false;
 
 		try {
-			
+
 			input = serialPort.getInputStream();
 			output = serialPort.getOutputStream();
 
@@ -226,75 +226,57 @@ public class Communicator2 implements SerialPortEventListener
 			try
 			{
 				byte singleData = (byte)input.read();
-						
 
-//				if (singleData != NEW_LINE_ASCII)
-//				{
-				
-					if (waitingForInstruction) {
-						waitingForInstruction = false;
-						if(singleData != SENSINSTR){
+				if (waitingForInstruction) {
+					waitingForInstruction = false;
+					if(singleData != SENSINSTR){
 						System.out.println("Instr: " + singleData);	
-						}
-						if (singleData == SENSINSTR) {
-							component = LEDS;
-						}
-						else if (singleData == MODEINSTR) {
-							component = MODE;
-						}
-						else if (singleData == STATIONINSTR) {
-							component = STATION;
-						}
-						else if (singleData == HISTORYINSTR) {
-							component = HISTORY;
-						}
-						else if (singleData == CARGOINSTR) {
-							component = CARGO;
-						}
-					
-						
 					}
-					else if (!waitingForInstruction) {
-						waitingForInstruction = true;
-						
-						if(component != LEDS){
-							System.out.println("DATA: " + singleData);	
-						}
-						
-						if (component == LEDS) {
-							sensCounter++;
-							System.out.println(sensCounter);
-							window.paintLED(singleData);
-						}
-						else if (component == MODE) {
-							window.toggleMode(singleData);
-						}
-						else if (component == STATION) {
-							window.showStation(singleData);
-						}
-						else if (component == HISTORY) {
-							window.showHistory(singleData);
-						}
-						else if (component == CARGO) {
-							window.showCargo(singleData);
-						}
+					if (singleData == SENSINSTR) {
+						component = LEDS;
 					}
-					
-					//telText = new String(new byte[] {singleData});
-					
-					
-					
-					
-					 // txtLastStation = "Last station: "
-					// txtCurrCargo = "Current cargo: " 
-					// txtHistory = "History: " 
-				
-					
-			//	}
-//				else
-//				{
-//					window.txtLog.append("\n");
-//				}
+					else if (singleData == MODEINSTR) {
+						component = MODE;
+					}
+					else if (singleData == STATIONINSTR) {
+						component = STATION;
+					}
+					else if (singleData == HISTORYINSTR) {
+						component = HISTORY;
+					}
+					else if (singleData == CARGOINSTR) {
+						component = CARGO;
+					}
+
+
+				}
+				else if (!waitingForInstruction) {
+					waitingForInstruction = true;
+
+					if(component != LEDS){
+						System.out.println("DATA: " + singleData);	
+					}
+
+					if (component == LEDS) {
+						sensCounter++;
+						System.out.println(sensCounter);
+						window.paintLED(singleData);
+					}
+					else if (component == MODE) {
+						window.toggleMode(singleData);
+					}
+					else if (component == STATION) {
+						window.showStation(singleData);
+					}
+					else if (component == HISTORY) {
+						window.showHistory(singleData);
+					}
+					else if (component == CARGO) {
+						window.showCargo(singleData);
+					}
+				}
+
+
 			}
 			catch (Exception e)
 			{
@@ -317,9 +299,9 @@ public class Communicator2 implements SerialPortEventListener
 		}
 		catch (Exception e)
 		{
-			logText = "Failed to write data. (" + e.toString() + ")";
-			window.txtLog.setForeground(Color.red);
-			window.txtLog.append(logText + "\n");
+			//logText = "Failed to write data. (" + e.toString() + ")";
+			//window.txtLog.setForeground(Color.red);
+			//window.txtLog.append(logText + "\n");
 		}
 	}
 }

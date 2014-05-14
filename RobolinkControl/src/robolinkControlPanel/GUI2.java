@@ -301,7 +301,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 
 		btnJoint6R.setActionCommand("J6R");
 		btnJoint6GN.setActionCommand("J6GN");
-		btnJoint6GN.setActionCommand("J6GW");
+		btnJoint6GW.setActionCommand("J6GW");
 		
 		btnDPP.setActionCommand("DPP");
 		btnDTP.setActionCommand("DTP");

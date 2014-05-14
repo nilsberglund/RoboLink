@@ -235,6 +235,7 @@ void moveRobot()
 		} else if(steeringData == 0b00000000 || steeringData == 0b10000000)
 		{
 			
+			stop();
 			TIMSK0 |= (1<<OCIE0A);
 			
 			stationMode = 1;
@@ -246,7 +247,7 @@ void moveRobot()
 			{
 				side = 0;
 			}
-			stop();
+			
 		} else if(steeringData == 0b00000101)
 		{
 			rotateCW();

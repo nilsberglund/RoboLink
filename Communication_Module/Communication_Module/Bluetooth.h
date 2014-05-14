@@ -30,6 +30,6 @@ void TXbluetoothInstr(uint8_t,uint8_t);
 
 uint8_t btdata; //the byte received by the AVR, transmitted from computer
 volatile uint8_t waiting_for_instruction;
-volatile uint8_t component;
+volatile uint8_t btcomponent;
 
 #endif /* BLUETOOTH_H_ */
