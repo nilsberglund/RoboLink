@@ -19,6 +19,7 @@ uint8_t catalog[18][10] = {{0x30, 0x31, 0x30, 0x30, 0x45, 0x32, 0x42, 0x33, 0x37
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	
+	TXwheelData();
 	powerRFID(1);
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
@@ -40,7 +41,9 @@ void stationMode(){
 		{
 			deliveryMode();
 		}
-		TIMSK0 = 0x06;
+		
+		TIMSK0 |= (1<<OCIE0A)|(1<<OCIE0B) ;
+		
 	}
 	stationModeEnable = 0;
 	
@@ -77,6 +80,7 @@ void waitForFinishedDrop()
 void pickUpMode(){
 	if (itemInHistory() == 1) //checks if mission completed for this station
 	{
+		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
 		// Do nothing -> exit code -> leave station mode
 	}
 	else
@@ -117,9 +121,11 @@ void deliveryMode(){
 		waitForFinishedDrop();	
 		carryItem = 0;
 		TXbluetoothInstr(CARGOINSTR, 32);
+		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
 	}
 	else
 	{
+		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
 		// Do nothing -> exit code -> leave station mode
 	}
 }

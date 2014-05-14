@@ -6,6 +6,13 @@ uint16_t joint4_Pos;
 uint16_t joint5_Pos;
 uint16_t joint6_Pos;
 
+uint16_t dropJoint2Pos;
+uint16_t dropJoint3Pos;
+uint16_t dropJoint4Pos;
+uint16_t dropJoint5Pos;
+
+uint8_t side;
+
 //functions
 void armInit(void);
 void USARTTransmit( unsigned char data);
@@ -13,8 +20,9 @@ void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2);
 void defaultPosition();
 void pickupDefaultPosition();
-void dropItem(uint8_t side);
+void dropItem();
 void moveArm(uint8_t armData);
+void updateServos();
 
 #define ENABLE_BIT_DEFINITIONS
 

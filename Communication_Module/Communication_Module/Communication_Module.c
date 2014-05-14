@@ -37,16 +37,24 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 		if(stationLeftSensCounter >= 10 || stationRightSensCounter >= 10)
 		{
 			lineReadingCounter++;
-			if(lineReadingCounter == 150)
+			if(lineReadingCounter == 130)
 			{
-				TIMSK0 = 0;
-				wheelData = 0;
+				
+				TIMSK0 &= ~(1<<OCIE0A);
+				TIMSK0 &= ~(1<<OCIE0B);
+				
+				if(stationRightSide == 0)
+				{
+					wheelData = 0x80;
+				} else if(stationRightSide)
+				{
+					wheelData = 0;
+				}
 				TXwheelData();
 				stationModeEnable = 1;
 				stationRightSensCounter = 0;
 				stationLeftSensCounter = 0;
 				lineReadingCounter = 0;
-				//send info about station
 			}
 		}
 		else
@@ -56,7 +64,7 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 		}
 		
 	}
-	//slaveSelect(CONTROLSLAVE);
+	slaveSelect(CONTROLSLAVE);
 }
 
 ISR(INT2_vect)
@@ -80,7 +88,7 @@ ISR(TIMER0_COMPB_vect)
 	if(stationModeEnable == 0)
 	{
 		TXsensorData();
-		TXbluetoothInstr(SENSINSTR, sensorData);
+		//TXbluetoothInstr(SENSINSTR, sensorData);
 	}
 }
 
@@ -199,7 +207,9 @@ void toggleMode()
 	{
 		automaticModeEnabled = 1;
 		manualModeEnabled = 0;
-		TIMSK0 = 0x06;
+		
+		TIMSK0 |= (1<<OCIE0A)|(1<<OCIE0B);
+		
 		stationModeEnable = 0;
 		TXbluetoothInstr(MODEINSTR, manualModeEnabled); 	//Send info about mode to GUI
 	
@@ -208,7 +218,10 @@ void toggleMode()
 	{
 		automaticModeEnabled = 0;
 		manualModeEnabled = 1;
-		TIMSK0 = 0;
+		
+		TIMSK0 &= ~(1<<OCIE0A);
+		TIMSK0 &= ~(1<<OCIE0B);
+		
 		stationModeEnable = 0;
 		wheelData = 0;
 		TXwheelData();

@@ -10,6 +10,7 @@
 #include "Control_wheel_steering.h"
 #include <avr/interrupt.h>
 #include "Servo.h"
+#include "Control_module.h"
 
 
 ISR(SPI_STC_vect)
@@ -23,6 +24,11 @@ ISR(SPI_STC_vect)
 		{
 			component = SENSOR;
 			waitingForInstruction = 0;
+			
+			TIMSK0 &= ~(1<<OCIE0A);
+			
+			stationMode = 0;
+			
 		} else if (data == 0b10000101)
 		{
 			component = WHEEL;
@@ -68,17 +74,26 @@ ISR(SPI_STC_vect)
 			changeDerivative(data);
 		}  else if (component == DROPITEM)
 		{
-			dropItem(data);
+			dropItem();
 		}
 	}
 }
 
+ISR(TIMER0_COMPA_vect)
+{
+	if(stationMode == 1)
+	{
+		updateServos();	
+	}
+	
+}
 
 int main(void)
 {
 	SPIInitSlave();
 	drivingSetup();
 	armInit();
+	initTimer();
 	while(1)
 	{
 		
@@ -86,3 +101,14 @@ int main(void)
 }
 
 
+void initTimer()
+{
+	TCCR0A = 0;
+	TCCR0B = 0x05;
+	
+	
+	TCNT0 = 0;
+	OCR0A = 150;
+	
+	stationMode = 0;
+}

@@ -11,6 +11,9 @@
 #include "Control_wheel_steering.h"
 #include "Slave_control.h"
 #include <stdlib.h>
+#include "Servo.h"
+#include "Control_module.h"
+
 
 /*Function that calculates the line error*/
 int8_t getError()
@@ -229,8 +232,20 @@ void moveRobot()
 		} else if(steeringData == 0b00000001)
 		{
 			driveForward(SLOWSPEED);
-		} else if(steeringData == 0b00000000)
+		} else if(steeringData == 0b00000000 || steeringData == 0b10000000)
 		{
+			
+			TIMSK0 |= (1<<OCIE0A);
+			
+			stationMode = 1;
+			if(steeringData == 0)
+			{
+				side = 1;
+				
+			} else if(steeringData == 128)
+			{
+				side = 0;
+			}
 			stop();
 		} else if(steeringData == 0b00000101)
 		{

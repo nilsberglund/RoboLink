@@ -675,9 +675,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		else if ("endpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
 			communicator.writeData(EPICKUP);
-			
-			communicator.writeData(ARMINSTR);
-			communicator.writeData(DTP);
 		}
 		else if ("startpickup".equals(e.getActionCommand())) {
 			communicator.writeData(PCONINSTR);
@@ -869,8 +866,6 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 			lblLED1.setForeground(Color.WHITE);
 		}
 		
-		this.repaint();
-		
 	}
 	
 	public void toggleMode(byte singleData) {
@@ -886,8 +881,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 	}
 	
 	public void showStation(byte singleData) {
-		txtLastStation.setText("Last station: " + singleData);		
-this.repaint();
+		txtLastStation.setText("Last station: " + singleData);
 	}
 
 
@@ -899,12 +893,10 @@ this.repaint();
 		else {
 			txtCurrCargo.setText("Current cargo: " + singleData);	
 		}		
-		this.repaint();
 	}	
 
 	public void showHistory(byte singleData) {
 		txtHistory.append(" " + singleData);
-		this.repaint();
 	}
 
 
