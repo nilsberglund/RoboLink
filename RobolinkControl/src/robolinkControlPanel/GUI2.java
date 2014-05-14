@@ -390,8 +390,9 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		btnJoint5RS.addActionListener(this);
 
 		btnJoint6R.addActionListener(this);
-
 		btnJoint6GN.addActionListener(this);
+		btnJoint6GW.addActionListener(this);
+		
 		btnDPP.addActionListener(this);
 		btnDTP.addActionListener(this);
 		txtKp.addActionListener(this);
@@ -477,10 +478,11 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		armPanel.add(btnJoint2RS);
 		armPanel.add(btnJoint2RB);
 		
-		armPanel.add(btnJoint3RS);
 		armPanel.add(btnJoint3RB);
-		armPanel.add(btnJoint3LB);
+		armPanel.add(btnJoint3RS);
 		armPanel.add(btnJoint3LS);
+		armPanel.add(btnJoint3LB);
+
 
 		
 		armPanel.add(btnJoint4LB);
