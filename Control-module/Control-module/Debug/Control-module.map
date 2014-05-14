@@ -193,7 +193,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xcf8
+.text           0x00000000      0xd4e
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -356,24 +356,24 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .text.dropItem
                 0x000008fe       0xd0 Servo.o
                 0x000008fe                dropItem
- .text.moveArm  0x000009ce      0x2b6 Servo.o
+ .text.moveArm  0x000009ce      0x30c Servo.o
                 0x000009ce                moveArm
  .text.updateServos
-                0x00000c84       0x52 Servo.o
-                0x00000c84                updateServos
+                0x00000cda       0x52 Servo.o
+                0x00000cda                updateServos
  .text.SPIInitSlave
-                0x00000cd6       0x12 Slave_control.o
-                0x00000cd6                SPIInitSlave
- .text.slaveTX  0x00000ce8        0x8 Slave_control.o
-                0x00000ce8                slaveTX
+                0x00000d2c       0x12 Slave_control.o
+                0x00000d2c                SPIInitSlave
+ .text.slaveTX  0x00000d3e        0x8 Slave_control.o
+                0x00000d3e                slaveTX
  .text.TXFinishedDrop
-                0x00000cf0        0x4 Slave_control.o
-                0x00000cf0                TXFinishedDrop
-                0x00000cf4                . = ALIGN (0x2)
+                0x00000d46        0x4 Slave_control.o
+                0x00000d46                TXFinishedDrop
+                0x00000d4a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000cf4        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
-                0x00000cf4                _exit
-                0x00000cf4                exit
+ .fini9         0x00000d4a        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+                0x00000d4a                _exit
+                0x00000d4a                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -392,11 +392,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000cf4        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000d4a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000cf8                _etext = .
+                0x00000d4e                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000cf8
+.data           0x00800100        0x0 load address 0x00000d4e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr51/crtm1284p.o
@@ -448,8 +448,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
                 0x00800121                dropJoint5Pos
                 0x00800123                joint6_Pos
                 0x00800125                PROVIDE (__bss_end, .)
-                0x00000cf8                __data_load_start = LOADADDR (.data)
-                0x00000cf8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000d4e                __data_load_start = LOADADDR (.data)
+                0x00000d4e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800125        0x0
                 0x00800125                PROVIDE (__noinit_start, .)
@@ -531,12 +531,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1a4e
+.debug_info     0x00000000     0x1a78
  *(.debug_info)
  .debug_info    0x00000000      0x3de Control_module.o
  .debug_info    0x000003de      0x782 Control_wheel_steering.o
- .debug_info    0x00000b60      0xdaa Servo.o
- .debug_info    0x0000190a      0x144 Slave_control.o
+ .debug_info    0x00000b60      0xdd4 Servo.o
+ .debug_info    0x00001934      0x144 Slave_control.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x53f
@@ -546,12 +546,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_abbrev  0x000002be      0x1c2 Servo.o
  .debug_abbrev  0x00000480       0xbf Slave_control.o
 
-.debug_line     0x00000000      0xe9b
+.debug_line     0x00000000      0xec5
  *(.debug_line)
  .debug_line    0x00000000      0x28e Control_module.o
  .debug_line    0x0000028e      0x4a6 Control_wheel_steering.o
- .debug_line    0x00000734      0x62a Servo.o
- .debug_line    0x00000d5e      0x13d Slave_control.o
+ .debug_line    0x00000734      0x654 Servo.o
+ .debug_line    0x00000d88      0x13d Slave_control.o
 
 .debug_frame    0x00000000      0x378
  *(.debug_frame)
@@ -560,22 +560,22 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x00000210      0x124 Servo.o
  .debug_frame   0x00000334       0x44 Slave_control.o
 
-.debug_str      0x00000000      0x53f
+.debug_str      0x00000000      0x58d
  *(.debug_str)
  .debug_str     0x00000000      0x288 Control_module.o
                                 0x2c3 (size before relaxing)
  .debug_str     0x00000288       0xf8 Control_wheel_steering.o
                                 0x353 (size before relaxing)
- .debug_str     0x00000380      0x161 Servo.o
-                                0x321 (size before relaxing)
- .debug_str     0x000004e1       0x5e Slave_control.o
+ .debug_str     0x00000380      0x1af Servo.o
+                                0x322 (size before relaxing)
+ .debug_str     0x0000052f       0x5e Slave_control.o
                                 0x13a (size before relaxing)
 
-.debug_loc      0x00000000     0x12cf
+.debug_loc      0x00000000     0x1395
  *(.debug_loc)
  .debug_loc     0x00000000      0x196 Control_module.o
  .debug_loc     0x00000196      0x226 Control_wheel_steering.o
- .debug_loc     0x000003bc      0xf13 Servo.o
+ .debug_loc     0x000003bc      0xfd9 Servo.o
 
 .debug_macinfo
  *(.debug_macinfo)
