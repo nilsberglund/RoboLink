@@ -40,8 +40,8 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 			if(lineReadingCounter == 130)
 			{
 				
-				TIMSK0 &= ~(1<<OCIE0A);
-				TIMSK0 &= ~(1<<OCIE0B);
+				TIMSK0 = 0; //Interrupt disabled
+				TCCR0B = 0; //Counter disabled
 				
 				if(stationRightSide == 0)
 				{
@@ -208,7 +208,8 @@ void toggleMode()
 		automaticModeEnabled = 1;
 		manualModeEnabled = 0;
 		
-		TIMSK0 |= (1<<OCIE0A)|(1<<OCIE0B);
+		TIMSK0 = 6; //Enable interrupts
+		TCCR0B = 0x04; //Enable Counter
 		
 		stationModeEnable = 0;
 		TXbluetoothInstr(MODEINSTR, manualModeEnabled); 	//Send info about mode to GUI
@@ -219,8 +220,8 @@ void toggleMode()
 		automaticModeEnabled = 0;
 		manualModeEnabled = 1;
 		
-		TIMSK0 &= ~(1<<OCIE0A);
-		TIMSK0 &= ~(1<<OCIE0B);
+		TIMSK0 = 0; //Disable interrupts
+		TCCR0B = 0; // Disable counter
 		
 		stationModeEnable = 0;
 		wheelData = 0;

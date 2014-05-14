@@ -298,14 +298,22 @@ void moveArm(uint8_t armData) {
 		}
 		else if (joint == 6)
 		{
-			if (direction == 0)
+			if (direction == 0 && amp == 0)
 			{
-				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip smal, ska ha en grip bred också
+				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip smal
 				dropJoint2Pos = joint2_Pos;
 				dropJoint3Pos = joint3_Pos;
 				dropJoint4Pos = joint4_Pos;
 				dropJoint5Pos = joint5_Pos;
 				
+			}
+			else if (direction == 0 && amp == 1)
+			{
+				moveSingleServo(0x12C, 0x50, 0x00, 0x08); //Grip bred
+				dropJoint2Pos = joint2_Pos;
+				dropJoint3Pos = joint3_Pos;
+				dropJoint4Pos = joint4_Pos;
+				dropJoint5Pos = joint5_Pos;
 			}
 			else if(direction == 1)
 			{

@@ -19,7 +19,6 @@ uint8_t catalog[18][10] = {{0x30, 0x31, 0x30, 0x30, 0x45, 0x32, 0x42, 0x33, 0x37
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	
-	TXwheelData();
 	powerRFID(1);
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
@@ -42,7 +41,8 @@ void stationMode(){
 			deliveryMode();
 		}
 		
-		TIMSK0 |= (1<<OCIE0A)|(1<<OCIE0B) ;
+		TIMSK0 = 6; //Enable interrupts
+		TCCR0B = 0x04; //Start counter
 		
 	}
 	stationModeEnable = 0;
@@ -156,7 +156,7 @@ void addPairToHistory(){
 }
 
 /*Called by pickupMode(). */
-_Bool itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
+uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
 	{
@@ -170,7 +170,7 @@ _Bool itemInHistory(){ //lägg till funktion som drar båda i ett par över samma k
 	return 0; //If no
 }
 
-_Bool newStreamPairsWithCargo()
+uint8_t newStreamPairsWithCargo()
 {
 	volatile uint8_t tmpCargo;
 	volatile uint8_t tmpNewStream;
@@ -259,7 +259,7 @@ uint8_t identifyCargoCatalogNumber()
 	return cargoCatalogNumber;
 }
 
-void powerRFID(_Bool power){
+void powerRFID(uint8_t power){
 	if (power == 1)
 	{
 		PORTD &= ~(1<<PORTD5);
@@ -275,7 +275,7 @@ void powerRFID(_Bool power){
 /*
 Prints the entire RFID tag on the display.
 */
-void printOnLCD(_Bool shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
+void printOnLCD(uint8_t shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
 	hd44780_l_clear_disp(&low_conf);
 	
 	if (shipment == 1)
