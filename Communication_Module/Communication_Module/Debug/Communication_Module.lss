@@ -3,33 +3,33 @@ Communication_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         000000de  00800100  000013bc  00001450  2**0
+  0 .data         000000de  00800100  000013ce  00001462  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000013bc  00000000  00000000  00000094  2**1
+  1 .text         000013ce  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000049  008001de  008001de  0000152e  2**0
+  2 .bss          00000049  008001de  008001de  00001540  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00001530  2**2
+  3 .stab         000006cc  00000000  00000000  00001540  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00001bfc  2**0
+  4 .stabstr      00000097  00000000  00000000  00001c0c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00001c93  2**0
+  5 .comment      0000002f  00000000  00000000  00001ca3  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 00000230  00000000  00000000  00001cc2  2**0
+  6 .debug_aranges 00000230  00000000  00000000  00001cd2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000325f  00000000  00000000  00001ef2  2**0
+  7 .debug_info   0000326e  00000000  00000000  00001f02  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000084f  00000000  00000000  00005151  2**0
+  8 .debug_abbrev 0000084f  00000000  00000000  00005170  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00001720  00000000  00000000  000059a0  2**0
+  9 .debug_line   00001720  00000000  00000000  000059bf  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000718  00000000  00000000  000070c0  2**2
+ 10 .debug_frame  00000718  00000000  00000000  000070e0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000007fd  00000000  00000000  000077d8  2**0
+ 11 .debug_str    000007fd  00000000  00000000  000077f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00001f02  00000000  00000000  00007fd5  2**0
+ 12 .debug_loc    00001f02  00000000  00000000  00007ff5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000001e0  00000000  00000000  00009ed7  2**0
+ 13 .debug_ranges 000001e0  00000000  00000000  00009ef7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -118,7 +118,7 @@ Disassembly of section .text:
       98:	11 e0       	ldi	r17, 0x01	; 1
       9a:	a0 e0       	ldi	r26, 0x00	; 0
       9c:	b1 e0       	ldi	r27, 0x01	; 1
-      9e:	ec eb       	ldi	r30, 0xBC	; 188
+      9e:	ee ec       	ldi	r30, 0xCE	; 206
       a0:	f3 e1       	ldi	r31, 0x13	; 19
       a2:	00 e0       	ldi	r16, 0x00	; 0
       a4:	0b bf       	out	0x3b, r16	; 59
@@ -143,7 +143,7 @@ Disassembly of section .text:
       be:	b2 07       	cpc	r27, r18
       c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
       c2:	c2 d1       	rcall	.+900    	; 0x448 <main>
-      c4:	0c 94 dc 09 	jmp	0x13b8	; 0x13b8 <_exit>
+      c4:	0c 94 e5 09 	jmp	0x13ca	; 0x13ca <_exit>
 
 000000c8 <__bad_interrupt>:
       c8:	9b cf       	rjmp	.-202    	; 0x0 <__vectors>
@@ -676,7 +676,7 @@ ISR(USART1_RX_vect){
      3f0:	80 93 f1 01 	sts	0x01F1, r24
 		powerRFID(0);
      3f4:	80 e0       	ldi	r24, 0x00	; 0
-     3f6:	8e d6       	rcall	.+3356   	; 0x1114 <powerRFID>
+     3f6:	97 d6       	rcall	.+3374   	; 0x1126 <powerRFID>
 	}
 }
      3f8:	ff 91       	pop	r31
@@ -735,7 +735,7 @@ int main(void)
 {
 	
 	setupWarehouse();
-     448:	36 d7       	rcall	.+3692   	; 0x12b6 <setupWarehouse>
+     448:	3f d7       	rcall	.+3710   	; 0x12c8 <setupWarehouse>
 	initManualMode();
      44a:	e9 df       	rcall	.-46     	; 0x41e <initManualMode>
 	SPI_Init_Master();
@@ -743,9 +743,9 @@ int main(void)
 	setupBluetoothRXTX();
      44e:	5a de       	rcall	.-844    	; 0x104 <setupBluetoothRXTX>
 	setupRFID();
-     450:	1f d7       	rcall	.+3646   	; 0x1290 <setupRFID>
+     450:	28 d7       	rcall	.+3664   	; 0x12a2 <setupRFID>
 	setupLCD();
-     452:	44 d7       	rcall	.+3720   	; 0x12dc <setupLCD>
+     452:	4d d7       	rcall	.+3738   	; 0x12ee <setupLCD>
 	
 	while(1)
 	{
@@ -755,7 +755,7 @@ int main(void)
      45a:	e1 f7       	brne	.-8      	; 0x454 <main+0xc>
 		{
 			stationMode();
-     45c:	f7 d6       	rcall	.+3566   	; 0x124c <stationMode>
+     45c:	00 d7       	rcall	.+3584   	; 0x125e <stationMode>
      45e:	fa cf       	rjmp	.-12     	; 0x454 <main+0xc>
 
 00000460 <toggleMode>:
@@ -926,7 +926,7 @@ ISR(USART0_RX_vect)
      55a:	83 e0       	ldi	r24, 0x03	; 3
      55c:	80 93 20 02 	sts	0x0220, r24
 			TXCalibration();
-     560:	c1 d4       	rcall	.+2434   	; 0xee4 <TXCalibration>
+     560:	ca d4       	rcall	.+2452   	; 0xef6 <TXCalibration>
      562:	42 c0       	rjmp	.+132    	; 0x5e8 <__vector_20+0xe6>
 			
 		}
@@ -1015,8 +1015,8 @@ ISR(USART0_RX_vect)
      5e0:	19 f4       	brne	.+6      	; 0x5e8 <__vector_20+0xe6>
 			Kd = btdata;
      5e2:	80 93 1f 02 	sts	0x021F, r24
-			TXKpData();
-     5e6:	6c d4       	rcall	.+2264   	; 0xec0 <TXKpData>
+			TXKdData();
+     5e6:	75 d4       	rcall	.+2282   	; 0xed2 <TXKdData>
 		}
 	}
 }
@@ -2040,1276 +2040,1434 @@ ISR(USART0_RX_vect)
      d8e:	08 95       	ret
 
 00000d90 <SPI_Init_Master>:
-void TXKdData()
+/* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
+void SPI_Init_Master()
 {
-	slaveSelect(CONTROLSLAVE);
-	TXprotocol(KDSEND);
-	masterTX(Kd);
-	slaveSelect(NOSLAVE);
+
+	//Sets MOSI, SCK and SS as outputs
+	DDRB = 0xB8;
      d90:	88 eb       	ldi	r24, 0xB8	; 184
      d92:	84 b9       	out	0x04, r24	; 4
+	DDRD &= ~(1<<PORTD3);
      d94:	53 98       	cbi	0x0a, 3	; 10
+	PORTB |= (1 << PORTB3)|(1 << PORTB4);
      d96:	85 b1       	in	r24, 0x05	; 5
      d98:	88 61       	ori	r24, 0x18	; 24
      d9a:	85 b9       	out	0x05, r24	; 5
+	//Sets the SPI-control register. Master settings and interrupt enable. SPR0, SPR1 sets clock to f/128.. 
+	SPCR |= (1 << SPE)|(1 << MSTR)|(1 << SPR0)|(1 << SPR1);
      d9c:	8c b5       	in	r24, 0x2c	; 44
      d9e:	83 65       	ori	r24, 0x53	; 83
      da0:	8c bd       	out	0x2c, r24	; 44
+	//Enables interrupt 2
+	EICRA = 0b00111100;
      da2:	8c e3       	ldi	r24, 0x3C	; 60
      da4:	80 93 69 00 	sts	0x0069, r24
+	EIMSK = 0b00000110;
      da8:	86 e0       	ldi	r24, 0x06	; 6
      daa:	8d bb       	out	0x1d, r24	; 29
+	
+	sei();//Enable global interrupt
      dac:	78 94       	sei
+	
+	TCCR0A = 0; //Sets Timer register
      dae:	14 bc       	out	0x24, r1	; 36
+	TCCR0B = 0x04; //Clk prescaler set to 256 and start counting
      db0:	84 e0       	ldi	r24, 0x04	; 4
      db2:	85 bd       	out	0x25, r24	; 37
+	
+	OCR0A = 120; //Sets compare register for sensor receive interrupt to 122
      db4:	88 e7       	ldi	r24, 0x78	; 120
      db6:	87 bd       	out	0x27, r24	; 39
+	OCR0B = 130; //Sets compare register for sensor send interrupt to 125
      db8:	82 e8       	ldi	r24, 0x82	; 130
      dba:	88 bd       	out	0x28, r24	; 40
+	TCNT0 = 0;	//Initiates timer
      dbc:	16 bc       	out	0x26, r1	; 38
      dbe:	08 95       	ret
 
 00000dc0 <masterTX>:
+}
+
+//Master transmission to slave
+void masterTX(volatile uint8_t data)
+{
      dc0:	cf 93       	push	r28
      dc2:	df 93       	push	r29
      dc4:	1f 92       	push	r1
      dc6:	cd b7       	in	r28, 0x3d	; 61
      dc8:	de b7       	in	r29, 0x3e	; 62
      dca:	89 83       	std	Y+1, r24	; 0x01
+		/* Start transmission */
+		SPDR = data;
      dcc:	89 81       	ldd	r24, Y+1	; 0x01
      dce:	8e bd       	out	0x2e, r24	; 46
+		/* Wait for transmission complete */
+		while(!(SPSR & (1<<SPIF)));
      dd0:	0d b4       	in	r0, 0x2d	; 45
      dd2:	07 fe       	sbrs	r0, 7
      dd4:	fd cf       	rjmp	.-6      	; 0xdd0 <masterTX+0x10>
+}
      dd6:	0f 90       	pop	r0
      dd8:	df 91       	pop	r29
      dda:	cf 91       	pop	r28
      ddc:	08 95       	ret
 
 00000dde <masterRX>:
+
+uint8_t masterRX(volatile uint8_t data){
      dde:	cf 93       	push	r28
      de0:	df 93       	push	r29
      de2:	1f 92       	push	r1
      de4:	cd b7       	in	r28, 0x3d	; 61
      de6:	de b7       	in	r29, 0x3e	; 62
      de8:	89 83       	std	Y+1, r24	; 0x01
+
+		/* Start transmission */
+		SPDR = data;
      dea:	89 81       	ldd	r24, Y+1	; 0x01
      dec:	8e bd       	out	0x2e, r24	; 46
+		/* Wait for transmission complete */
+		while(!(SPSR & (1<<SPIF)));
      dee:	0d b4       	in	r0, 0x2d	; 45
      df0:	07 fe       	sbrs	r0, 7
      df2:	fd cf       	rjmp	.-6      	; 0xdee <masterRX+0x10>
+		
+		return SPDR;
      df4:	8e b5       	in	r24, 0x2e	; 46
+}
      df6:	0f 90       	pop	r0
      df8:	df 91       	pop	r29
      dfa:	cf 91       	pop	r28
      dfc:	08 95       	ret
 
 00000dfe <slaveSelect>:
+		
+//Selects slave. PORTB4 = CONTROLSLAVE, PORTB3 = SENSORSLAVE
+void slaveSelect(volatile uint8_t slave)
+{
      dfe:	cf 93       	push	r28
      e00:	df 93       	push	r29
      e02:	1f 92       	push	r1
      e04:	cd b7       	in	r28, 0x3d	; 61
      e06:	de b7       	in	r29, 0x3e	; 62
      e08:	89 83       	std	Y+1, r24	; 0x01
+	if(slave == CONTROLSLAVE)
      e0a:	89 81       	ldd	r24, Y+1	; 0x01
      e0c:	8a 30       	cpi	r24, 0x0A	; 10
      e0e:	19 f4       	brne	.+6      	; 0xe16 <slaveSelect+0x18>
+	{
+		PORTB |= (1 << PORTB3);
      e10:	2b 9a       	sbi	0x05, 3	; 5
+		PORTB &= ~(1 << PORTB4);
      e12:	2c 98       	cbi	0x05, 4	; 5
      e14:	08 c0       	rjmp	.+16     	; 0xe26 <slaveSelect+0x28>
+
+	}
+	else if (slave == SENSORSLAVE)
      e16:	89 81       	ldd	r24, Y+1	; 0x01
      e18:	89 30       	cpi	r24, 0x09	; 9
      e1a:	19 f4       	brne	.+6      	; 0xe22 <slaveSelect+0x24>
+	{
+		PORTB |= (1 << PORTB4);
      e1c:	2c 9a       	sbi	0x05, 4	; 5
+		PORTB &= ~(1 << PORTB3);
      e1e:	2b 98       	cbi	0x05, 3	; 5
      e20:	02 c0       	rjmp	.+4      	; 0xe26 <slaveSelect+0x28>
+		
+	}
+	else
+	{
+		PORTB |= (1 << PORTB4);
      e22:	2c 9a       	sbi	0x05, 4	; 5
+		PORTB |= (1 << PORTB3);
      e24:	2b 9a       	sbi	0x05, 3	; 5
+	}
+}
      e26:	0f 90       	pop	r0
      e28:	df 91       	pop	r29
      e2a:	cf 91       	pop	r28
      e2c:	08 95       	ret
 
 00000e2e <TXprotocol>:
+
+// a = arm, s = sensor data, w = wheel data, r = rfid data
+void TXprotocol(uint8_t component)
+{
+
+	if(component ==SENSORDATASEND)
      e2e:	81 30       	cpi	r24, 0x01	; 1
      e30:	11 f4       	brne	.+4      	; 0xe36 <TXprotocol+0x8>
+	{
+		masterTX(0b10000100);
      e32:	84 e8       	ldi	r24, 0x84	; 132
      e34:	c5 cf       	rjmp	.-118    	; 0xdc0 <masterTX>
+	}
+	else if(component == DRIVEINSTRSEND)
      e36:	83 30       	cpi	r24, 0x03	; 3
      e38:	11 f4       	brne	.+4      	; 0xe3e <TXprotocol+0x10>
+	{
+		masterTX(0b10000101);
      e3a:	85 e8       	ldi	r24, 0x85	; 133
      e3c:	c1 cf       	rjmp	.-126    	; 0xdc0 <masterTX>
+	}
+	else if(component == ARMINSTRSEND)
      e3e:	84 30       	cpi	r24, 0x04	; 4
      e40:	11 f4       	brne	.+4      	; 0xe46 <TXprotocol+0x18>
+	{
+		masterTX(0b10000110);
      e42:	86 e8       	ldi	r24, 0x86	; 134
      e44:	bd cf       	rjmp	.-134    	; 0xdc0 <masterTX>
+	}
+	else if(component == SENSORDATARECEIVE)
      e46:	82 30       	cpi	r24, 0x02	; 2
      e48:	11 f4       	brne	.+4      	; 0xe4e <TXprotocol+0x20>
+	{
+		masterTX(0b00000100);
      e4a:	84 e0       	ldi	r24, 0x04	; 4
      e4c:	b9 cf       	rjmp	.-142    	; 0xdc0 <masterTX>
+	}
+	else if(component == KPSEND)
      e4e:	85 30       	cpi	r24, 0x05	; 5
      e50:	11 f4       	brne	.+4      	; 0xe56 <TXprotocol+0x28>
+	{
+		masterTX(0b10000111);
      e52:	87 e8       	ldi	r24, 0x87	; 135
      e54:	b5 cf       	rjmp	.-150    	; 0xdc0 <masterTX>
+	}
+	else if(component == KDSEND)
      e56:	86 30       	cpi	r24, 0x06	; 6
      e58:	11 f4       	brne	.+4      	; 0xe5e <TXprotocol+0x30>
+	{
+		masterTX(0b10001011);
      e5a:	8b e8       	ldi	r24, 0x8B	; 139
      e5c:	b1 cf       	rjmp	.-158    	; 0xdc0 <masterTX>
+	}
+	else if(component == DROPITEMSEND)
      e5e:	87 30       	cpi	r24, 0x07	; 7
      e60:	11 f4       	brne	.+4      	; 0xe66 <TXprotocol+0x38>
+	{
+		masterTX(0b10001111);
      e62:	8f e8       	ldi	r24, 0x8F	; 143
      e64:	ad cf       	rjmp	.-166    	; 0xdc0 <masterTX>
+	}
+	else if(component == CALIBRATION)
      e66:	88 30       	cpi	r24, 0x08	; 8
      e68:	11 f4       	brne	.+4      	; 0xe6e <TXprotocol+0x40>
+	{
+		masterTX(0b10011111);
      e6a:	8f e9       	ldi	r24, 0x9F	; 159
      e6c:	a9 cf       	rjmp	.-174    	; 0xdc0 <masterTX>
+	}
+	else if(component == LEAVESTATIONINSTR)
      e6e:	8c 30       	cpi	r24, 0x0C	; 12
      e70:	11 f4       	brne	.+4      	; 0xe76 <TXprotocol+0x48>
+	{
+		masterTX(0b10010000);
      e72:	80 e9       	ldi	r24, 0x90	; 144
      e74:	a5 cf       	rjmp	.-182    	; 0xdc0 <masterTX>
      e76:	08 95       	ret
 
 00000e78 <TXsensorData>:
+}
+
+/* Function that transmits sensor data to the control slave. */
+void TXsensorData()
+{
+	slaveSelect(CONTROLSLAVE);
      e78:	8a e0       	ldi	r24, 0x0A	; 10
      e7a:	c1 df       	rcall	.-126    	; 0xdfe <slaveSelect>
+	TXprotocol(SENSORDATASEND); 
      e7c:	81 e0       	ldi	r24, 0x01	; 1
      e7e:	d7 df       	rcall	.-82     	; 0xe2e <TXprotocol>
+	slaveSelect(NOSLAVE);
      e80:	8b e0       	ldi	r24, 0x0B	; 11
      e82:	bd df       	rcall	.-134    	; 0xdfe <slaveSelect>
+	slaveSelect(CONTROLSLAVE);
      e84:	8a e0       	ldi	r24, 0x0A	; 10
      e86:	bb df       	rcall	.-138    	; 0xdfe <slaveSelect>
+	masterTX(sensorData);
      e88:	80 91 f6 01 	lds	r24, 0x01F6
      e8c:	99 cf       	rjmp	.-206    	; 0xdc0 <masterTX>
 
 00000e8e <RXsensorData>:
+}
+
+/* Function that tells the sensor slave to transmit sensor data. */
+void RXsensorData()
+{
+	wantedData = SENSORDATARECEIVE;
      e8e:	82 e0       	ldi	r24, 0x02	; 2
      e90:	80 93 26 02 	sts	0x0226, r24
+	slaveSelect(SENSORSLAVE);
      e94:	89 e0       	ldi	r24, 0x09	; 9
      e96:	b3 df       	rcall	.-154    	; 0xdfe <slaveSelect>
+	TXprotocol(SENSORDATARECEIVE);
      e98:	82 e0       	ldi	r24, 0x02	; 2
      e9a:	c9 df       	rcall	.-110    	; 0xe2e <TXprotocol>
+	slaveSelect(NOSLAVE);
      e9c:	8b e0       	ldi	r24, 0x0B	; 11
      e9e:	af cf       	rjmp	.-162    	; 0xdfe <slaveSelect>
 
 00000ea0 <TXwheelData>:
+}
+ 
+ void TXwheelData()
+ {
+	 slaveSelect(CONTROLSLAVE);
      ea0:	8a e0       	ldi	r24, 0x0A	; 10
      ea2:	ad df       	rcall	.-166    	; 0xdfe <slaveSelect>
+	 TXprotocol(DRIVEINSTRSEND);
      ea4:	83 e0       	ldi	r24, 0x03	; 3
      ea6:	c3 df       	rcall	.-122    	; 0xe2e <TXprotocol>
+	 masterTX(wheelData);
      ea8:	80 91 24 02 	lds	r24, 0x0224
      eac:	89 df       	rcall	.-238    	; 0xdc0 <masterTX>
+	 slaveSelect(NOSLAVE);
      eae:	8b e0       	ldi	r24, 0x0B	; 11
      eb0:	a6 cf       	rjmp	.-180    	; 0xdfe <slaveSelect>
 
 00000eb2 <TXarmData>:
+ }
+ 
+ void TXarmData()
+{
+	slaveSelect(CONTROLSLAVE);
      eb2:	8a e0       	ldi	r24, 0x0A	; 10
      eb4:	a4 df       	rcall	.-184    	; 0xdfe <slaveSelect>
+	TXprotocol(ARMINSTRSEND);
      eb6:	84 e0       	ldi	r24, 0x04	; 4
      eb8:	ba df       	rcall	.-140    	; 0xe2e <TXprotocol>
+	masterTX(armData);
      eba:	80 91 f4 01 	lds	r24, 0x01F4
      ebe:	80 cf       	rjmp	.-256    	; 0xdc0 <masterTX>
 
 00000ec0 <TXKpData>:
+}
+
+void TXKpData()
+{
+	slaveSelect(CONTROLSLAVE);
      ec0:	8a e0       	ldi	r24, 0x0A	; 10
      ec2:	9d df       	rcall	.-198    	; 0xdfe <slaveSelect>
+	TXprotocol(KPSEND);
      ec4:	85 e0       	ldi	r24, 0x05	; 5
      ec6:	b3 df       	rcall	.-154    	; 0xe2e <TXprotocol>
+	masterTX(Kp);
      ec8:	80 91 21 02 	lds	r24, 0x0221
      ecc:	79 df       	rcall	.-270    	; 0xdc0 <masterTX>
+	slaveSelect(NOSLAVE);
      ece:	8b e0       	ldi	r24, 0x0B	; 11
      ed0:	96 cf       	rjmp	.-212    	; 0xdfe <slaveSelect>
 
-00000ed2 <TXDropItem>:
+00000ed2 <TXKdData>:
 }
 
-void TXDropItem()
+void TXKdData()
 {
 	slaveSelect(CONTROLSLAVE);
      ed2:	8a e0       	ldi	r24, 0x0A	; 10
      ed4:	94 df       	rcall	.-216    	; 0xdfe <slaveSelect>
-	TXprotocol(DROPITEMSEND);
-     ed6:	87 e0       	ldi	r24, 0x07	; 7
+	TXprotocol(KDSEND);
+     ed6:	86 e0       	ldi	r24, 0x06	; 6
      ed8:	aa df       	rcall	.-172    	; 0xe2e <TXprotocol>
-	masterTX(stationRightSide);
-     eda:	80 91 f8 01 	lds	r24, 0x01F8
+	masterTX(Kd);
+     eda:	80 91 1f 02 	lds	r24, 0x021F
      ede:	70 df       	rcall	.-288    	; 0xdc0 <masterTX>
 	slaveSelect(NOSLAVE);
      ee0:	8b e0       	ldi	r24, 0x0B	; 11
      ee2:	8d cf       	rjmp	.-230    	; 0xdfe <slaveSelect>
 
-00000ee4 <TXCalibration>:
+00000ee4 <TXDropItem>:
+}
+
+void TXDropItem()
+{
+	slaveSelect(CONTROLSLAVE);
+     ee4:	8a e0       	ldi	r24, 0x0A	; 10
+     ee6:	8b df       	rcall	.-234    	; 0xdfe <slaveSelect>
+	TXprotocol(DROPITEMSEND);
+     ee8:	87 e0       	ldi	r24, 0x07	; 7
+     eea:	a1 df       	rcall	.-190    	; 0xe2e <TXprotocol>
+	masterTX(stationRightSide);
+     eec:	80 91 f8 01 	lds	r24, 0x01F8
+     ef0:	67 df       	rcall	.-306    	; 0xdc0 <masterTX>
+	slaveSelect(NOSLAVE);
+     ef2:	8b e0       	ldi	r24, 0x0B	; 11
+     ef4:	84 cf       	rjmp	.-248    	; 0xdfe <slaveSelect>
+
+00000ef6 <TXCalibration>:
 }
 
 void TXCalibration()
 {
 	slaveSelect(SENSORSLAVE);
-     ee4:	89 e0       	ldi	r24, 0x09	; 9
-     ee6:	8b df       	rcall	.-234    	; 0xdfe <slaveSelect>
+     ef6:	89 e0       	ldi	r24, 0x09	; 9
+     ef8:	82 df       	rcall	.-252    	; 0xdfe <slaveSelect>
 	TXprotocol(CALIBRATION);
-     ee8:	88 e0       	ldi	r24, 0x08	; 8
-     eea:	a1 df       	rcall	.-190    	; 0xe2e <TXprotocol>
+     efa:	88 e0       	ldi	r24, 0x08	; 8
+     efc:	98 df       	rcall	.-208    	; 0xe2e <TXprotocol>
 	slaveSelect(NOSLAVE);
-     eec:	8b e0       	ldi	r24, 0x0B	; 11
-     eee:	87 cf       	rjmp	.-242    	; 0xdfe <slaveSelect>
+     efe:	8b e0       	ldi	r24, 0x0B	; 11
+     f00:	7e cf       	rjmp	.-260    	; 0xdfe <slaveSelect>
 
-00000ef0 <TXleaveStation>:
+00000f02 <TXleaveStation>:
 }
 
 void TXleaveStation()
 {
 	slaveSelect(CONTROLSLAVE);
-     ef0:	8a e0       	ldi	r24, 0x0A	; 10
-     ef2:	85 df       	rcall	.-246    	; 0xdfe <slaveSelect>
+     f02:	8a e0       	ldi	r24, 0x0A	; 10
+     f04:	7c df       	rcall	.-264    	; 0xdfe <slaveSelect>
 	TXprotocol(LEAVESTATIONINSTR);
-     ef4:	8c e0       	ldi	r24, 0x0C	; 12
-     ef6:	9b df       	rcall	.-202    	; 0xe2e <TXprotocol>
+     f06:	8c e0       	ldi	r24, 0x0C	; 12
+     f08:	92 df       	rcall	.-220    	; 0xe2e <TXprotocol>
 	slaveSelect(NOSLAVE);
-     ef8:	8b e0       	ldi	r24, 0x0B	; 11
-     efa:	81 cf       	rjmp	.-254    	; 0xdfe <slaveSelect>
+     f0a:	8b e0       	ldi	r24, 0x0B	; 11
+     f0c:	78 cf       	rjmp	.-272    	; 0xdfe <slaveSelect>
 
-00000efc <waitForUserInputStartAbort>:
+00000f0e <waitForUserInputStartAbort>:
 }
 
 /*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
 void waitForUserInputStartAbort()
 {
 	while (waitingForStartAbort == 0) {
-     efc:	80 91 f9 01 	lds	r24, 0x01F9
-     f00:	88 23       	and	r24, r24
-     f02:	e1 f3       	breq	.-8      	; 0xefc <waitForUserInputStartAbort>
+     f0e:	80 91 f9 01 	lds	r24, 0x01F9
+     f12:	88 23       	and	r24, r24
+     f14:	e1 f3       	breq	.-8      	; 0xf0e <waitForUserInputStartAbort>
 		
 	}
 	waitingForStartAbort = 0;
-     f04:	10 92 f9 01 	sts	0x01F9, r1
-     f08:	08 95       	ret
+     f16:	10 92 f9 01 	sts	0x01F9, r1
+     f1a:	08 95       	ret
 
-00000f0a <waitForUserInputEndPickup>:
+00000f1c <waitForUserInputEndPickup>:
 
 
 /*Called by pickupMode(). Waiting for the user to finish pick up and press END PICKUP */
 void waitForUserInputEndPickup()
 {
 	while (waitingForEndPickup == 0) {
-     f0a:	80 91 22 02 	lds	r24, 0x0222
-     f0e:	88 23       	and	r24, r24
-     f10:	e1 f3       	breq	.-8      	; 0xf0a <waitForUserInputEndPickup>
+     f1c:	80 91 22 02 	lds	r24, 0x0222
+     f20:	88 23       	and	r24, r24
+     f22:	e1 f3       	breq	.-8      	; 0xf1c <waitForUserInputEndPickup>
 		
 	}
 	waitingForEndPickup = 0;
-     f12:	10 92 22 02 	sts	0x0222, r1
-     f16:	08 95       	ret
+     f24:	10 92 22 02 	sts	0x0222, r1
+     f28:	08 95       	ret
 
-00000f18 <waitForFinishedDrop>:
+00000f2a <waitForFinishedDrop>:
 }
 
 void waitForFinishedDrop()
 {
 	while (finishedDrop == 0) {
-     f18:	80 91 ee 01 	lds	r24, 0x01EE
-     f1c:	88 23       	and	r24, r24
-     f1e:	e1 f3       	breq	.-8      	; 0xf18 <waitForFinishedDrop>
+     f2a:	80 91 ee 01 	lds	r24, 0x01EE
+     f2e:	88 23       	and	r24, r24
+     f30:	e1 f3       	breq	.-8      	; 0xf2a <waitForFinishedDrop>
 		
 	}
 	finishedDrop = 0;
-     f20:	10 92 ee 01 	sts	0x01EE, r1
-     f24:	08 95       	ret
+     f32:	10 92 ee 01 	sts	0x01EE, r1
+     f36:	08 95       	ret
 
-00000f26 <identifyNewStreamCatalogNumber>:
+00000f38 <identifyNewStreamCatalogNumber>:
 	return 0;
 }
 
 
 uint8_t identifyNewStreamCatalogNumber()
 {
-     f26:	1f 93       	push	r17
-     f28:	cf 93       	push	r28
-     f2a:	df 93       	push	r29
-     f2c:	00 d0       	rcall	.+0      	; 0xf2e <identifyNewStreamCatalogNumber+0x8>
-     f2e:	cd b7       	in	r28, 0x3d	; 61
-     f30:	de b7       	in	r29, 0x3e	; 62
+     f38:	1f 93       	push	r17
+     f3a:	cf 93       	push	r28
+     f3c:	df 93       	push	r29
+     f3e:	00 d0       	rcall	.+0      	; 0xf40 <identifyNewStreamCatalogNumber+0x8>
+     f40:	cd b7       	in	r28, 0x3d	; 61
+     f42:	de b7       	in	r29, 0x3e	; 62
 	volatile uint8_t newStreamCatalogNumber = 0;
-     f32:	19 82       	std	Y+1, r1	; 0x01
+     f44:	19 82       	std	Y+1, r1	; 0x01
 	volatile uint8_t cntMatch = 0;
-     f34:	1a 82       	std	Y+2, r1	; 0x02
-     f36:	20 e0       	ldi	r18, 0x00	; 0
-     f38:	30 e0       	ldi	r19, 0x00	; 0
-     f3a:	63 ed       	ldi	r22, 0xD3	; 211
-     f3c:	71 e0       	ldi	r23, 0x01	; 1
+     f46:	1a 82       	std	Y+2, r1	; 0x02
+     f48:	20 e0       	ldi	r18, 0x00	; 0
+     f4a:	30 e0       	ldi	r19, 0x00	; 0
+     f4c:	63 ed       	ldi	r22, 0xD3	; 211
+     f4e:	71 e0       	ldi	r23, 0x01	; 1
 	}
 	return 0;
 }
 
 
 uint8_t identifyNewStreamCatalogNumber()
-     f3e:	8d ed       	ldi	r24, 0xDD	; 221
-     f40:	91 e0       	ldi	r25, 0x01	; 1
-     f42:	16 c0       	rjmp	.+44     	; 0xf70 <identifyNewStreamCatalogNumber+0x4a>
+     f50:	8d ed       	ldi	r24, 0xDD	; 221
+     f52:	91 e0       	ldi	r25, 0x01	; 1
+     f54:	16 c0       	rjmp	.+44     	; 0xf82 <identifyNewStreamCatalogNumber+0x4a>
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
 	{
 		for (uint8_t cntDigit = 1; cntDigit<11; cntDigit++)
 		{
 			if (catalog[cntCatalog][cntDigit-1] == newStream[cntDigit])
-     f44:	5d 91       	ld	r21, X+
-     f46:	41 91       	ld	r20, Z+
-     f48:	54 13       	cpse	r21, r20
-     f4a:	09 c0       	rjmp	.+18     	; 0xf5e <identifyNewStreamCatalogNumber+0x38>
+     f56:	5d 91       	ld	r21, X+
+     f58:	41 91       	ld	r20, Z+
+     f5a:	54 13       	cpse	r21, r20
+     f5c:	09 c0       	rjmp	.+18     	; 0xf70 <identifyNewStreamCatalogNumber+0x38>
 			{
 				cntMatch++;
-     f4c:	4a 81       	ldd	r20, Y+2	; 0x02
-     f4e:	4f 5f       	subi	r20, 0xFF	; 255
-     f50:	4a 83       	std	Y+2, r20	; 0x02
+     f5e:	4a 81       	ldd	r20, Y+2	; 0x02
+     f60:	4f 5f       	subi	r20, 0xFF	; 255
+     f62:	4a 83       	std	Y+2, r20	; 0x02
 				
 				if (cntMatch == 10){
-     f52:	4a 81       	ldd	r20, Y+2	; 0x02
-     f54:	4a 30       	cpi	r20, 0x0A	; 10
-     f56:	21 f4       	brne	.+8      	; 0xf60 <identifyNewStreamCatalogNumber+0x3a>
+     f64:	4a 81       	ldd	r20, Y+2	; 0x02
+     f66:	4a 30       	cpi	r20, 0x0A	; 10
+     f68:	21 f4       	brne	.+8      	; 0xf72 <identifyNewStreamCatalogNumber+0x3a>
 					newStreamCatalogNumber = cntCatalog;
-     f58:	19 83       	std	Y+1, r17	; 0x01
+     f6a:	19 83       	std	Y+1, r17	; 0x01
 					cntMatch = 0;
-     f5a:	1a 82       	std	Y+2, r1	; 0x02
-     f5c:	01 c0       	rjmp	.+2      	; 0xf60 <identifyNewStreamCatalogNumber+0x3a>
+     f6c:	1a 82       	std	Y+2, r1	; 0x02
+     f6e:	01 c0       	rjmp	.+2      	; 0xf72 <identifyNewStreamCatalogNumber+0x3a>
 				}
 			}
 			else
 			{
 				cntMatch = 0;
-     f5e:	1a 82       	std	Y+2, r1	; 0x02
+     f70:	1a 82       	std	Y+2, r1	; 0x02
 	volatile uint8_t newStreamCatalogNumber = 0;
 	volatile uint8_t cntMatch = 0;
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
 	{
 		for (uint8_t cntDigit = 1; cntDigit<11; cntDigit++)
-     f60:	e8 17       	cp	r30, r24
-     f62:	f9 07       	cpc	r31, r25
-     f64:	79 f7       	brne	.-34     	; 0xf44 <identifyNewStreamCatalogNumber+0x1e>
-     f66:	2f 5f       	subi	r18, 0xFF	; 255
-     f68:	3f 4f       	sbci	r19, 0xFF	; 255
+     f72:	e8 17       	cp	r30, r24
+     f74:	f9 07       	cpc	r31, r25
+     f76:	79 f7       	brne	.-34     	; 0xf56 <identifyNewStreamCatalogNumber+0x1e>
+     f78:	2f 5f       	subi	r18, 0xFF	; 255
+     f7a:	3f 4f       	sbci	r19, 0xFF	; 255
 uint8_t identifyNewStreamCatalogNumber()
 {
 	volatile uint8_t newStreamCatalogNumber = 0;
 	volatile uint8_t cntMatch = 0;
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
-     f6a:	22 31       	cpi	r18, 0x12	; 18
-     f6c:	31 05       	cpc	r19, r1
-     f6e:	89 f0       	breq	.+34     	; 0xf92 <identifyNewStreamCatalogNumber+0x6c>
-     f70:	12 2f       	mov	r17, r18
+     f7c:	22 31       	cpi	r18, 0x12	; 18
+     f7e:	31 05       	cpc	r19, r1
+     f80:	89 f0       	breq	.+34     	; 0xfa4 <identifyNewStreamCatalogNumber+0x6c>
+     f82:	12 2f       	mov	r17, r18
 	}
 	return 0;
 }
 
 
 uint8_t identifyNewStreamCatalogNumber()
-     f72:	d9 01       	movw	r26, r18
-     f74:	aa 0f       	add	r26, r26
-     f76:	bb 1f       	adc	r27, r27
-     f78:	a9 01       	movw	r20, r18
-     f7a:	44 0f       	add	r20, r20
-     f7c:	55 1f       	adc	r21, r21
-     f7e:	44 0f       	add	r20, r20
-     f80:	55 1f       	adc	r21, r21
-     f82:	44 0f       	add	r20, r20
-     f84:	55 1f       	adc	r21, r21
-     f86:	a4 0f       	add	r26, r20
-     f88:	b5 1f       	adc	r27, r21
-     f8a:	a0 50       	subi	r26, 0x00	; 0
-     f8c:	bf 4f       	sbci	r27, 0xFF	; 255
-     f8e:	fb 01       	movw	r30, r22
-     f90:	d9 cf       	rjmp	.-78     	; 0xf44 <identifyNewStreamCatalogNumber+0x1e>
+     f84:	d9 01       	movw	r26, r18
+     f86:	aa 0f       	add	r26, r26
+     f88:	bb 1f       	adc	r27, r27
+     f8a:	a9 01       	movw	r20, r18
+     f8c:	44 0f       	add	r20, r20
+     f8e:	55 1f       	adc	r21, r21
+     f90:	44 0f       	add	r20, r20
+     f92:	55 1f       	adc	r21, r21
+     f94:	44 0f       	add	r20, r20
+     f96:	55 1f       	adc	r21, r21
+     f98:	a4 0f       	add	r26, r20
+     f9a:	b5 1f       	adc	r27, r21
+     f9c:	a0 50       	subi	r26, 0x00	; 0
+     f9e:	bf 4f       	sbci	r27, 0xFF	; 255
+     fa0:	fb 01       	movw	r30, r22
+     fa2:	d9 cf       	rjmp	.-78     	; 0xf56 <identifyNewStreamCatalogNumber+0x1e>
 			{
 				cntMatch = 0;
 			}
 		}
 	}
 	return newStreamCatalogNumber;
-     f92:	89 81       	ldd	r24, Y+1	; 0x01
+     fa4:	89 81       	ldd	r24, Y+1	; 0x01
 }
-     f94:	0f 90       	pop	r0
-     f96:	0f 90       	pop	r0
-     f98:	df 91       	pop	r29
-     f9a:	cf 91       	pop	r28
-     f9c:	1f 91       	pop	r17
-     f9e:	08 95       	ret
+     fa6:	0f 90       	pop	r0
+     fa8:	0f 90       	pop	r0
+     faa:	df 91       	pop	r29
+     fac:	cf 91       	pop	r28
+     fae:	1f 91       	pop	r17
+     fb0:	08 95       	ret
 
-00000fa0 <itemInHistory>:
+00000fb2 <itemInHistory>:
 	}
 	
 }
 
 /*Called by pickupMode(). */
 uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
-     fa0:	ff 92       	push	r15
-     fa2:	0f 93       	push	r16
-     fa4:	1f 93       	push	r17
-     fa6:	cf 93       	push	r28
-     fa8:	df 93       	push	r29
-     faa:	c4 eb       	ldi	r28, 0xB4	; 180
-     fac:	d1 e0       	ldi	r29, 0x01	; 1
-     fae:	06 ec       	ldi	r16, 0xC6	; 198
-     fb0:	11 e0       	ldi	r17, 0x01	; 1
+     fb2:	ff 92       	push	r15
+     fb4:	0f 93       	push	r16
+     fb6:	1f 93       	push	r17
+     fb8:	cf 93       	push	r28
+     fba:	df 93       	push	r29
+     fbc:	c4 eb       	ldi	r28, 0xB4	; 180
+     fbe:	d1 e0       	ldi	r29, 0x01	; 1
+     fc0:	06 ec       	ldi	r16, 0xC6	; 198
+     fc2:	11 e0       	ldi	r17, 0x01	; 1
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
 	{
 		if (history[cntCatalog] == identifyNewStreamCatalogNumber())
-     fb2:	f9 90       	ld	r15, Y+
-     fb4:	b8 df       	rcall	.-144    	; 0xf26 <identifyNewStreamCatalogNumber>
-     fb6:	f8 16       	cp	r15, r24
-     fb8:	29 f0       	breq	.+10     	; 0xfc4 <itemInHistory+0x24>
+     fc4:	f9 90       	ld	r15, Y+
+     fc6:	b8 df       	rcall	.-144    	; 0xf38 <identifyNewStreamCatalogNumber>
+     fc8:	f8 16       	cp	r15, r24
+     fca:	29 f0       	breq	.+10     	; 0xfd6 <itemInHistory+0x24>
 }
 
 /*Called by pickupMode(). */
 uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
-     fba:	c0 17       	cp	r28, r16
-     fbc:	d1 07       	cpc	r29, r17
-     fbe:	c9 f7       	brne	.-14     	; 0xfb2 <itemInHistory+0x12>
+     fcc:	c0 17       	cp	r28, r16
+     fce:	d1 07       	cpc	r29, r17
+     fd0:	c9 f7       	brne	.-14     	; 0xfc4 <itemInHistory+0x12>
 			return 1;
 		}
 		
 	}
 	
 	return 0; //If no
-     fc0:	80 e0       	ldi	r24, 0x00	; 0
-     fc2:	01 c0       	rjmp	.+2      	; 0xfc6 <itemInHistory+0x26>
+     fd2:	80 e0       	ldi	r24, 0x00	; 0
+     fd4:	01 c0       	rjmp	.+2      	; 0xfd8 <itemInHistory+0x26>
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
 	{
 		if (history[cntCatalog] == identifyNewStreamCatalogNumber())
 		{
 			return 1;
-     fc4:	81 e0       	ldi	r24, 0x01	; 1
+     fd6:	81 e0       	ldi	r24, 0x01	; 1
 		}
 		
 	}
 	
 	return 0; //If no
 }
-     fc6:	df 91       	pop	r29
-     fc8:	cf 91       	pop	r28
-     fca:	1f 91       	pop	r17
-     fcc:	0f 91       	pop	r16
-     fce:	ff 90       	pop	r15
-     fd0:	08 95       	ret
+     fd8:	df 91       	pop	r29
+     fda:	cf 91       	pop	r28
+     fdc:	1f 91       	pop	r17
+     fde:	0f 91       	pop	r16
+     fe0:	ff 90       	pop	r15
+     fe2:	08 95       	ret
 
-00000fd2 <identifyCargoCatalogNumber>:
+00000fe4 <identifyCargoCatalogNumber>:
 	}
 	return newStreamCatalogNumber;
 }
 
 uint8_t identifyCargoCatalogNumber()
 {
-     fd2:	1f 93       	push	r17
-     fd4:	cf 93       	push	r28
-     fd6:	df 93       	push	r29
-     fd8:	00 d0       	rcall	.+0      	; 0xfda <identifyCargoCatalogNumber+0x8>
-     fda:	cd b7       	in	r28, 0x3d	; 61
-     fdc:	de b7       	in	r29, 0x3e	; 62
+     fe4:	1f 93       	push	r17
+     fe6:	cf 93       	push	r28
+     fe8:	df 93       	push	r29
+     fea:	00 d0       	rcall	.+0      	; 0xfec <identifyCargoCatalogNumber+0x8>
+     fec:	cd b7       	in	r28, 0x3d	; 61
+     fee:	de b7       	in	r29, 0x3e	; 62
 	volatile uint8_t cargoCatalogNumber = 0;
-     fde:	19 82       	std	Y+1, r1	; 0x01
+     ff0:	19 82       	std	Y+1, r1	; 0x01
 	volatile uint8_t cntMatch = 0;
-     fe0:	1a 82       	std	Y+2, r1	; 0x02
-     fe2:	20 e0       	ldi	r18, 0x00	; 0
-     fe4:	30 e0       	ldi	r19, 0x00	; 0
-     fe6:	67 ec       	ldi	r22, 0xC7	; 199
-     fe8:	71 e0       	ldi	r23, 0x01	; 1
+     ff2:	1a 82       	std	Y+2, r1	; 0x02
+     ff4:	20 e0       	ldi	r18, 0x00	; 0
+     ff6:	30 e0       	ldi	r19, 0x00	; 0
+     ff8:	67 ec       	ldi	r22, 0xC7	; 199
+     ffa:	71 e0       	ldi	r23, 0x01	; 1
 		}
 	}
 	return newStreamCatalogNumber;
 }
 
 uint8_t identifyCargoCatalogNumber()
-     fea:	81 ed       	ldi	r24, 0xD1	; 209
-     fec:	91 e0       	ldi	r25, 0x01	; 1
-     fee:	16 c0       	rjmp	.+44     	; 0x101c <identifyCargoCatalogNumber+0x4a>
+     ffc:	81 ed       	ldi	r24, 0xD1	; 209
+     ffe:	91 e0       	ldi	r25, 0x01	; 1
+    1000:	16 c0       	rjmp	.+44     	; 0x102e <identifyCargoCatalogNumber+0x4a>
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
 	{
 		for (uint8_t cntDigit = 1; cntDigit < 11; cntDigit++)
 		{
 			if (catalog[cntCatalog][cntDigit-1] == cargo[cntDigit])
-     ff0:	5d 91       	ld	r21, X+
-     ff2:	41 91       	ld	r20, Z+
-     ff4:	54 13       	cpse	r21, r20
-     ff6:	09 c0       	rjmp	.+18     	; 0x100a <identifyCargoCatalogNumber+0x38>
+    1002:	5d 91       	ld	r21, X+
+    1004:	41 91       	ld	r20, Z+
+    1006:	54 13       	cpse	r21, r20
+    1008:	09 c0       	rjmp	.+18     	; 0x101c <identifyCargoCatalogNumber+0x38>
 			{
 				cntMatch++;
-     ff8:	4a 81       	ldd	r20, Y+2	; 0x02
-     ffa:	4f 5f       	subi	r20, 0xFF	; 255
-     ffc:	4a 83       	std	Y+2, r20	; 0x02
+    100a:	4a 81       	ldd	r20, Y+2	; 0x02
+    100c:	4f 5f       	subi	r20, 0xFF	; 255
+    100e:	4a 83       	std	Y+2, r20	; 0x02
 				
 				if (cntMatch == 10){ 
-     ffe:	4a 81       	ldd	r20, Y+2	; 0x02
-    1000:	4a 30       	cpi	r20, 0x0A	; 10
-    1002:	21 f4       	brne	.+8      	; 0x100c <identifyCargoCatalogNumber+0x3a>
+    1010:	4a 81       	ldd	r20, Y+2	; 0x02
+    1012:	4a 30       	cpi	r20, 0x0A	; 10
+    1014:	21 f4       	brne	.+8      	; 0x101e <identifyCargoCatalogNumber+0x3a>
 					cargoCatalogNumber = cntCatalog;
-    1004:	19 83       	std	Y+1, r17	; 0x01
+    1016:	19 83       	std	Y+1, r17	; 0x01
 					cntMatch = 0;
-    1006:	1a 82       	std	Y+2, r1	; 0x02
-    1008:	01 c0       	rjmp	.+2      	; 0x100c <identifyCargoCatalogNumber+0x3a>
+    1018:	1a 82       	std	Y+2, r1	; 0x02
+    101a:	01 c0       	rjmp	.+2      	; 0x101e <identifyCargoCatalogNumber+0x3a>
 				}	
 			}
 			else
 			{
 				cntMatch = 0;
-    100a:	1a 82       	std	Y+2, r1	; 0x02
+    101c:	1a 82       	std	Y+2, r1	; 0x02
 	volatile uint8_t cargoCatalogNumber = 0;
 	volatile uint8_t cntMatch = 0;
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
 	{
 		for (uint8_t cntDigit = 1; cntDigit < 11; cntDigit++)
-    100c:	e8 17       	cp	r30, r24
-    100e:	f9 07       	cpc	r31, r25
-    1010:	79 f7       	brne	.-34     	; 0xff0 <identifyCargoCatalogNumber+0x1e>
-    1012:	2f 5f       	subi	r18, 0xFF	; 255
-    1014:	3f 4f       	sbci	r19, 0xFF	; 255
+    101e:	e8 17       	cp	r30, r24
+    1020:	f9 07       	cpc	r31, r25
+    1022:	79 f7       	brne	.-34     	; 0x1002 <identifyCargoCatalogNumber+0x1e>
+    1024:	2f 5f       	subi	r18, 0xFF	; 255
+    1026:	3f 4f       	sbci	r19, 0xFF	; 255
 uint8_t identifyCargoCatalogNumber()
 {
 	volatile uint8_t cargoCatalogNumber = 0;
 	volatile uint8_t cntMatch = 0;
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog++)
-    1016:	22 31       	cpi	r18, 0x12	; 18
-    1018:	31 05       	cpc	r19, r1
-    101a:	89 f0       	breq	.+34     	; 0x103e <identifyCargoCatalogNumber+0x6c>
-    101c:	12 2f       	mov	r17, r18
+    1028:	22 31       	cpi	r18, 0x12	; 18
+    102a:	31 05       	cpc	r19, r1
+    102c:	89 f0       	breq	.+34     	; 0x1050 <identifyCargoCatalogNumber+0x6c>
+    102e:	12 2f       	mov	r17, r18
 		}
 	}
 	return newStreamCatalogNumber;
 }
 
 uint8_t identifyCargoCatalogNumber()
-    101e:	d9 01       	movw	r26, r18
-    1020:	aa 0f       	add	r26, r26
-    1022:	bb 1f       	adc	r27, r27
-    1024:	a9 01       	movw	r20, r18
-    1026:	44 0f       	add	r20, r20
-    1028:	55 1f       	adc	r21, r21
-    102a:	44 0f       	add	r20, r20
-    102c:	55 1f       	adc	r21, r21
-    102e:	44 0f       	add	r20, r20
-    1030:	55 1f       	adc	r21, r21
-    1032:	a4 0f       	add	r26, r20
-    1034:	b5 1f       	adc	r27, r21
-    1036:	a0 50       	subi	r26, 0x00	; 0
-    1038:	bf 4f       	sbci	r27, 0xFF	; 255
-    103a:	fb 01       	movw	r30, r22
-    103c:	d9 cf       	rjmp	.-78     	; 0xff0 <identifyCargoCatalogNumber+0x1e>
+    1030:	d9 01       	movw	r26, r18
+    1032:	aa 0f       	add	r26, r26
+    1034:	bb 1f       	adc	r27, r27
+    1036:	a9 01       	movw	r20, r18
+    1038:	44 0f       	add	r20, r20
+    103a:	55 1f       	adc	r21, r21
+    103c:	44 0f       	add	r20, r20
+    103e:	55 1f       	adc	r21, r21
+    1040:	44 0f       	add	r20, r20
+    1042:	55 1f       	adc	r21, r21
+    1044:	a4 0f       	add	r26, r20
+    1046:	b5 1f       	adc	r27, r21
+    1048:	a0 50       	subi	r26, 0x00	; 0
+    104a:	bf 4f       	sbci	r27, 0xFF	; 255
+    104c:	fb 01       	movw	r30, r22
+    104e:	d9 cf       	rjmp	.-78     	; 0x1002 <identifyCargoCatalogNumber+0x1e>
 			{
 				cntMatch = 0;
 			}
 		}	
 	}
 	return cargoCatalogNumber;
-    103e:	89 81       	ldd	r24, Y+1	; 0x01
+    1050:	89 81       	ldd	r24, Y+1	; 0x01
 }
-    1040:	0f 90       	pop	r0
-    1042:	0f 90       	pop	r0
-    1044:	df 91       	pop	r29
-    1046:	cf 91       	pop	r28
-    1048:	1f 91       	pop	r17
-    104a:	08 95       	ret
+    1052:	0f 90       	pop	r0
+    1054:	0f 90       	pop	r0
+    1056:	df 91       	pop	r29
+    1058:	cf 91       	pop	r28
+    105a:	1f 91       	pop	r17
+    105c:	08 95       	ret
 
-0000104c <newStreamPairsWithCargo>:
+0000105e <newStreamPairsWithCargo>:
 	
 	return 0; //If no
 }
 
 uint8_t newStreamPairsWithCargo()
 {
-    104c:	cf 93       	push	r28
-    104e:	df 93       	push	r29
-    1050:	00 d0       	rcall	.+0      	; 0x1052 <newStreamPairsWithCargo+0x6>
-    1052:	cd b7       	in	r28, 0x3d	; 61
-    1054:	de b7       	in	r29, 0x3e	; 62
+    105e:	cf 93       	push	r28
+    1060:	df 93       	push	r29
+    1062:	00 d0       	rcall	.+0      	; 0x1064 <newStreamPairsWithCargo+0x6>
+    1064:	cd b7       	in	r28, 0x3d	; 61
+    1066:	de b7       	in	r29, 0x3e	; 62
 	volatile uint8_t tmpCargo;
 	volatile uint8_t tmpNewStream;
 	
 	 tmpCargo = identifyCargoCatalogNumber();
-    1056:	bd df       	rcall	.-134    	; 0xfd2 <identifyCargoCatalogNumber>
-    1058:	89 83       	std	Y+1, r24	; 0x01
+    1068:	bd df       	rcall	.-134    	; 0xfe4 <identifyCargoCatalogNumber>
+    106a:	89 83       	std	Y+1, r24	; 0x01
 	 tmpNewStream = identifyNewStreamCatalogNumber();
-    105a:	65 df       	rcall	.-310    	; 0xf26 <identifyNewStreamCatalogNumber>
-    105c:	8a 83       	std	Y+2, r24	; 0x02
+    106c:	65 df       	rcall	.-310    	; 0xf38 <identifyNewStreamCatalogNumber>
+    106e:	8a 83       	std	Y+2, r24	; 0x02
 	 
 	if ((tmpCargo % 2) == 0) // cargo catalog index is even (even catalog number implies start of new pair)
-    105e:	89 81       	ldd	r24, Y+1	; 0x01
-    1060:	80 fd       	sbrc	r24, 0
-    1062:	0c c0       	rjmp	.+24     	; 0x107c <newStreamPairsWithCargo+0x30>
+    1070:	89 81       	ldd	r24, Y+1	; 0x01
+    1072:	80 fd       	sbrc	r24, 0
+    1074:	0c c0       	rjmp	.+24     	; 0x108e <newStreamPairsWithCargo+0x30>
 	{
 		if (tmpNewStream == tmpCargo + 1)
-    1064:	4a 81       	ldd	r20, Y+2	; 0x02
-    1066:	29 81       	ldd	r18, Y+1	; 0x01
-    1068:	50 e0       	ldi	r21, 0x00	; 0
-    106a:	30 e0       	ldi	r19, 0x00	; 0
-    106c:	2f 5f       	subi	r18, 0xFF	; 255
-    106e:	3f 4f       	sbci	r19, 0xFF	; 255
-    1070:	81 e0       	ldi	r24, 0x01	; 1
-    1072:	42 17       	cp	r20, r18
-    1074:	53 07       	cpc	r21, r19
-    1076:	91 f0       	breq	.+36     	; 0x109c <newStreamPairsWithCargo+0x50>
-    1078:	80 e0       	ldi	r24, 0x00	; 0
-    107a:	10 c0       	rjmp	.+32     	; 0x109c <newStreamPairsWithCargo+0x50>
+    1076:	4a 81       	ldd	r20, Y+2	; 0x02
+    1078:	29 81       	ldd	r18, Y+1	; 0x01
+    107a:	50 e0       	ldi	r21, 0x00	; 0
+    107c:	30 e0       	ldi	r19, 0x00	; 0
+    107e:	2f 5f       	subi	r18, 0xFF	; 255
+    1080:	3f 4f       	sbci	r19, 0xFF	; 255
+    1082:	81 e0       	ldi	r24, 0x01	; 1
+    1084:	42 17       	cp	r20, r18
+    1086:	53 07       	cpc	r21, r19
+    1088:	91 f0       	breq	.+36     	; 0x10ae <newStreamPairsWithCargo+0x50>
+    108a:	80 e0       	ldi	r24, 0x00	; 0
+    108c:	10 c0       	rjmp	.+32     	; 0x10ae <newStreamPairsWithCargo+0x50>
 		{
 			return 0;
 		}
 	}
 	
 	else if((tmpCargo % 2) == 1) //cargo catalog index is odd (odd catalog number implies end of new pair)
-    107c:	89 81       	ldd	r24, Y+1	; 0x01
-    107e:	80 ff       	sbrs	r24, 0
-    1080:	0c c0       	rjmp	.+24     	; 0x109a <newStreamPairsWithCargo+0x4e>
+    108e:	89 81       	ldd	r24, Y+1	; 0x01
+    1090:	80 ff       	sbrs	r24, 0
+    1092:	0c c0       	rjmp	.+24     	; 0x10ac <newStreamPairsWithCargo+0x4e>
 	{
 		if (tmpNewStream == tmpCargo - 1)
-    1082:	4a 81       	ldd	r20, Y+2	; 0x02
-    1084:	29 81       	ldd	r18, Y+1	; 0x01
-    1086:	50 e0       	ldi	r21, 0x00	; 0
-    1088:	30 e0       	ldi	r19, 0x00	; 0
-    108a:	21 50       	subi	r18, 0x01	; 1
-    108c:	31 09       	sbc	r19, r1
-    108e:	81 e0       	ldi	r24, 0x01	; 1
-    1090:	42 17       	cp	r20, r18
-    1092:	53 07       	cpc	r21, r19
-    1094:	19 f0       	breq	.+6      	; 0x109c <newStreamPairsWithCargo+0x50>
-    1096:	80 e0       	ldi	r24, 0x00	; 0
-    1098:	01 c0       	rjmp	.+2      	; 0x109c <newStreamPairsWithCargo+0x50>
+    1094:	4a 81       	ldd	r20, Y+2	; 0x02
+    1096:	29 81       	ldd	r18, Y+1	; 0x01
+    1098:	50 e0       	ldi	r21, 0x00	; 0
+    109a:	30 e0       	ldi	r19, 0x00	; 0
+    109c:	21 50       	subi	r18, 0x01	; 1
+    109e:	31 09       	sbc	r19, r1
+    10a0:	81 e0       	ldi	r24, 0x01	; 1
+    10a2:	42 17       	cp	r20, r18
+    10a4:	53 07       	cpc	r21, r19
+    10a6:	19 f0       	breq	.+6      	; 0x10ae <newStreamPairsWithCargo+0x50>
+    10a8:	80 e0       	ldi	r24, 0x00	; 0
+    10aa:	01 c0       	rjmp	.+2      	; 0x10ae <newStreamPairsWithCargo+0x50>
 		else
 		{
 			return 0;
 		}
 	}
 	return 0;
-    109a:	80 e0       	ldi	r24, 0x00	; 0
+    10ac:	80 e0       	ldi	r24, 0x00	; 0
 }
-    109c:	0f 90       	pop	r0
-    109e:	0f 90       	pop	r0
-    10a0:	df 91       	pop	r29
-    10a2:	cf 91       	pop	r28
-    10a4:	08 95       	ret
+    10ae:	0f 90       	pop	r0
+    10b0:	0f 90       	pop	r0
+    10b2:	df 91       	pop	r29
+    10b4:	cf 91       	pop	r28
+    10b6:	08 95       	ret
 
-000010a6 <addPairToHistory>:
+000010b8 <addPairToHistory>:
 		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
 		// Do nothing -> exit code -> leave station mode
 	}
 }
 
 void addPairToHistory(){
-    10a6:	cf 93       	push	r28
+    10b8:	cf 93       	push	r28
 	uint8_t tmp2Cargo = identifyCargoCatalogNumber();
-    10a8:	94 df       	rcall	.-216    	; 0xfd2 <identifyCargoCatalogNumber>
+    10ba:	94 df       	rcall	.-216    	; 0xfe4 <identifyCargoCatalogNumber>
 	
 	if (tmp2Cargo % 2 == 0) // Even indexes (cards)
-    10aa:	80 fd       	sbrc	r24, 0
-    10ac:	19 c0       	rjmp	.+50     	; 0x10e0 <addPairToHistory+0x3a>
+    10bc:	80 fd       	sbrc	r24, 0
+    10be:	19 c0       	rjmp	.+50     	; 0x10f2 <addPairToHistory+0x3a>
 	{
 		history[historySize] = tmp2Cargo;
-    10ae:	90 91 23 02 	lds	r25, 0x0223
-    10b2:	e9 2f       	mov	r30, r25
-    10b4:	f0 e0       	ldi	r31, 0x00	; 0
-    10b6:	ec 54       	subi	r30, 0x4C	; 76
-    10b8:	fe 4f       	sbci	r31, 0xFE	; 254
-    10ba:	80 83       	st	Z, r24
+    10c0:	90 91 23 02 	lds	r25, 0x0223
+    10c4:	e9 2f       	mov	r30, r25
+    10c6:	f0 e0       	ldi	r31, 0x00	; 0
+    10c8:	ec 54       	subi	r30, 0x4C	; 76
+    10ca:	fe 4f       	sbci	r31, 0xFE	; 254
+    10cc:	80 83       	st	Z, r24
 		historySize++;
 		history[historySize] = tmp2Cargo + 1;
-    10bc:	c8 2f       	mov	r28, r24
-    10be:	cf 5f       	subi	r28, 0xFF	; 255
+    10ce:	c8 2f       	mov	r28, r24
+    10d0:	cf 5f       	subi	r28, 0xFF	; 255
 	uint8_t tmp2Cargo = identifyCargoCatalogNumber();
 	
 	if (tmp2Cargo % 2 == 0) // Even indexes (cards)
 	{
 		history[historySize] = tmp2Cargo;
 		historySize++;
-    10c0:	e9 2f       	mov	r30, r25
-    10c2:	ef 5f       	subi	r30, 0xFF	; 255
+    10d2:	e9 2f       	mov	r30, r25
+    10d4:	ef 5f       	subi	r30, 0xFF	; 255
 		history[historySize] = tmp2Cargo + 1;
-    10c4:	f0 e0       	ldi	r31, 0x00	; 0
-    10c6:	ec 54       	subi	r30, 0x4C	; 76
-    10c8:	fe 4f       	sbci	r31, 0xFE	; 254
-    10ca:	c0 83       	st	Z, r28
+    10d6:	f0 e0       	ldi	r31, 0x00	; 0
+    10d8:	ec 54       	subi	r30, 0x4C	; 76
+    10da:	fe 4f       	sbci	r31, 0xFE	; 254
+    10dc:	c0 83       	st	Z, r28
 		historySize++;
-    10cc:	9e 5f       	subi	r25, 0xFE	; 254
-    10ce:	90 93 23 02 	sts	0x0223, r25
+    10de:	9e 5f       	subi	r25, 0xFE	; 254
+    10e0:	90 93 23 02 	sts	0x0223, r25
 		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo);
-    10d2:	68 2f       	mov	r22, r24
-    10d4:	8a e0       	ldi	r24, 0x0A	; 10
-    10d6:	25 d8       	rcall	.-4022   	; 0x122 <TXbluetoothInstr>
+    10e4:	68 2f       	mov	r22, r24
+    10e6:	8a e0       	ldi	r24, 0x0A	; 10
+    10e8:	1c d8       	rcall	.-4040   	; 0x122 <TXbluetoothInstr>
 		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo+1);
-    10d8:	6c 2f       	mov	r22, r28
-    10da:	8a e0       	ldi	r24, 0x0A	; 10
-    10dc:	22 d8       	rcall	.-4028   	; 0x122 <TXbluetoothInstr>
-    10de:	18 c0       	rjmp	.+48     	; 0x1110 <addPairToHistory+0x6a>
+    10ea:	6c 2f       	mov	r22, r28
+    10ec:	8a e0       	ldi	r24, 0x0A	; 10
+    10ee:	19 d8       	rcall	.-4046   	; 0x122 <TXbluetoothInstr>
+    10f0:	18 c0       	rjmp	.+48     	; 0x1122 <addPairToHistory+0x6a>
 	}
 	
 	else if (tmp2Cargo % 2 == 1)
 	{
 		history[historySize] = tmp2Cargo;
-    10e0:	90 91 23 02 	lds	r25, 0x0223
-    10e4:	e9 2f       	mov	r30, r25
-    10e6:	f0 e0       	ldi	r31, 0x00	; 0
-    10e8:	ec 54       	subi	r30, 0x4C	; 76
-    10ea:	fe 4f       	sbci	r31, 0xFE	; 254
-    10ec:	80 83       	st	Z, r24
+    10f2:	90 91 23 02 	lds	r25, 0x0223
+    10f6:	e9 2f       	mov	r30, r25
+    10f8:	f0 e0       	ldi	r31, 0x00	; 0
+    10fa:	ec 54       	subi	r30, 0x4C	; 76
+    10fc:	fe 4f       	sbci	r31, 0xFE	; 254
+    10fe:	80 83       	st	Z, r24
 		historySize++;
 		history[historySize] = tmp2Cargo - 1;
-    10ee:	c8 2f       	mov	r28, r24
-    10f0:	c1 50       	subi	r28, 0x01	; 1
+    1100:	c8 2f       	mov	r28, r24
+    1102:	c1 50       	subi	r28, 0x01	; 1
 	}
 	
 	else if (tmp2Cargo % 2 == 1)
 	{
 		history[historySize] = tmp2Cargo;
 		historySize++;
-    10f2:	e9 2f       	mov	r30, r25
-    10f4:	ef 5f       	subi	r30, 0xFF	; 255
+    1104:	e9 2f       	mov	r30, r25
+    1106:	ef 5f       	subi	r30, 0xFF	; 255
 		history[historySize] = tmp2Cargo - 1;
-    10f6:	f0 e0       	ldi	r31, 0x00	; 0
-    10f8:	ec 54       	subi	r30, 0x4C	; 76
-    10fa:	fe 4f       	sbci	r31, 0xFE	; 254
-    10fc:	c0 83       	st	Z, r28
+    1108:	f0 e0       	ldi	r31, 0x00	; 0
+    110a:	ec 54       	subi	r30, 0x4C	; 76
+    110c:	fe 4f       	sbci	r31, 0xFE	; 254
+    110e:	c0 83       	st	Z, r28
 		historySize++;
-    10fe:	9e 5f       	subi	r25, 0xFE	; 254
-    1100:	90 93 23 02 	sts	0x0223, r25
+    1110:	9e 5f       	subi	r25, 0xFE	; 254
+    1112:	90 93 23 02 	sts	0x0223, r25
 		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo);
-    1104:	68 2f       	mov	r22, r24
-    1106:	8a e0       	ldi	r24, 0x0A	; 10
-    1108:	0c d8       	rcall	.-4072   	; 0x122 <TXbluetoothInstr>
+    1116:	68 2f       	mov	r22, r24
+    1118:	8a e0       	ldi	r24, 0x0A	; 10
+    111a:	03 d8       	rcall	.-4090   	; 0x122 <TXbluetoothInstr>
 		TXbluetoothInstr(HISTORYINSTR, tmp2Cargo-1);
-    110a:	6c 2f       	mov	r22, r28
-    110c:	8a e0       	ldi	r24, 0x0A	; 10
-    110e:	09 d8       	rcall	.-4078   	; 0x122 <TXbluetoothInstr>
+    111c:	6c 2f       	mov	r22, r28
+    111e:	8a e0       	ldi	r24, 0x0A	; 10
+    1120:	00 d8       	rcall	.-4096   	; 0x122 <TXbluetoothInstr>
 	}
 	
 }
-    1110:	cf 91       	pop	r28
-    1112:	08 95       	ret
+    1122:	cf 91       	pop	r28
+    1124:	08 95       	ret
 
-00001114 <powerRFID>:
+00001126 <powerRFID>:
 	}
 	return cargoCatalogNumber;
 }
 
 void powerRFID(uint8_t power){
 	if (power == 1)
-    1114:	81 30       	cpi	r24, 0x01	; 1
-    1116:	11 f4       	brne	.+4      	; 0x111c <powerRFID+0x8>
+    1126:	81 30       	cpi	r24, 0x01	; 1
+    1128:	11 f4       	brne	.+4      	; 0x112e <powerRFID+0x8>
 	{
 		PORTD &= ~(1<<PORTD5);
-    1118:	5d 98       	cbi	0x0b, 5	; 11
-    111a:	08 95       	ret
+    112a:	5d 98       	cbi	0x0b, 5	; 11
+    112c:	08 95       	ret
 		//((Port on AVR connected to RFIDs "Enable") = LOW) => Power up byte reader
 	}
 	else
 	{
 		PORTD |= (1<<PORTD5);
-    111c:	5d 9a       	sbi	0x0b, 5	; 11
-    111e:	08 95       	ret
+    112e:	5d 9a       	sbi	0x0b, 5	; 11
+    1130:	08 95       	ret
 
-00001120 <printOnLCD>:
+00001132 <printOnLCD>:
 }
 
 /*
 Prints the entire RFID tag on the display.
 */
 void printOnLCD(uint8_t shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
-    1120:	0f 93       	push	r16
-    1122:	1f 93       	push	r17
-    1124:	cf 93       	push	r28
-    1126:	df 93       	push	r29
-    1128:	c8 2f       	mov	r28, r24
+    1132:	0f 93       	push	r16
+    1134:	1f 93       	push	r17
+    1136:	cf 93       	push	r28
+    1138:	df 93       	push	r29
+    113a:	c8 2f       	mov	r28, r24
 	hd44780_l_clear_disp(&low_conf);
-    112a:	8a ef       	ldi	r24, 0xFA	; 250
-    112c:	91 e0       	ldi	r25, 0x01	; 1
-    112e:	7d dc       	rcall	.-1798   	; 0xa2a <hd44780_l_clear_disp>
+    113c:	8a ef       	ldi	r24, 0xFA	; 250
+    113e:	91 e0       	ldi	r25, 0x01	; 1
+    1140:	74 dc       	rcall	.-1816   	; 0xa2a <hd44780_l_clear_disp>
 	
 	if (shipment == 1)
-    1130:	c1 30       	cpi	r28, 0x01	; 1
-    1132:	01 f5       	brne	.+64     	; 0x1174 <printOnLCD+0x54>
+    1142:	c1 30       	cpi	r28, 0x01	; 1
+    1144:	01 f5       	brne	.+64     	; 0x1186 <printOnLCD+0x54>
 	{
 		hd44780_l_write(&low_conf, 0x52);	//R
-    1134:	62 e5       	ldi	r22, 0x52	; 82
-    1136:	8a ef       	ldi	r24, 0xFA	; 250
-    1138:	91 e0       	ldi	r25, 0x01	; 1
-    113a:	bf dc       	rcall	.-1666   	; 0xaba <hd44780_l_write>
+    1146:	62 e5       	ldi	r22, 0x52	; 82
+    1148:	8a ef       	ldi	r24, 0xFA	; 250
+    114a:	91 e0       	ldi	r25, 0x01	; 1
+    114c:	b6 dc       	rcall	.-1684   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x46);	//F
-    113c:	66 e4       	ldi	r22, 0x46	; 70
-    113e:	8a ef       	ldi	r24, 0xFA	; 250
-    1140:	91 e0       	ldi	r25, 0x01	; 1
-    1142:	bb dc       	rcall	.-1674   	; 0xaba <hd44780_l_write>
+    114e:	66 e4       	ldi	r22, 0x46	; 70
+    1150:	8a ef       	ldi	r24, 0xFA	; 250
+    1152:	91 e0       	ldi	r25, 0x01	; 1
+    1154:	b2 dc       	rcall	.-1692   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x49);	//I
-    1144:	69 e4       	ldi	r22, 0x49	; 73
-    1146:	8a ef       	ldi	r24, 0xFA	; 250
-    1148:	91 e0       	ldi	r25, 0x01	; 1
-    114a:	b7 dc       	rcall	.-1682   	; 0xaba <hd44780_l_write>
+    1156:	69 e4       	ldi	r22, 0x49	; 73
+    1158:	8a ef       	ldi	r24, 0xFA	; 250
+    115a:	91 e0       	ldi	r25, 0x01	; 1
+    115c:	ae dc       	rcall	.-1700   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x44);	//D
-    114c:	64 e4       	ldi	r22, 0x44	; 68
-    114e:	8a ef       	ldi	r24, 0xFA	; 250
-    1150:	91 e0       	ldi	r25, 0x01	; 1
-    1152:	b3 dc       	rcall	.-1690   	; 0xaba <hd44780_l_write>
+    115e:	64 e4       	ldi	r22, 0x44	; 68
+    1160:	8a ef       	ldi	r24, 0xFA	; 250
+    1162:	91 e0       	ldi	r25, 0x01	; 1
+    1164:	aa dc       	rcall	.-1708   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x3A);	//:
-    1154:	6a e3       	ldi	r22, 0x3A	; 58
-    1156:	8a ef       	ldi	r24, 0xFA	; 250
-    1158:	91 e0       	ldi	r25, 0x01	; 1
-    115a:	af dc       	rcall	.-1698   	; 0xaba <hd44780_l_write>
-    115c:	c7 ec       	ldi	r28, 0xC7	; 199
-    115e:	d1 e0       	ldi	r29, 0x01	; 1
+    1166:	6a e3       	ldi	r22, 0x3A	; 58
+    1168:	8a ef       	ldi	r24, 0xFA	; 250
+    116a:	91 e0       	ldi	r25, 0x01	; 1
+    116c:	a6 dc       	rcall	.-1716   	; 0xaba <hd44780_l_write>
+    116e:	c7 ec       	ldi	r28, 0xC7	; 199
+    1170:	d1 e0       	ldi	r29, 0x01	; 1
 }
 
 /*
 Prints the entire RFID tag on the display.
 */
 void printOnLCD(uint8_t shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
-    1160:	01 ed       	ldi	r16, 0xD1	; 209
-    1162:	11 e0       	ldi	r17, 0x01	; 1
+    1172:	01 ed       	ldi	r16, 0xD1	; 209
+    1174:	11 e0       	ldi	r17, 0x01	; 1
 		hd44780_l_write(&low_conf, 0x3A);	//:
 
 		
 		for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
 		{
 			hd44780_l_write(&low_conf, cargo[i]);
-    1164:	69 91       	ld	r22, Y+
-    1166:	8a ef       	ldi	r24, 0xFA	; 250
-    1168:	91 e0       	ldi	r25, 0x01	; 1
-    116a:	a7 dc       	rcall	.-1714   	; 0xaba <hd44780_l_write>
+    1176:	69 91       	ld	r22, Y+
+    1178:	8a ef       	ldi	r24, 0xFA	; 250
+    117a:	91 e0       	ldi	r25, 0x01	; 1
+    117c:	9e dc       	rcall	.-1732   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x49);	//I
 		hd44780_l_write(&low_conf, 0x44);	//D
 		hd44780_l_write(&low_conf, 0x3A);	//:
 
 		
 		for(int i = 1; i<11; i++)	//Prints the tag's ID bytes.
-    116c:	c0 17       	cp	r28, r16
-    116e:	d1 07       	cpc	r29, r17
-    1170:	c9 f7       	brne	.-14     	; 0x1164 <printOnLCD+0x44>
-    1172:	20 c0       	rjmp	.+64     	; 0x11b4 <printOnLCD+0x94>
+    117e:	c0 17       	cp	r28, r16
+    1180:	d1 07       	cpc	r29, r17
+    1182:	c9 f7       	brne	.-14     	; 0x1176 <printOnLCD+0x44>
+    1184:	20 c0       	rjmp	.+64     	; 0x11c6 <printOnLCD+0x94>
 			hd44780_l_write(&low_conf, cargo[i]);
 		}
 	}
 	else
 	{
 		hd44780_l_write(&low_conf, 0x4E);	//N
-    1174:	6e e4       	ldi	r22, 0x4E	; 78
-    1176:	8a ef       	ldi	r24, 0xFA	; 250
-    1178:	91 e0       	ldi	r25, 0x01	; 1
-    117a:	9f dc       	rcall	.-1730   	; 0xaba <hd44780_l_write>
+    1186:	6e e4       	ldi	r22, 0x4E	; 78
+    1188:	8a ef       	ldi	r24, 0xFA	; 250
+    118a:	91 e0       	ldi	r25, 0x01	; 1
+    118c:	96 dc       	rcall	.-1748   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x4F);	//O
-    117c:	6f e4       	ldi	r22, 0x4F	; 79
-    117e:	8a ef       	ldi	r24, 0xFA	; 250
-    1180:	91 e0       	ldi	r25, 0x01	; 1
-    1182:	9b dc       	rcall	.-1738   	; 0xaba <hd44780_l_write>
+    118e:	6f e4       	ldi	r22, 0x4F	; 79
+    1190:	8a ef       	ldi	r24, 0xFA	; 250
+    1192:	91 e0       	ldi	r25, 0x01	; 1
+    1194:	92 dc       	rcall	.-1756   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x20);	//
-    1184:	60 e2       	ldi	r22, 0x20	; 32
-    1186:	8a ef       	ldi	r24, 0xFA	; 250
-    1188:	91 e0       	ldi	r25, 0x01	; 1
-    118a:	97 dc       	rcall	.-1746   	; 0xaba <hd44780_l_write>
+    1196:	60 e2       	ldi	r22, 0x20	; 32
+    1198:	8a ef       	ldi	r24, 0xFA	; 250
+    119a:	91 e0       	ldi	r25, 0x01	; 1
+    119c:	8e dc       	rcall	.-1764   	; 0xaba <hd44780_l_write>
 		
 		hd44780_l_write(&low_conf, 0x43);	//C
-    118c:	63 e4       	ldi	r22, 0x43	; 67
-    118e:	8a ef       	ldi	r24, 0xFA	; 250
-    1190:	91 e0       	ldi	r25, 0x01	; 1
-    1192:	93 dc       	rcall	.-1754   	; 0xaba <hd44780_l_write>
+    119e:	63 e4       	ldi	r22, 0x43	; 67
+    11a0:	8a ef       	ldi	r24, 0xFA	; 250
+    11a2:	91 e0       	ldi	r25, 0x01	; 1
+    11a4:	8a dc       	rcall	.-1772   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x41);	//A
-    1194:	61 e4       	ldi	r22, 0x41	; 65
-    1196:	8a ef       	ldi	r24, 0xFA	; 250
-    1198:	91 e0       	ldi	r25, 0x01	; 1
-    119a:	8f dc       	rcall	.-1762   	; 0xaba <hd44780_l_write>
+    11a6:	61 e4       	ldi	r22, 0x41	; 65
+    11a8:	8a ef       	ldi	r24, 0xFA	; 250
+    11aa:	91 e0       	ldi	r25, 0x01	; 1
+    11ac:	86 dc       	rcall	.-1780   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x52);	//R
-    119c:	62 e5       	ldi	r22, 0x52	; 82
-    119e:	8a ef       	ldi	r24, 0xFA	; 250
-    11a0:	91 e0       	ldi	r25, 0x01	; 1
-    11a2:	8b dc       	rcall	.-1770   	; 0xaba <hd44780_l_write>
+    11ae:	62 e5       	ldi	r22, 0x52	; 82
+    11b0:	8a ef       	ldi	r24, 0xFA	; 250
+    11b2:	91 e0       	ldi	r25, 0x01	; 1
+    11b4:	82 dc       	rcall	.-1788   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x47);	//G
-    11a4:	67 e4       	ldi	r22, 0x47	; 71
-    11a6:	8a ef       	ldi	r24, 0xFA	; 250
-    11a8:	91 e0       	ldi	r25, 0x01	; 1
-    11aa:	87 dc       	rcall	.-1778   	; 0xaba <hd44780_l_write>
+    11b6:	67 e4       	ldi	r22, 0x47	; 71
+    11b8:	8a ef       	ldi	r24, 0xFA	; 250
+    11ba:	91 e0       	ldi	r25, 0x01	; 1
+    11bc:	7e dc       	rcall	.-1796   	; 0xaba <hd44780_l_write>
 		hd44780_l_write(&low_conf, 0x4F);	//O
-    11ac:	6f e4       	ldi	r22, 0x4F	; 79
-    11ae:	8a ef       	ldi	r24, 0xFA	; 250
-    11b0:	91 e0       	ldi	r25, 0x01	; 1
-    11b2:	83 dc       	rcall	.-1786   	; 0xaba <hd44780_l_write>
+    11be:	6f e4       	ldi	r22, 0x4F	; 79
+    11c0:	8a ef       	ldi	r24, 0xFA	; 250
+    11c2:	91 e0       	ldi	r25, 0x01	; 1
+    11c4:	7a dc       	rcall	.-1804   	; 0xaba <hd44780_l_write>
 
 	}
 	
 
 }
-    11b4:	df 91       	pop	r29
-    11b6:	cf 91       	pop	r28
-    11b8:	1f 91       	pop	r17
-    11ba:	0f 91       	pop	r16
-    11bc:	08 95       	ret
+    11c6:	df 91       	pop	r29
+    11c8:	cf 91       	pop	r28
+    11ca:	1f 91       	pop	r17
+    11cc:	0f 91       	pop	r16
+    11ce:	08 95       	ret
 
-000011be <deliveryMode>:
+000011d0 <deliveryMode>:
 
 
 /*Called by stationMode(). Enters if carrying object. */
 void deliveryMode(){
 	
 	if (newStreamPairsWithCargo() == 1) //Checks if the station is the correct station to leave cargo
-    11be:	46 df       	rcall	.-372    	; 0x104c <newStreamPairsWithCargo>
-    11c0:	81 30       	cpi	r24, 0x01	; 1
-    11c2:	99 f4       	brne	.+38     	; 0x11ea <deliveryMode+0x2c>
+    11d0:	46 df       	rcall	.-372    	; 0x105e <newStreamPairsWithCargo>
+    11d2:	81 30       	cpi	r24, 0x01	; 1
+    11d4:	99 f4       	brne	.+38     	; 0x11fc <deliveryMode+0x2c>
 	{
 		addPairToHistory();
-    11c4:	70 df       	rcall	.-288    	; 0x10a6 <addPairToHistory>
+    11d6:	70 df       	rcall	.-288    	; 0x10b8 <addPairToHistory>
 		printOnLCD(0); //Prints "No Cargo" on LCD
-    11c6:	80 e0       	ldi	r24, 0x00	; 0
-    11c8:	ab df       	rcall	.-170    	; 0x1120 <printOnLCD>
+    11d8:	80 e0       	ldi	r24, 0x00	; 0
+    11da:	ab df       	rcall	.-170    	; 0x1132 <printOnLCD>
 		TXDropItem(stationRightSide); //1 = right side, 0 = left side
-    11ca:	80 91 f8 01 	lds	r24, 0x01F8
-    11ce:	90 e0       	ldi	r25, 0x00	; 0
-    11d0:	80 de       	rcall	.-768    	; 0xed2 <TXDropItem>
+    11dc:	80 91 f8 01 	lds	r24, 0x01F8
+    11e0:	90 e0       	ldi	r25, 0x00	; 0
+    11e2:	80 de       	rcall	.-768    	; 0xee4 <TXDropItem>
 		waitForFinishedDrop();	
-    11d2:	a2 de       	rcall	.-700    	; 0xf18 <waitForFinishedDrop>
+    11e4:	a2 de       	rcall	.-700    	; 0xf2a <waitForFinishedDrop>
 		carryItem = 0;
-    11d4:	10 92 ef 01 	sts	0x01EF, r1
+    11e6:	10 92 ef 01 	sts	0x01EF, r1
 		TXbluetoothInstr(CARGOINSTR, 32);
-    11d8:	60 e2       	ldi	r22, 0x20	; 32
-    11da:	8b e0       	ldi	r24, 0x0B	; 11
-    11dc:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
+    11ea:	60 e2       	ldi	r22, 0x20	; 32
+    11ec:	8b e0       	ldi	r24, 0x0B	; 11
+    11ee:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
 		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
-    11e0:	a2 de       	rcall	.-700    	; 0xf26 <identifyNewStreamCatalogNumber>
-    11e2:	68 2f       	mov	r22, r24
-    11e4:	89 e0       	ldi	r24, 0x09	; 9
-    11e6:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
+    11f2:	a2 de       	rcall	.-700    	; 0xf38 <identifyNewStreamCatalogNumber>
+    11f4:	68 2f       	mov	r22, r24
+    11f6:	89 e0       	ldi	r24, 0x09	; 9
+    11f8:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
 	}
 	else
 	{
 		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
-    11ea:	9d de       	rcall	.-710    	; 0xf26 <identifyNewStreamCatalogNumber>
-    11ec:	68 2f       	mov	r22, r24
-    11ee:	89 e0       	ldi	r24, 0x09	; 9
-    11f0:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
+    11fc:	9d de       	rcall	.-710    	; 0xf38 <identifyNewStreamCatalogNumber>
+    11fe:	68 2f       	mov	r22, r24
+    1200:	89 e0       	ldi	r24, 0x09	; 9
+    1202:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
 
-000011f4 <pickUpMode>:
+00001206 <pickUpMode>:
 	finishedDrop = 0;
 }
 
 /*Called by stationMode(). Enters if not carrying object.*/
 void pickUpMode(){
 	if (itemInHistory() == 1) //checks if mission completed for this station
-    11f4:	d5 de       	rcall	.-598    	; 0xfa0 <itemInHistory>
-    11f6:	81 30       	cpi	r24, 0x01	; 1
-    11f8:	29 f4       	brne	.+10     	; 0x1204 <pickUpMode+0x10>
+    1206:	d5 de       	rcall	.-598    	; 0xfb2 <itemInHistory>
+    1208:	81 30       	cpi	r24, 0x01	; 1
+    120a:	29 f4       	brne	.+10     	; 0x1216 <pickUpMode+0x10>
 	{
 		TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
-    11fa:	95 de       	rcall	.-726    	; 0xf26 <identifyNewStreamCatalogNumber>
-    11fc:	68 2f       	mov	r22, r24
-    11fe:	89 e0       	ldi	r24, 0x09	; 9
-    1200:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
+    120c:	95 de       	rcall	.-726    	; 0xf38 <identifyNewStreamCatalogNumber>
+    120e:	68 2f       	mov	r22, r24
+    1210:	89 e0       	ldi	r24, 0x09	; 9
+    1212:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
 		// Do nothing -> exit code -> leave station mode
 	}
 	else
 	{
 		waitForUserInputStartAbort();
-    1204:	7b de       	rcall	.-778    	; 0xefc <waitForUserInputStartAbort>
+    1216:	7b de       	rcall	.-778    	; 0xf0e <waitForUserInputStartAbort>
 		
 		if (pickUpItem == 1)
-    1206:	80 91 f2 01 	lds	r24, 0x01F2
-    120a:	81 30       	cpi	r24, 0x01	; 1
-    120c:	d1 f4       	brne	.+52     	; 0x1242 <pickUpMode+0x4e>
-    120e:	e2 ed       	ldi	r30, 0xD2	; 210
-    1210:	f1 e0       	ldi	r31, 0x01	; 1
-    1212:	a6 ec       	ldi	r26, 0xC6	; 198
-    1214:	b1 e0       	ldi	r27, 0x01	; 1
+    1218:	80 91 f2 01 	lds	r24, 0x01F2
+    121c:	81 30       	cpi	r24, 0x01	; 1
+    121e:	d1 f4       	brne	.+52     	; 0x1254 <pickUpMode+0x4e>
+    1220:	e2 ed       	ldi	r30, 0xD2	; 210
+    1222:	f1 e0       	ldi	r31, 0x01	; 1
+    1224:	a6 ec       	ldi	r26, 0xC6	; 198
+    1226:	b1 e0       	ldi	r27, 0x01	; 1
 	}
 	finishedDrop = 0;
 }
 
 /*Called by stationMode(). Enters if not carrying object.*/
 void pickUpMode(){
-    1216:	8e ed       	ldi	r24, 0xDE	; 222
-    1218:	91 e0       	ldi	r25, 0x01	; 1
+    1228:	8e ed       	ldi	r24, 0xDE	; 222
+    122a:	91 e0       	ldi	r25, 0x01	; 1
 		if (pickUpItem == 1)
 		{
 			for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Storing RFID tag in cargo
 			{
 				
 				cargo[cntDigit] = newStream[cntDigit];
-    121a:	21 91       	ld	r18, Z+
-    121c:	2d 93       	st	X+, r18
+    122c:	21 91       	ld	r18, Z+
+    122e:	2d 93       	st	X+, r18
 	{
 		waitForUserInputStartAbort();
 		
 		if (pickUpItem == 1)
 		{
 			for (uint8_t cntDigit = 0; cntDigit < 12; cntDigit++) //Storing RFID tag in cargo
-    121e:	e8 17       	cp	r30, r24
-    1220:	f9 07       	cpc	r31, r25
-    1222:	d9 f7       	brne	.-10     	; 0x121a <pickUpMode+0x26>
+    1230:	e8 17       	cp	r30, r24
+    1232:	f9 07       	cpc	r31, r25
+    1234:	d9 f7       	brne	.-10     	; 0x122c <pickUpMode+0x26>
 			{
 				
 				cargo[cntDigit] = newStream[cntDigit];
 			}
 			carryItem = 1; // Shows that the robot is carrying an object
-    1224:	81 e0       	ldi	r24, 0x01	; 1
-    1226:	80 93 ef 01 	sts	0x01EF, r24
+    1236:	81 e0       	ldi	r24, 0x01	; 1
+    1238:	80 93 ef 01 	sts	0x01EF, r24
 			printOnLCD(1); //Printing cargo RFID tag on display
-    122a:	7a df       	rcall	.-268    	; 0x1120 <printOnLCD>
+    123c:	7a df       	rcall	.-268    	; 0x1132 <printOnLCD>
 			TXbluetoothInstr(STATIONINSTR, identifyCargoCatalogNumber());
-    122c:	d2 de       	rcall	.-604    	; 0xfd2 <identifyCargoCatalogNumber>
-    122e:	68 2f       	mov	r22, r24
-    1230:	89 e0       	ldi	r24, 0x09	; 9
-    1232:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
+    123e:	d2 de       	rcall	.-604    	; 0xfe4 <identifyCargoCatalogNumber>
+    1240:	68 2f       	mov	r22, r24
+    1242:	89 e0       	ldi	r24, 0x09	; 9
+    1244:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
 			TXbluetoothInstr(CARGOINSTR, identifyCargoCatalogNumber());
-    1236:	cd de       	rcall	.-614    	; 0xfd2 <identifyCargoCatalogNumber>
-    1238:	68 2f       	mov	r22, r24
-    123a:	8b e0       	ldi	r24, 0x0B	; 11
-    123c:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
+    1248:	cd de       	rcall	.-614    	; 0xfe4 <identifyCargoCatalogNumber>
+    124a:	68 2f       	mov	r22, r24
+    124c:	8b e0       	ldi	r24, 0x0B	; 11
+    124e:	0e 94 91 00 	call	0x122	; 0x122 <TXbluetoothInstr>
 			waitForUserInputEndPickup(); // the item has been pickup up and leave stationMode()
-    1240:	64 ce       	rjmp	.-824    	; 0xf0a <waitForUserInputEndPickup>
+    1252:	64 ce       	rjmp	.-824    	; 0xf1c <waitForUserInputEndPickup>
 		}
 		else
 		{
 			TXbluetoothInstr(STATIONINSTR, identifyNewStreamCatalogNumber());
-    1242:	71 de       	rcall	.-798    	; 0xf26 <identifyNewStreamCatalogNumber>
-    1244:	68 2f       	mov	r22, r24
-    1246:	89 e0       	ldi	r24, 0x09	; 9
-    1248:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
+    1254:	71 de       	rcall	.-798    	; 0xf38 <identifyNewStreamCatalogNumber>
+    1256:	68 2f       	mov	r22, r24
+    1258:	89 e0       	ldi	r24, 0x09	; 9
+    125a:	0c 94 91 00 	jmp	0x122	; 0x122 <TXbluetoothInstr>
 
-0000124c <stationMode>:
+0000125e <stationMode>:
 
 
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	
 	powerRFID(1);
-    124c:	81 e0       	ldi	r24, 0x01	; 1
-    124e:	62 df       	rcall	.-316    	; 0x1114 <powerRFID>
+    125e:	81 e0       	ldi	r24, 0x01	; 1
+    1260:	62 df       	rcall	.-316    	; 0x1126 <powerRFID>
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
-    1250:	06 c0       	rjmp	.+12     	; 0x125e <stationMode+0x12>
+    1262:	06 c0       	rjmp	.+12     	; 0x1270 <stationMode+0x12>
 	{
 		if(stationModeEnable == 0)//Check if we have entered manualmode
-    1252:	80 91 eb 01 	lds	r24, 0x01EB
-    1256:	81 11       	cpse	r24, r1
-    1258:	02 c0       	rjmp	.+4      	; 0x125e <stationMode+0x12>
+    1264:	80 91 eb 01 	lds	r24, 0x01EB
+    1268:	81 11       	cpse	r24, r1
+    126a:	02 c0       	rjmp	.+4      	; 0x1270 <stationMode+0x12>
 		{
 			powerRFID(0);
-    125a:	5c df       	rcall	.-328    	; 0x1114 <powerRFID>
+    126c:	5c df       	rcall	.-328    	; 0x1126 <powerRFID>
 			break;
-    125c:	04 c0       	rjmp	.+8      	; 0x1266 <stationMode+0x1a>
+    126e:	04 c0       	rjmp	.+8      	; 0x1278 <stationMode+0x1a>
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	
 	powerRFID(1);
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
-    125e:	80 91 f1 01 	lds	r24, 0x01F1
-    1262:	88 23       	and	r24, r24
-    1264:	b1 f3       	breq	.-20     	; 0x1252 <stationMode+0x6>
+    1270:	80 91 f1 01 	lds	r24, 0x01F1
+    1274:	88 23       	and	r24, r24
+    1276:	b1 f3       	breq	.-20     	; 0x1264 <stationMode+0x6>
 		{
 			powerRFID(0);
 			break;
 		}
 	}
 	streamFilled = 0;
-    1266:	10 92 f1 01 	sts	0x01F1, r1
+    1278:	10 92 f1 01 	sts	0x01F1, r1
 	if(stationModeEnable == 1)
-    126a:	80 91 eb 01 	lds	r24, 0x01EB
-    126e:	81 30       	cpi	r24, 0x01	; 1
-    1270:	61 f4       	brne	.+24     	; 0x128a <stationMode+0x3e>
+    127c:	80 91 eb 01 	lds	r24, 0x01EB
+    1280:	81 30       	cpi	r24, 0x01	; 1
+    1282:	61 f4       	brne	.+24     	; 0x129c <stationMode+0x3e>
 	{
 		if (carryItem == 0)
-    1272:	80 91 ef 01 	lds	r24, 0x01EF
-    1276:	81 11       	cpse	r24, r1
-    1278:	02 c0       	rjmp	.+4      	; 0x127e <stationMode+0x32>
+    1284:	80 91 ef 01 	lds	r24, 0x01EF
+    1288:	81 11       	cpse	r24, r1
+    128a:	02 c0       	rjmp	.+4      	; 0x1290 <stationMode+0x32>
 		{
 			pickUpMode();
-    127a:	bc df       	rcall	.-136    	; 0x11f4 <pickUpMode>
-    127c:	01 c0       	rjmp	.+2      	; 0x1280 <stationMode+0x34>
+    128c:	bc df       	rcall	.-136    	; 0x1206 <pickUpMode>
+    128e:	01 c0       	rjmp	.+2      	; 0x1292 <stationMode+0x34>
 		}
 		else
 		{
 			deliveryMode();
-    127e:	9f df       	rcall	.-194    	; 0x11be <deliveryMode>
+    1290:	9f df       	rcall	.-194    	; 0x11d0 <deliveryMode>
 		}
 		
 		TIMSK0 = 6; //Enable interrupts
-    1280:	86 e0       	ldi	r24, 0x06	; 6
-    1282:	80 93 6e 00 	sts	0x006E, r24
+    1292:	86 e0       	ldi	r24, 0x06	; 6
+    1294:	80 93 6e 00 	sts	0x006E, r24
 		TCCR0B = 0x04; //Start counter
-    1286:	84 e0       	ldi	r24, 0x04	; 4
-    1288:	85 bd       	out	0x25, r24	; 37
+    1298:	84 e0       	ldi	r24, 0x04	; 4
+    129a:	85 bd       	out	0x25, r24	; 37
 		
 	}
 	stationModeEnable = 0;
-    128a:	10 92 eb 01 	sts	0x01EB, r1
+    129c:	10 92 eb 01 	sts	0x01EB, r1
 	TXleaveStation();
-    128e:	30 ce       	rjmp	.-928    	; 0xef0 <TXleaveStation>
+    12a0:	30 ce       	rjmp	.-928    	; 0xf02 <TXleaveStation>
 
-00001290 <setupRFID>:
+000012a2 <setupRFID>:
 	
 
 }
 
 void setupRFID(){
 	UCSR1B |= (1<<RXEN1) | (1 << RXCIE1); //Enable RX1 and the RX complete interrupt
-    1290:	e9 ec       	ldi	r30, 0xC9	; 201
-    1292:	f0 e0       	ldi	r31, 0x00	; 0
-    1294:	80 81       	ld	r24, Z
-    1296:	80 69       	ori	r24, 0x90	; 144
-    1298:	80 83       	st	Z, r24
+    12a2:	e9 ec       	ldi	r30, 0xC9	; 201
+    12a4:	f0 e0       	ldi	r31, 0x00	; 0
+    12a6:	80 81       	ld	r24, Z
+    12a8:	80 69       	ori	r24, 0x90	; 144
+    12aa:	80 83       	st	Z, r24
 	UCSR1C |= (1 << UCSZ11)|(1 << UCSZ10); //set data length to 8-bit;
-    129a:	ea ec       	ldi	r30, 0xCA	; 202
-    129c:	f0 e0       	ldi	r31, 0x00	; 0
-    129e:	80 81       	ld	r24, Z
-    12a0:	86 60       	ori	r24, 0x06	; 6
-    12a2:	80 83       	st	Z, r24
+    12ac:	ea ec       	ldi	r30, 0xCA	; 202
+    12ae:	f0 e0       	ldi	r31, 0x00	; 0
+    12b0:	80 81       	ld	r24, Z
+    12b2:	86 60       	ori	r24, 0x06	; 6
+    12b4:	80 83       	st	Z, r24
 	UBRR1H = (383 >> 8);
-    12a4:	81 e0       	ldi	r24, 0x01	; 1
-    12a6:	80 93 cd 00 	sts	0x00CD, r24
+    12b6:	81 e0       	ldi	r24, 0x01	; 1
+    12b8:	80 93 cd 00 	sts	0x00CD, r24
 	UBRR1L = 0b01111111; //Sets baudvalue in AVR to 383, which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
-    12aa:	8f e7       	ldi	r24, 0x7F	; 127
-    12ac:	80 93 cc 00 	sts	0x00CC, r24
+    12bc:	8f e7       	ldi	r24, 0x7F	; 127
+    12be:	80 93 cc 00 	sts	0x00CC, r24
 	DDRD |= (1<<DDD5);
-    12b0:	55 9a       	sbi	0x0a, 5	; 10
+    12c2:	55 9a       	sbi	0x0a, 5	; 10
 	PORTD |= (1<<PORTD5);
-    12b2:	5d 9a       	sbi	0x0b, 5	; 11
-    12b4:	08 95       	ret
+    12c4:	5d 9a       	sbi	0x0b, 5	; 11
+    12c6:	08 95       	ret
 
-000012b6 <setupWarehouse>:
+000012c8 <setupWarehouse>:
 }
 
 void setupWarehouse(){
 	streamFilled = 0;
-    12b6:	10 92 f1 01 	sts	0x01F1, r1
+    12c8:	10 92 f1 01 	sts	0x01F1, r1
 	carryItem = 0;
-    12ba:	10 92 ef 01 	sts	0x01EF, r1
+    12cc:	10 92 ef 01 	sts	0x01EF, r1
 	pickUpItem = 0;
-    12be:	10 92 f2 01 	sts	0x01F2, r1
+    12d0:	10 92 f2 01 	sts	0x01F2, r1
 	waitingForStartAbort = 0;
-    12c2:	10 92 f9 01 	sts	0x01F9, r1
+    12d4:	10 92 f9 01 	sts	0x01F9, r1
 	waitingForEndPickup = 0;
-    12c6:	10 92 22 02 	sts	0x0222, r1
+    12d8:	10 92 22 02 	sts	0x0222, r1
 	stationModeEnable = 0;
-    12ca:	10 92 eb 01 	sts	0x01EB, r1
+    12dc:	10 92 eb 01 	sts	0x01EB, r1
 	digit = 0;
-    12ce:	10 92 df 01 	sts	0x01DF, r1
+    12e0:	10 92 df 01 	sts	0x01DF, r1
 	historySize = 0;
-    12d2:	10 92 23 02 	sts	0x0223, r1
+    12e4:	10 92 23 02 	sts	0x0223, r1
 	finishedDrop = 0;
-    12d6:	10 92 ee 01 	sts	0x01EE, r1
-    12da:	08 95       	ret
+    12e8:	10 92 ee 01 	sts	0x01EE, r1
+    12ec:	08 95       	ret
 
-000012dc <setupLCD>:
+000012ee <setupLCD>:
 }
 
 void setupLCD(){
-    12dc:	0f 93       	push	r16
+    12ee:	0f 93       	push	r16
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
-    12de:	8f ef       	ldi	r24, 0xFF	; 255
-    12e0:	81 b9       	out	0x01, r24	; 1
+    12f0:	8f ef       	ldi	r24, 0xFF	; 255
+    12f2:	81 b9       	out	0x01, r24	; 1
 	DDRB |= (1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
-    12e2:	84 b1       	in	r24, 0x04	; 4
-    12e4:	83 60       	ori	r24, 0x03	; 3
-    12e6:	84 b9       	out	0x04, r24	; 4
+    12f4:	84 b1       	in	r24, 0x04	; 4
+    12f6:	83 60       	ori	r24, 0x03	; 3
+    12f8:	84 b9       	out	0x04, r24	; 4
 	DDRC |=	(1<< DDC6);
-    12e8:	3e 9a       	sbi	0x07, 6	; 7
+    12fa:	3e 9a       	sbi	0x07, 6	; 7
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
 	low_conf.rs_i = 1;
-    12ea:	21 e0       	ldi	r18, 0x01	; 1
-    12ec:	20 93 fa 01 	sts	0x01FA, r18
+    12fc:	21 e0       	ldi	r18, 0x01	; 1
+    12fe:	20 93 fa 01 	sts	0x01FA, r18
 	low_conf.rw_i = 0;
-    12f0:	10 92 fb 01 	sts	0x01FB, r1
+    1302:	10 92 fb 01 	sts	0x01FB, r1
 	low_conf.en_i = 6;
-    12f4:	86 e0       	ldi	r24, 0x06	; 6
-    12f6:	80 93 fc 01 	sts	0x01FC, r24
+    1306:	86 e0       	ldi	r24, 0x06	; 6
+    1308:	80 93 fc 01 	sts	0x01FC, r24
 	
 	low_conf.db7_i = 7;
-    12fa:	97 e0       	ldi	r25, 0x07	; 7
-    12fc:	90 93 fd 01 	sts	0x01FD, r25
+    130c:	97 e0       	ldi	r25, 0x07	; 7
+    130e:	90 93 fd 01 	sts	0x01FD, r25
 	low_conf.db6_i = 6;
-    1300:	80 93 fe 01 	sts	0x01FE, r24
+    1312:	80 93 fe 01 	sts	0x01FE, r24
 	low_conf.db5_i = 5;
-    1304:	85 e0       	ldi	r24, 0x05	; 5
-    1306:	80 93 ff 01 	sts	0x01FF, r24
+    1316:	85 e0       	ldi	r24, 0x05	; 5
+    1318:	80 93 ff 01 	sts	0x01FF, r24
 	low_conf.db4_i = 4;
-    130a:	84 e0       	ldi	r24, 0x04	; 4
-    130c:	80 93 00 02 	sts	0x0200, r24
+    131c:	84 e0       	ldi	r24, 0x04	; 4
+    131e:	80 93 00 02 	sts	0x0200, r24
 	low_conf.db3_i = 3;
-    1310:	83 e0       	ldi	r24, 0x03	; 3
-    1312:	80 93 01 02 	sts	0x0201, r24
+    1322:	83 e0       	ldi	r24, 0x03	; 3
+    1324:	80 93 01 02 	sts	0x0201, r24
 	low_conf.db2_i = 2;
-    1316:	82 e0       	ldi	r24, 0x02	; 2
-    1318:	80 93 02 02 	sts	0x0202, r24
+    1328:	82 e0       	ldi	r24, 0x02	; 2
+    132a:	80 93 02 02 	sts	0x0202, r24
 	low_conf.db1_i = 1;
-    131c:	20 93 03 02 	sts	0x0203, r18
+    132e:	20 93 03 02 	sts	0x0203, r18
 	low_conf.db0_i = 0;
-    1320:	10 92 04 02 	sts	0x0204, r1
+    1332:	10 92 04 02 	sts	0x0204, r1
 	low_conf.rs_port = &PORTB;
-    1324:	85 e2       	ldi	r24, 0x25	; 37
-    1326:	90 e0       	ldi	r25, 0x00	; 0
-    1328:	90 93 06 02 	sts	0x0206, r25
-    132c:	80 93 05 02 	sts	0x0205, r24
+    1336:	85 e2       	ldi	r24, 0x25	; 37
+    1338:	90 e0       	ldi	r25, 0x00	; 0
+    133a:	90 93 06 02 	sts	0x0206, r25
+    133e:	80 93 05 02 	sts	0x0205, r24
 	low_conf.rw_port = &PORTB;
-    1330:	90 93 08 02 	sts	0x0208, r25
-    1334:	80 93 07 02 	sts	0x0207, r24
+    1342:	90 93 08 02 	sts	0x0208, r25
+    1346:	80 93 07 02 	sts	0x0207, r24
 	low_conf.en_port = &PORTC;
-    1338:	88 e2       	ldi	r24, 0x28	; 40
-    133a:	90 e0       	ldi	r25, 0x00	; 0
-    133c:	90 93 0a 02 	sts	0x020A, r25
-    1340:	80 93 09 02 	sts	0x0209, r24
+    134a:	88 e2       	ldi	r24, 0x28	; 40
+    134c:	90 e0       	ldi	r25, 0x00	; 0
+    134e:	90 93 0a 02 	sts	0x020A, r25
+    1352:	80 93 09 02 	sts	0x0209, r24
 	low_conf.db7_port = &PORTA;
-    1344:	82 e2       	ldi	r24, 0x22	; 34
-    1346:	90 e0       	ldi	r25, 0x00	; 0
-    1348:	90 93 0c 02 	sts	0x020C, r25
-    134c:	80 93 0b 02 	sts	0x020B, r24
+    1356:	82 e2       	ldi	r24, 0x22	; 34
+    1358:	90 e0       	ldi	r25, 0x00	; 0
+    135a:	90 93 0c 02 	sts	0x020C, r25
+    135e:	80 93 0b 02 	sts	0x020B, r24
 	low_conf.db6_port = &PORTA;
-    1350:	90 93 0e 02 	sts	0x020E, r25
-    1354:	80 93 0d 02 	sts	0x020D, r24
+    1362:	90 93 0e 02 	sts	0x020E, r25
+    1366:	80 93 0d 02 	sts	0x020D, r24
 	low_conf.db5_port = &PORTA;
-    1358:	90 93 10 02 	sts	0x0210, r25
-    135c:	80 93 0f 02 	sts	0x020F, r24
+    136a:	90 93 10 02 	sts	0x0210, r25
+    136e:	80 93 0f 02 	sts	0x020F, r24
 	low_conf.db4_port = &PORTA;
-    1360:	90 93 12 02 	sts	0x0212, r25
-    1364:	80 93 11 02 	sts	0x0211, r24
+    1372:	90 93 12 02 	sts	0x0212, r25
+    1376:	80 93 11 02 	sts	0x0211, r24
 	low_conf.db3_port = &PORTA;
-    1368:	90 93 14 02 	sts	0x0214, r25
-    136c:	80 93 13 02 	sts	0x0213, r24
+    137a:	90 93 14 02 	sts	0x0214, r25
+    137e:	80 93 13 02 	sts	0x0213, r24
 	low_conf.db2_port = &PORTA;
-    1370:	90 93 16 02 	sts	0x0216, r25
-    1374:	80 93 15 02 	sts	0x0215, r24
+    1382:	90 93 16 02 	sts	0x0216, r25
+    1386:	80 93 15 02 	sts	0x0215, r24
 	low_conf.db1_port = &PORTA;
-    1378:	90 93 18 02 	sts	0x0218, r25
-    137c:	80 93 17 02 	sts	0x0217, r24
+    138a:	90 93 18 02 	sts	0x0218, r25
+    138e:	80 93 17 02 	sts	0x0217, r24
 	low_conf.db0_port = &PORTA;
-    1380:	90 93 1a 02 	sts	0x021A, r25
-    1384:	80 93 19 02 	sts	0x0219, r24
+    1392:	90 93 1a 02 	sts	0x021A, r25
+    1396:	80 93 19 02 	sts	0x0219, r24
 	low_conf.line1_base_addr = 0x00;
-    1388:	10 92 1b 02 	sts	0x021B, r1
+    139a:	10 92 1b 02 	sts	0x021B, r1
 	low_conf.line2_base_addr = 0x40;
-    138c:	80 e4       	ldi	r24, 0x40	; 64
-    138e:	80 93 1c 02 	sts	0x021C, r24
+    139e:	80 e4       	ldi	r24, 0x40	; 64
+    13a0:	80 93 1c 02 	sts	0x021C, r24
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
-    1392:	20 93 1d 02 	sts	0x021D, r18
+    13a4:	20 93 1d 02 	sts	0x021D, r18
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
-    1396:	00 e0       	ldi	r16, 0x00	; 0
-    1398:	40 e0       	ldi	r20, 0x00	; 0
-    139a:	61 e0       	ldi	r22, 0x01	; 1
-    139c:	8a ef       	ldi	r24, 0xFA	; 250
-    139e:	91 e0       	ldi	r25, 0x01	; 1
-    13a0:	97 db       	rcall	.-2258   	; 0xad0 <hd44780_l_init>
-	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-    13a2:	20 e0       	ldi	r18, 0x00	; 0
-    13a4:	40 e0       	ldi	r20, 0x00	; 0
-    13a6:	61 e0       	ldi	r22, 0x01	; 1
-    13a8:	8a ef       	ldi	r24, 0xFA	; 250
-    13aa:	91 e0       	ldi	r25, 0x01	; 1
-    13ac:	5b db       	rcall	.-2378   	; 0xa64 <hd44780_l_disp>
-	hd44780_l_clear_disp(&low_conf);
+    13a8:	00 e0       	ldi	r16, 0x00	; 0
+    13aa:	40 e0       	ldi	r20, 0x00	; 0
+    13ac:	61 e0       	ldi	r22, 0x01	; 1
     13ae:	8a ef       	ldi	r24, 0xFA	; 250
     13b0:	91 e0       	ldi	r25, 0x01	; 1
-    13b2:	3b db       	rcall	.-2442   	; 0xa2a <hd44780_l_clear_disp>
+    13b2:	8e db       	rcall	.-2276   	; 0xad0 <hd44780_l_init>
+	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
+    13b4:	20 e0       	ldi	r18, 0x00	; 0
+    13b6:	40 e0       	ldi	r20, 0x00	; 0
+    13b8:	61 e0       	ldi	r22, 0x01	; 1
+    13ba:	8a ef       	ldi	r24, 0xFA	; 250
+    13bc:	91 e0       	ldi	r25, 0x01	; 1
+    13be:	52 db       	rcall	.-2396   	; 0xa64 <hd44780_l_disp>
+	hd44780_l_clear_disp(&low_conf);
+    13c0:	8a ef       	ldi	r24, 0xFA	; 250
+    13c2:	91 e0       	ldi	r25, 0x01	; 1
+    13c4:	32 db       	rcall	.-2460   	; 0xa2a <hd44780_l_clear_disp>
 }
-    13b4:	0f 91       	pop	r16
-    13b6:	08 95       	ret
+    13c6:	0f 91       	pop	r16
+    13c8:	08 95       	ret
 
-000013b8 <_exit>:
-    13b8:	f8 94       	cli
+000013ca <_exit>:
+    13ca:	f8 94       	cli
 
-000013ba <__stop_program>:
-    13ba:	ff cf       	rjmp	.-2      	; 0x13ba <__stop_program>
+000013cc <__stop_program>:
+    13cc:	ff cf       	rjmp	.-2      	; 0x13cc <__stop_program>

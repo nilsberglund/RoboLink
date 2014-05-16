@@ -151,7 +151,7 @@ ISR(USART0_RX_vect)
 		}
 		else if (btcomponent == KDINSTR) {
 			Kd = btdata;
-			TXKpData();
+			TXKdData();
 		}
 	}
 }
