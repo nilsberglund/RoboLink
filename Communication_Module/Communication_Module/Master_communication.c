@@ -114,6 +114,10 @@ void TXprotocol(uint8_t component)
 	{
 		masterTX(0b10011111);
 	}
+	else if(component == LEAVESTATIONINSTR)
+	{
+		masterTX(0b10010000);
+	}
 }
 
 /* Function that transmits sensor data to the control slave. */
@@ -178,6 +182,13 @@ void TXCalibration()
 {
 	slaveSelect(SENSORSLAVE);
 	TXprotocol(CALIBRATION);
+	slaveSelect(NOSLAVE);
+}
+
+void TXleaveStation()
+{
+	slaveSelect(CONTROLSLAVE);
+	TXprotocol(LEAVESTATIONINSTR);
 	slaveSelect(NOSLAVE);
 }
 

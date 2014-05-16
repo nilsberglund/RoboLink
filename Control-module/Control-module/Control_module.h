@@ -15,8 +15,6 @@ uint8_t stationMode;
 
 //Functions
 void initTimer();
-
-
-
+void startTransportMode();
 
 #endif /* CONTROL_MODULE_H_ */

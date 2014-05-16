@@ -46,7 +46,7 @@ void stationMode(){
 		
 	}
 	stationModeEnable = 0;
-	
+	TXleaveStation();
 }
 
 /*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */

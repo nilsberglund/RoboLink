@@ -27,7 +27,7 @@ ISR(SPI_STC_vect)
 			
 			TIMSK0 &= ~(1<<OCIE0A);
 			
-			stationMode = 0;
+			//stationMode = 0;
 			
 		} else if (data == 0b10000101)
 		{
@@ -49,6 +49,10 @@ ISR(SPI_STC_vect)
 		{
 			component = DROPITEM;
 			waitingForInstruction = 0;
+		} else if(data == 0b10010000)
+		{
+			waitingForInstruction = 1;
+			startTransportMode();
 		}
 	}
 	else
@@ -57,7 +61,10 @@ ISR(SPI_STC_vect)
 		if(component == SENSOR)
 		{
 			sensorData = data;
-			controlAlgorithm();
+			if(stationMode == 0)
+			{
+				controlAlgorithm();
+			}
 		}else if (component == ARM)
 		{
 			armData = data;
@@ -108,5 +115,10 @@ void initTimer()
 	TCNT0 = 0;
 	OCR0A = 150;
 	
+	stationMode = 0;
+}
+
+void startTransportMode()
+{
 	stationMode = 0;
 }

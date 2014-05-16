@@ -21,6 +21,7 @@
 #define SENSORSLAVE 9
 #define CONTROLSLAVE 10
 #define NOSLAVE 11
+#define LEAVESTATIONINSTR 12
 
 /* Variables */
 volatile uint8_t received_data;
@@ -52,5 +53,6 @@ void TXKpData();
 void TXKdData();
 void TXDropItem();
 void TXCalibration();
+void TXleaveStation();
 
 #endif /* MASTER_COMMUNICATION_H_ */

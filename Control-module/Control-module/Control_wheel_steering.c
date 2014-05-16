@@ -68,6 +68,9 @@ void controlAlgorithm()
 		drive(1, 1, leftWheelSpeed, rightWheelSpeed);
 	} 	
 	else
+	{
+		
+	}
 	{	
 		midSpeed = 140;  //Standard speed
 		int16_t speed = calculateSpeed(error);  //calculate new speed 
@@ -267,3 +270,4 @@ void changeDerivative(uint8_t newKd)
 {
 	Kd = newKd;
 }
+
