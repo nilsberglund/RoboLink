@@ -30,7 +30,7 @@ void SPI_Init_Master()
 	sei();//Enable global interrupt
 	
 	TCCR0A = 0; //Sets Timer register
-	TCCR0B = 0x04; //Clk prescaler set to 256 and start counting
+	TCCR0B = 0x04; //Clk prescaler set to 1024 and start counting
 	
 	OCR0A = 120; //Sets compare register for sensor receive interrupt to 122
 	OCR0B = 130; //Sets compare register for sensor send interrupt to 125

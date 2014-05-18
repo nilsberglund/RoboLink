@@ -3,33 +3,33 @@ Communication_Module.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         000000de  00800100  000013ce  00001462  2**0
+  0 .data         000000de  00800100  000013c0  00001454  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000013ce  00000000  00000000  00000094  2**1
+  1 .text         000013c0  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000049  008001de  008001de  00001540  2**0
+  2 .bss          00000049  008001de  008001de  00001532  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  00001540  2**2
+  3 .stab         000006cc  00000000  00000000  00001534  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00001c0c  2**0
+  4 .stabstr      00000097  00000000  00000000  00001c00  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00001ca3  2**0
+  5 .comment      0000002f  00000000  00000000  00001c97  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 00000230  00000000  00000000  00001cd2  2**0
+  6 .debug_aranges 00000230  00000000  00000000  00001cc6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000326e  00000000  00000000  00001f02  2**0
+  7 .debug_info   00003265  00000000  00000000  00001ef6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000084f  00000000  00000000  00005170  2**0
+  8 .debug_abbrev 0000084f  00000000  00000000  0000515b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00001720  00000000  00000000  000059bf  2**0
+  9 .debug_line   00001708  00000000  00000000  000059aa  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000718  00000000  00000000  000070e0  2**2
+ 10 .debug_frame  00000718  00000000  00000000  000070b4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000007fd  00000000  00000000  000077f8  2**0
+ 11 .debug_str    000007fd  00000000  00000000  000077cc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00001f02  00000000  00000000  00007ff5  2**0
+ 12 .debug_loc    00001f02  00000000  00000000  00007fc9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000001e0  00000000  00000000  00009ef7  2**0
+ 13 .debug_ranges 000001e0  00000000  00000000  00009ecb  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -118,7 +118,7 @@ Disassembly of section .text:
       98:	11 e0       	ldi	r17, 0x01	; 1
       9a:	a0 e0       	ldi	r26, 0x00	; 0
       9c:	b1 e0       	ldi	r27, 0x01	; 1
-      9e:	ee ec       	ldi	r30, 0xCE	; 206
+      9e:	e0 ec       	ldi	r30, 0xC0	; 192
       a0:	f3 e1       	ldi	r31, 0x13	; 19
       a2:	00 e0       	ldi	r16, 0x00	; 0
       a4:	0b bf       	out	0x3b, r16	; 59
@@ -143,7 +143,7 @@ Disassembly of section .text:
       be:	b2 07       	cpc	r27, r18
       c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
       c2:	c2 d1       	rcall	.+900    	; 0x448 <main>
-      c4:	0c 94 e5 09 	jmp	0x13ca	; 0x13ca <_exit>
+      c4:	0c 94 de 09 	jmp	0x13bc	; 0x13bc <_exit>
 
 000000c8 <__bad_interrupt>:
       c8:	9b cf       	rjmp	.-202    	; 0x0 <__vectors>
@@ -735,7 +735,7 @@ int main(void)
 {
 	
 	setupWarehouse();
-     448:	3f d7       	rcall	.+3710   	; 0x12c8 <setupWarehouse>
+     448:	38 d7       	rcall	.+3696   	; 0x12ba <setupWarehouse>
 	initManualMode();
      44a:	e9 df       	rcall	.-46     	; 0x41e <initManualMode>
 	SPI_Init_Master();
@@ -743,9 +743,9 @@ int main(void)
 	setupBluetoothRXTX();
      44e:	5a de       	rcall	.-844    	; 0x104 <setupBluetoothRXTX>
 	setupRFID();
-     450:	28 d7       	rcall	.+3664   	; 0x12a2 <setupRFID>
+     450:	21 d7       	rcall	.+3650   	; 0x1294 <setupRFID>
 	setupLCD();
-     452:	4d d7       	rcall	.+3738   	; 0x12ee <setupLCD>
+     452:	46 d7       	rcall	.+3724   	; 0x12e0 <setupLCD>
 	
 	while(1)
 	{
@@ -2072,7 +2072,7 @@ void SPI_Init_Master()
 	
 	TCCR0A = 0; //Sets Timer register
      dae:	14 bc       	out	0x24, r1	; 36
-	TCCR0B = 0x04; //Clk prescaler set to 256 and start counting
+	TCCR0B = 0x04; //Clk prescaler set to 1024 and start counting
      db0:	84 e0       	ldi	r24, 0x04	; 4
      db2:	85 bd       	out	0x25, r24	; 37
 	
@@ -3238,236 +3238,219 @@ void stationMode(){
     1260:	62 df       	rcall	.-316    	; 0x1126 <powerRFID>
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
-    1262:	06 c0       	rjmp	.+12     	; 0x1270 <stationMode+0x12>
-	{
-		if(stationModeEnable == 0)//Check if we have entered manualmode
-    1264:	80 91 eb 01 	lds	r24, 0x01EB
-    1268:	81 11       	cpse	r24, r1
-    126a:	02 c0       	rjmp	.+4      	; 0x1270 <stationMode+0x12>
-		{
-			powerRFID(0);
-    126c:	5c df       	rcall	.-328    	; 0x1126 <powerRFID>
-			break;
-    126e:	04 c0       	rjmp	.+8      	; 0x1278 <stationMode+0x1a>
-/*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
-void stationMode(){
-	
-	powerRFID(1);
-	
-	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
-    1270:	80 91 f1 01 	lds	r24, 0x01F1
-    1274:	88 23       	and	r24, r24
-    1276:	b1 f3       	breq	.-20     	; 0x1264 <stationMode+0x6>
-		{
-			powerRFID(0);
-			break;
-		}
+    1262:	80 91 f1 01 	lds	r24, 0x01F1
+    1266:	88 23       	and	r24, r24
+    1268:	e1 f3       	breq	.-8      	; 0x1262 <stationMode+0x4>
+// 		{
+// 			powerRFID(0);
+// 			break;
+// 		}
 	}
 	streamFilled = 0;
-    1278:	10 92 f1 01 	sts	0x01F1, r1
+    126a:	10 92 f1 01 	sts	0x01F1, r1
 	if(stationModeEnable == 1)
-    127c:	80 91 eb 01 	lds	r24, 0x01EB
-    1280:	81 30       	cpi	r24, 0x01	; 1
-    1282:	61 f4       	brne	.+24     	; 0x129c <stationMode+0x3e>
+    126e:	80 91 eb 01 	lds	r24, 0x01EB
+    1272:	81 30       	cpi	r24, 0x01	; 1
+    1274:	61 f4       	brne	.+24     	; 0x128e <stationMode+0x30>
 	{
 		if (carryItem == 0)
-    1284:	80 91 ef 01 	lds	r24, 0x01EF
-    1288:	81 11       	cpse	r24, r1
-    128a:	02 c0       	rjmp	.+4      	; 0x1290 <stationMode+0x32>
+    1276:	80 91 ef 01 	lds	r24, 0x01EF
+    127a:	81 11       	cpse	r24, r1
+    127c:	02 c0       	rjmp	.+4      	; 0x1282 <stationMode+0x24>
 		{
 			pickUpMode();
-    128c:	bc df       	rcall	.-136    	; 0x1206 <pickUpMode>
-    128e:	01 c0       	rjmp	.+2      	; 0x1292 <stationMode+0x34>
+    127e:	c3 df       	rcall	.-122    	; 0x1206 <pickUpMode>
+    1280:	01 c0       	rjmp	.+2      	; 0x1284 <stationMode+0x26>
 		}
 		else
 		{
 			deliveryMode();
-    1290:	9f df       	rcall	.-194    	; 0x11d0 <deliveryMode>
+    1282:	a6 df       	rcall	.-180    	; 0x11d0 <deliveryMode>
 		}
 		
 		TIMSK0 = 6; //Enable interrupts
-    1292:	86 e0       	ldi	r24, 0x06	; 6
-    1294:	80 93 6e 00 	sts	0x006E, r24
+    1284:	86 e0       	ldi	r24, 0x06	; 6
+    1286:	80 93 6e 00 	sts	0x006E, r24
 		TCCR0B = 0x04; //Start counter
-    1298:	84 e0       	ldi	r24, 0x04	; 4
-    129a:	85 bd       	out	0x25, r24	; 37
+    128a:	84 e0       	ldi	r24, 0x04	; 4
+    128c:	85 bd       	out	0x25, r24	; 37
 		
 	}
 	stationModeEnable = 0;
-    129c:	10 92 eb 01 	sts	0x01EB, r1
+    128e:	10 92 eb 01 	sts	0x01EB, r1
 	TXleaveStation();
-    12a0:	30 ce       	rjmp	.-928    	; 0xf02 <TXleaveStation>
+    1292:	37 ce       	rjmp	.-914    	; 0xf02 <TXleaveStation>
 
-000012a2 <setupRFID>:
+00001294 <setupRFID>:
 	
 
 }
 
 void setupRFID(){
 	UCSR1B |= (1<<RXEN1) | (1 << RXCIE1); //Enable RX1 and the RX complete interrupt
-    12a2:	e9 ec       	ldi	r30, 0xC9	; 201
-    12a4:	f0 e0       	ldi	r31, 0x00	; 0
-    12a6:	80 81       	ld	r24, Z
-    12a8:	80 69       	ori	r24, 0x90	; 144
-    12aa:	80 83       	st	Z, r24
+    1294:	e9 ec       	ldi	r30, 0xC9	; 201
+    1296:	f0 e0       	ldi	r31, 0x00	; 0
+    1298:	80 81       	ld	r24, Z
+    129a:	80 69       	ori	r24, 0x90	; 144
+    129c:	80 83       	st	Z, r24
 	UCSR1C |= (1 << UCSZ11)|(1 << UCSZ10); //set data length to 8-bit;
-    12ac:	ea ec       	ldi	r30, 0xCA	; 202
-    12ae:	f0 e0       	ldi	r31, 0x00	; 0
-    12b0:	80 81       	ld	r24, Z
-    12b2:	86 60       	ori	r24, 0x06	; 6
-    12b4:	80 83       	st	Z, r24
+    129e:	ea ec       	ldi	r30, 0xCA	; 202
+    12a0:	f0 e0       	ldi	r31, 0x00	; 0
+    12a2:	80 81       	ld	r24, Z
+    12a4:	86 60       	ori	r24, 0x06	; 6
+    12a6:	80 83       	st	Z, r24
 	UBRR1H = (383 >> 8);
-    12b6:	81 e0       	ldi	r24, 0x01	; 1
-    12b8:	80 93 cd 00 	sts	0x00CD, r24
+    12a8:	81 e0       	ldi	r24, 0x01	; 1
+    12aa:	80 93 cd 00 	sts	0x00CD, r24
 	UBRR1L = 0b01111111; //Sets baudvalue in AVR to 383, which gives baude rate 2400. baudvalue = (Fcpu/baudrate*16)-1
-    12bc:	8f e7       	ldi	r24, 0x7F	; 127
-    12be:	80 93 cc 00 	sts	0x00CC, r24
+    12ae:	8f e7       	ldi	r24, 0x7F	; 127
+    12b0:	80 93 cc 00 	sts	0x00CC, r24
 	DDRD |= (1<<DDD5);
-    12c2:	55 9a       	sbi	0x0a, 5	; 10
+    12b4:	55 9a       	sbi	0x0a, 5	; 10
 	PORTD |= (1<<PORTD5);
-    12c4:	5d 9a       	sbi	0x0b, 5	; 11
-    12c6:	08 95       	ret
+    12b6:	5d 9a       	sbi	0x0b, 5	; 11
+    12b8:	08 95       	ret
 
-000012c8 <setupWarehouse>:
+000012ba <setupWarehouse>:
 }
 
 void setupWarehouse(){
 	streamFilled = 0;
-    12c8:	10 92 f1 01 	sts	0x01F1, r1
+    12ba:	10 92 f1 01 	sts	0x01F1, r1
 	carryItem = 0;
-    12cc:	10 92 ef 01 	sts	0x01EF, r1
+    12be:	10 92 ef 01 	sts	0x01EF, r1
 	pickUpItem = 0;
-    12d0:	10 92 f2 01 	sts	0x01F2, r1
+    12c2:	10 92 f2 01 	sts	0x01F2, r1
 	waitingForStartAbort = 0;
-    12d4:	10 92 f9 01 	sts	0x01F9, r1
+    12c6:	10 92 f9 01 	sts	0x01F9, r1
 	waitingForEndPickup = 0;
-    12d8:	10 92 22 02 	sts	0x0222, r1
+    12ca:	10 92 22 02 	sts	0x0222, r1
 	stationModeEnable = 0;
-    12dc:	10 92 eb 01 	sts	0x01EB, r1
+    12ce:	10 92 eb 01 	sts	0x01EB, r1
 	digit = 0;
-    12e0:	10 92 df 01 	sts	0x01DF, r1
+    12d2:	10 92 df 01 	sts	0x01DF, r1
 	historySize = 0;
-    12e4:	10 92 23 02 	sts	0x0223, r1
+    12d6:	10 92 23 02 	sts	0x0223, r1
 	finishedDrop = 0;
-    12e8:	10 92 ee 01 	sts	0x01EE, r1
-    12ec:	08 95       	ret
+    12da:	10 92 ee 01 	sts	0x01EE, r1
+    12de:	08 95       	ret
 
-000012ee <setupLCD>:
+000012e0 <setupLCD>:
 }
 
 void setupLCD(){
-    12ee:	0f 93       	push	r16
+    12e0:	0f 93       	push	r16
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD
-    12f0:	8f ef       	ldi	r24, 0xFF	; 255
-    12f2:	81 b9       	out	0x01, r24	; 1
+    12e2:	8f ef       	ldi	r24, 0xFF	; 255
+    12e4:	81 b9       	out	0x01, r24	; 1
 	DDRB |= (1 << DDB1)|(1 << DDB0); //rs, rw and en are outputs
-    12f4:	84 b1       	in	r24, 0x04	; 4
-    12f6:	83 60       	ori	r24, 0x03	; 3
-    12f8:	84 b9       	out	0x04, r24	; 4
+    12e6:	84 b1       	in	r24, 0x04	; 4
+    12e8:	83 60       	ori	r24, 0x03	; 3
+    12ea:	84 b9       	out	0x04, r24	; 4
 	DDRC |=	(1<< DDC6);
-    12fa:	3e 9a       	sbi	0x07, 6	; 7
+    12ec:	3e 9a       	sbi	0x07, 6	; 7
 	// setting pin numbers and which ports on the LCD the ports on the AVR are hooked up to
 	low_conf.rs_i = 1;
-    12fc:	21 e0       	ldi	r18, 0x01	; 1
-    12fe:	20 93 fa 01 	sts	0x01FA, r18
+    12ee:	21 e0       	ldi	r18, 0x01	; 1
+    12f0:	20 93 fa 01 	sts	0x01FA, r18
 	low_conf.rw_i = 0;
-    1302:	10 92 fb 01 	sts	0x01FB, r1
+    12f4:	10 92 fb 01 	sts	0x01FB, r1
 	low_conf.en_i = 6;
-    1306:	86 e0       	ldi	r24, 0x06	; 6
-    1308:	80 93 fc 01 	sts	0x01FC, r24
+    12f8:	86 e0       	ldi	r24, 0x06	; 6
+    12fa:	80 93 fc 01 	sts	0x01FC, r24
 	
 	low_conf.db7_i = 7;
-    130c:	97 e0       	ldi	r25, 0x07	; 7
-    130e:	90 93 fd 01 	sts	0x01FD, r25
+    12fe:	97 e0       	ldi	r25, 0x07	; 7
+    1300:	90 93 fd 01 	sts	0x01FD, r25
 	low_conf.db6_i = 6;
-    1312:	80 93 fe 01 	sts	0x01FE, r24
+    1304:	80 93 fe 01 	sts	0x01FE, r24
 	low_conf.db5_i = 5;
-    1316:	85 e0       	ldi	r24, 0x05	; 5
-    1318:	80 93 ff 01 	sts	0x01FF, r24
+    1308:	85 e0       	ldi	r24, 0x05	; 5
+    130a:	80 93 ff 01 	sts	0x01FF, r24
 	low_conf.db4_i = 4;
-    131c:	84 e0       	ldi	r24, 0x04	; 4
-    131e:	80 93 00 02 	sts	0x0200, r24
+    130e:	84 e0       	ldi	r24, 0x04	; 4
+    1310:	80 93 00 02 	sts	0x0200, r24
 	low_conf.db3_i = 3;
-    1322:	83 e0       	ldi	r24, 0x03	; 3
-    1324:	80 93 01 02 	sts	0x0201, r24
+    1314:	83 e0       	ldi	r24, 0x03	; 3
+    1316:	80 93 01 02 	sts	0x0201, r24
 	low_conf.db2_i = 2;
-    1328:	82 e0       	ldi	r24, 0x02	; 2
-    132a:	80 93 02 02 	sts	0x0202, r24
+    131a:	82 e0       	ldi	r24, 0x02	; 2
+    131c:	80 93 02 02 	sts	0x0202, r24
 	low_conf.db1_i = 1;
-    132e:	20 93 03 02 	sts	0x0203, r18
+    1320:	20 93 03 02 	sts	0x0203, r18
 	low_conf.db0_i = 0;
-    1332:	10 92 04 02 	sts	0x0204, r1
+    1324:	10 92 04 02 	sts	0x0204, r1
 	low_conf.rs_port = &PORTB;
-    1336:	85 e2       	ldi	r24, 0x25	; 37
-    1338:	90 e0       	ldi	r25, 0x00	; 0
-    133a:	90 93 06 02 	sts	0x0206, r25
-    133e:	80 93 05 02 	sts	0x0205, r24
+    1328:	85 e2       	ldi	r24, 0x25	; 37
+    132a:	90 e0       	ldi	r25, 0x00	; 0
+    132c:	90 93 06 02 	sts	0x0206, r25
+    1330:	80 93 05 02 	sts	0x0205, r24
 	low_conf.rw_port = &PORTB;
-    1342:	90 93 08 02 	sts	0x0208, r25
-    1346:	80 93 07 02 	sts	0x0207, r24
+    1334:	90 93 08 02 	sts	0x0208, r25
+    1338:	80 93 07 02 	sts	0x0207, r24
 	low_conf.en_port = &PORTC;
-    134a:	88 e2       	ldi	r24, 0x28	; 40
-    134c:	90 e0       	ldi	r25, 0x00	; 0
-    134e:	90 93 0a 02 	sts	0x020A, r25
-    1352:	80 93 09 02 	sts	0x0209, r24
+    133c:	88 e2       	ldi	r24, 0x28	; 40
+    133e:	90 e0       	ldi	r25, 0x00	; 0
+    1340:	90 93 0a 02 	sts	0x020A, r25
+    1344:	80 93 09 02 	sts	0x0209, r24
 	low_conf.db7_port = &PORTA;
-    1356:	82 e2       	ldi	r24, 0x22	; 34
-    1358:	90 e0       	ldi	r25, 0x00	; 0
-    135a:	90 93 0c 02 	sts	0x020C, r25
-    135e:	80 93 0b 02 	sts	0x020B, r24
+    1348:	82 e2       	ldi	r24, 0x22	; 34
+    134a:	90 e0       	ldi	r25, 0x00	; 0
+    134c:	90 93 0c 02 	sts	0x020C, r25
+    1350:	80 93 0b 02 	sts	0x020B, r24
 	low_conf.db6_port = &PORTA;
-    1362:	90 93 0e 02 	sts	0x020E, r25
-    1366:	80 93 0d 02 	sts	0x020D, r24
+    1354:	90 93 0e 02 	sts	0x020E, r25
+    1358:	80 93 0d 02 	sts	0x020D, r24
 	low_conf.db5_port = &PORTA;
-    136a:	90 93 10 02 	sts	0x0210, r25
-    136e:	80 93 0f 02 	sts	0x020F, r24
+    135c:	90 93 10 02 	sts	0x0210, r25
+    1360:	80 93 0f 02 	sts	0x020F, r24
 	low_conf.db4_port = &PORTA;
-    1372:	90 93 12 02 	sts	0x0212, r25
-    1376:	80 93 11 02 	sts	0x0211, r24
+    1364:	90 93 12 02 	sts	0x0212, r25
+    1368:	80 93 11 02 	sts	0x0211, r24
 	low_conf.db3_port = &PORTA;
-    137a:	90 93 14 02 	sts	0x0214, r25
-    137e:	80 93 13 02 	sts	0x0213, r24
+    136c:	90 93 14 02 	sts	0x0214, r25
+    1370:	80 93 13 02 	sts	0x0213, r24
 	low_conf.db2_port = &PORTA;
-    1382:	90 93 16 02 	sts	0x0216, r25
-    1386:	80 93 15 02 	sts	0x0215, r24
+    1374:	90 93 16 02 	sts	0x0216, r25
+    1378:	80 93 15 02 	sts	0x0215, r24
 	low_conf.db1_port = &PORTA;
-    138a:	90 93 18 02 	sts	0x0218, r25
-    138e:	80 93 17 02 	sts	0x0217, r24
+    137c:	90 93 18 02 	sts	0x0218, r25
+    1380:	80 93 17 02 	sts	0x0217, r24
 	low_conf.db0_port = &PORTA;
-    1392:	90 93 1a 02 	sts	0x021A, r25
-    1396:	80 93 19 02 	sts	0x0219, r24
+    1384:	90 93 1a 02 	sts	0x021A, r25
+    1388:	80 93 19 02 	sts	0x0219, r24
 	low_conf.line1_base_addr = 0x00;
-    139a:	10 92 1b 02 	sts	0x021B, r1
+    138c:	10 92 1b 02 	sts	0x021B, r1
 	low_conf.line2_base_addr = 0x40;
-    139e:	80 e4       	ldi	r24, 0x40	; 64
-    13a0:	80 93 1c 02 	sts	0x021C, r24
+    1390:	80 e4       	ldi	r24, 0x40	; 64
+    1392:	80 93 1c 02 	sts	0x021C, r24
 	low_conf.dl = HD44780_L_FS_DL_8BIT;
-    13a4:	20 93 1d 02 	sts	0x021D, r18
+    1396:	20 93 1d 02 	sts	0x021D, r18
 	hd44780_l_init(&low_conf, HD44780_L_FS_N_DUAL, HD44780_L_FS_F_58, HD44780_L_EMS_ID_INC, HD44780_L_EMS_S_OFF);
-    13a8:	00 e0       	ldi	r16, 0x00	; 0
-    13aa:	40 e0       	ldi	r20, 0x00	; 0
-    13ac:	61 e0       	ldi	r22, 0x01	; 1
-    13ae:	8a ef       	ldi	r24, 0xFA	; 250
-    13b0:	91 e0       	ldi	r25, 0x01	; 1
-    13b2:	8e db       	rcall	.-2276   	; 0xad0 <hd44780_l_init>
+    139a:	00 e0       	ldi	r16, 0x00	; 0
+    139c:	40 e0       	ldi	r20, 0x00	; 0
+    139e:	61 e0       	ldi	r22, 0x01	; 1
+    13a0:	8a ef       	ldi	r24, 0xFA	; 250
+    13a2:	91 e0       	ldi	r25, 0x01	; 1
+    13a4:	95 db       	rcall	.-2262   	; 0xad0 <hd44780_l_init>
 	hd44780_l_disp(&low_conf, HD44780_L_DISP_D_ON, HD44780_L_DISP_C_OFF, HD44780_L_DISP_B_OFF);
-    13b4:	20 e0       	ldi	r18, 0x00	; 0
-    13b6:	40 e0       	ldi	r20, 0x00	; 0
-    13b8:	61 e0       	ldi	r22, 0x01	; 1
-    13ba:	8a ef       	ldi	r24, 0xFA	; 250
-    13bc:	91 e0       	ldi	r25, 0x01	; 1
-    13be:	52 db       	rcall	.-2396   	; 0xa64 <hd44780_l_disp>
+    13a6:	20 e0       	ldi	r18, 0x00	; 0
+    13a8:	40 e0       	ldi	r20, 0x00	; 0
+    13aa:	61 e0       	ldi	r22, 0x01	; 1
+    13ac:	8a ef       	ldi	r24, 0xFA	; 250
+    13ae:	91 e0       	ldi	r25, 0x01	; 1
+    13b0:	59 db       	rcall	.-2382   	; 0xa64 <hd44780_l_disp>
 	hd44780_l_clear_disp(&low_conf);
-    13c0:	8a ef       	ldi	r24, 0xFA	; 250
-    13c2:	91 e0       	ldi	r25, 0x01	; 1
-    13c4:	32 db       	rcall	.-2460   	; 0xa2a <hd44780_l_clear_disp>
+    13b2:	8a ef       	ldi	r24, 0xFA	; 250
+    13b4:	91 e0       	ldi	r25, 0x01	; 1
+    13b6:	39 db       	rcall	.-2446   	; 0xa2a <hd44780_l_clear_disp>
 }
-    13c6:	0f 91       	pop	r16
-    13c8:	08 95       	ret
+    13b8:	0f 91       	pop	r16
+    13ba:	08 95       	ret
 
-000013ca <_exit>:
-    13ca:	f8 94       	cli
+000013bc <_exit>:
+    13bc:	f8 94       	cli
 
-000013cc <__stop_program>:
-    13cc:	ff cf       	rjmp	.-2      	; 0x13cc <__stop_program>
+000013be <__stop_program>:
+    13be:	ff cf       	rjmp	.-2      	; 0x13be <__stop_program>

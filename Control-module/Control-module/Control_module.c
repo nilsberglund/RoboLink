@@ -27,7 +27,6 @@ ISR(SPI_STC_vect)
 			
 			TIMSK0 &= ~(1<<OCIE0A);
 			
-			//stationMode = 0;
 			
 		} else if (data == 0b10000101)
 		{

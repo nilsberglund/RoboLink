@@ -23,11 +23,11 @@ void stationMode(){
 	
 	while (streamFilled == 0)//Do nothing and wait for interupts -> do not leave loop unitil entire newStream is filled;
 	{
-		if(stationModeEnable == 0)//Check if we have entered manualmode
-		{
-			powerRFID(0);
-			break;
-		}
+// 		if(stationModeEnable == 0)//Check if we have entered manualmode
+// 		{
+// 			powerRFID(0);
+// 			break;
+// 		}
 	}
 	streamFilled = 0;
 	if(stationModeEnable == 1)
