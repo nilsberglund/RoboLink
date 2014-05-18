@@ -16,7 +16,7 @@
 ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 {
 	slaveSelect(SENSORSLAVE);	//slave select
-	sensorData = masterRX(0x01); //sending dummy
+	sensorData = masterRX(0x01); //sending dummy and receiving sensor data
 	
 	if(sensorData == 0b00001111 || sensorData == 0b00011111)
 	{
@@ -197,7 +197,7 @@ int main(void)
 void initManualMode()
 {
 	DDRD &= ~(1 << DDD6);
-	PCICR = 0x08; //sets PCINT31..24 as possible external interrupt port
+	PCICR = 0x08; //sets PCINT31..24 as possible external interrupt ports
 	PCMSK3 = 0x40; //enables external interrupt on PORT PCINT30   - pin 20
 	automaticModeEnabled = 0;
 	manualModeEnabled = 1;
@@ -214,7 +214,7 @@ void toggleMode()
 		automaticModeEnabled = 1;
 		manualModeEnabled = 0;
 		
-		TIMSK0 = 6; //Enable interrupts
+		TIMSK0 = 6; //Enable interrupts for receiving and transmitting sensor data
 		TCCR0B = 0x04; //Enable Counter
 		
 		stationModeEnable = 0;
