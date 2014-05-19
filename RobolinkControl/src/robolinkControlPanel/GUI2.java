@@ -547,7 +547,7 @@ public class GUI2 extends JFrame implements ChangeListener, ActionListener {
 		telTxtPanel.add(txtHistory);
 		
 		txtLastStation.append("Last station: ");
-		txtCurrCargo.append("Current station: ");
+		txtCurrCargo.append("Current cargo: ");
 		txtHistory.append("History: ");
 		
 		telPanel.add(telTxtPanel, BorderLayout.CENTER);	
