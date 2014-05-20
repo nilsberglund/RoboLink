@@ -23,7 +23,7 @@
 #define CARGOINSTR 11
 
 /*----------Variables------------*/
-uint8_t btData;
+volatile uint8_t btData;
 volatile uint8_t waitingForInstruction;
 volatile uint8_t btComponent;
 

@@ -106,11 +106,11 @@ void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 /*Move the arm to default position*/
 void defaultPosition() {
 	
-	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 (joint 5) straight
-	moveSingleServo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up
-	moveDoubleServo(0x1FF, 0x50, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
-	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
-	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
+	moveSingleServo(0x1FF, 0x40, 0x00, 0x07);			//setting servo 7 (joint 5) straight
+	moveSingleServo(0x332, 0x40, 0x00, 0x06);			//setting servo 6 (joint 4) straight up
+	moveDoubleServo(0x1FF, 0x40, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
+	moveDoubleServo(0xCC, 0x40, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
+	moveDoubleServo(0xCC, 0x40, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
 	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
 	
 	//Updating positions
@@ -136,10 +136,10 @@ void pickupDefaultPosition() {
 		joint1_Pos = 0xCC;
 	}
 	
-	moveDoubleServo(0x270, 0xF0, 0x00, 0x02, 0x03);		//Joint 2 //288 innan
-	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);		//Joint 3
-	moveSingleServo(0x144, 0xF0, 0x00, 0x06);			//Joint 4
-	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//Joint 5
+	moveDoubleServo(0x270, 0x50, 0x00, 0x02, 0x03);		//Joint 2 //288 innan
+	moveDoubleServo(0x288, 0x50, 0x00, 0x04, 0x05);		//Joint 3
+	moveSingleServo(0x144, 0x50, 0x00, 0x06);			//Joint 4
+	moveSingleServo(0x1FF, 0x50, 0x00, 0x07);			//Joint 5
 	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);			//Joint 6
 	
 	//Updating positions
@@ -150,7 +150,7 @@ void pickupDefaultPosition() {
 	joint5_Pos = 0x1FF;
 	joint6_Pos = 0x1FF;
 	
-	_delay_ms(1000);
+	_delay_ms(3000);
 	
 	TIMSK0 |= (1<<OCIE0A);
 	

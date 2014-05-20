@@ -23,49 +23,63 @@ ISR(INT1_vect)
 	if(sensorData == 0b00001111 || sensorData == 0b00011111)
 	{
 		stationLeftSensCounter++;
-		if (stationLeftSensCounter == 10)
+		if (stationLeftSensCounter == 5)
 		{
 			stationRightSide = 1;
 		}
-	}	else if(sensorData == 0b01111000 || sensorData == 0b01111100)
+	} else if(sensorData == 0b01111000 || sensorData == 0b01111100)
 	{
 		stationRightSensCounter++;
-		if(stationRightSensCounter == 10)
+		if(stationRightSensCounter == 5)
 		{
 			stationRightSide = 0;
 		}
-	} else
+	}
+	if(stationLeftSensCounter >= 5 || stationRightSensCounter >= 5)
 	{
-		if(stationLeftSensCounter >= 10 || stationRightSensCounter >= 10)
+		lineReadingCounter++;
+		if(lineReadingCounter == 130)
 		{
-			lineReadingCounter++;
-			if(lineReadingCounter == 130)
+			
+			TIMSK0 = 0; //Interrupt disabled
+			TCCR0B = 0; //Counter disabled
+			
+			if(stationRightSide == 0)
 			{
-				
-				TIMSK0 = 0; //Interrupt disabled
-				TCCR0B = 0; //Counter disabled
-				
-				if(stationRightSide == 0)
-				{
-					wheelData = 0x80;
-				} else if(stationRightSide)
-				{
-					wheelData = 0;
-				}
-				TXwheelData();
-				stationModeEnable = 1;
-				stationRightSensCounter = 0;
+				wheelData = 0x80;
+			} else if(stationRightSide == 1)
+			{
+				wheelData = 0;
+			}
+			TXwheelData();
+			stationModeEnable = 1;
+			stationRightSensCounter = 0;
+			stationLeftSensCounter = 0;
+			lineReadingCounter = 0;
+		}
+	}
+	else
+	{
+		if(sensorData != 0b00001111 || sensorData != 0b00011111)
+		{
+			notLeftStationCounter++;
+			if (notLeftStationCounter == 30)
+			{
 				stationLeftSensCounter = 0;
-				lineReadingCounter = 0;
+				notLeftStationCounter = 0;
 			}
 		}
-		else
+		if(sensorData != 0b01111000 || sensorData != 0b01111100)
 		{
-			stationLeftSensCounter = 0;
-			stationRightSensCounter = 0;
+			notRightStationCounter++;
+			if (notRightStationCounter == 30)
+			{
+				stationRightSensCounter = 0;
+				notRightStationCounter = 0;
+			}
 		}
-		
 	}
+	
 	slaveSelect(CONTROLSLAVE);
 }
 
@@ -164,17 +178,17 @@ ISR(USART1_RX_vect){
 	newStream[digit] = UDR1;
 	digit++;
 	if (digit == 12) {
+		powerRFID(0);
 		digit = 0;
 		streamFilled = 1;
-		powerRFID(0);
 	}
 }
 
 /*Interrupt hooked up to switch for changing between auto/manual mode*/
 ISR(PCINT3_vect)
- {
- 	toggleMode();
- }
+{
+	toggleMode();
+}
 
 int main(void)
 {
@@ -207,6 +221,8 @@ void initManualMode()
 	stationRightSensCounter = 0;
 	lineReadingCounter = 0;
 	btSensDataCnt = 0;
+	notLeftStationCounter = 0;
+	notRightStationCounter = 0;
 }
 
 /*Toggles between manual and auto mode*/
@@ -222,7 +238,7 @@ void toggleMode()
 		
 		stationModeEnable = 0;
 		TXbluetoothInstr(MODEINSTR, manualModeEnabled); 	//Send info about mode to GUI
-	
+		
 		
 	} else if (manualModeEnabled == 0)
 	{

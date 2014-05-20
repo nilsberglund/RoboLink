@@ -32,8 +32,8 @@ void SPIinitMaster()
 	TCCR0A = 0; //Sets Timer register
 	TCCR0B = 0x04; //Clk prescaler set to 1024 and start counting
 	
-	OCR0A = 120; //Sets compare register for sensor receive interrupt to 122
-	OCR0B = 130; //Sets compare register for sensor send interrupt to 125
+	OCR0A = 100; //Sets compare register for sensor receive interrupt to 122
+	OCR0B = 150; //Sets compare register for sensor send interrupt to 125
 	TCNT0 = 0;	//Initiates timer
 }
 

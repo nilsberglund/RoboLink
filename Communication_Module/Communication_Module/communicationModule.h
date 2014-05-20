@@ -22,6 +22,8 @@ volatile uint8_t stationRightSensCounter;
 volatile uint8_t stationLeftSensCounter;
 volatile uint8_t lineReadingCounter;
 uint8_t btSensDataCnt;
+volatile uint8_t notLeftStationCounter;
+volatile uint8_t notRightStationCounter;
 
 
 #endif /* COMMUNICATIONMODULE_H_ */

@@ -17,6 +17,7 @@ uint8_t catalog[18][10] = {{0x30, 0x31, 0x30, 0x30, 0x45, 0x32, 0x42, 0x33, 0x37
 /*Called by transportMode(). Reads rfid tag and enters pickupMode() or deliveryMode() if the robot is carrying object or not */
 void stationMode(){
 	
+	streamFilled = 0;
 	powerRFID(1);
 	
 	while (streamFilled == 0)//Do nothing and wait for interrupts -> do not leave loop unitil entire newStream is filled;
@@ -39,40 +40,16 @@ void stationMode(){
 			deliveryMode();
 		}
 		
+		//TXleaveStation();
 		TIMSK0 = 6; //Enable interrupts
 		TCCR0B = 0x04; //Start counter
 		
 	}
 	stationModeEnable = 0;
-	TXleaveStation();
-}
-
-/*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
-void waitForUserInputStartAbort()
-{
-	while (waitingForStartAbort == 0) {
-		
-	}
-	waitingForStartAbort = 0;
+	
 }
 
 
-/*Called by pickupMode(). Waiting for the user to finish pick up and press END PICKUP */
-void waitForUserInputEndPickup()
-{
-	while (waitingForEndPickup == 0) {
-		
-	}
-	waitingForEndPickup = 0;
-}
-
-void waitForFinishedDrop()
-{
-	while (finishedDrop == 0) {
-		
-	}
-	finishedDrop = 0;
-}
 
 /*Called by stationMode(). Enters if not carrying object.*/
 void pickUpMode(){
@@ -128,6 +105,35 @@ void deliveryMode(){
 	}
 }
 
+/*Called by pickupMode(). Waiting for the user to press either START PICKUP or ABORT PICKUP */
+void waitForUserInputStartAbort()
+{
+	while (waitingForStartAbort == 0) {
+		
+	}
+	waitingForStartAbort = 0;
+}
+
+
+/*Called by pickupMode(). Waiting for the user to finish pick up and press END PICKUP */
+void waitForUserInputEndPickup()
+{
+	while (waitingForEndPickup == 0) {
+		
+	}
+	waitingForEndPickup = 0;
+}
+
+
+/*Function that waits for item to be dropped of*/
+void waitForFinishedDrop()
+{
+	while (finishedDrop == 0) {
+		
+	}
+	finishedDrop = 0;
+}
+
 
 /*Adds RIFD pair to history when they are finished*/
 void addPairToHistory(){
@@ -158,9 +164,11 @@ void addPairToHistory(){
 /*Called by pickupMode(). Checks if object is already delivered */
 uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
 	
+	uint8_t tempCatNumber = identifyNewStreamCatalogNumber();
+	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
 	{
-		if (history[cntCatalog] == identifyNewStreamCatalogNumber())
+		if (history[cntCatalog] == tempCatNumber)
 		{
 			return 1;
 		}

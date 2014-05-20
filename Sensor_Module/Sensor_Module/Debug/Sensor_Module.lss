@@ -171,7 +171,7 @@ void initADC() {
   dc:	81 e0       	ldi	r24, 0x01	; 1
   de:	8d bb       	out	0x1d, r24	; 29
 		{
-			channelThresholds[i] = 195;
+			channelThresholds[i] = 180;
 		}
 		else
 		{
@@ -183,8 +183,8 @@ void initADC() {
 		
 		if(i == 1 || i == 2)
 		{
-			channelThresholds[i] = 195;
-  e6:	93 ec       	ldi	r25, 0xC3	; 195
+			channelThresholds[i] = 180;
+  e6:	94 eb       	ldi	r25, 0xB4	; 180
   e8:	90 93 1c 01 	sts	0x011C, r25
   ec:	90 93 1d 01 	sts	0x011D, r25
 		}

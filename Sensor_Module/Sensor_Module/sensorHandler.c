@@ -59,7 +59,7 @@ void initADC() {
 		
 		if(i == 1 || i == 2)
 		{
-			channelThresholds[i] = 195;
+			channelThresholds[i] = 180;
 		}
 		else
 		{

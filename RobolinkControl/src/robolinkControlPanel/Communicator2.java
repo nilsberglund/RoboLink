@@ -32,7 +32,7 @@ public class Communicator2 implements SerialPortEventListener
 	//and disabling buttons depending on whether the program
 	//is connected to a serial port or not
 
-	private int sensCounter = 0;
+	//private int sensCounter = 0;
 
 	private int component;
 	private boolean bConnected = false;
@@ -229,9 +229,9 @@ public class Communicator2 implements SerialPortEventListener
 
 				if (waitingForInstruction) {
 					waitingForInstruction = false;
-					if(singleData != SENSINSTR){
-						System.out.println("Instr: " + singleData);	
-					}
+//					if(singleData != SENSINSTR){
+//						System.out.println("Instr: " + singleData);	
+//					}
 					if (singleData == SENSINSTR) {
 						component = LEDS;
 					}
@@ -253,13 +253,13 @@ public class Communicator2 implements SerialPortEventListener
 				else if (!waitingForInstruction) {
 					waitingForInstruction = true;
 
-					if(component != LEDS){
-						System.out.println("DATA: " + singleData);	
-					}
+//					if(component != LEDS){
+//						System.out.println("DATA: " + singleData);	
+//					}
 
 					if (component == LEDS) {
-						sensCounter++;
-						System.out.println(sensCounter);
+						//sensCounter++;
+						//System.out.println(sensCounter);
 						window.paintLED(singleData);
 					}
 					else if (component == MODE) {

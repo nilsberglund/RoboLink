@@ -59,10 +59,11 @@ ISR(SPI_STC_vect)
 		if(component == SENSOR)
 		{
 			sensorData = data;
-			if(stationMode == 0)
-			{
-				controlAlgorithm();
-			}
+			controlAlgorithm();
+// 			if(stationMode == 0)
+// 			{
+// 				controlAlgorithm();
+// 			}
 		}else if (component == ARM)
 		{
 			armData = data;
