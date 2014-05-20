@@ -1,18 +1,18 @@
 /*
-* Control_module.c
+* controlWheelSteering.c
 *
 * Created: 4/23/2014 9:05:12 AM
-*  Author: NISSE B
+*  Author: Nils Berglund
 */
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <math.h>
-#include "Control_wheel_steering.h"
-#include "Slave_control.h"
+#include "controlWheelSteering.h"
+#include "slaveControl.h"
 #include <stdlib.h>
 #include "Servo.h"
-#include "Control_module.h"
+#include "controlModule.h"
 
 
 /*Function that calculates the line error*/
@@ -120,7 +120,7 @@ int8_t calculateSpeed(int8_t error)
 	return speed;
 }
 
-/* function initiates driving */
+/* Function that initiates driving */
 void drivingSetup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
@@ -261,11 +261,14 @@ void moveRobot()
 	}
 }
 
+/*Functions that sets new Kp value*/
 void changeProportional(uint8_t newKp)
 {
 	Kp = newKp;
 }
 
+
+/*Functions that sets new Kd value*/
 void changeDerivative(uint8_t newKd)
 {
 	Kd = newKd;

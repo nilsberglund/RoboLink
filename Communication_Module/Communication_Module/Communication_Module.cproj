@@ -120,22 +120,22 @@
     <Compile Include="Bluetooth.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication_Module.c">
+    <Compile Include="communicationModule.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Communication_Module.h">
+    <Compile Include="communicationModule.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hd44780_low.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="LCD_new.c">
+    <Compile Include="LCD.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master_communication.c">
+    <Compile Include="masterCommunication.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Master_communication.h">
+    <Compile Include="masterCommunication.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="warehouseMode.c">

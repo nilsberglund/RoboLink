@@ -1,13 +1,13 @@
 ﻿/*
- * Communication_Module.h
+ * communicationModule.h
  *
  * Created: 4/23/2014 10:30:27 AM
- *  Author: susba199
+ *  Author: Susanna Bäckman
  */ 
 
 
-#ifndef COMMUNICATION_MODULE_H_
-#define COMMUNICATION_MODULE_H_
+#ifndef COMMUNICATIONMODULE_H_
+#define COMMUNICATIONMODULE_H_
 
 
 /*--------Functions-----------*/
@@ -24,4 +24,4 @@ volatile uint8_t lineReadingCounter;
 uint8_t btSensDataCnt;
 
 
-#endif /* COMMUNICATION_MODULE_H_ */
+#endif /* COMMUNICATIONMODULE_H_ */

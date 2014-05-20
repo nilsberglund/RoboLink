@@ -1,13 +1,13 @@
 ﻿/*
- * SensorCalMajor.h
+ * sensorHandler.h
  *
  * Created: 4/23/2014 9:45:46 AM
  *  Author: susba199
  */ 
 
 
-#ifndef SENSORCALMAJOR_H_
-#define SENSORCALMAJOR_H_
+#ifndef SENSORHANDLER_H_
+#define SENSORHANDLER_H_
 
 /*------Variables-------*/
 
@@ -32,4 +32,4 @@ void calibration();
 
 
 
-#endif /* SENSORCALMAJOR_H_ */
+#endif /* SENSORHANDLER_H_ */

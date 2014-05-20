@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 0000054e  00000000  00000000  00003184  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000eee  00000000  00000000  000036d2  2**0
+  9 .debug_line   00000ee0  00000000  00000000  000036d2  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000388  00000000  00000000  000045c0  2**2
+ 10 .debug_frame  00000388  00000000  00000000  000045b4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000005a0  00000000  00000000  00004948  2**0
+ 11 .debug_str    0000050e  00000000  00000000  0000493c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00001395  00000000  00000000  00004ee8  2**0
+ 12 .debug_loc    00001395  00000000  00000000  00004e4a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000120  00000000  00000000  0000627d  2**0
+ 13 .debug_ranges 00000120  00000000  00000000  000061df  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -137,7 +137,7 @@ Disassembly of section .text:
 		}
 	}
 }
-
+/*Interrupt that runs when timer matches compare register. Updates servo position*/
 ISR(TIMER0_COMPA_vect)
 {
   ae:	1f 92       	push	r1
@@ -192,7 +192,7 @@ ISR(TIMER0_COMPA_vect)
 00000104 <initTimer>:
 }
 
-
+/*Initializes the timer*/
 void initTimer()
 {
 	TCCR0A = 0;
@@ -227,9 +227,9 @@ int main(void)
  11e:	ff cf       	rjmp	.-2      	; 0x11e <main+0x8>
 
 00000120 <startTransportMode>:
-	stationMode = 0;
 }
 
+/*Starts transport mode*/
 void startTransportMode()
 {
 	stationMode = 0;
@@ -238,9 +238,9 @@ void startTransportMode()
 
 00000126 <__vector_19>:
 #include "Servo.h"
-#include "Control_module.h"
+#include "controlModule.h"
 
-
+/*Interrupt that runs when new SPI data is received*/
 ISR(SPI_STC_vect)
 {
  126:	1f 92       	push	r1
@@ -272,7 +272,6 @@ ISR(SPI_STC_vect)
  158:	09 f0       	breq	.+2      	; 0x15c <__vector_19+0x36>
  15a:	4b c0       	rjmp	.+150    	; 0x1f2 <__vector_19+0xcc>
 	{
-		//waitingForInstruction = 0;
 		if(data == 0b10000100)
  15c:	80 91 13 01 	lds	r24, 0x0113
  160:	84 38       	cpi	r24, 0x84	; 132
@@ -456,7 +455,7 @@ ISR(SPI_STC_vect)
  28e:	18 95       	reti
 
 00000290 <getError>:
-#include "Control_module.h"
+#include "controlModule.h"
 
 
 /*Function that calculates the line error*/
@@ -643,7 +642,7 @@ int8_t calculateSpeed(int8_t error)
 
 000003ae <drivingSetup>:
 
-/* function initiates driving */
+/* Function that initiates driving */
 void drivingSetup()
 {
 	TCCR1A    = 0b11110001; //Sets the mode to Phase Correct PWM and sets the Comp to set on incrementing.
@@ -1116,9 +1115,9 @@ void moveRobot()
  63e:	08 95       	ret
 
 00000640 <changeProportional>:
-	}
 }
 
+/*Functions that sets new Kp value*/
 void changeProportional(uint8_t newKp)
 {
 	Kp = newKp;
@@ -1126,8 +1125,9 @@ void changeProportional(uint8_t newKp)
  644:	08 95       	ret
 
 00000646 <changeDerivative>:
-}
 
+
+/*Functions that sets new Kd value*/
 void changeDerivative(uint8_t newKd)
 {
 	Kd = newKd;
@@ -1135,16 +1135,30 @@ void changeDerivative(uint8_t newKd)
  64a:	08 95       	ret
 
 0000064c <USARTTransmit>:
+}
+
+/*Transmits a byte via USART*/
+void USARTTransmit( unsigned char data) {
+	/*Wait for empty transmit buffer*/
+	PORTD |= (1 << PORTD3);
  64c:	5b 9a       	sbi	0x0b, 3	; 11
+	while (!(UCSR0A & (1<<UDRE0))); // UDREn == Data Register Empty (indicates whether the transmit buffer is ready to recieve new data.
  64e:	e0 ec       	ldi	r30, 0xC0	; 192
  650:	f0 e0       	ldi	r31, 0x00	; 0
  652:	90 81       	ld	r25, Z
  654:	95 ff       	sbrs	r25, 5
  656:	fd cf       	rjmp	.-6      	; 0x652 <USARTTransmit+0x6>
+	/*Put data into buffer, sends the data*/
+	UDR0 = data; //UDREn cleared.
  658:	80 93 c6 00 	sts	0x00C6, r24
  65c:	08 95       	ret
 
 0000065e <moveSingleServo>:
+}
+
+
+/*Move single servos to a position*/
+void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID) { 
  65e:	ff 92       	push	r15
  660:	0f 93       	push	r16
  662:	1f 93       	push	r17
@@ -1156,28 +1170,46 @@ void changeDerivative(uint8_t newKd)
  66e:	f6 2e       	mov	r15, r22
  670:	04 2f       	mov	r16, r20
  672:	12 2f       	mov	r17, r18
+	
+	byte checksum;
+	
+	volatile unsigned char s_low_byte = position;			//lower byte of position for servo
  674:	89 83       	std	Y+1, r24	; 0x01
+	volatile unsigned char s_high_byte = (position >> 8);	//higher byte of position for servo
  676:	9a 83       	std	Y+2, r25	; 0x02
+	
+	USARTTransmit(0xFF);			//start byte
  678:	8f ef       	ldi	r24, 0xFF	; 255
  67a:	e8 df       	rcall	.-48     	; 0x64c <USARTTransmit>
+	USARTTransmit(0xFF);			//start byte
  67c:	8f ef       	ldi	r24, 0xFF	; 255
  67e:	e6 df       	rcall	.-52     	; 0x64c <USARTTransmit>
+	USARTTransmit(servo_ID);		//servo ID
  680:	81 2f       	mov	r24, r17
  682:	e4 df       	rcall	.-56     	; 0x64c <USARTTransmit>
+	USARTTransmit(0x07);			//length = 7
  684:	87 e0       	ldi	r24, 0x07	; 7
  686:	e2 df       	rcall	.-60     	; 0x64c <USARTTransmit>
+	USARTTransmit(WRITE);			//instruction = write_data
  688:	83 e0       	ldi	r24, 0x03	; 3
  68a:	e0 df       	rcall	.-64     	; 0x64c <USARTTransmit>
+	USARTTransmit(GOAL_POSITION_L);	//address = goal position(L)
  68c:	8e e1       	ldi	r24, 0x1E	; 30
  68e:	de df       	rcall	.-68     	; 0x64c <USARTTransmit>
+	USARTTransmit(s_low_byte);		//send low byte of position
  690:	89 81       	ldd	r24, Y+1	; 0x01
  692:	dc df       	rcall	.-72     	; 0x64c <USARTTransmit>
+	USARTTransmit(s_high_byte);		//send high byte of position
  694:	8a 81       	ldd	r24, Y+2	; 0x02
  696:	da df       	rcall	.-76     	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_l);			//send low byte of speed
  698:	8f 2d       	mov	r24, r15
  69a:	d8 df       	rcall	.-80     	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_h);			//send high byte of speed
  69c:	80 2f       	mov	r24, r16
  69e:	d6 df       	rcall	.-84     	; 0x64c <USARTTransmit>
+	
+	checksum = servo_ID + 0x07 + WRITE + GOAL_POSITION_L + s_low_byte + s_high_byte + speed_l + speed_h;
  6a0:	99 81       	ldd	r25, Y+1	; 0x01
  6a2:	8a 81       	ldd	r24, Y+2	; 0x02
  6a4:	89 0f       	add	r24, r25
@@ -1186,8 +1218,14 @@ void changeDerivative(uint8_t newKd)
  6aa:	0f 0d       	add	r16, r15
  6ac:	80 2f       	mov	r24, r16
  6ae:	81 0f       	add	r24, r17
+	
+	checksum = ~checksum;
+	
+	USARTTransmit(checksum);
  6b0:	80 95       	com	r24
  6b2:	cc df       	rcall	.-104    	; 0x64c <USARTTransmit>
+	
+}
  6b4:	0f 90       	pop	r0
  6b6:	0f 90       	pop	r0
  6b8:	df 91       	pop	r29
@@ -1198,6 +1236,9 @@ void changeDerivative(uint8_t newKd)
  6c2:	08 95       	ret
 
 000006c4 <moveDoubleServo>:
+
+/*Move servos placed two and two to a position.*/
+void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2) {
  6c4:	ef 92       	push	r14
  6c6:	ff 92       	push	r15
  6c8:	0f 93       	push	r16
@@ -1212,54 +1253,84 @@ void changeDerivative(uint8_t newKd)
  6da:	f6 2e       	mov	r15, r22
  6dc:	14 2f       	mov	r17, r20
  6de:	e2 2e       	mov	r14, r18
+	
+	byte checksum;
+	
+	volatile unsigned int tmp = 1023-position;
  6e0:	af ef       	ldi	r26, 0xFF	; 255
  6e2:	b3 e0       	ldi	r27, 0x03	; 3
  6e4:	a8 1b       	sub	r26, r24
  6e6:	b9 0b       	sbc	r27, r25
  6e8:	ba 83       	std	Y+2, r27	; 0x02
  6ea:	a9 83       	std	Y+1, r26	; 0x01
+	
+	volatile unsigned char s1_low_byte = position;			//lower byte of position for servo 1
  6ec:	8b 83       	std	Y+3, r24	; 0x03
+	volatile unsigned char s1_high_byte = (position >> 8);	//higher byte of position for servo 1
  6ee:	9c 83       	std	Y+4, r25	; 0x04
+	
+	volatile unsigned char s2_low_byte = tmp;			//lower byte of position for servo 2
  6f0:	e9 81       	ldd	r30, Y+1	; 0x01
  6f2:	fa 81       	ldd	r31, Y+2	; 0x02
  6f4:	ed 83       	std	Y+5, r30	; 0x05
+	volatile unsigned char s2_high_byte = (tmp >> 8);	//higher byte of position for servo 2
  6f6:	e9 81       	ldd	r30, Y+1	; 0x01
  6f8:	fa 81       	ldd	r31, Y+2	; 0x02
  6fa:	fe 83       	std	Y+6, r31	; 0x06
+	
+	USARTTransmit(0xFF);			//start byte
  6fc:	8f ef       	ldi	r24, 0xFF	; 255
  6fe:	a6 df       	rcall	.-180    	; 0x64c <USARTTransmit>
+	USARTTransmit(0xFF);			//start byte
  700:	8f ef       	ldi	r24, 0xFF	; 255
  702:	a4 df       	rcall	.-184    	; 0x64c <USARTTransmit>
+	USARTTransmit(0xFE);			//broadcast ID
  704:	8e ef       	ldi	r24, 0xFE	; 254
  706:	a2 df       	rcall	.-188    	; 0x64c <USARTTransmit>
+	USARTTransmit(0x0E);			//length is 14
  708:	8e e0       	ldi	r24, 0x0E	; 14
  70a:	a0 df       	rcall	.-192    	; 0x64c <USARTTransmit>
+	USARTTransmit(SYNC_WRITE);		//instruction = sync_data (2 servo)
  70c:	83 e8       	ldi	r24, 0x83	; 131
  70e:	9e df       	rcall	.-196    	; 0x64c <USARTTransmit>
+	USARTTransmit(GOAL_POSITION_L);	
  710:	8e e1       	ldi	r24, 0x1E	; 30
  712:	9c df       	rcall	.-200    	; 0x64c <USARTTransmit>
+	USARTTransmit(0x04);			//data length is 4
  714:	84 e0       	ldi	r24, 0x04	; 4
  716:	9a df       	rcall	.-204    	; 0x64c <USARTTransmit>
+	USARTTransmit(servo_ID1);		//servo id1
  718:	8e 2d       	mov	r24, r14
  71a:	98 df       	rcall	.-208    	; 0x64c <USARTTransmit>
+	USARTTransmit(s1_low_byte);		//send low byte of position
  71c:	8b 81       	ldd	r24, Y+3	; 0x03
  71e:	96 df       	rcall	.-212    	; 0x64c <USARTTransmit>
+	USARTTransmit(s1_high_byte);	//send high byte of position
  720:	8c 81       	ldd	r24, Y+4	; 0x04
  722:	94 df       	rcall	.-216    	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_l);			//send low byte of speed
  724:	8f 2d       	mov	r24, r15
  726:	92 df       	rcall	.-220    	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_h);			//send high byte of speed
  728:	81 2f       	mov	r24, r17
  72a:	90 df       	rcall	.-224    	; 0x64c <USARTTransmit>
+	USARTTransmit(servo_ID2);		//servo id2
  72c:	80 2f       	mov	r24, r16
  72e:	8e df       	rcall	.-228    	; 0x64c <USARTTransmit>
+	USARTTransmit(s2_low_byte);		//send low byte of position
  730:	8d 81       	ldd	r24, Y+5	; 0x05
  732:	8c df       	rcall	.-232    	; 0x64c <USARTTransmit>
+	USARTTransmit(s2_high_byte);	//send high byte of position
  734:	8e 81       	ldd	r24, Y+6	; 0x06
  736:	8a df       	rcall	.-236    	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_l);			//send low byte of speed
  738:	8f 2d       	mov	r24, r15
  73a:	88 df       	rcall	.-240    	; 0x64c <USARTTransmit>
+	USARTTransmit(speed_h);			//send high byte of speed
  73c:	81 2f       	mov	r24, r17
  73e:	86 df       	rcall	.-244    	; 0x64c <USARTTransmit>
+	
+	checksum = 0xFE + 0x0E + SYNC_WRITE + GOAL_POSITION_L + 0x04 + servo_ID1 + s1_low_byte + s1_high_byte + speed_l + speed_h + servo_ID2 + s2_low_byte + s2_high_byte + speed_l + speed_h;
  740:	3b 81       	ldd	r19, Y+3	; 0x03
  742:	8c 81       	ldd	r24, Y+4	; 0x04
  744:	2d 81       	ldd	r18, Y+5	; 0x05
@@ -1275,8 +1346,13 @@ void changeDerivative(uint8_t newKd)
  758:	e1 0e       	add	r14, r17
  75a:	8e 2d       	mov	r24, r14
  75c:	80 0f       	add	r24, r16
+	
+	checksum = ~checksum;
+	
+	USARTTransmit(checksum);
  75e:	80 95       	com	r24
  760:	75 df       	rcall	.-278    	; 0x64c <USARTTransmit>
+}
  762:	26 96       	adiw	r28, 0x06	; 6
  764:	0f b6       	in	r0, 0x3f	; 63
  766:	f8 94       	cli
@@ -1292,20 +1368,27 @@ void changeDerivative(uint8_t newKd)
  77a:	08 95       	ret
 
 0000077c <defaultPosition>:
+
+/*Move the arm to default position*/
+void defaultPosition() {
  77c:	0f 93       	push	r16
  77e:	1f 93       	push	r17
+	
+	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//setting servo 7 (joint 5) straight
  780:	27 e0       	ldi	r18, 0x07	; 7
  782:	41 e0       	ldi	r20, 0x01	; 1
  784:	60 e5       	ldi	r22, 0x50	; 80
  786:	8f ef       	ldi	r24, 0xFF	; 255
  788:	91 e0       	ldi	r25, 0x01	; 1
  78a:	69 df       	rcall	.-302    	; 0x65e <moveSingleServo>
+	moveSingleServo(0x332, 0x50, 0x01, 0x06);			//setting servo 6 (joint 4) straight up
  78c:	26 e0       	ldi	r18, 0x06	; 6
  78e:	41 e0       	ldi	r20, 0x01	; 1
  790:	60 e5       	ldi	r22, 0x50	; 80
  792:	82 e3       	ldi	r24, 0x32	; 50
  794:	93 e0       	ldi	r25, 0x03	; 3
  796:	63 df       	rcall	.-314    	; 0x65e <moveSingleServo>
+	moveDoubleServo(0x1FF, 0x50, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
  798:	03 e0       	ldi	r16, 0x03	; 3
  79a:	10 e0       	ldi	r17, 0x00	; 0
  79c:	22 e0       	ldi	r18, 0x02	; 2
@@ -1314,6 +1397,7 @@ void changeDerivative(uint8_t newKd)
  7a2:	8f ef       	ldi	r24, 0xFF	; 255
  7a4:	91 e0       	ldi	r25, 0x01	; 1
  7a6:	8e df       	rcall	.-228    	; 0x6c4 <moveDoubleServo>
+	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
  7a8:	05 e0       	ldi	r16, 0x05	; 5
  7aa:	10 e0       	ldi	r17, 0x00	; 0
  7ac:	24 e0       	ldi	r18, 0x04	; 4
@@ -1322,6 +1406,7 @@ void changeDerivative(uint8_t newKd)
  7b2:	8c ec       	ldi	r24, 0xCC	; 204
  7b4:	90 e0       	ldi	r25, 0x00	; 0
  7b6:	86 df       	rcall	.-244    	; 0x6c4 <moveDoubleServo>
+	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
  7b8:	03 e0       	ldi	r16, 0x03	; 3
  7ba:	10 e0       	ldi	r17, 0x00	; 0
  7bc:	22 e0       	ldi	r18, 0x02	; 2
@@ -1330,41 +1415,66 @@ void changeDerivative(uint8_t newKd)
  7c2:	8c ec       	ldi	r24, 0xCC	; 204
  7c4:	90 e0       	ldi	r25, 0x00	; 0
  7c6:	7e df       	rcall	.-260    	; 0x6c4 <moveDoubleServo>
+	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
  7c8:	21 e0       	ldi	r18, 0x01	; 1
  7ca:	40 e0       	ldi	r20, 0x00	; 0
  7cc:	60 e2       	ldi	r22, 0x20	; 32
  7ce:	8f ef       	ldi	r24, 0xFF	; 255
  7d0:	91 e0       	ldi	r25, 0x01	; 1
  7d2:	45 df       	rcall	.-374    	; 0x65e <moveSingleServo>
+	
+	//Updating positions
+	joint1_Pos = 0x1FF;
  7d4:	8f ef       	ldi	r24, 0xFF	; 255
  7d6:	91 e0       	ldi	r25, 0x01	; 1
  7d8:	90 93 09 01 	sts	0x0109, r25
  7dc:	80 93 08 01 	sts	0x0108, r24
+	joint2_Pos = 0xCC;
  7e0:	2c ec       	ldi	r18, 0xCC	; 204
  7e2:	30 e0       	ldi	r19, 0x00	; 0
  7e4:	30 93 05 01 	sts	0x0105, r19
  7e8:	20 93 04 01 	sts	0x0104, r18
+	joint3_Pos = 0xCC;
  7ec:	30 93 17 01 	sts	0x0117, r19
  7f0:	20 93 16 01 	sts	0x0116, r18
+	joint4_Pos = 0x332;
  7f4:	22 e3       	ldi	r18, 0x32	; 50
  7f6:	33 e0       	ldi	r19, 0x03	; 3
  7f8:	30 93 20 01 	sts	0x0120, r19
  7fc:	20 93 1f 01 	sts	0x011F, r18
+	joint5_Pos = 0x1FF;
  800:	90 93 1e 01 	sts	0x011E, r25
  804:	80 93 1d 01 	sts	0x011D, r24
+}
  808:	1f 91       	pop	r17
  80a:	0f 91       	pop	r16
  80c:	08 95       	ret
 
 0000080e <armInit>:
+#include <avr/interrupt.h>
+
+/*Initializes ports and registers to communicate with robot arm*/
+void armInit(void) {
+	
+	DDRD |= (1<<DDD3); //Setting D2 to output to control the tri-state
  80e:	53 9a       	sbi	0x0a, 3	; 10
+	/*Set baud rate.*/
+	UBRR0H = (unsigned char)(0);  //baudvalue = (f_cpu/baudrate*16) -1
  810:	10 92 c5 00 	sts	0x00C5, r1
+	UBRR0L = (unsigned char)(0);
  814:	10 92 c4 00 	sts	0x00C4, r1
+	/* Enable receiver and transmitter.*/
+	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
  818:	88 e1       	ldi	r24, 0x18	; 24
  81a:	80 93 c1 00 	sts	0x00C1, r24
+	/*Set frame format. Asynchronous mode, no parity, 1 stop bit, char size 8.  */
+	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
  81e:	86 e0       	ldi	r24, 0x06	; 6
  820:	80 93 c2 00 	sts	0x00C2, r24
+		
+	defaultPosition(); 	
  824:	ab df       	rcall	.-170    	; 0x77c <defaultPosition>
+	moveSingleServo(0x1FF, 0x50, 0x00, 0x08); //150 grader
  826:	28 e0       	ldi	r18, 0x08	; 8
  828:	40 e0       	ldi	r20, 0x00	; 0
  82a:	60 e5       	ldi	r22, 0x50	; 80
@@ -1373,39 +1483,59 @@ void changeDerivative(uint8_t newKd)
  830:	16 cf       	rjmp	.-468    	; 0x65e <moveSingleServo>
 
 00000832 <pickupDefaultPosition>:
+	joint4_Pos = 0x332;
+	joint5_Pos = 0x1FF;
+}
+
+/*Move the arm to pickup default position.*/
+void pickupDefaultPosition() {
  832:	0f 93       	push	r16
  834:	1f 93       	push	r17
+	
+	TIMSK0 &= ~(1<<OCIE0A);
  836:	ee e6       	ldi	r30, 0x6E	; 110
  838:	f0 e0       	ldi	r31, 0x00	; 0
  83a:	80 81       	ld	r24, Z
  83c:	8d 7f       	andi	r24, 0xFD	; 253
  83e:	80 83       	st	Z, r24
+	
+	if(side == 0){ //Pickup on left side
  840:	80 91 00 01 	lds	r24, 0x0100
  844:	81 11       	cpse	r24, r1
  846:	0d c0       	rjmp	.+26     	; 0x862 <pickupDefaultPosition+0x30>
+		moveSingleServo
+		(0x332, 0x80, 0x00, 0x01); //Servo 1 in position 240 degrees
  848:	21 e0       	ldi	r18, 0x01	; 1
  84a:	40 e0       	ldi	r20, 0x00	; 0
  84c:	60 e8       	ldi	r22, 0x80	; 128
  84e:	82 e3       	ldi	r24, 0x32	; 50
  850:	93 e0       	ldi	r25, 0x03	; 3
  852:	05 df       	rcall	.-502    	; 0x65e <moveSingleServo>
+		joint1_Pos = 0x332;
  854:	82 e3       	ldi	r24, 0x32	; 50
  856:	93 e0       	ldi	r25, 0x03	; 3
  858:	90 93 09 01 	sts	0x0109, r25
  85c:	80 93 08 01 	sts	0x0108, r24
  860:	0e c0       	rjmp	.+28     	; 0x87e <pickupDefaultPosition+0x4c>
+	}
+	else if(side == 1){ //Pickup on right side
  862:	81 30       	cpi	r24, 0x01	; 1
  864:	61 f4       	brne	.+24     	; 0x87e <pickupDefaultPosition+0x4c>
+		moveSingleServo(0xCC, 0x80, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
  866:	21 e0       	ldi	r18, 0x01	; 1
  868:	40 e0       	ldi	r20, 0x00	; 0
  86a:	60 e8       	ldi	r22, 0x80	; 128
  86c:	8c ec       	ldi	r24, 0xCC	; 204
  86e:	90 e0       	ldi	r25, 0x00	; 0
  870:	f6 de       	rcall	.-532    	; 0x65e <moveSingleServo>
+		joint1_Pos = 0xCC;
  872:	8c ec       	ldi	r24, 0xCC	; 204
  874:	90 e0       	ldi	r25, 0x00	; 0
  876:	90 93 09 01 	sts	0x0109, r25
  87a:	80 93 08 01 	sts	0x0108, r24
+	}
+	
+	moveDoubleServo(0x270, 0xF0, 0x00, 0x02, 0x03);		//Joint 2 //288 innan
  87e:	03 e0       	ldi	r16, 0x03	; 3
  880:	10 e0       	ldi	r17, 0x00	; 0
  882:	22 e0       	ldi	r18, 0x02	; 2
@@ -1414,6 +1544,7 @@ void changeDerivative(uint8_t newKd)
  888:	80 e7       	ldi	r24, 0x70	; 112
  88a:	92 e0       	ldi	r25, 0x02	; 2
  88c:	1b df       	rcall	.-458    	; 0x6c4 <moveDoubleServo>
+	moveDoubleServo(0x288, 0xF0, 0x00, 0x04, 0x05);		//Joint 3
  88e:	05 e0       	ldi	r16, 0x05	; 5
  890:	10 e0       	ldi	r17, 0x00	; 0
  892:	24 e0       	ldi	r18, 0x04	; 4
@@ -1422,40 +1553,51 @@ void changeDerivative(uint8_t newKd)
  898:	88 e8       	ldi	r24, 0x88	; 136
  89a:	92 e0       	ldi	r25, 0x02	; 2
  89c:	13 df       	rcall	.-474    	; 0x6c4 <moveDoubleServo>
+	moveSingleServo(0x144, 0xF0, 0x00, 0x06);			//Joint 4
  89e:	26 e0       	ldi	r18, 0x06	; 6
  8a0:	40 e0       	ldi	r20, 0x00	; 0
  8a2:	60 ef       	ldi	r22, 0xF0	; 240
  8a4:	84 e4       	ldi	r24, 0x44	; 68
  8a6:	91 e0       	ldi	r25, 0x01	; 1
  8a8:	da de       	rcall	.-588    	; 0x65e <moveSingleServo>
+	moveSingleServo(0x1FF, 0x50, 0x01, 0x07);			//Joint 5
  8aa:	27 e0       	ldi	r18, 0x07	; 7
  8ac:	41 e0       	ldi	r20, 0x01	; 1
  8ae:	60 e5       	ldi	r22, 0x50	; 80
  8b0:	8f ef       	ldi	r24, 0xFF	; 255
  8b2:	91 e0       	ldi	r25, 0x01	; 1
  8b4:	d4 de       	rcall	.-600    	; 0x65e <moveSingleServo>
+	moveSingleServo(0x1FF, 0x50, 0x00, 0x08);			//Joint 6
  8b6:	28 e0       	ldi	r18, 0x08	; 8
  8b8:	40 e0       	ldi	r20, 0x00	; 0
  8ba:	60 e5       	ldi	r22, 0x50	; 80
  8bc:	8f ef       	ldi	r24, 0xFF	; 255
  8be:	91 e0       	ldi	r25, 0x01	; 1
  8c0:	ce de       	rcall	.-612    	; 0x65e <moveSingleServo>
+	
+	//Updating positions
+	
+	joint2_Pos = 0x270; //Var 288 innan
  8c2:	80 e7       	ldi	r24, 0x70	; 112
  8c4:	92 e0       	ldi	r25, 0x02	; 2
  8c6:	90 93 05 01 	sts	0x0105, r25
  8ca:	80 93 04 01 	sts	0x0104, r24
+	joint3_Pos = 0x288;
  8ce:	88 e8       	ldi	r24, 0x88	; 136
  8d0:	92 e0       	ldi	r25, 0x02	; 2
  8d2:	90 93 17 01 	sts	0x0117, r25
  8d6:	80 93 16 01 	sts	0x0116, r24
+	joint4_Pos = 0x144;
  8da:	84 e4       	ldi	r24, 0x44	; 68
  8dc:	91 e0       	ldi	r25, 0x01	; 1
  8de:	90 93 20 01 	sts	0x0120, r25
  8e2:	80 93 1f 01 	sts	0x011F, r24
+	joint5_Pos = 0x1FF;
  8e6:	8f ef       	ldi	r24, 0xFF	; 255
  8e8:	91 e0       	ldi	r25, 0x01	; 1
  8ea:	90 93 1e 01 	sts	0x011E, r25
  8ee:	80 93 1d 01 	sts	0x011D, r24
+	joint6_Pos = 0x1FF;
  8f2:	90 93 24 01 	sts	0x0124, r25
  8f6:	80 93 23 01 	sts	0x0123, r24
 	#else
@@ -1473,21 +1615,35 @@ void changeDerivative(uint8_t newKd)
  906:	e1 f7       	brne	.-8      	; 0x900 <pickupDefaultPosition+0xce>
  908:	00 c0       	rjmp	.+0      	; 0x90a <pickupDefaultPosition+0xd8>
  90a:	00 00       	nop
+	
+	_delay_ms(1000);
+	
+	TIMSK0 |= (1<<OCIE0A);
  90c:	ee e6       	ldi	r30, 0x6E	; 110
  90e:	f0 e0       	ldi	r31, 0x00	; 0
  910:	80 81       	ld	r24, Z
  912:	82 60       	ori	r24, 0x02	; 2
  914:	80 83       	st	Z, r24
+	
+}
  916:	1f 91       	pop	r17
  918:	0f 91       	pop	r16
  91a:	08 95       	ret
 
 0000091c <dropItem>:
+
+/*Drop the item on either left or right side.*/
+void dropItem() { //Side = 1 right side, side = 0 left side
  91c:	0f 93       	push	r16
  91e:	1f 93       	push	r17
+	
+	//Only servo 1 that is different
+	if(side == 0){ //Drop on left side
  920:	80 91 00 01 	lds	r24, 0x0100
  924:	81 11       	cpse	r24, r1
  926:	07 c0       	rjmp	.+14     	; 0x936 <dropItem+0x1a>
+		moveSingleServo
+		(0x332, 0x80, 0x00, 0x01); //Servo 1 in position 240 degrees
  928:	21 e0       	ldi	r18, 0x01	; 1
  92a:	40 e0       	ldi	r20, 0x00	; 0
  92c:	60 e8       	ldi	r22, 0x80	; 128
@@ -1495,8 +1651,11 @@ void changeDerivative(uint8_t newKd)
  930:	93 e0       	ldi	r25, 0x03	; 3
  932:	95 de       	rcall	.-726    	; 0x65e <moveSingleServo>
  934:	08 c0       	rjmp	.+16     	; 0x946 <dropItem+0x2a>
+	}
+	else if(side == 1){ //Drop on right side
  936:	81 30       	cpi	r24, 0x01	; 1
  938:	31 f4       	brne	.+12     	; 0x946 <dropItem+0x2a>
+		moveSingleServo(0xCC, 0x80, 0x00, 0x01); //Servo 1 in position 60 (CC) degrees
  93a:	21 e0       	ldi	r18, 0x01	; 1
  93c:	40 e0       	ldi	r20, 0x00	; 0
  93e:	60 e8       	ldi	r22, 0x80	; 128
@@ -1512,6 +1671,11 @@ void changeDerivative(uint8_t newKd)
  952:	e1 f7       	brne	.-8      	; 0x94c <dropItem+0x30>
  954:	00 c0       	rjmp	.+0      	; 0x956 <dropItem+0x3a>
  956:	00 00       	nop
+	}
+	
+	_delay_ms(2000);
+	
+	moveDoubleServo(dropJoint2Pos, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
  958:	03 e0       	ldi	r16, 0x03	; 3
  95a:	10 e0       	ldi	r17, 0x00	; 0
  95c:	22 e0       	ldi	r18, 0x02	; 2
@@ -1520,6 +1684,7 @@ void changeDerivative(uint8_t newKd)
  962:	80 91 01 01 	lds	r24, 0x0101
  966:	90 91 02 01 	lds	r25, 0x0102
  96a:	ac de       	rcall	.-680    	; 0x6c4 <moveDoubleServo>
+	moveDoubleServo(dropJoint3Pos, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
  96c:	05 e0       	ldi	r16, 0x05	; 5
  96e:	10 e0       	ldi	r17, 0x00	; 0
  970:	24 e0       	ldi	r18, 0x04	; 4
@@ -1528,12 +1693,14 @@ void changeDerivative(uint8_t newKd)
  976:	80 91 0a 01 	lds	r24, 0x010A
  97a:	90 91 0b 01 	lds	r25, 0x010B
  97e:	a2 de       	rcall	.-700    	; 0x6c4 <moveDoubleServo>
+	moveSingleServo(dropJoint4Pos, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
  980:	26 e0       	ldi	r18, 0x06	; 6
  982:	40 e0       	ldi	r20, 0x00	; 0
  984:	60 e6       	ldi	r22, 0x60	; 96
  986:	80 91 0d 01 	lds	r24, 0x010D
  98a:	90 91 0e 01 	lds	r25, 0x010E
  98e:	67 de       	rcall	.-818    	; 0x65e <moveSingleServo>
+	moveSingleServo(dropJoint5Pos, 0x50, 0x01, 0x07);
  990:	27 e0       	ldi	r18, 0x07	; 7
  992:	41 e0       	ldi	r20, 0x01	; 1
  994:	60 e5       	ldi	r22, 0x50	; 80
@@ -1549,6 +1716,10 @@ void changeDerivative(uint8_t newKd)
  9ac:	e1 f7       	brne	.-8      	; 0x9a6 <dropItem+0x8a>
  9ae:	00 c0       	rjmp	.+0      	; 0x9b0 <dropItem+0x94>
  9b0:	00 00       	nop
+	
+	_delay_ms(3000);
+	
+	moveSingleServo(0x1FF, 0x60, 0x00, 0x08); //Servo 8 in position 150 (1FF) degrees 
  9b2:	28 e0       	ldi	r18, 0x08	; 8
  9b4:	40 e0       	ldi	r20, 0x00	; 0
  9b6:	60 e6       	ldi	r22, 0x60	; 96
@@ -1564,6 +1735,10 @@ void changeDerivative(uint8_t newKd)
  9ca:	e1 f7       	brne	.-8      	; 0x9c4 <dropItem+0xa8>
  9cc:	00 c0       	rjmp	.+0      	; 0x9ce <dropItem+0xb2>
  9ce:	00 00       	nop
+	
+	_delay_ms(2000);
+	
+	defaultPosition();
  9d0:	d5 de       	rcall	.-598    	; 0x77c <defaultPosition>
  9d2:	2f ef       	ldi	r18, 0xFF	; 255
  9d4:	83 ed       	ldi	r24, 0xD3	; 211
@@ -1574,40 +1749,81 @@ void changeDerivative(uint8_t newKd)
  9de:	e1 f7       	brne	.-8      	; 0x9d8 <dropItem+0xbc>
  9e0:	00 c0       	rjmp	.+0      	; 0x9e2 <dropItem+0xc6>
  9e2:	00 00       	nop
+	
+	_delay_ms(1000);
+	
+	TXFinishedDrop();
  9e4:	bf d1       	rcall	.+894    	; 0xd64 <TXFinishedDrop>
+}
  9e6:	1f 91       	pop	r17
  9e8:	0f 91       	pop	r16
  9ea:	08 95       	ret
 
 000009ec <moveArm>:
+
+/*Moves the arm according to armData byte. Byte received by communication module*/
+void moveArm(uint8_t armData) {
  9ec:	0f 93       	push	r16
  9ee:	1f 93       	push	r17
+	
+	uint8_t joint = armData & 0x07;
+	_Bool direction = (armData >> 4) & 0x01;
+	_Bool amp = (armData >> 3) & 0x01;
+	_Bool DPP = (armData >> 5) & 0x01;
+	_Bool DTP = (armData >> 6) & 0x01;
  9f0:	86 fb       	bst	r24, 6
  9f2:	99 27       	eor	r25, r25
  9f4:	90 f9       	bld	r25, 0
+	
+	if (DPP)
  9f6:	85 ff       	sbrs	r24, 5
  9f8:	02 c0       	rjmp	.+4      	; 0x9fe <moveArm+0x12>
+	{
+		pickupDefaultPosition();
  9fa:	1b df       	rcall	.-458    	; 0x832 <pickupDefaultPosition>
  9fc:	7a c1       	rjmp	.+756    	; 0xcf2 <moveArm+0x306>
+	}
+	else if (DTP)
  9fe:	99 23       	and	r25, r25
  a00:	39 f0       	breq	.+14     	; 0xa10 <moveArm+0x24>
+	{
+		
+		TIMSK0 &= ~(1<<OCIE0A);
  a02:	ee e6       	ldi	r30, 0x6E	; 110
  a04:	f0 e0       	ldi	r31, 0x00	; 0
  a06:	80 81       	ld	r24, Z
  a08:	8d 7f       	andi	r24, 0xFD	; 253
  a0a:	80 83       	st	Z, r24
+		
+		defaultPosition();
  a0c:	b7 de       	rcall	.-658    	; 0x77c <defaultPosition>
  a0e:	71 c1       	rjmp	.+738    	; 0xcf2 <moveArm+0x306>
+}
+
+/*Moves the arm according to armData byte. Byte received by communication module*/
+void moveArm(uint8_t armData) {
+	
+	uint8_t joint = armData & 0x07;
  a10:	98 2f       	mov	r25, r24
  a12:	97 70       	andi	r25, 0x07	; 7
+	_Bool direction = (armData >> 4) & 0x01;
  a14:	84 fb       	bst	r24, 4
  a16:	33 27       	eor	r19, r19
  a18:	30 f9       	bld	r19, 0
+	_Bool amp = (armData >> 3) & 0x01;
  a1a:	83 fb       	bst	r24, 3
  a1c:	22 27       	eor	r18, r18
  a1e:	20 f9       	bld	r18, 0
+	}
+	else
+	{
+		
+		
+		if (joint == 1)
  a20:	91 30       	cpi	r25, 0x01	; 1
  a22:	91 f5       	brne	.+100    	; 0xa88 <moveArm+0x9c>
+		{
+			if (direction == 0 && (joint1_Pos - (10+40*amp)) > 0)
  a24:	31 11       	cpse	r19, r1
  a26:	18 c0       	rjmp	.+48     	; 0xa58 <moveArm+0x6c>
  a28:	38 ed       	ldi	r19, 0xD8	; 216
@@ -1622,14 +1838,19 @@ void changeDerivative(uint8_t newKd)
  a3e:	91 05       	cpc	r25, r1
  a40:	09 f4       	brne	.+2      	; 0xa44 <moveArm+0x58>
  a42:	57 c1       	rjmp	.+686    	; 0xcf2 <moveArm+0x306>
+			{
+				joint1_Pos -= (10+40*amp);
  a44:	0a 97       	sbiw	r24, 0x0a	; 10
  a46:	90 93 09 01 	sts	0x0109, r25
  a4a:	80 93 08 01 	sts	0x0108, r24
+				moveSingleServo(joint1_Pos, 0x50, 0x00, 0x01);
  a4e:	21 e0       	ldi	r18, 0x01	; 1
  a50:	40 e0       	ldi	r20, 0x00	; 0
  a52:	60 e5       	ldi	r22, 0x50	; 80
  a54:	04 de       	rcall	.-1016   	; 0x65e <moveSingleServo>
  a56:	4d c1       	rjmp	.+666    	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1 && (joint1_Pos + (10+40*amp)) < 1023)
  a58:	80 91 08 01 	lds	r24, 0x0108
  a5c:	90 91 09 01 	lds	r25, 0x0109
  a60:	0a 96       	adiw	r24, 0x0a	; 10
@@ -1643,15 +1864,23 @@ void changeDerivative(uint8_t newKd)
  a70:	92 07       	cpc	r25, r18
  a72:	08 f0       	brcs	.+2      	; 0xa76 <moveArm+0x8a>
  a74:	3e c1       	rjmp	.+636    	; 0xcf2 <moveArm+0x306>
+			{
+				joint1_Pos += (10+40*amp);
  a76:	90 93 09 01 	sts	0x0109, r25
  a7a:	80 93 08 01 	sts	0x0108, r24
+				moveSingleServo(joint1_Pos, 0x50, 0x00, 0x01);
  a7e:	21 e0       	ldi	r18, 0x01	; 1
  a80:	40 e0       	ldi	r20, 0x00	; 0
  a82:	60 e5       	ldi	r22, 0x50	; 80
  a84:	ec dd       	rcall	.-1064   	; 0x65e <moveSingleServo>
  a86:	35 c1       	rjmp	.+618    	; 0xcf2 <moveArm+0x306>
+			}
+		}
+		else if(joint == 2)
  a88:	92 30       	cpi	r25, 0x02	; 2
  a8a:	b1 f5       	brne	.+108    	; 0xaf8 <moveArm+0x10c>
+		{
+			if (direction == 0 && (joint2_Pos - (10+40*amp)) > 0xCD)
  a8c:	31 11       	cpse	r19, r1
  a8e:	1a c0       	rjmp	.+52     	; 0xac4 <moveArm+0xd8>
  a90:	80 91 04 01 	lds	r24, 0x0104
@@ -1667,8 +1896,11 @@ void changeDerivative(uint8_t newKd)
  aa8:	91 05       	cpc	r25, r1
  aaa:	08 f4       	brcc	.+2      	; 0xaae <moveArm+0xc2>
  aac:	22 c1       	rjmp	.+580    	; 0xcf2 <moveArm+0x306>
+			{
+				joint2_Pos -= (10+40*amp);
  aae:	90 93 05 01 	sts	0x0105, r25
  ab2:	80 93 04 01 	sts	0x0104, r24
+				moveDoubleServo(joint2_Pos, 0x50, 0x00, 0x02, 0x03);
  ab6:	03 e0       	ldi	r16, 0x03	; 3
  ab8:	10 e0       	ldi	r17, 0x00	; 0
  aba:	22 e0       	ldi	r18, 0x02	; 2
@@ -1676,6 +1908,8 @@ void changeDerivative(uint8_t newKd)
  abe:	60 e5       	ldi	r22, 0x50	; 80
  ac0:	01 de       	rcall	.-1022   	; 0x6c4 <moveDoubleServo>
  ac2:	17 c1       	rjmp	.+558    	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1 && (joint2_Pos + (10+40*amp)) < 0x322)
  ac4:	80 91 04 01 	lds	r24, 0x0104
  ac8:	90 91 05 01 	lds	r25, 0x0105
  acc:	0a 96       	adiw	r24, 0x0a	; 10
@@ -1689,8 +1923,11 @@ void changeDerivative(uint8_t newKd)
  adc:	94 07       	cpc	r25, r20
  ade:	08 f0       	brcs	.+2      	; 0xae2 <moveArm+0xf6>
  ae0:	08 c1       	rjmp	.+528    	; 0xcf2 <moveArm+0x306>
+			{
+				joint2_Pos += (10+40*amp);
  ae2:	90 93 05 01 	sts	0x0105, r25
  ae6:	80 93 04 01 	sts	0x0104, r24
+				moveDoubleServo(joint2_Pos, 0x50, 0x00, 0x02, 0x03);
  aea:	03 e0       	ldi	r16, 0x03	; 3
  aec:	10 e0       	ldi	r17, 0x00	; 0
  aee:	22 e0       	ldi	r18, 0x02	; 2
@@ -1698,8 +1935,13 @@ void changeDerivative(uint8_t newKd)
  af2:	60 e5       	ldi	r22, 0x50	; 80
  af4:	e7 dd       	rcall	.-1074   	; 0x6c4 <moveDoubleServo>
  af6:	fd c0       	rjmp	.+506    	; 0xcf2 <moveArm+0x306>
+			}
+		}
+		else if(joint == 3)
  af8:	93 30       	cpi	r25, 0x03	; 3
  afa:	b1 f5       	brne	.+108    	; 0xb68 <moveArm+0x17c>
+		{
+			if (direction == 0 && (joint3_Pos - (10+40*amp)) > 0xCD)
  afc:	31 11       	cpse	r19, r1
  afe:	1a c0       	rjmp	.+52     	; 0xb34 <moveArm+0x148>
  b00:	80 91 16 01 	lds	r24, 0x0116
@@ -1715,8 +1957,11 @@ void changeDerivative(uint8_t newKd)
  b18:	91 05       	cpc	r25, r1
  b1a:	08 f4       	brcc	.+2      	; 0xb1e <moveArm+0x132>
  b1c:	ea c0       	rjmp	.+468    	; 0xcf2 <moveArm+0x306>
+			{
+				joint3_Pos -= (10+40*amp);
  b1e:	90 93 17 01 	sts	0x0117, r25
  b22:	80 93 16 01 	sts	0x0116, r24
+				moveDoubleServo(joint3_Pos, 0x50, 0x00, 0x04, 0x05);
  b26:	05 e0       	ldi	r16, 0x05	; 5
  b28:	10 e0       	ldi	r17, 0x00	; 0
  b2a:	24 e0       	ldi	r18, 0x04	; 4
@@ -1724,6 +1969,8 @@ void changeDerivative(uint8_t newKd)
  b2e:	60 e5       	ldi	r22, 0x50	; 80
  b30:	c9 dd       	rcall	.-1134   	; 0x6c4 <moveDoubleServo>
  b32:	df c0       	rjmp	.+446    	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1 && (joint3_Pos + (10+40*amp)) < 0x322)
  b34:	80 91 16 01 	lds	r24, 0x0116
  b38:	90 91 17 01 	lds	r25, 0x0117
  b3c:	0a 96       	adiw	r24, 0x0a	; 10
@@ -1737,8 +1984,11 @@ void changeDerivative(uint8_t newKd)
  b4c:	94 07       	cpc	r25, r20
  b4e:	08 f0       	brcs	.+2      	; 0xb52 <moveArm+0x166>
  b50:	d0 c0       	rjmp	.+416    	; 0xcf2 <moveArm+0x306>
+			{
+				joint3_Pos += (10+40*amp);
  b52:	90 93 17 01 	sts	0x0117, r25
  b56:	80 93 16 01 	sts	0x0116, r24
+				moveDoubleServo(joint3_Pos, 0x50, 0x00, 0x04, 0x05);
  b5a:	05 e0       	ldi	r16, 0x05	; 5
  b5c:	10 e0       	ldi	r17, 0x00	; 0
  b5e:	24 e0       	ldi	r18, 0x04	; 4
@@ -1746,8 +1996,13 @@ void changeDerivative(uint8_t newKd)
  b62:	60 e5       	ldi	r22, 0x50	; 80
  b64:	af dd       	rcall	.-1186   	; 0x6c4 <moveDoubleServo>
  b66:	c5 c0       	rjmp	.+394    	; 0xcf2 <moveArm+0x306>
+			}
+		}
+		else if (joint == 4)
  b68:	94 30       	cpi	r25, 0x04	; 4
  b6a:	91 f5       	brne	.+100    	; 0xbd0 <moveArm+0x1e4>
+		{
+			if (direction == 0 && (joint4_Pos - (10+40*amp)) > 0)
  b6c:	31 11       	cpse	r19, r1
  b6e:	18 c0       	rjmp	.+48     	; 0xba0 <moveArm+0x1b4>
  b70:	38 ed       	ldi	r19, 0xD8	; 216
@@ -1762,14 +2017,19 @@ void changeDerivative(uint8_t newKd)
  b86:	91 05       	cpc	r25, r1
  b88:	09 f4       	brne	.+2      	; 0xb8c <moveArm+0x1a0>
  b8a:	b3 c0       	rjmp	.+358    	; 0xcf2 <moveArm+0x306>
+			{
+				joint4_Pos -= (10+40*amp);
  b8c:	0a 97       	sbiw	r24, 0x0a	; 10
  b8e:	90 93 20 01 	sts	0x0120, r25
  b92:	80 93 1f 01 	sts	0x011F, r24
+				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
  b96:	26 e0       	ldi	r18, 0x06	; 6
  b98:	40 e0       	ldi	r20, 0x00	; 0
  b9a:	60 e5       	ldi	r22, 0x50	; 80
  b9c:	60 dd       	rcall	.-1344   	; 0x65e <moveSingleServo>
  b9e:	a9 c0       	rjmp	.+338    	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 818)
  ba0:	80 91 1f 01 	lds	r24, 0x011F
  ba4:	90 91 20 01 	lds	r25, 0x0120
  ba8:	0a 96       	adiw	r24, 0x0a	; 10
@@ -1783,15 +2043,23 @@ void changeDerivative(uint8_t newKd)
  bb8:	92 07       	cpc	r25, r18
  bba:	08 f0       	brcs	.+2      	; 0xbbe <moveArm+0x1d2>
  bbc:	9a c0       	rjmp	.+308    	; 0xcf2 <moveArm+0x306>
+			{
+				joint4_Pos += (10+40*amp);
  bbe:	90 93 20 01 	sts	0x0120, r25
  bc2:	80 93 1f 01 	sts	0x011F, r24
+				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
  bc6:	26 e0       	ldi	r18, 0x06	; 6
  bc8:	40 e0       	ldi	r20, 0x00	; 0
  bca:	60 e5       	ldi	r22, 0x50	; 80
  bcc:	48 dd       	rcall	.-1392   	; 0x65e <moveSingleServo>
  bce:	91 c0       	rjmp	.+290    	; 0xcf2 <moveArm+0x306>
+			}
+		}
+		else if (joint == 5)
  bd0:	95 30       	cpi	r25, 0x05	; 5
  bd2:	a1 f5       	brne	.+104    	; 0xc3c <moveArm+0x250>
+		{
+			if (direction == 0 && (joint5_Pos - (10+40*amp)) > 0)
  bd4:	31 11       	cpse	r19, r1
  bd6:	18 c0       	rjmp	.+48     	; 0xc08 <moveArm+0x21c>
  bd8:	38 ed       	ldi	r19, 0xD8	; 216
@@ -1806,14 +2074,19 @@ void changeDerivative(uint8_t newKd)
  bee:	91 05       	cpc	r25, r1
  bf0:	09 f4       	brne	.+2      	; 0xbf4 <moveArm+0x208>
  bf2:	7f c0       	rjmp	.+254    	; 0xcf2 <moveArm+0x306>
+			{
+				joint5_Pos -= (10+40*amp);
  bf4:	0a 97       	sbiw	r24, 0x0a	; 10
  bf6:	90 93 1e 01 	sts	0x011E, r25
  bfa:	80 93 1d 01 	sts	0x011D, r24
+				moveSingleServo(joint5_Pos, 0x50, 0x00, 0x07);
  bfe:	27 e0       	ldi	r18, 0x07	; 7
  c00:	40 e0       	ldi	r20, 0x00	; 0
  c02:	60 e5       	ldi	r22, 0x50	; 80
  c04:	2c dd       	rcall	.-1448   	; 0x65e <moveSingleServo>
  c06:	75 c0       	rjmp	.+234    	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1 && (joint5_Pos + (10+40*amp)) < 1023)
  c08:	40 91 1d 01 	lds	r20, 0x011D
  c0c:	50 91 1e 01 	lds	r21, 0x011E
  c10:	46 5f       	subi	r20, 0xF6	; 246
@@ -1829,85 +2102,122 @@ void changeDerivative(uint8_t newKd)
  c24:	94 07       	cpc	r25, r20
  c26:	08 f0       	brcs	.+2      	; 0xc2a <moveArm+0x23e>
  c28:	64 c0       	rjmp	.+200    	; 0xcf2 <moveArm+0x306>
+			{
+				joint5_Pos += (10+40*amp);
  c2a:	90 93 1e 01 	sts	0x011E, r25
  c2e:	80 93 1d 01 	sts	0x011D, r24
+				moveSingleServo(joint5_Pos, 0x50, 0x00, 0x07);
  c32:	27 e0       	ldi	r18, 0x07	; 7
  c34:	40 e0       	ldi	r20, 0x00	; 0
  c36:	60 e5       	ldi	r22, 0x50	; 80
  c38:	12 dd       	rcall	.-1500   	; 0x65e <moveSingleServo>
  c3a:	5b c0       	rjmp	.+182    	; 0xcf2 <moveArm+0x306>
+			}
+		}
+		else if (joint == 6)
  c3c:	96 30       	cpi	r25, 0x06	; 6
  c3e:	09 f0       	breq	.+2      	; 0xc42 <moveArm+0x256>
  c40:	58 c0       	rjmp	.+176    	; 0xcf2 <moveArm+0x306>
+		{
+			if (direction == 0 && amp == 0)
  c42:	31 11       	cpse	r19, r1
  c44:	50 c0       	rjmp	.+160    	; 0xce6 <moveArm+0x2fa>
  c46:	21 11       	cpse	r18, r1
  c48:	27 c0       	rjmp	.+78     	; 0xc98 <moveArm+0x2ac>
+			{
+				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip narrow
  c4a:	28 e0       	ldi	r18, 0x08	; 8
  c4c:	40 e0       	ldi	r20, 0x00	; 0
  c4e:	60 e5       	ldi	r22, 0x50	; 80
  c50:	8b eb       	ldi	r24, 0xBB	; 187
  c52:	90 e0       	ldi	r25, 0x00	; 0
  c54:	04 dd       	rcall	.-1528   	; 0x65e <moveSingleServo>
+				dropJoint2Pos = joint2_Pos;
  c56:	80 91 04 01 	lds	r24, 0x0104
  c5a:	90 91 05 01 	lds	r25, 0x0105
  c5e:	90 93 02 01 	sts	0x0102, r25
  c62:	80 93 01 01 	sts	0x0101, r24
+				dropJoint3Pos = joint3_Pos;
  c66:	80 91 16 01 	lds	r24, 0x0116
  c6a:	90 91 17 01 	lds	r25, 0x0117
  c6e:	90 93 0b 01 	sts	0x010B, r25
  c72:	80 93 0a 01 	sts	0x010A, r24
+				dropJoint4Pos = joint4_Pos;
  c76:	80 91 1f 01 	lds	r24, 0x011F
  c7a:	90 91 20 01 	lds	r25, 0x0120
  c7e:	90 93 0e 01 	sts	0x010E, r25
  c82:	80 93 0d 01 	sts	0x010D, r24
+				dropJoint5Pos = joint5_Pos;
  c86:	80 91 1d 01 	lds	r24, 0x011D
  c8a:	90 91 1e 01 	lds	r25, 0x011E
  c8e:	90 93 22 01 	sts	0x0122, r25
  c92:	80 93 21 01 	sts	0x0121, r24
  c96:	2d c0       	rjmp	.+90     	; 0xcf2 <moveArm+0x306>
+				
+			}
+			else if (direction == 0 && amp == 1)
+			{
+				moveSingleServo(0x12C, 0x50, 0x00, 0x08); //Grip broad
  c98:	28 e0       	ldi	r18, 0x08	; 8
  c9a:	40 e0       	ldi	r20, 0x00	; 0
  c9c:	60 e5       	ldi	r22, 0x50	; 80
  c9e:	8c e2       	ldi	r24, 0x2C	; 44
  ca0:	91 e0       	ldi	r25, 0x01	; 1
  ca2:	dd dc       	rcall	.-1606   	; 0x65e <moveSingleServo>
+				dropJoint2Pos = joint2_Pos;
  ca4:	80 91 04 01 	lds	r24, 0x0104
  ca8:	90 91 05 01 	lds	r25, 0x0105
  cac:	90 93 02 01 	sts	0x0102, r25
  cb0:	80 93 01 01 	sts	0x0101, r24
+				dropJoint3Pos = joint3_Pos;
  cb4:	80 91 16 01 	lds	r24, 0x0116
  cb8:	90 91 17 01 	lds	r25, 0x0117
  cbc:	90 93 0b 01 	sts	0x010B, r25
  cc0:	80 93 0a 01 	sts	0x010A, r24
+				dropJoint4Pos = joint4_Pos;
  cc4:	80 91 1f 01 	lds	r24, 0x011F
  cc8:	90 91 20 01 	lds	r25, 0x0120
  ccc:	90 93 0e 01 	sts	0x010E, r25
  cd0:	80 93 0d 01 	sts	0x010D, r24
+				dropJoint5Pos = joint5_Pos;
  cd4:	80 91 1d 01 	lds	r24, 0x011D
  cd8:	90 91 1e 01 	lds	r25, 0x011E
  cdc:	90 93 22 01 	sts	0x0122, r25
  ce0:	80 93 21 01 	sts	0x0121, r24
  ce4:	06 c0       	rjmp	.+12     	; 0xcf2 <moveArm+0x306>
+			}
+			else if(direction == 1)
+			{
+				moveSingleServo(0x1FF, 0x50, 0x00, 0x08); //Release
  ce6:	28 e0       	ldi	r18, 0x08	; 8
  ce8:	40 e0       	ldi	r20, 0x00	; 0
  cea:	60 e5       	ldi	r22, 0x50	; 80
  cec:	8f ef       	ldi	r24, 0xFF	; 255
  cee:	91 e0       	ldi	r25, 0x01	; 1
  cf0:	b6 dc       	rcall	.-1684   	; 0x65e <moveSingleServo>
+			}
+		}
+	}
+}
  cf2:	1f 91       	pop	r17
  cf4:	0f 91       	pop	r16
  cf6:	08 95       	ret
 
 00000cf8 <updateServos>:
+
+/*Updating the servo positions. Avoiding servos being tired*/
+void updateServos()
+{
  cf8:	0f 93       	push	r16
  cfa:	1f 93       	push	r17
+		moveSingleServo(joint1_Pos, 0x30, 0x00, 0x01);
  cfc:	21 e0       	ldi	r18, 0x01	; 1
  cfe:	40 e0       	ldi	r20, 0x00	; 0
  d00:	60 e3       	ldi	r22, 0x30	; 48
  d02:	80 91 08 01 	lds	r24, 0x0108
  d06:	90 91 09 01 	lds	r25, 0x0109
  d0a:	a9 dc       	rcall	.-1710   	; 0x65e <moveSingleServo>
+		moveDoubleServo(joint2_Pos, 0x30, 0x00, 0x02, 0x03);
  d0c:	03 e0       	ldi	r16, 0x03	; 3
  d0e:	10 e0       	ldi	r17, 0x00	; 0
  d10:	22 e0       	ldi	r18, 0x02	; 2
@@ -1916,6 +2226,7 @@ void changeDerivative(uint8_t newKd)
  d16:	80 91 04 01 	lds	r24, 0x0104
  d1a:	90 91 05 01 	lds	r25, 0x0105
  d1e:	d2 dc       	rcall	.-1628   	; 0x6c4 <moveDoubleServo>
+		moveDoubleServo(joint3_Pos, 0x30, 0x00, 0x04, 0x05);
  d20:	05 e0       	ldi	r16, 0x05	; 5
  d22:	10 e0       	ldi	r17, 0x00	; 0
  d24:	24 e0       	ldi	r18, 0x04	; 4
@@ -1924,6 +2235,7 @@ void changeDerivative(uint8_t newKd)
  d2a:	80 91 16 01 	lds	r24, 0x0116
  d2e:	90 91 17 01 	lds	r25, 0x0117
  d32:	c8 dc       	rcall	.-1648   	; 0x6c4 <moveDoubleServo>
+		moveSingleServo(joint4_Pos, 0x30, 0x00, 0x06);
  d34:	26 e0       	ldi	r18, 0x06	; 6
  d36:	40 e0       	ldi	r20, 0x00	; 0
  d38:	60 e3       	ldi	r22, 0x30	; 48
@@ -1935,22 +2247,45 @@ void changeDerivative(uint8_t newKd)
  d48:	08 95       	ret
 
 00000d4a <SPIInitSlave>:
+#include "slaveControl.h"
+
+/*Initializes the AVR as a slave*/
+void SPIInitSlave()
+{
+	waitingForInstruction = 1;
  d4a:	81 e0       	ldi	r24, 0x01	; 1
  d4c:	80 93 1c 01 	sts	0x011C, r24
+	DDRB = 0x48;	
  d50:	88 e4       	ldi	r24, 0x48	; 72
  d52:	84 b9       	out	0x04, r24	; 4
+	SPCR = 0xC3;		
  d54:	83 ec       	ldi	r24, 0xC3	; 195
  d56:	8c bd       	out	0x2c, r24	; 44
+	sei(); 
  d58:	78 94       	sei
  d5a:	08 95       	ret
 
 00000d5c <slaveTX>:
+}
+
+/*Transmits a byte via SPI to Master*/
+void slaveTX(uint8_t data)
+{
+	SPDR = data;
  d5c:	8e bd       	out	0x2e, r24	; 46
+	PORTB |= (1 << PORTB3); // Sets INT_Req high. I.e throws interrupt.
  d5e:	2b 9a       	sbi	0x05, 3	; 5
+	PORTB &= ~(1 << PORTB3); // Sets INT_Req low. Interrupt finished.
  d60:	2b 98       	cbi	0x05, 3	; 5
  d62:	08 95       	ret
 
 00000d64 <TXFinishedDrop>:
+}
+
+/*Tells communication AVR that drop of is finished*/
+void TXFinishedDrop()
+{
+	slaveTX(1);
  d64:	81 e0       	ldi	r24, 0x01	; 1
  d66:	fa cf       	rjmp	.-12     	; 0xd5c <slaveTX>
 

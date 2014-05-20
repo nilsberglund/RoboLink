@@ -2,7 +2,7 @@
  * Bluetooth.c
  *
  * Created: 15/04/2014 12:49:29
- *  Author: Tobias
+ *  Author: Tobias Ahlström
  */ 
 
 
@@ -10,10 +10,10 @@
 #include <avr/interrupt.h>
 #include "Bluetooth.h"
 #include "warehouseMode.h"
-#include "Communication_Module.h"
-#include "Master_communication.h"
+#include "communicationModule.h"
+#include "masterCommunication.h"
 
-
+/*Function that handles PCONINTSTR data. (PC = PickupControl)*/
 void handleData(uint8_t temp)
 {
 	switch(temp) {
@@ -31,6 +31,7 @@ void handleData(uint8_t temp)
 	}
 }
 
+/*Sends a byte via blueooth*/
 void bluetoothTX(uint8_t txdata) {
 	
 	/* Wait for empty transmit buffer */
@@ -40,15 +41,17 @@ void bluetoothTX(uint8_t txdata) {
 	UDR0 = txdata;
 }
 
+/*Sets up ports and registers for Bluetooth*/
 void setupBluetoothRXTX()
 {
-	waiting_for_instruction = 1;
+	waitingForInstruction = 1;
 	UCSR0B = (1<<RXEN0) | (1<<TXEN0) | (1 << RXCIE0); //Enable RX0, TX0 and RX complete interrupt
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); //set data length to 8-bit;
 	UBRR0H = 0x00;
 	UBRR0L = 0x07; //Sets baudvalue in AVR to 7, which gives baude rate 115200. baudvalue = (Fcpu/baudrate*16)-1	
 }
 
+/*Sends a byte via Bluetooth based on instruction*/
 void TXbluetoothInstr(uint8_t instr, uint8_t data)
 {
 	switch(instr) {

@@ -1,4 +1,4 @@
-//variables
+/*-----------Variables--------*/
 uint16_t joint1_Pos;
 uint16_t joint2_Pos;
 uint16_t joint3_Pos;
@@ -13,7 +13,7 @@ uint16_t dropJoint5Pos;
 
 uint8_t side;
 
-//functions
+/*----------Functions-----------*/
 void armInit(void);
 void USARTTransmit( unsigned char data);
 void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID);
@@ -23,6 +23,10 @@ void pickupDefaultPosition();
 void dropItem();
 void moveArm(uint8_t armData);
 void updateServos();
+
+/*-------------------------------*/
+
+/*Below constants is taken from data sheet*/
 
 #define ENABLE_BIT_DEFINITIONS
 

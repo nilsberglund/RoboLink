@@ -1,15 +1,12 @@
 ﻿/*
- * Control_wheel_steering.h
+ * controlWheelSteering.h
  *
  * Created: 4/23/2014 9:48:08 AM
- *  Author: nilbe317
+ *  Author: Nils Berglund
  */ 
 
-#ifndef CONTROL_WHEEL_STEERING_H_
-#define CONTROL_WHEEL_STEERING_H_
-
-/*-------Constants---------*/
-
+#ifndef CONTROLWHEELSTEERING_H_
+#define CONTROLWHEELSTEERING_H_
 
 /*-------Variables---------*/
 volatile int8_t error;
@@ -36,4 +33,4 @@ void rotateCCW();
 void changeProportional(uint8_t);
 void changeDerivative(uint8_t);
 
-#endif /* CONTROL_WHEEL_STEERING_H_ */
+#endif /* CONTROLWHEELSTEERING_H_ */

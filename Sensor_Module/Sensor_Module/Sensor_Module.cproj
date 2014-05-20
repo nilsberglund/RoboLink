@@ -109,22 +109,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SensorCalMajor.c">
+    <Compile Include="sensorHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SensorCalMajor.h">
+    <Compile Include="sensorHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensor_Module.c">
+    <Compile Include="sensorModule.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensor_Module.h">
+    <Compile Include="sensorModule.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_sensor.c">
+    <Compile Include="slaveSensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_sensor.h">
+    <Compile Include="slaveSensor.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

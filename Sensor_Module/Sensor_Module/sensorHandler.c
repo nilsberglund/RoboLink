@@ -1,8 +1,8 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "Slave_sensor.h"
-#include "SensorCalMajor.h"
+#include "slaveSensor.h"
+#include "sensorHandler.h"
 
 
 /*-------------------------Interrupts------------------------*/
@@ -29,6 +29,7 @@ ISR(INT0_vect) {						// First ADC conversion after button press
 	calibration();
 }
 
+/*Initialize calibration of sensors */
 void calibration()
 {
 	ch = 0;
@@ -73,7 +74,6 @@ void analogRead (int ch){
 	ADMUX &= 0xF8;									// Set 3 lsb:s to 0
 	ADMUX |= ch;									// Select pin ADC0..ADC6 using MUX.
 	ADCSRA |=(1<<ADSC);								// Start conversion
-	//while(!(ADCSRA & (1<<ADIF)));
 }
 
 
@@ -97,12 +97,13 @@ void defaultMode() {
 }
 
 
+/*Calibrate sensors*/
 void calibrationMode() {
-	if (buttonPushed == 1){ //calibrate light 
-		lightVector[ch] = adcValue;	//Add values in lightVector for first calibration
+	if (buttonPushed == 1){				//calibrate light 
+		lightVector[ch] = adcValue;		//Add values in lightVector for first calibration
 	}
 	
-	if (buttonPushed == 2){ //calibrate dark
+	if (buttonPushed == 2){				//calibrate dark
 		darkVector[ch] = adcValue;		//Add values in darkVector for second calibration
 		if (ch == 6){
 			calcThresholds();
@@ -117,7 +118,7 @@ void calibrationMode() {
 	
 	PORTB &= 0xF8; 							
 	PORTB |= ch;								
-						//Light up new channel
+										//Light up new channel
 	analogRead(ch);						//Read analog value on new channel
 	
 

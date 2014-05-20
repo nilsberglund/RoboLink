@@ -114,16 +114,16 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Control_module.c">
+    <Compile Include="controlModule.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Control_module.h">
+    <Compile Include="controlModule.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Control_wheel_steering.c">
+    <Compile Include="controlWheelSteering.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Control_wheel_steering.h">
+    <Compile Include="controlWheelSteering.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Servo.c">
@@ -132,10 +132,10 @@
     <Compile Include="Servo.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_control.c">
+    <Compile Include="slaveControl.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Slave_control.h">
+    <Compile Include="slaveControl.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

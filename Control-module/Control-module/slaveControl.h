@@ -1,23 +1,24 @@
 ﻿/*
- * Slave_control.h
+ * slaveControl.h
  *
  * Created: 4/23/2014 9:45:58 AM
- *  Author: nilbe317
+ *  Author: Nils Berglund
  */ 
 
 
-#ifndef SLAVE_CONTROL_H_
-#define SLAVE_CONTROL_H_
+#ifndef SLAVECONTROL_H_
+#define SLAVECONTROL_H_
 
 
-/*-------constants----------*/
+/*-------Constants----------*/
 #define ARM 1
 #define SENSOR 2
 #define WHEEL 3
 #define KPROPORTIONAL 4
 #define KDERIVATIVE 5 
 #define DROPITEM 6
-/*--------variables---------*/
+
+/*--------Variables---------*/
 
 volatile uint8_t data;
 volatile uint8_t sensorData;
@@ -32,4 +33,4 @@ void SPIInitSlave();
 void slaveTX(uint8_t);
 void TXFinishedDrop();
 
-#endif /* SLAVE_CONTROL_H_ */
+#endif /* SLAVECONTROL_H_ */

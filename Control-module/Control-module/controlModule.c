@@ -1,25 +1,24 @@
 /*
-* Control_module.c
+* controlModule.c
 *
 * Created: 4/23/2014 9:05:12 AM
-*  Author: NISSE B
+*  Author: Nils Berglund
 */
 
 #include <avr/io.h>
-#include "Slave_control.h"
-#include "Control_wheel_steering.h"
+#include "slaveControl.h"
+#include "controlWheelSteering.h"
 #include <avr/interrupt.h>
 #include "Servo.h"
-#include "Control_module.h"
+#include "controlModule.h"
 
-
+/*Interrupt that runs when new SPI data is received*/
 ISR(SPI_STC_vect)
 {
 	data = SPDR;
 	
 	if(waitingForInstruction == 1)
 	{
-		//waitingForInstruction = 0;
 		if(data == 0b10000100)
 		{
 			component = SENSOR;
@@ -84,7 +83,7 @@ ISR(SPI_STC_vect)
 		}
 	}
 }
-
+/*Interrupt that runs when timer matches compare register. Updates servo position*/
 ISR(TIMER0_COMPA_vect)
 {
 	if(stationMode == 1)
@@ -106,7 +105,7 @@ int main(void)
 	}
 }
 
-
+/*Initializes the timer*/
 void initTimer()
 {
 	TCCR0A = 0;
@@ -117,6 +116,7 @@ void initTimer()
 	stationMode = 0;
 }
 
+/*Starts transport mode*/
 void startTransportMode()
 {
 	stationMode = 0;

@@ -2,7 +2,7 @@
  * warehouseMode.h
  *
  * Created: 4/25/2014 2:50:38 PM
- *  Author: nilbe317
+ *  Author: Nils Berglund
  */ 
 
 
@@ -11,7 +11,7 @@
 
 #include "hd44780_low.h"
 
-//"Booleans"////////////////////////////////////////////////
+/*-----------Variables------------*/
 volatile uint8_t streamFilled;
 volatile uint8_t carryItem;
 volatile uint8_t pickUpItem;
@@ -20,9 +20,6 @@ volatile uint8_t waitingForEndPickup;
 volatile uint8_t stationRightSide;
 volatile uint8_t stationModeEnable;
 
-//////////////////////////////////////////////////////////
-
-//Variables////////////////////////////////////////////////////////////////
 uint8_t newStream[12];
 uint8_t cargo[12];
 uint8_t history[18];
@@ -30,10 +27,8 @@ volatile uint8_t finishedDrop;
 struct hd44780_l_conf low_conf;
 volatile uint8_t digit;
 uint8_t historySize;
-/////////////////////////////////////////////////////////////////////////////
 
-
-///Programs/////////////////////////////////////////////////////
+/*---------Functions----------------*/
 void setupLCD();
 void stationMode();
 void pickUpMode();
@@ -50,8 +45,5 @@ uint8_t identifyNewStreamCatalogNumber();
 uint8_t identifyCargoCatalogNumber();
 void addPairToHistory();
 void waitForFinishedDrop();
-////////////////////////////////////////////////////////////////////
-
-
 
 #endif /* WAREHOUSEMODE_H_ */

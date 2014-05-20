@@ -4,11 +4,11 @@
 
 Bluetooth.c
 
-Communication_Module.c
+communicationModule.c
 
-LCD_new.c
+LCD.c
 
-Master_communication.c
+masterCommunication.c
 
 warehouseMode.c
 

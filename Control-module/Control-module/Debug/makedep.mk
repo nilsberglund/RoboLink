@@ -2,11 +2,11 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Control_module.c
+controlModule.c
 
-Control_wheel_steering.c
+controlWheelSteering.c
 
 Servo.c
 
-Slave_control.c
+slaveControl.c
 

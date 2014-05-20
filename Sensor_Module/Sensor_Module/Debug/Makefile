@@ -36,9 +36,9 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../SensorCalMajor.c \
-../Sensor_Module.c \
-../Slave_sensor.c
+../sensorHandler.c \
+../sensorModule.c \
+../slaveSensor.c
 
 
 PREPROCESSING_SRCS += 
@@ -48,24 +48,24 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-SensorCalMajor.o \
-Sensor_Module.o \
-Slave_sensor.o
+sensorHandler.o \
+sensorModule.o \
+slaveSensor.o
 
 OBJS_AS_ARGS +=  \
-SensorCalMajor.o \
-Sensor_Module.o \
-Slave_sensor.o
+sensorHandler.o \
+sensorModule.o \
+slaveSensor.o
 
 C_DEPS +=  \
-SensorCalMajor.d \
-Sensor_Module.d \
-Slave_sensor.d
+sensorHandler.d \
+sensorModule.d \
+slaveSensor.d
 
 C_DEPS_AS_ARGS +=  \
-SensorCalMajor.d \
-Sensor_Module.d \
-Slave_sensor.d
+sensorHandler.d \
+sensorModule.d \
+slaveSensor.d
 
 OUTPUT_FILE_PATH +=Sensor_Module.elf
 

@@ -37,9 +37,9 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Bluetooth.c \
-../Communication_Module.c \
-../LCD_new.c \
-../Master_communication.c \
+../communicationModule.c \
+../LCD.c \
+../masterCommunication.c \
 ../warehouseMode.c
 
 
@@ -51,30 +51,30 @@ ASM_SRCS +=
 
 OBJS +=  \
 Bluetooth.o \
-Communication_Module.o \
-LCD_new.o \
-Master_communication.o \
+communicationModule.o \
+LCD.o \
+masterCommunication.o \
 warehouseMode.o
 
 OBJS_AS_ARGS +=  \
 Bluetooth.o \
-Communication_Module.o \
-LCD_new.o \
-Master_communication.o \
+communicationModule.o \
+LCD.o \
+masterCommunication.o \
 warehouseMode.o
 
 C_DEPS +=  \
 Bluetooth.d \
-Communication_Module.d \
-LCD_new.d \
-Master_communication.d \
+communicationModule.d \
+LCD.d \
+masterCommunication.d \
 warehouseMode.d
 
 C_DEPS_AS_ARGS +=  \
 Bluetooth.d \
-Communication_Module.d \
-LCD_new.d \
-Master_communication.d \
+communicationModule.d \
+LCD.d \
+masterCommunication.d \
 warehouseMode.d
 
 OUTPUT_FILE_PATH +=Communication_Module.elf

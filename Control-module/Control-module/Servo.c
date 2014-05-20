@@ -2,17 +2,17 @@
 * Servo.c
 *
 * Created: 3/30/2014 12:16:02 PM
-* Author: susba199
-* baud rate is 1000000 for the robot arm
+* Author: Susanna Bäckman
 */
 
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include "Servo.h"
 #include <util/delay.h>
-#include "Slave_control.h"
+#include "slaveControl.h"
 #include <avr/interrupt.h>
 
+/*Initializes ports and registers to communicate with robot arm*/
 void armInit(void) {
 	
 	DDRD |= (1<<DDD3); //Setting D2 to output to control the tri-state
@@ -28,6 +28,7 @@ void armInit(void) {
 	moveSingleServo(0x1FF, 0x50, 0x00, 0x08); //150 grader
 }
 
+/*Transmits a byte via USART*/
 void USARTTransmit( unsigned char data) {
 	/*Wait for empty transmit buffer*/
 	PORTD |= (1 << PORTD3);
@@ -36,16 +37,8 @@ void USARTTransmit( unsigned char data) {
 	UDR0 = data; //UDREn cleared.
 }
 
-//receive is never used
-// unsigned char USART_Recieve(void){
-//
-// 	char data;
-// 	PORTD &= ~(1 << PORTD2);
-// 	data = UDR0;
-// 	return data;
-// }
 
-/*Move servos placed one by one*/
+/*Move single servos to a position*/
 void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID) { 
 	
 	byte checksum;
@@ -72,7 +65,7 @@ void moveSingleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 	
 }
 
-/*Move servos placed two by two.*/
+/*Move servos placed two and two to a position.*/
 void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, uint8_t servo_ID1, unsigned int servo_ID2) {
 	
 	byte checksum;
@@ -177,12 +170,6 @@ void dropItem() { //Side = 1 right side, side = 0 left side
 	
 	_delay_ms(2000);
 	
-	//Vad är lämpligt läge på följande servon?
-	//moveDoubleServo(0x2B4, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
-	//moveDoubleServo(0x2CC, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
-	//moveSingleServo(0xD3, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
-	//moveSingleServo(0x1FF, 0x50, 0x01, 0x07);
-	
 	moveDoubleServo(dropJoint2Pos, 0x60, 0x00, 0x02, 0x03);	//Servo 2 and 3 in position 203 (2B4) degrees
 	moveDoubleServo(dropJoint3Pos, 0x60, 0x00, 0x04, 0x05);	//Servo 4 and 5 in position 210 degrees
 	moveSingleServo(dropJoint4Pos, 0x60, 0x00, 0x06);		//Servo 6 in position 60 grader D3
@@ -201,13 +188,7 @@ void dropItem() { //Side = 1 right side, side = 0 left side
 	TXFinishedDrop();
 }
 
-/*
-* Device function: Move the arm
-*
-* @param joint	joint to be moved
-* @param direction	direction of movement
-* @param amp if movement is amplified or not
-*/
+/*Moves the arm according to armData byte. Byte received by communication module*/
 void moveArm(uint8_t armData) {
 	
 	uint8_t joint = armData & 0x07;
@@ -272,12 +253,12 @@ void moveArm(uint8_t armData) {
 		}
 		else if (joint == 4)
 		{
-			if (direction == 0 && (joint4_Pos - (10+40*amp)) > 0) //kolla gränserna
+			if (direction == 0 && (joint4_Pos - (10+40*amp)) > 0)
 			{
 				joint4_Pos -= (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
 			}
-			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 818) //kolla gränserna
+			else if(direction == 1 && (joint4_Pos + (10+40*amp)) < 818)
 			{
 				joint4_Pos += (10+40*amp);
 				moveSingleServo(joint4_Pos, 0x50, 0x00, 0x06);
@@ -300,7 +281,7 @@ void moveArm(uint8_t armData) {
 		{
 			if (direction == 0 && amp == 0)
 			{
-				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip smal
+				moveSingleServo(0xBB, 0x50, 0x00, 0x08); //Grip narrow
 				dropJoint2Pos = joint2_Pos;
 				dropJoint3Pos = joint3_Pos;
 				dropJoint4Pos = joint4_Pos;
@@ -309,7 +290,7 @@ void moveArm(uint8_t armData) {
 			}
 			else if (direction == 0 && amp == 1)
 			{
-				moveSingleServo(0x12C, 0x50, 0x00, 0x08); //Grip bred
+				moveSingleServo(0x12C, 0x50, 0x00, 0x08); //Grip broad
 				dropJoint2Pos = joint2_Pos;
 				dropJoint3Pos = joint3_Pos;
 				dropJoint4Pos = joint4_Pos;
@@ -323,6 +304,7 @@ void moveArm(uint8_t armData) {
 	}
 }
 
+/*Updating the servo positions. Avoiding servos being tired*/
 void updateServos()
 {
 		moveSingleServo(joint1_Pos, 0x30, 0x00, 0x01);

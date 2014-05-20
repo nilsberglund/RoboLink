@@ -1,5 +1,5 @@
 /*
- * Slave.c
+ * slaveSensor.c
  *
  * Created: 3/30/2014 3:27:11 PM
  *  Author: albal214
@@ -7,8 +7,8 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "Slave_sensor.h"
-#include "SensorCalMajor.h"
+#include "slaveSensor.h"
+#include "sensorHandler.h"
 
 
 /* Interrupt that gets triggered when slave has received instruction byte */

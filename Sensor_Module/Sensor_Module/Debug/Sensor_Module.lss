@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 000002ed  00000000  00000000  000012ed  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000581  00000000  00000000  000015da  2**0
+  9 .debug_line   00000578  00000000  00000000  000015da  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000001f0  00000000  00000000  00001b5c  2**2
+ 10 .debug_frame  000001f0  00000000  00000000  00001b54  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000001e3  00000000  00000000  00001d4c  2**0
+ 11 .debug_str    000001ed  00000000  00000000  00001d44  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000356  00000000  00000000  00001f2f  2**0
+ 12 .debug_loc    00000356  00000000  00000000  00001f31  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000080  00000000  00000000  00002285  2**0
+ 13 .debug_ranges 00000080  00000000  00000000  00002287  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -225,9 +225,9 @@ void analogRead (int ch){
  11e:	08 95       	ret
 
 00000120 <calibration>:
-	calibration();
 }
 
+/*Initialize calibration of sensors */
 void calibration()
 {
 	ch = 0;
@@ -246,7 +246,7 @@ void calibration()
  13e:	83 30       	cpi	r24, 0x03	; 3
  140:	91 05       	cpc	r25, r1
  142:	29 f0       	breq	.+10     	; 0x14e <calibration+0x2e>
-
+/*Initialize calibration of sensors */
 void calibration()
 {
 	ch = 0;
@@ -366,18 +366,18 @@ void calcThresholds(){
  1e2:	08 95       	ret
 
 000001e4 <calibrationMode>:
-
 }
 
 
+/*Calibrate sensors*/
 void calibrationMode() {
-	if (buttonPushed == 1){ //calibrate light 
+	if (buttonPushed == 1){				//calibrate light 
  1e4:	80 91 00 01 	lds	r24, 0x0100
  1e8:	90 91 01 01 	lds	r25, 0x0101
  1ec:	81 30       	cpi	r24, 0x01	; 1
  1ee:	91 05       	cpc	r25, r1
  1f0:	51 f4       	brne	.+20     	; 0x206 <calibrationMode+0x22>
-		lightVector[ch] = adcValue;	//Add values in lightVector for first calibration
+		lightVector[ch] = adcValue;		//Add values in lightVector for first calibration
  1f2:	e0 91 23 01 	lds	r30, 0x0123
  1f6:	f0 91 24 01 	lds	r31, 0x0124
  1fa:	e5 5f       	subi	r30, 0xF5	; 245
@@ -387,7 +387,7 @@ void calibrationMode() {
  204:	0f c0       	rjmp	.+30     	; 0x224 <calibrationMode+0x40>
 	}
 	
-	if (buttonPushed == 2){ //calibrate dark
+	if (buttonPushed == 2){				//calibrate dark
  206:	02 97       	sbiw	r24, 0x02	; 2
  208:	69 f4       	brne	.+26     	; 0x224 <calibrationMode+0x40>
 		darkVector[ch] = adcValue;		//Add values in darkVector for second calibration
@@ -432,7 +432,7 @@ void calibrationMode() {
  252:	80 91 23 01 	lds	r24, 0x0123
  256:	89 2b       	or	r24, r25
  258:	85 b9       	out	0x05, r24	; 5
-						//Light up new channel
+										//Light up new channel
 	analogRead(ch);						//Read analog value on new channel
  25a:	80 91 23 01 	lds	r24, 0x0123
  25e:	90 91 24 01 	lds	r25, 0x0124
@@ -614,8 +614,8 @@ ISR(ADC_vect) //Interrupt Service Routine (ADC Conversion Complete)
  354:	18 95       	reti
 
 00000356 <main>:
-#include "SensorCalMajor.h"
-#include "Slave_sensor.h"
+#include "sensorHandler.h"
+#include "slaveSensor.h"
 
 int main(void)
 {
@@ -662,7 +662,7 @@ void slaveTX(uint8_t data)
  374:	08 95       	ret
 
 00000376 <__vector_19>:
-#include "SensorCalMajor.h"
+#include "sensorHandler.h"
 
 
 /* Interrupt that gets triggered when slave has received instruction byte */

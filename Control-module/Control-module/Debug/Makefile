@@ -36,10 +36,10 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../Control_module.c \
-../Control_wheel_steering.c \
+../controlModule.c \
+../controlWheelSteering.c \
 ../Servo.c \
-../Slave_control.c
+../slaveControl.c
 
 
 PREPROCESSING_SRCS += 
@@ -49,28 +49,28 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-Control_module.o \
-Control_wheel_steering.o \
+controlModule.o \
+controlWheelSteering.o \
 Servo.o \
-Slave_control.o
+slaveControl.o
 
 OBJS_AS_ARGS +=  \
-Control_module.o \
-Control_wheel_steering.o \
+controlModule.o \
+controlWheelSteering.o \
 Servo.o \
-Slave_control.o
+slaveControl.o
 
 C_DEPS +=  \
-Control_module.d \
-Control_wheel_steering.d \
+controlModule.d \
+controlWheelSteering.d \
 Servo.d \
-Slave_control.d
+slaveControl.d
 
 C_DEPS_AS_ARGS +=  \
-Control_module.d \
-Control_wheel_steering.d \
+controlModule.d \
+controlWheelSteering.d \
 Servo.d \
-Slave_control.d
+slaveControl.d
 
 OUTPUT_FILE_PATH +=Control-module.elf
 

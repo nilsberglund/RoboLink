@@ -5,7 +5,7 @@
 #include "hd44780_low.h"
 #include "Bluetooth.h"
 #include "warehouseMode.h"
-#include "Master_communication.h"
+#include "masterCommunication.h"
 #include <stdlib.h>
 #include <math.h>
 
@@ -128,6 +128,8 @@ void deliveryMode(){
 	}
 }
 
+
+/*Adds RIFD pair to history when they are finished*/
 void addPairToHistory(){
 	uint8_t tmp2Cargo = identifyCargoCatalogNumber();
 	
@@ -153,7 +155,7 @@ void addPairToHistory(){
 	
 }
 
-/*Called by pickupMode(). */
+/*Called by pickupMode(). Checks if object is already delivered */
 uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma kant
 	
 	for (uint8_t cntCatalog = 0; cntCatalog < 18; cntCatalog ++)
@@ -168,6 +170,7 @@ uint8_t itemInHistory(){ //lägg till funktion som drar båda i ett par över samma
 	return 0; //If no
 }
 
+/*Checks if new station RFID value pairs with the cargo*/
 uint8_t newStreamPairsWithCargo()
 {
 	volatile uint8_t tmpCargo;
@@ -203,6 +206,7 @@ uint8_t newStreamPairsWithCargo()
 }
 
 
+/*Gets the current station's catalog number in the catalog of RFID IDs*/
 uint8_t identifyNewStreamCatalogNumber()
 {
 	volatile uint8_t newStreamCatalogNumber = 0;
@@ -230,6 +234,8 @@ uint8_t identifyNewStreamCatalogNumber()
 	return newStreamCatalogNumber;
 }
 
+
+/*Gets the cargo's catalog number in the catalog of RFID IDs*/
 uint8_t identifyCargoCatalogNumber()
 {
 	volatile uint8_t cargoCatalogNumber = 0;
@@ -257,6 +263,7 @@ uint8_t identifyCargoCatalogNumber()
 	return cargoCatalogNumber;
 }
 
+/*Turns RFID card reader on or off*/
 void powerRFID(uint8_t power){
 	if (power == 1)
 	{
@@ -270,10 +277,8 @@ void powerRFID(uint8_t power){
 	}
 }
 
-/*
-Prints the entire RFID tag on the display.
-*/
-void printOnLCD(uint8_t shipment){ //Eventuellt göra generisk om vi vill skicka in andra värden än cargo
+/*Prints the entire RFID tag on the display.*/
+void printOnLCD(uint8_t shipment) {
 	hd44780_l_clear_disp(&low_conf);
 	
 	if (shipment == 1)
@@ -307,6 +312,7 @@ void printOnLCD(uint8_t shipment){ //Eventuellt göra generisk om vi vill skicka 
 
 }
 
+/*Sets up ports and registers to communicate with RFID card reader*/
 void setupRFID(){
 	UCSR1B |= (1<<RXEN1) | (1 << RXCIE1); //Enable RX1 and the RX complete interrupt
 	UCSR1C |= (1 << UCSZ11)|(1 << UCSZ10); //set data length to 8-bit;
@@ -316,6 +322,8 @@ void setupRFID(){
 	PORTD |= (1<<PORTD5);
 }
 
+
+/*Sets up variables for the simulated warehouse*/
 void setupWarehouse(){
 	streamFilled = 0;
 	carryItem = 0;
@@ -328,6 +336,7 @@ void setupWarehouse(){
 	finishedDrop = 0;
 }
 
+/*Sets up the LCD display*/
 void setupLCD(){
 	// setting I/O configuration for pins
 	DDRA = 0xFF; //data outputs to the LCD

@@ -1,13 +1,13 @@
 ﻿/*
- * Sensor_Module.h
+ * sensorModule.h
  *
  * Created: 4/23/2014 9:10:30 AM
  *  Author: susba199
  */ 
 
 
-#ifndef SENSOR_MODULE_H_
-#define SENSOR_MODULE_H_
+#ifndef SENSORMODULE_H_
+#define SENSORMODULE_H_
 
 /*------Variables-------*/
 
@@ -15,4 +15,4 @@
 
 
 
-#endif /* SENSOR_MODULE_H_ */
+#endif /* SENSORMODULE_H_ */

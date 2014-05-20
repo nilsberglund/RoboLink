@@ -1,20 +1,20 @@
 /*
- * Master.c
+ * masterCommunication.c
  *
  * Created: 3/30/2014 3:27:11 PM
- *  Author: albal214
+ *  Author: Albin Ålander
  */ 
 
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
-#include "Master_communication.h"
+#include "masterCommunication.h"
 #include "Bluetooth.h"
 #include "warehouseMode.h"
 
 /* Initializes sensor AVR as master. Sets ports and registers and enables interrupts */
-void SPI_Init_Master()
+void SPIinitMaster()
 {
 
 	//Sets MOSI, SCK and SS as outputs
@@ -37,7 +37,7 @@ void SPI_Init_Master()
 	TCNT0 = 0;	//Initiates timer
 }
 
-//Master transmission to slave
+/*Master transmission to slave*/
 void masterTX(volatile uint8_t data)
 {
 		/* Start transmission */
@@ -46,6 +46,7 @@ void masterTX(volatile uint8_t data)
 		while(!(SPSR & (1<<SPIF)));
 }
 
+/*Master receive from slave. data should be a dummy byte*/
 uint8_t masterRX(volatile uint8_t data){
 
 		/* Start transmission */
@@ -56,7 +57,7 @@ uint8_t masterRX(volatile uint8_t data){
 		return SPDR;
 }
 		
-//Selects slave. PORTB4 = CONTROLSLAVE, PORTB3 = SENSORSLAVE
+/*Selects slave. PORTB4 = CONTROLSLAVE, PORTB3 = SENSORSLAVE*/
 void slaveSelect(volatile uint8_t slave)
 {
 	if(slave == CONTROLSLAVE)
@@ -78,43 +79,43 @@ void slaveSelect(volatile uint8_t slave)
 	}
 }
 
-// a = arm, s = sensor data, w = wheel data, r = rfid data
-void TXprotocol(uint8_t component)
+/*Sends an instruction byte based on instructions*/
+void TXprotocol(uint8_t instruction)
 {
 
-	if(component ==SENSORDATASEND)
+	if(instruction ==SENSORDATASEND)
 	{
 		masterTX(0b10000100);
 	}
-	else if(component == DRIVEINSTRSEND)
+	else if(instruction == DRIVEINSTRSEND)
 	{
 		masterTX(0b10000101);
 	}
-	else if(component == ARMINSTRSEND)
+	else if(instruction == ARMINSTRSEND)
 	{
 		masterTX(0b10000110);
 	}
-	else if(component == SENSORDATARECEIVE)
+	else if(instruction == SENSORDATARECEIVE)
 	{
 		masterTX(0b00000100);
 	}
-	else if(component == KPSEND)
+	else if(instruction == KPSEND)
 	{
 		masterTX(0b10000111);
 	}
-	else if(component == KDSEND)
+	else if(instruction == KDSEND)
 	{
 		masterTX(0b10001011);
 	}
-	else if(component == DROPITEMSEND)
+	else if(instruction == DROPITEMSEND)
 	{
 		masterTX(0b10001111);
 	}
-	else if(component == CALIBRATION)
+	else if(instruction == CALIBRATION)
 	{
 		masterTX(0b10011111);
 	}
-	else if(component == LEAVESTATIONINSTR)
+	else if(instruction == LEAVESTATIONINSTR)
 	{
 		masterTX(0b10010000);
 	}
@@ -133,12 +134,12 @@ void TXsensorData()
 /* Function that tells the sensor slave to transmit sensor data. */
 void RXsensorData()
 {
-	wantedData = SENSORDATARECEIVE;
 	slaveSelect(SENSORSLAVE);
 	TXprotocol(SENSORDATARECEIVE);
 	slaveSelect(NOSLAVE);
 }
  
+ /*Transmits wheelData to control AVR*/
  void TXwheelData()
  {
 	 slaveSelect(CONTROLSLAVE);
@@ -147,6 +148,8 @@ void RXsensorData()
 	 slaveSelect(NOSLAVE);
  }
  
+ 
+ /*Transmits armData to control AVR*/
  void TXarmData()
 {
 	slaveSelect(CONTROLSLAVE);
@@ -154,6 +157,8 @@ void RXsensorData()
 	masterTX(armData);
 }
 
+
+/*Transmits Kp value to control AVR*/
 void TXKpData()
 {
 	slaveSelect(CONTROLSLAVE);
@@ -162,6 +167,8 @@ void TXKpData()
 	slaveSelect(NOSLAVE);
 }
 
+
+/*Transmits Kd value to control AVR*/
 void TXKdData()
 {
 	slaveSelect(CONTROLSLAVE);
@@ -170,6 +177,8 @@ void TXKdData()
 	slaveSelect(NOSLAVE);
 }
 
+
+/*Tells control AVR to drop the item*/
 void TXDropItem()
 {
 	slaveSelect(CONTROLSLAVE);
@@ -178,6 +187,8 @@ void TXDropItem()
 	slaveSelect(NOSLAVE);
 }
 
+
+/*Tells sensor AVR to perform a calibration*/
 void TXCalibration()
 {
 	slaveSelect(SENSORSLAVE);
@@ -185,6 +196,8 @@ void TXCalibration()
 	slaveSelect(NOSLAVE);
 }
 
+
+/*Tells control AVR to leave station and start line following*/
 void TXleaveStation()
 {
 	slaveSelect(CONTROLSLAVE);

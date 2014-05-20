@@ -2,13 +2,14 @@
  * Bluetooth.h
  *
  * Created: 4/25/2014 2:49:03 PM
- *  Author: nilbe317
+ *  Author: Nils Berglund
  */ 
 
 
 #ifndef BLUETOOTH_H_
 #define BLUETOOTH_H_
 
+/*--------Constants---------*/
 #define WHEEL 1
 #define ARM 2
 #define CALINSTR 3
@@ -21,15 +22,16 @@
 #define HISTORYINSTR 10
 #define CARGOINSTR 11
 
+/*----------Variables------------*/
+uint8_t btData;
+volatile uint8_t waitingForInstruction;
+volatile uint8_t btComponent;
+
+
+/*-----------Functions-----------*/
 void handleData(uint8_t temp);
 void bluetoothTX(uint8_t txdata);
 void setupBluetoothRXTX();
 void TXbluetoothInstr(uint8_t,uint8_t);
-
-
-
-uint8_t btdata; //the byte received by the AVR, transmitted from computer
-volatile uint8_t waiting_for_instruction;
-volatile uint8_t btcomponent;
 
 #endif /* BLUETOOTH_H_ */

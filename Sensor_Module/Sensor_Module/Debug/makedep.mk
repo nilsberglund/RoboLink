@@ -2,9 +2,9 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-SensorCalMajor.c
+sensorHandler.c
 
-Sensor_Module.c
+sensorModule.c
 
-Slave_sensor.c
+slaveSensor.c
 

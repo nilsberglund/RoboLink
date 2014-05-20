@@ -1,13 +1,13 @@
 ﻿/*
- * Slave_sensor.h
+ * slaveSensor.h
  *
  * Created: 4/23/2014 9:45:27 AM
  *  Author: susba199
  */ 
 
 
-#ifndef SLAVE_SENSOR_H_
-#define SLAVE_SENSOR_H_
+#ifndef SLAVESENSOR_H_
+#define SLAVESENSOR_H_
 
 /*------Variables-------*/
 volatile uint8_t instructionData;
@@ -18,4 +18,4 @@ void SPIInitSlave();
 void slaveTX(uint8_t);
 
 
-#endif /* SLAVE_SENSOR_H_ */
+#endif /* SLAVESENSOR_H_ */

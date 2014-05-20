@@ -12,7 +12,7 @@ Bluetooth.d Bluetooth.o: .././Bluetooth.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/lock.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/interrupt.h \
  .././Bluetooth.h .././warehouseMode.h .././hd44780_low.h \
- .././Communication_Module.h .././Master_communication.h
+ .././communicationModule.h .././masterCommunication.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/io.h:
 
@@ -44,6 +44,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.1002\avr8
 
 .././hd44780_low.h:
 
-.././Communication_Module.h:
+.././communicationModule.h:
 
-.././Master_communication.h:
+.././masterCommunication.h:

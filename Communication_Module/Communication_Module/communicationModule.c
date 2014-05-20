@@ -1,19 +1,21 @@
 /*
-* Communication_Module.c
+* communicationModule.c
 *
 * Created: 4/23/2014 10:30:04 AM
-*  Author: susba199
+*  Author: Susanna Bäckman
 */
 
 #include <avr/io.h>
-#include "Communication_Module.h"
-#include "Master_communication.h"
+#include "communicationModule.h"
+#include "masterCommunication.h"
 #include <avr/interrupt.h>
 #include "Bluetooth.h"
 #include "warehouseMode.h"
 #include "hd44780_low.h"
 
-ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
+
+/*Receive function. Data is transmitted from the sensor slave. Always sensor data*/
+ISR(INT1_vect)
 {
 	slaveSelect(SENSORSLAVE);	//slave select
 	sensorData = masterRX(0x01); //sending dummy and receiving sensor data
@@ -67,6 +69,7 @@ ISR(INT1_vect)			//Receive function. Data is transmitted from the sensor slave
 	slaveSelect(CONTROLSLAVE);
 }
 
+/*Receive function. Data is transmitted by control slave. Always data about finished drop*/
 ISR(INT2_vect)
 {
 	slaveSelect(CONTROLSLAVE);
@@ -98,67 +101,65 @@ ISR(TIMER0_COMPB_vect)
 }
 
 
-/* Interrupt routine for receiving bluetooth data */
+/* Interrupt routine for receiving Bluetooth data */
 ISR(USART0_RX_vect)
 {
-	btdata = UDR0;
-	if (waiting_for_instruction == 1) {
-		waiting_for_instruction = 0;
-		if (btdata == 1) {
-			btcomponent = WHEEL;
+	btData = UDR0;
+	if (waitingForInstruction == 1) {
+		waitingForInstruction = 0;
+		if (btData == 1) {
+			btComponent = WHEEL;
 		}
-		else if(btdata == 2) {
-			btcomponent = ARM;
+		else if(btData == 2) {
+			btComponent = ARM;
 		}
-		else if(btdata == 3) {
-			waiting_for_instruction = 1;
-			btcomponent = CALINSTR;
+		else if(btData == 3) {
+			waitingForInstruction = 1;
+			btComponent = CALINSTR;
 			TXCalibration();
 			
 		}
-		else if(btdata == 4) {
-			btcomponent = PCONINSTR;
+		else if(btData == 4) {
+			btComponent = PCONINSTR;
 		}
-		else if(btdata == 5) {
-			btcomponent = KPINSTR;
+		else if(btData == 5) {
+			btComponent = KPINSTR;
 		}
-		else if(btdata == 6) {
-			btcomponent = KDINSTR;
+		else if(btData == 6) {
+			btComponent = KDINSTR;
 		}
-		else if(btdata == 7) { //Toggle mode instruction
-			waiting_for_instruction = 1;
+		else if(btData == 7) { //Toggle mode instruction
+			waitingForInstruction = 1;
 			toggleMode();
 		}
 	}
 	else {
-		waiting_for_instruction = 1;
-		if (btcomponent == WHEEL) {
+		waitingForInstruction = 1;
+		if (btComponent == WHEEL) {
 			if(manualModeEnabled == 1) {
-				wheelData = btdata;
+				wheelData = btData;
 				TXwheelData();
 			}
 		}
-		else if (btcomponent == ARM) {
-			armData = btdata;
+		else if (btComponent == ARM) {
+			armData = btData;
 			TXarmData();
 		}
-		else if (btcomponent == PCONINSTR) {
-			handleData(btdata);
+		else if (btComponent == PCONINSTR) {
+			handleData(btData);
 		}
-		else if (btcomponent == KPINSTR) {
-			Kp = btdata;
+		else if (btComponent == KPINSTR) {
+			Kp = btData;
 			TXKpData();
 		}
-		else if (btcomponent == KDINSTR) {
-			Kd = btdata;
+		else if (btComponent == KDINSTR) {
+			Kd = btData;
 			TXKdData();
 		}
 	}
 }
 
-/*
-When the receive of one byte is complete, this interrupt will run.
-*/
+/* When the receive of one byte from RFID card reader is complete, this interrupt will run.*/
 ISR(USART1_RX_vect){
 	newStream[digit] = UDR1;
 	digit++;
@@ -169,6 +170,7 @@ ISR(USART1_RX_vect){
 	}
 }
 
+/*Interrupt hooked up to switch for changing between auto/manual mode*/
 ISR(PCINT3_vect)
  {
  	toggleMode();
@@ -179,7 +181,7 @@ int main(void)
 	
 	setupWarehouse();
 	initManualMode();
-	SPI_Init_Master();
+	SPIinitMaster();
 	setupBluetoothRXTX();
 	setupRFID();
 	setupLCD();
@@ -207,6 +209,7 @@ void initManualMode()
 	btSensDataCnt = 0;
 }
 
+/*Toggles between manual and auto mode*/
 void toggleMode()
 {
 	if(automaticModeEnabled == 0)
