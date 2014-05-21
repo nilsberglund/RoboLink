@@ -1386,12 +1386,12 @@ void defaultPosition() {
  78a:	82 e3       	ldi	r24, 0x32	; 50
  78c:	93 e0       	ldi	r25, 0x03	; 3
  78e:	63 df       	rcall	.-314    	; 0x656 <moveSingleServo>
-	moveDoubleServo(0x1FF, 0x40, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
+	moveDoubleServo(0x1FF, 0x70, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
  790:	03 e0       	ldi	r16, 0x03	; 3
  792:	10 e0       	ldi	r17, 0x00	; 0
  794:	22 e0       	ldi	r18, 0x02	; 2
  796:	40 e0       	ldi	r20, 0x00	; 0
- 798:	60 e4       	ldi	r22, 0x40	; 64
+ 798:	60 e7       	ldi	r22, 0x70	; 112
  79a:	8f ef       	ldi	r24, 0xFF	; 255
  79c:	91 e0       	ldi	r25, 0x01	; 1
  79e:	8e df       	rcall	.-228    	; 0x6bc <moveDoubleServo>
@@ -1404,12 +1404,12 @@ void defaultPosition() {
  7aa:	8c ec       	ldi	r24, 0xCC	; 204
  7ac:	90 e0       	ldi	r25, 0x00	; 0
  7ae:	86 df       	rcall	.-244    	; 0x6bc <moveDoubleServo>
-	moveDoubleServo(0xCC, 0x40, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
+	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
  7b0:	03 e0       	ldi	r16, 0x03	; 3
  7b2:	10 e0       	ldi	r17, 0x00	; 0
  7b4:	22 e0       	ldi	r18, 0x02	; 2
  7b6:	40 e0       	ldi	r20, 0x00	; 0
- 7b8:	60 e4       	ldi	r22, 0x40	; 64
+ 7b8:	60 e5       	ldi	r22, 0x50	; 80
  7ba:	8c ec       	ldi	r24, 0xCC	; 204
  7bc:	90 e0       	ldi	r25, 0x00	; 0
  7be:	7e df       	rcall	.-260    	; 0x6bc <moveDoubleServo>
