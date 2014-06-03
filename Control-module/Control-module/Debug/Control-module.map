@@ -534,12 +534,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1a92
+.debug_info     0x00000000     0x1a91
  *(.debug_info)
  .debug_info    0x00000000      0x3f8 controlModule.o
  .debug_info    0x000003f8      0x782 controlWheelSteering.o
- .debug_info    0x00000b7a      0xdd4 Servo.o
- .debug_info    0x0000194e      0x144 slaveControl.o
+ .debug_info    0x00000b7a      0xdd3 Servo.o
+ .debug_info    0x0000194d      0x144 slaveControl.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x54e

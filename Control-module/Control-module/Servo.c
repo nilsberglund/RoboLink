@@ -107,11 +107,11 @@ void moveDoubleServo(unsigned int position, uint8_t speed_l, uint8_t speed_h, ui
 void defaultPosition() {
 	
 	moveSingleServo(0x1FF, 0x40, 0x00, 0x07);			//setting servo 7 (joint 5) straight
-	moveSingleServo(0x332, 0x40, 0x00, 0x06);			//setting servo 6 (joint 4) straight up
-	moveDoubleServo(0x1FF, 0x70, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
-	moveDoubleServo(0xCC, 0x40, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
-	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
-	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
+	moveSingleServo(0x332, 0x50, 0x00, 0x06);			//setting servo 6 (joint 4) straight up
+	moveDoubleServo(0x1FF, 0x90, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
+	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
+	moveDoubleServo(0xCC, 0x90, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
+	moveSingleServo(0x1FF, 0x15, 0x00, 0x01);			//setting servo 1 (joint 1)
 	
 	//Updating positions
 	joint1_Pos = 0x1FF;
@@ -179,11 +179,11 @@ void dropItem() { //Side = 1 right side, side = 0 left side
 	
 	moveSingleServo(0x1FF, 0x60, 0x00, 0x08); //Servo 8 in position 150 (1FF) degrees 
 	
-	_delay_ms(2000);
+	_delay_ms(1500);
 	
 	defaultPosition();
 	
-	_delay_ms(1000);
+	_delay_ms(1200);
 	
 	TXFinishedDrop();
 }

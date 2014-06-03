@@ -17,11 +17,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .debug_aranges 00000160  00000000  00000000  0000158a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00001a92  00000000  00000000  000016ea  2**0
+  7 .debug_info   00001a91  00000000  00000000  000016ea  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000054e  00000000  00000000  0000317c  2**0
+  8 .debug_abbrev 0000054e  00000000  00000000  0000317b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000eda  00000000  00000000  000036ca  2**0
+  9 .debug_line   00000eda  00000000  00000000  000036c9  2**0
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_frame  00000388  00000000  00000000  000045a4  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -1379,44 +1379,44 @@ void defaultPosition() {
  77e:	8f ef       	ldi	r24, 0xFF	; 255
  780:	91 e0       	ldi	r25, 0x01	; 1
  782:	69 df       	rcall	.-302    	; 0x656 <moveSingleServo>
-	moveSingleServo(0x332, 0x40, 0x00, 0x06);			//setting servo 6 (joint 4) straight up
+	moveSingleServo(0x332, 0x50, 0x00, 0x06);			//setting servo 6 (joint 4) straight up
  784:	26 e0       	ldi	r18, 0x06	; 6
  786:	40 e0       	ldi	r20, 0x00	; 0
- 788:	60 e4       	ldi	r22, 0x40	; 64
+ 788:	60 e5       	ldi	r22, 0x50	; 80
  78a:	82 e3       	ldi	r24, 0x32	; 50
  78c:	93 e0       	ldi	r25, 0x03	; 3
  78e:	63 df       	rcall	.-314    	; 0x656 <moveSingleServo>
-	moveDoubleServo(0x1FF, 0x70, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
+	moveDoubleServo(0x1FF, 0x90, 0x00, 0x02, 0x03);		//setting servo 2 & 3 (joint 2) to 0x1FF (straight upwards)
  790:	03 e0       	ldi	r16, 0x03	; 3
  792:	10 e0       	ldi	r17, 0x00	; 0
  794:	22 e0       	ldi	r18, 0x02	; 2
  796:	40 e0       	ldi	r20, 0x00	; 0
- 798:	60 e7       	ldi	r22, 0x70	; 112
+ 798:	60 e9       	ldi	r22, 0x90	; 144
  79a:	8f ef       	ldi	r24, 0xFF	; 255
  79c:	91 e0       	ldi	r25, 0x01	; 1
  79e:	8e df       	rcall	.-228    	; 0x6bc <moveDoubleServo>
-	moveDoubleServo(0xCC, 0x40, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
+	moveDoubleServo(0xCC, 0x50, 0x00, 0x04, 0x05);		//0xCC (60 deg) is 0 degree position for servo 4 and 5 (joint 3)
  7a0:	05 e0       	ldi	r16, 0x05	; 5
  7a2:	10 e0       	ldi	r17, 0x00	; 0
  7a4:	24 e0       	ldi	r18, 0x04	; 4
  7a6:	40 e0       	ldi	r20, 0x00	; 0
- 7a8:	60 e4       	ldi	r22, 0x40	; 64
+ 7a8:	60 e5       	ldi	r22, 0x50	; 80
  7aa:	8c ec       	ldi	r24, 0xCC	; 204
  7ac:	90 e0       	ldi	r25, 0x00	; 0
  7ae:	86 df       	rcall	.-244    	; 0x6bc <moveDoubleServo>
-	moveDoubleServo(0xCC, 0x50, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
+	moveDoubleServo(0xCC, 0x90, 0x00, 0x02, 0x03);		//0xCC (60 deg) is 0 degree position for servo 2 and 3 (joint 2)
  7b0:	03 e0       	ldi	r16, 0x03	; 3
  7b2:	10 e0       	ldi	r17, 0x00	; 0
  7b4:	22 e0       	ldi	r18, 0x02	; 2
  7b6:	40 e0       	ldi	r20, 0x00	; 0
- 7b8:	60 e5       	ldi	r22, 0x50	; 80
+ 7b8:	60 e9       	ldi	r22, 0x90	; 144
  7ba:	8c ec       	ldi	r24, 0xCC	; 204
  7bc:	90 e0       	ldi	r25, 0x00	; 0
  7be:	7e df       	rcall	.-260    	; 0x6bc <moveDoubleServo>
-	moveSingleServo(0x1FF, 0x20, 0x00, 0x01);			//setting servo 1 (joint 1)
+	moveSingleServo(0x1FF, 0x15, 0x00, 0x01);			//setting servo 1 (joint 1)
  7c0:	21 e0       	ldi	r18, 0x01	; 1
  7c2:	40 e0       	ldi	r20, 0x00	; 0
- 7c4:	60 e2       	ldi	r22, 0x20	; 32
+ 7c4:	65 e1       	ldi	r22, 0x15	; 21
  7c6:	8f ef       	ldi	r24, 0xFF	; 255
  7c8:	91 e0       	ldi	r25, 0x01	; 1
  7ca:	45 df       	rcall	.-374    	; 0x656 <moveSingleServo>
@@ -1725,8 +1725,8 @@ void dropItem() { //Side = 1 right side, side = 0 left side
  9b2:	91 e0       	ldi	r25, 0x01	; 1
  9b4:	50 de       	rcall	.-864    	; 0x656 <moveSingleServo>
  9b6:	2f ef       	ldi	r18, 0xFF	; 255
- 9b8:	87 ea       	ldi	r24, 0xA7	; 167
- 9ba:	91 e6       	ldi	r25, 0x61	; 97
+ 9b8:	8d e3       	ldi	r24, 0x3D	; 61
+ 9ba:	99 e4       	ldi	r25, 0x49	; 73
  9bc:	21 50       	subi	r18, 0x01	; 1
  9be:	80 40       	sbci	r24, 0x00	; 0
  9c0:	90 40       	sbci	r25, 0x00	; 0
@@ -1734,13 +1734,13 @@ void dropItem() { //Side = 1 right side, side = 0 left side
  9c4:	00 c0       	rjmp	.+0      	; 0x9c6 <dropItem+0xb2>
  9c6:	00 00       	nop
 	
-	_delay_ms(2000);
+	_delay_ms(1500);
 	
 	defaultPosition();
  9c8:	d5 de       	rcall	.-598    	; 0x774 <defaultPosition>
  9ca:	2f ef       	ldi	r18, 0xFF	; 255
- 9cc:	83 ed       	ldi	r24, 0xD3	; 211
- 9ce:	90 e3       	ldi	r25, 0x30	; 48
+ 9cc:	87 e9       	ldi	r24, 0x97	; 151
+ 9ce:	9a e3       	ldi	r25, 0x3A	; 58
  9d0:	21 50       	subi	r18, 0x01	; 1
  9d2:	80 40       	sbci	r24, 0x00	; 0
  9d4:	90 40       	sbci	r25, 0x00	; 0
@@ -1748,7 +1748,7 @@ void dropItem() { //Side = 1 right side, side = 0 left side
  9d8:	00 c0       	rjmp	.+0      	; 0x9da <dropItem+0xc6>
  9da:	00 00       	nop
 	
-	_delay_ms(1000);
+	_delay_ms(1200);
 	
 	TXFinishedDrop();
  9dc:	bf d1       	rcall	.+894    	; 0xd5c <TXFinishedDrop>
